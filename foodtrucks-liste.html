@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alle Foodtrucks – Partyretter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --dark:  #1A1208; --dark2: #2d1f0e;
+  --gold:  #C8922A; --gold2: #e0a430;
+  --cream: #F5F0E8; --cream2:#EDE8DF;
+  --text:  #1A1208; --muted: rgba(26,18,8,0.52);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--cream);}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.4);}
+.nav-logo{font-family:'Fraunces',serif;font-size:19px;font-weight:900;color:var(--cream);text-decoration:none;}
+.nav-logo .g{color:var(--gold2);} .nav-logo .a{color:var(--gold);}
+.nav-links{display:flex;gap:22px;list-style:none;}
+.nav-links a{color:rgba(245,240,232,.75);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-actions{display:flex;gap:10px;align-items:center;}
+.btn-login{color:rgba(245,240,232,.78);font-size:13px;font-weight:600;text-decoration:none;padding:6px 14px;border-radius:8px;border:1px solid rgba(200,146,42,.35);transition:.2s;}
+.btn-login:hover{border-color:var(--gold);color:var(--gold);}
+.btn-cta-nav{background:var(--gold);color:var(--dark);padding:7px 18px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:.2s;}
+.btn-cta-nav:hover{background:var(--gold2);}
+
+/* ── PAGE HEADER ── */
+.page-hero{background:var(--dark);padding:40px 0 36px;text-align:center;}
+.page-hero h1{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--cream);margin-bottom:8px;}
+.page-hero h1 span{color:var(--gold);}
+.page-hero p{font-size:15px;color:rgba(245,240,232,.6);max-width:480px;margin:0 auto;}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(245,240,232,.4);justify-content:center;margin-bottom:12px;}
+.breadcrumb a{color:rgba(245,240,232,.5);text-decoration:none;}
+.breadcrumb a:hover{color:var(--gold);}
+
+/* ── FILTER BAR ── */
+.filter-wrap{background:#fff;border-bottom:1px solid var(--cream2);position:sticky;top:64px;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.filter-inner{max-width:1300px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.filter-chip{padding:7px 16px;border-radius:20px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;}
+.filter-chip:hover,.filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+.filter-select{padding:7px 14px;border:1.5px solid var(--cream2);border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;cursor:pointer;}
+.filter-count{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;}
+.filter-sort{padding:7px 14px;border:1.5px solid var(--cream2);border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;cursor:pointer;}
+
+/* ── LAYOUT ── */
+.page-body{max-width:1300px;margin:0 auto;padding:36px 40px 80px;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start;}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar{background:#fff;border-radius:16px;border:1.5px solid var(--cream2);padding:22px;position:sticky;top:130px;max-height:calc(100vh - 150px);overflow-y:auto;}
+.sb-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.sb-group{margin-bottom:18px;}
+.sb-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+.sb-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark);padding:3px 0;cursor:pointer;}
+.sb-check input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer;}
+.sb-check span{flex:1;}
+.sb-check small{color:var(--muted);font-size:11px;}
+.sb-range{width:100%;accent-color:var(--gold);margin-top:6px;}
+.sb-range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px;}
+.btn-reset{width:100%;padding:9px;background:var(--cream2);border:none;border-radius:10px;font-size:13px;font-weight:600;color:var(--dark);cursor:pointer;margin-top:14px;font-family:'DM Sans',sans-serif;}
+.btn-reset:hover{background:var(--cream);}
+
+/* ── TRUCK GRID ── */
+.truck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+
+/* ── TRUCK CARD (Steckbrief) ── */
+.truck-card{background:#fff;border-radius:18px;border:1.5px solid var(--cream2);overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:pointer;position:relative;}
+.truck-card:hover{box-shadow:0 8px 32px rgba(200,146,42,.15);transform:translateY(-3px);}
+.truck-img{position:relative;height:200px;overflow:hidden;}
+.truck-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.truck-card:hover .truck-img img{transform:scale(1.04);}
+.truck-tag{position:absolute;top:12px;left:12px;background:rgba(200,146,42,.92);color:var(--dark);font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;backdrop-filter:blur(4px);}
+.truck-tag.blue{background:rgba(36,113,163,.92);color:#fff;}
+.truck-tag.green{background:rgba(39,174,96,.92);color:#fff;}
+.truck-tag.red{background:rgba(192,57,43,.92);color:#fff;}
+.truck-fav{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.92);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;backdrop-filter:blur(4px);border:none;transition:transform .2s;}
+.truck-fav:hover{transform:scale(1.15);}
+.truck-avail{position:absolute;bottom:10px;left:12px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:8px;backdrop-filter:blur(6px);}
+.truck-avail.free{background:rgba(39,174,96,.9);color:#fff;}
+.truck-avail.booked{background:rgba(192,57,43,.85);color:#fff;}
+.truck-avail.soon{background:rgba(230,126,34,.9);color:#fff;}
+
+/* ── CARD BODY ── */
+.truck-body{padding:18px 18px 14px;}
+.truck-name{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.truck-sub{font-size:13px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:4px;}
+.truck-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.chip{background:var(--cream2);color:var(--dark);font-size:11px;font-weight:600;padding:3px 9px;border-radius:12px;}
+.chip.gold{background:rgba(200,146,42,.12);color:var(--gold);}
+
+/* ── STECKBRIEF TABLE ── */
+.steckbrief{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin-bottom:14px;border-top:1px solid var(--cream2);padding-top:12px;}
+.sb-item{display:flex;flex-direction:column;}
+.sb-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
+.sb-item-val{font-size:13px;font-weight:600;color:var(--dark);}
+
+/* ── CARD FOOTER ── */
+.truck-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--cream2);background:rgba(245,240,232,.4);}
+.truck-price{font-size:17px;font-weight:700;color:var(--dark);}
+.truck-price span{font-size:12px;font-weight:400;color:var(--muted);}
+.truck-stars{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.truck-stars strong{color:var(--dark);font-size:13px;}
+.btn-book{padding:8px 18px;background:var(--gold);color:var(--dark);border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:.2s;}
+.btn-book:hover{background:var(--gold2);}
+
+/* ── HIGHLIGHT CARD (breit) ── */
+.truck-card.wide{grid-column:1/-1;display:grid;grid-template-columns:360px 1fr;border-radius:18px;}
+.truck-card.wide .truck-img{height:100%;border-radius:0;}
+.truck-card.wide .truck-body{padding:22px;}
+.truck-card.wide .truck-footer{border-top:none;border-left:1px solid var(--cream2);padding:22px;flex-direction:column;align-items:flex-start;gap:12px;}
+
+/* ── EMPTY / LOADING ── */
+.no-results{grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);}
+.no-results .icon{font-size:48px;margin-bottom:12px;}
+
+/* ── PAGINATION ── */
+.pagination{display:flex;gap:6px;justify-content:center;margin-top:36px;}
+.page-btn{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--dark);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.page-btn.active,.page-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .page-body{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="homepage.html">
+    <span class="g">Mein</span><span class="a">Party</span>Retter
+  </a>
+  <ul class="nav-links">
+    <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
+    <li><a href="foodtrucks-liste.html" style="color:var(--gold)">🚚 Foodtrucks</a></li>
+    <li><a href="blog.html">📝 Blog</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-login" href="login.html">Anmelden</a>
+    <a class="btn-cta-nav" href="login.html">Inserat erstellen →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="homepage.html">Startseite</a>
+    <span>›</span>
+    <span>Foodtrucks</span>
+  </div>
+  <h1>Alle <span>Foodtrucks</span></h1>
+  <p>Steckbriefe, Küche, Kapazität & Preise – finde deinen perfekten Foodtruck für jedes Event</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-wrap">
+  <div class="filter-inner">
+    <button class="filter-chip active" onclick="filterKueche('alle', this)">Alle</button>
+    <button class="filter-chip" onclick="filterKueche('burger', this)">🍔 Burger & BBQ</button>
+    <button class="filter-chip" onclick="filterKueche('steak', this)">🥩 Steak & Grill</button>
+    <button class="filter-chip" onclick="filterKueche('pizza', this)">🍕 Pizza</button>
+    <button class="filter-chip" onclick="filterKueche('pasta', this)">🍝 Pasta & Italiano</button>
+    <button class="filter-chip" onclick="filterKueche('asiatisch', this)">🍜 Asiatisch</button>
+    <button class="filter-chip" onclick="filterKueche('sushi', this)">🍱 Sushi</button>
+    <button class="filter-chip" onclick="filterKueche('indisch', this)">🍛 Indisch</button>
+    <button class="filter-chip" onclick="filterKueche('mexiko', this)">🌮 Mexikanisch</button>
+    <button class="filter-chip" onclick="filterKueche('doener', this)">🥙 Döner & Türkisch</button>
+    <button class="filter-chip" onclick="filterKueche('griechisch', this)">🫒 Griechisch</button>
+    <button class="filter-chip" onclick="filterKueche('seafood', this)">🦞 Seafood</button>
+    <button class="filter-chip" onclick="filterKueche('vegan', this)">🌱 Vegan</button>
+    <button class="filter-chip" onclick="filterKueche('bowl', this)">🥗 Bowls & Salate</button>
+    <button class="filter-chip" onclick="filterKueche('kaffee', this)">☕ Kaffeetruck</button>
+    <button class="filter-chip" onclick="filterKueche('getraenke', this)">🍹 Cocktailbar</button>
+    <button class="filter-chip" onclick="filterKueche('dessert', this)">🧁 Desserts</button>
+    <button class="filter-chip" onclick="filterKueche('crepes', this)">🥞 Crepes & Waffeln</button>
+    <button class="filter-chip" onclick="filterKueche('suppen', this)">🍲 Suppen</button>
+    <button class="filter-chip" onclick="filterKueche('sonstiges', this)">➕ Sonstiges</button>
+    <select class="filter-select" id="sort-select" onchange="sortTrucks()">
+      <option value="rating">⭐ Beste Bewertung</option>
+      <option value="price-asc">💰 Preis aufsteigend</option>
+      <option value="price-desc">💰 Preis absteigend</option>
+      <option value="capacity">👥 Kapazität</option>
+    </select>
+    <span class="filter-count" id="result-count">21 Foodtrucks gefunden</span>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- SIDEBAR FILTER -->
+  <aside class="sidebar">
+    <div class="sb-title">🔍 Filter</div>
+
+    <div class="sb-group">
+      <div class="sb-label">Verfügbarkeit</div>
+      <label class="sb-check"><input type="checkbox" checked><span>Sofort buchbar</span><small>9</small></label>
+      <label class="sb-check"><input type="checkbox"><span>Dieses Wochenende</span><small>4</small></label>
+      <label class="sb-check"><input type="checkbox"><span>Innerhalb 7 Tage</span><small>12</small></label>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Region</div>
+      <label class="sb-check"><input type="checkbox" checked><span>München</span><small>6</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Augsburg</span><small>3</small></label>
+      <label class="sb-check"><input type="checkbox"><span>Ingolstadt</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox"><span>Nürnberg</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox"><span>Stuttgart</span><small>2</small></label>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Kapazität (Personen)</div>
+      <input type="range" class="sb-range" min="10" max="500" value="500" id="capacity-range"
+             oninput="document.getElementById('cap-max').textContent=this.value">
+      <div class="sb-range-labels"><span>10 Pers.</span><span id="cap-max">500 Pers.</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Tagesmiete (€)</div>
+      <input type="range" class="sb-range" min="300" max="3000" value="3000" id="price-range"
+             oninput="document.getElementById('price-max').textContent='bis '+this.value+'€'">
+      <div class="sb-range-labels"><span>ab 300€</span><span id="price-max">bis 3000€</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Küche</div>
+      <label class="sb-check"><input type="checkbox" checked><span>Burger & BBQ</span><small>4</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Pizza</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Asiatisch</span><small>3</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Mexikanisch</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Vegan</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Desserts</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Seafood</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Kaffeetruck</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Steak & Grill</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Pasta & Italiano</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Indisch</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Griechisch</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Döner & Türkisch</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Crepes & Waffeln</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Sushi</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Bowls & Salate</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Cocktailbar</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Suppen</span><small>0</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Sonstiges</span><small>0</small></label>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Ausstattung</div>
+      <label class="sb-check"><input type="checkbox"><span>Stromversorgung inkl.</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Zelt / Überdachung</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Personal inkl.</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Genehmigungen inkl.</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Vegetarisch möglich</span></label>
+    </div>
+
+    <button class="btn-reset" onclick="resetFilters()">Filter zurücksetzen</button>
+  </aside>
+
+  <!-- TRUCK GRID -->
+  <div>
+    <div class="truck-grid" id="truck-grid">
+
+      <!-- ── TOP-HIGHLIGHT (breit) ── -->
+      <div class="truck-card wide" data-kueche="burger" data-preis="1200" data-kapaz="300" data-rating="4.9">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=720&h=400&fit=crop&auto=format" alt="Burger Brothers"/>
+          <span class="truck-tag">⭐ Top-Foodtruck</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail free">✓ Sofort buchbar</span>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="truck-body" style="flex:1;">
+            <div class="truck-name">Burger Brothers – Premium BBQ Foodtruck</div>
+            <div class="truck-sub">📍 München · bayernweit · gegründet 2019</div>
+            <div class="truck-chips">
+              <span class="chip gold">🍔 Burger & BBQ</span>
+              <span class="chip">Streetfood</span>
+              <span class="chip">bis 300 Pers.</span>
+              <span class="chip">Event-erfahren</span>
+              <span class="chip">Genehmigungen inkl.</span>
+            </div>
+            <div class="steckbrief">
+              <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 300 Personen/Tag</div></div>
+              <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 200 km (Bayern)</div></div>
+              <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 4 Stunden</div></div>
+              <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 50 Personen</div></div>
+              <div class="sb-item"><div class="sb-item-label">Buchbar</div><div class="sb-item-val">Stunden- & Tagesweise</div></div>
+              <div class="sb-item"><div class="sb-item-label">Events</div><div class="sb-item-val">Firmen, Hochzeit, Festival</div></div>
+            </div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.6;">
+              „Wir bringen echtes American BBQ direkt zu eurer Veranstaltung.
+              Pulled Pork, Brisket, Smash Burger – handgemacht, vor Ort zubereitet.
+              Über 200 Events seit 2019."
+            </p>
+          </div>
+          <div class="truck-footer">
+            <div>
+              <div class="truck-price">ab 800 € <span>/Tag</span></div>
+              <div class="truck-stars">⭐⭐⭐⭐⭐ <strong>4.9</strong> (53 Bewertungen)</div>
+            </div>
+            <a class="btn-book" href="marktplatz.html">Jetzt anfragen →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 2 ── -->
+      <div class="truck-card" data-kueche="asiatisch" data-preis="750" data-kapaz="150" data-rating="4.8">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=480&h=320&fit=crop&auto=format" alt="Asia Street"/>
+          <span class="truck-tag blue">🍜 Asiatisch</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail free">✓ Sofort buchbar</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Asia Street Kitchen</div>
+          <div class="truck-sub">📍 München · bis 80 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🍜 Asiatisch</span>
+            <span class="chip">Wok-Gerichte</span>
+            <span class="chip">bis 150 Pers.</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 150 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 80 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 3 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 30 Personen</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 650 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐⭐ <strong>4.8</strong> (38)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 3 ── -->
+      <div class="truck-card" data-kueche="pizza" data-preis="900" data-kapaz="200" data-rating="4.7">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=480&h=320&fit=crop&auto=format" alt="Napoli Express"/>
+          <span class="truck-tag">🍕 Pizza</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail soon">⚡ Ab nächste Woche</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Napoli Express – Holzofenpizza</div>
+          <div class="truck-sub">📍 Augsburg · bis 120 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🍕 Holzofenpizza</span>
+            <span class="chip">Italienisch</span>
+            <span class="chip">bis 200 Pers.</span>
+            <span class="chip">Zelt inkl.</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 200 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 120 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 20 Personen</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 750 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐½ <strong>4.7</strong> (29)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 4 ── -->
+      <div class="truck-card" data-kueche="vegan" data-preis="600" data-kapaz="120" data-rating="4.9">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=480&h=320&fit=crop&auto=format" alt="Green Garden"/>
+          <span class="truck-tag green">🌱 Vegan</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail free">✓ Sofort buchbar</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Green Garden – 100% Pflanzlich</div>
+          <div class="truck-sub">📍 München · bis 60 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🌱 Vegan</span>
+            <span class="chip">Glutenfrei möglich</span>
+            <span class="chip">bis 120 Pers.</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 120 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 60 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">keine</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 550 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐⭐ <strong>4.9</strong> (41)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 5 ── -->
+      <div class="truck-card" data-kueche="mexiko" data-preis="700" data-kapaz="180" data-rating="4.6">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=480&h=320&fit=crop&auto=format" alt="El Taco Loco"/>
+          <span class="truck-tag" style="background:rgba(192,57,43,.9);color:#fff;">🌮 Mexiko</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail free">✓ Sofort buchbar</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">El Taco Loco – Mexikanischer Foodtruck</div>
+          <div class="truck-sub">📍 München · bis 100 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🌮 Mexikanisch</span>
+            <span class="chip">Tacos & Burritos</span>
+            <span class="chip">bis 180 Pers.</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 180 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 100 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 3 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 25 Personen</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 600 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐½ <strong>4.6</strong> (31)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 6 ── -->
+      <div class="truck-card" data-kueche="dessert" data-preis="500" data-kapaz="100" data-rating="5.0">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1488477304112-4944851de03d?w=480&h=320&fit=crop&auto=format" alt="Sweet Dreams"/>
+          <span class="truck-tag" style="background:rgba(155,89,182,.9);color:#fff;">🧁 Desserts</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail free">✓ Sofort buchbar</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Sweet Dreams – Dessert & Eis Truck</div>
+          <div class="truck-sub">📍 Ingolstadt · bis 80 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🧁 Desserts</span>
+            <span class="chip">Eis & Crepes</span>
+            <span class="chip">bis 100 Pers.</span>
+            <span class="chip">Hochzeit ♥</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 100 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 80 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">keine</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 450 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐⭐ <strong>5.0</strong> (19)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 7 ── -->
+      <div class="truck-card" data-kueche="burger" data-preis="850" data-kapaz="250" data-rating="4.7">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=480&h=320&fit=crop&auto=format" alt="Smoky BBQ"/>
+          <span class="truck-tag">🔥 BBQ</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail soon">⚡ Nächste Woche frei</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Smoky Mountain BBQ</div>
+          <div class="truck-sub">📍 Nürnberg · bis 150 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🔥 American BBQ</span>
+            <span class="chip">Smoker inkl.</span>
+            <span class="chip">bis 250 Pers.</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 250 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 150 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">ganzer Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 40 Personen</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 850 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐½ <strong>4.7</strong> (22)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 8 ── -->
+      <div class="truck-card" data-kueche="seafood" data-preis="1100" data-kapaz="80" data-rating="4.8">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=480&h=320&fit=crop&auto=format" alt="Fischer Fritz"/>
+          <span class="truck-tag blue">🦞 Seafood</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail booked">⚠ Bis 20. März ausgebucht</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Fischer Fritz – Seafood Delikatessen</div>
+          <div class="truck-sub">📍 München · bis 50 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🦞 Seafood</span>
+            <span class="chip">Fine Dining</span>
+            <span class="chip">bis 80 Pers.</span>
+            <span class="chip">Premium</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 80 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 50 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 4 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 800 €</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 980 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐⭐ <strong>4.8</strong> (15)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 9 ── -->
+      <div class="truck-card" data-kueche="vegan" data-preis="480" data-kapaz="90" data-rating="4.5">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=480&h=320&fit=crop&auto=format" alt="Bowl & Soul"/>
+          <span class="truck-tag green">🥗 Vegan</span>
+          <button class="truck-fav">🤍</button>
+          <span class="truck-avail free">✓ Sofort buchbar</span>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Bowl & Soul – Healthy Foodtruck</div>
+          <div class="truck-sub">📍 Stuttgart · bis 70 km</div>
+          <div class="truck-chips">
+            <span class="chip gold">🥗 Vegan & Gesund</span>
+            <span class="chip">Bowls & Smoothies</span>
+            <span class="chip">bis 90 Pers.</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 90 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Anfahrt</div><div class="sb-item-val">bis 70 km</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">keine</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div>
+            <div class="truck-price">ab 420 € <span>/Tag</span></div>
+            <div class="truck-stars">⭐⭐⭐⭐½ <strong>4.5</strong> (24)</div>
+          </div>
+          <a class="btn-book" href="marktplatz.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 10: Kaffeetruck ── -->
+      <div class="truck-card" data-kueche="kaffee" data-preis="380" data-kapaz="200" data-rating="4.9">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=480&h=320&fit=crop&auto=format" alt="Kaffee Mobil"/>
+          <span class="truck-tag" style="background:rgba(101,67,33,.9);color:#fff;">☕ Kaffeetruck</span>
+          <button class="truck-fav">🤍</button>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Kaffee Mobil – Specialty Coffee</div>
+          <div class="truck-sub">📍 München · bundesweit</div>
+          <div class="truck-chips"><span class="chip gold">☕ Kaffeetruck</span><span class="chip">Barista</span><span class="chip">Cold Brew</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Espresso, Latte, Cold Brew</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 200 Tassen/Std.</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindest-Event</div><div class="sb-item-val">3 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Gebiet</div><div class="sb-item-val">Bundesweit</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div><div class="truck-price">ab 380 € <span>/Event</span></div><div class="truck-rating">⭐ 4.9 <span>(28)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 11: Steak & Grill ── -->
+      <div class="truck-card" data-kueche="steak" data-preis="1100" data-kapaz="220" data-rating="4.8">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=480&h=320&fit=crop&auto=format" alt="Steak Brothers"/>
+          <span class="truck-tag" style="background:rgba(180,30,30,.9);color:#fff;">🥩 Steak & Grill</span>
+          <button class="truck-fav">🤍</button>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Steak Brothers – Premium Grill</div>
+          <div class="truck-sub">📍 Stuttgart · Bayern · BW</div>
+          <div class="truck-chips"><span class="chip gold">🥩 Steak & Grill</span><span class="chip">BBQ</span><span class="chip">Dry Aged</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Ribeye, T-Bone, Spare Ribs</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 220 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindest-Event</div><div class="sb-item-val">30 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Gebiet</div><div class="sb-item-val">Süddeutschland</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div><div class="truck-price">ab 1.100 € <span>/Tag</span></div><div class="truck-rating">⭐ 4.8 <span>(41)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 12: Döner & Türkisch ── -->
+      <div class="truck-card" data-kueche="doener" data-preis="650" data-kapaz="300" data-rating="4.7">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=480&h=320&fit=crop&auto=format" alt="Sultan Street"/>
+          <span class="truck-tag blue">🥙 Döner & Türkisch</span>
+          <button class="truck-fav">🤍</button>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Sultan Street Food – Döner & Grill</div>
+          <div class="truck-sub">📍 Berlin · Bundesweit verfügbar</div>
+          <div class="truck-chips"><span class="chip gold">🥙 Döner</span><span class="chip">Lahmacun</span><span class="chip">Vegetarisch möglich</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Döner, Lahmacun, Gözleme</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 300 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindest-Event</div><div class="sb-item-val">20 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Gebiet</div><div class="sb-item-val">Bundesweit</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div><div class="truck-price">ab 650 € <span>/Tag</span></div><div class="truck-rating">⭐ 4.7 <span>(63)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 13: Cocktailbar ── -->
+      <div class="truck-card" data-kueche="getraenke" data-preis="890" data-kapaz="150" data-rating="4.9">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=480&h=320&fit=crop&auto=format" alt="Mix Masters"/>
+          <span class="truck-tag" style="background:rgba(142,68,173,.9);color:#fff;">🍹 Cocktailbar</span>
+          <button class="truck-fav">🤍</button>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Mix Masters – Mobile Cocktailbar</div>
+          <div class="truck-sub">📍 Hamburg · Norddeutschland</div>
+          <div class="truck-chips"><span class="chip gold">🍹 Cocktails</span><span class="chip">Mocktails</span><span class="chip">Longdrinks</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Angebot</div><div class="sb-item-val">Cocktails, Longdrinks, Shots</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 150 Pers./Abend</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindest-Event</div><div class="sb-item-val">4 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Gebiet</div><div class="sb-item-val">Norddeutschland</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div><div class="truck-price">ab 890 € <span>/Abend</span></div><div class="truck-rating">⭐ 4.9 <span>(37)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 14: Crepes & Waffeln ── -->
+      <div class="truck-card" data-kueche="crepes" data-preis="420" data-kapaz="120" data-rating="4.8">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1519676867240-f03562e64548?w=480&h=320&fit=crop&auto=format" alt="La Crêperie"/>
+          <span class="truck-tag" style="background:rgba(230,126,34,.9);color:#fff;">🥞 Crepes & Waffeln</span>
+          <button class="truck-fav">🤍</button>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">La Crêperie – Süß & Herzhaft</div>
+          <div class="truck-sub">📍 Frankfurt · Hessen · NRW</div>
+          <div class="truck-chips"><span class="chip gold">🥞 Crepes</span><span class="chip">Waffeln</span><span class="chip">Churros</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Crêpes, Waffeln, Churros</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 120 Pers./Std.</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindest-Event</div><div class="sb-item-val">2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Gebiet</div><div class="sb-item-val">Mitte & West DE</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div><div class="truck-price">ab 420 € <span>/Event</span></div><div class="truck-rating">⭐ 4.8 <span>(51)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── TRUCK 15: Indisch ── -->
+      <div class="truck-card" data-kueche="indisch" data-preis="720" data-kapaz="160" data-rating="4.7">
+        <div class="truck-img">
+          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=480&h=320&fit=crop&auto=format" alt="Spice of India"/>
+          <span class="truck-tag blue">🍛 Indisch</span>
+          <button class="truck-fav">🤍</button>
+        </div>
+        <div class="truck-body">
+          <div class="truck-name">Spice of India – Authentisch & Würzig</div>
+          <div class="truck-sub">📍 Düsseldorf · NRW</div>
+          <div class="truck-chips"><span class="chip gold">🍛 Indisch</span><span class="chip">Curry</span><span class="chip">Tandoori</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Curry, Tandoori, Samosas</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 160 Pers./Tag</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindest-Event</div><div class="sb-item-val">25 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Gebiet</div><div class="sb-item-val">NRW & Umgebung</div></div>
+          </div>
+        </div>
+        <div class="truck-footer">
+          <div><div class="truck-price">ab 720 € <span>/Tag</span></div><div class="truck-rating">⭐ 4.7 <span>(22)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+    </div><!-- /truck-grid -->
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">›</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function filterKueche(kueche, btn) {
+  const alleBtn = document.querySelector('.filter-chip');
+
+  if (kueche === 'alle') {
+    // "Alle" → alle anderen deaktivieren, nur Alle aktiv
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+  } else {
+    // Anderer Chip → "Alle" deaktivieren, diesen toggling
+    alleBtn.classList.remove('active');
+    btn.classList.toggle('active');
+    // Wenn kein Chip mehr aktiv → "Alle" wieder aktivieren
+    const anyActive = Array.from(document.querySelectorAll('.filter-chip')).some(c => c.classList.contains('active'));
+    if (!anyActive) alleBtn.classList.add('active');
+  }
+
+  // Aktive Filter sammeln
+  const activeFilters = Array.from(document.querySelectorAll('.filter-chip.active'))
+    .map(c => c.getAttribute('onclick').match(/'([^']+)'/)[1]);
+
+  const cards = document.querySelectorAll('.truck-card');
+  let count = 0;
+  cards.forEach(card => {
+    const k = card.dataset.kueche || '';
+    const show = activeFilters.includes('alle') || activeFilters.includes(k);
+    card.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('result-count').textContent = count + ' Foodtrucks gefunden';
+}
+
+function sortTrucks() {
+  const val = document.getElementById('sort-select').value;
+  const grid = document.getElementById('truck-grid');
+  const cards = Array.from(grid.querySelectorAll('.truck-card'));
+  cards.sort((a, b) => {
+    if(val === 'rating') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+    if(val === 'price-asc') return parseFloat(a.dataset.preis) - parseFloat(b.dataset.preis);
+    if(val === 'price-desc') return parseFloat(b.dataset.preis) - parseFloat(a.dataset.preis);
+    if(val === 'capacity') return parseFloat(b.dataset.kapaz) - parseFloat(a.dataset.kapaz);
+    return 0;
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+
+function resetFilters() {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.filter-chip')[0].classList.add('active');
+  document.querySelectorAll('.truck-card').forEach(c => c.style.display = '');
+  document.getElementById('result-count').textContent = document.querySelectorAll('.truck-card').length + ' Foodtrucks gefunden';
+  document.getElementById('sort-select').value = 'rating';
+  document.querySelectorAll('.sb-check input').forEach(cb => { cb.checked = false; });
+  document.getElementById('capacity-range').value = 500;
+  document.getElementById('price-range').value = 3000;
+  document.getElementById('cap-max').textContent = '500 Pers.';
+  document.getElementById('price-max').textContent = 'bis 3000€';
+}
+
+// Fav button toggle
+document.querySelectorAll('.truck-fav').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+  });
+});
+</script>
+
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

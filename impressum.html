@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impressum – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dark: #1A1208;
+      --dark2: #2d1f0e;
+      --gold: #C8922A;
+      --gold2: #e0a430;
+      --cream: #F5F0E8;
+      --cream2: #EDE8DF;
+      --text: #1A1208;
+      --muted: rgba(26, 18, 8, 0.55);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: #f5f3ef;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 66px;
+      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo .logo-accent {
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(245, 240, 232, 0.78);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(140deg, #0e0a05 0%, #1A1208 55%, #2d1f0e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(200, 146, 42, 0.14) 0%, transparent 65%),
+                  radial-gradient(ellipse at 30% 70%, rgba(201, 168, 76, 0.12) 0%, transparent 55%);
+    }
+    .hero > * {
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(34px, 5.5vw, 48px);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.08;
+      max-width: 800px;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: rgba(245, 240, 232, 0.68);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+    /* CONTENT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      flex: 1;
+    }
+    .content-section {
+      margin-bottom: 50px;
+    }
+    .content-section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+    }
+    .content-section p {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .content-section strong {
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .content-section ul {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+    .content-section li {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    /* BUTTONS */
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      border: 1.5px solid var(--gold);
+    }
+    .btn-primary:hover {
+      background: var(--gold2);
+      border-color: var(--gold2);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--gold);
+    }
+    .btn-secondary:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+    /* PRINT */
+    @media print {
+      nav,
+      .btn-group {
+        display: none !important;
+      }
+      body {
+        background: white;
+      }
+      .container {
+        padding: 20px;
+      }
+    }
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+      }
+      .hero {
+        padding: 60px 20px 50px;
+      }
+      .container {
+        padding: 40px 20px;
+      }
+      .content-section h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="homepage.html"><span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter</a>
+    <ul class="nav-links">
+      <li><a href="homepage.html">Startseite</a></li>
+      <li><a href="agb.html">AGB</a></li>
+      <li><a href="datenschutz.html">Datenschutz</a></li>
+      <li><a href="START.html">Alle Seiten</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="btn-nav-outline" href="START.html">🗺️ Alle Seiten</a>
+      <a class="btn-nav-outline" href="login.html">Anmelden</a>
+      <a class="btn-nav-cta" href="registrierung.html">Registrieren</a>
+    </div>
+  </nav>
+
+  <!-- HERO HEADER -->
+  <div class="hero">
+    <h1>Impressum</h1>
+    <p>Angaben gemäß TMG – Transparenz und Kontaktinformationen</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <!-- ANGABEN GEM. § 5 TMG -->
+    <div class="content-section">
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p><strong>Betreiber:</strong> Alexander Moser</p>
+      <p style="margin-top:8px"><strong>Anschrift:</strong><br>
+        Ulmer Str. 45<br>
+        88471 Laupheim<br>
+        Deutschland
+      </p>
+      <p style="margin-top:8px"><strong>Kontakt:</strong><br>
+        E-Mail: <a href="mailto:info@partyretter.de" style="color:var(--gold);text-decoration:none;font-weight:700;">info@partyretter.de</a>
+      </p>
+      <p style="margin-top:12px;font-size:12px;color:rgba(26,18,8,0.45);border-top:1px solid rgba(26,18,8,0.08);padding-top:10px;">
+        <!-- TODO: Nach UG-Gründung ersetzen durch: Unternehmensname "Partyretter UG (haftungsbeschränkt)", Geschäftsadresse, Amtsgericht + HRB-Nummer -->
+        Hinweis: Eine Unternehmensgesellschaft (UG) befindet sich in Gründung. Das Impressum wird nach erfolgter Eintragung ins Handelsregister aktualisiert.
+      </p>
+    </div>
+
+    <!-- VERANTWORTLICH FÜR INHALT -->
+    <div class="content-section">
+      <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+      <p>Alexander Moser<br>
+        Ulmer Str. 45<br>
+        88471 Laupheim
+      </p>
+      <p style="margin-top:8px">E-Mail: <a href="mailto:info@partyretter.de" style="color:var(--gold);text-decoration:none;font-weight:700;">info@partyretter.de</a></p>
+    </div>
+
+    <!-- HAFTUNG FÜR INHALTE -->
+    <div class="content-section">
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 des TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+      </p>
+      <p>
+        Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+      </p>
+    </div>
+
+    <!-- HAFTUNG FÜR LINKS -->
+    <div class="content-section">
+      <h2>Haftung für Links</h2>
+      <p>
+        Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
+      </p>
+      <p>
+        Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+      </p>
+    </div>
+
+    <!-- URHEBERRECHT -->
+    <div class="content-section">
+      <h2>Urheberrecht</h2>
+      <p>
+        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des Autors oder Urhebers bzw. Seitenbetreibers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+      </p>
+      <p>
+        Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+      </p>
+    </div>
+
+    <!-- DATENSCHUTZ -->
+    <div class="content-section">
+      <h2>Datenschutz</h2>
+      <p>
+        Die Nutzung unserer Website ist in der Regel ohne Angabe von personenbezogenen Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf Grundlage freiwilliger Eingaben des Nutzers. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.
+      </p>
+      <p>
+        Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. Detaillierte Informationen zum Datenschutz finden Sie in unserer <a href="datenschutz.html" style="color:var(--gold);text-decoration:none;font-weight:700;">Datenschutzerklärung</a>.
+      </p>
+    </div>
+
+    <!-- ONLINE STREITBEILEGUNG -->
+    <div class="content-section">
+      <h2>Online-Streitbeilegung</h2>
+      <p>
+        Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;">https://ec.europa.eu/consumers/odr/</a>
+      </p>
+      <p>
+        Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind grundsätzlich bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen, sind hierzu jedoch nicht verpflichtet.
+      </p>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Drucken</button>
+      <a href="homepage.html" class="btn btn-secondary">← Zur Startseite</a>
+      <a href="START.html" class="btn btn-secondary">Alle Seiten</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--dark);color:rgba(245,240,232,0.55);padding:40px 40px 24px;margin-top:auto;">
+    <div style="max-width:1260px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;gap:40px;margin-bottom:32px;justify-content:space-between;">
+        <div style="min-width:200px;">
+          <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--cream);margin-bottom:10px;"><img src="logo-v2.svg" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;filter:brightness(0) invert(1);"></div>
+          <p style="font-size:13px;line-height:1.6;max-width:240px;">Die Plattform für professionelles Event-Catering in Deutschland.</p>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Kunden</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <a href="marktplatz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Marktplatz</a>
+            <a href="kochevents.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Koch-Events</a>
+            <a href="foodtruck-karte.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Foodtruck-Karte</a>
+            <a href="event-ausschreiben.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Event ausschreiben</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Anbieter</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <a href="anbieter-onboarding.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter werden</a>
+            <a href="registrierung.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Registrierung</a>
+            <a href="anbieter-profil.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter-Profil</a>
+            <a href="buchhaltung.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Buchhaltung</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Rechtliches</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <a href="agb.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">AGB</a>
+            <a href="datenschutz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Datenschutz</a>
+            <a href="impressum.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Impressum</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(245,240,232,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div style="font-size:12.5px;">© 2026 Partyretter. Alle Rechte vorbehalten.</div>
+        <div style="font-size:12px;">🍽️ Made with ❤️ für perfekte Events</div>
+      </div>
+    </div>
+  </footer>
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+</body>
+</html>

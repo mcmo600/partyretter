@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Als Anbieter starten – Partyretter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #1A1208;
+    --dark2: #2d1f0e;
+    --gold: #C8922A;
+    --gold2: #e0a430;
+    --cream: #F5F0E8;
+    --cream2: #EDE8DF;
+    --green: #2d7a3e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); }
+
+  /* NAV */
+  nav {
+    background: var(--dark);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  nav a.nl { color: rgba(245,240,232,0.7); font-size: 0.85rem; text-decoration: none; }
+  nav a.nl:hover { color: var(--cream); }
+  .nav-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+  .nav-btn {
+    padding: 8px 18px;
+    background: var(--gold);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: var(--gold2); }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    padding: 70px 40px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,146,42,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(200,146,42,0.2);
+    border: 1px solid rgba(200,146,42,0.4);
+    color: var(--gold2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 3rem;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 1.1rem;
+    color: rgba(245,240,232,0.7);
+    max-width: 600px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  /* TYPE SELECTOR */
+  .type-selector {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .type-btn {
+    padding: 14px 24px;
+    border: 2px solid rgba(200,146,42,0.35);
+    border-radius: 12px;
+    background: rgba(245,240,232,0.05);
+    color: var(--cream);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 130px;
+    text-align: center;
+  }
+  .type-btn:hover {
+    border-color: var(--gold);
+    background: rgba(200,146,42,0.1);
+  }
+  .type-btn.active {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: white;
+  }
+  .type-btn .type-icon { font-size: 1.8rem; }
+  .type-btn .type-sub { font-size: 0.72rem; opacity: 0.8; }
+
+  /* MAIN */
+  .main { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+  /* SECTION TABS CONTENT */
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  /* ONBOARDING INTRO */
+  .intro-bar {
+    background: white;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(26,18,8,0.06);
+  }
+  .intro-icon { font-size: 3rem; flex-shrink: 0; }
+  .intro-text h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+  .intro-text p { font-size: 0.9rem; color: #666; line-height: 1.5; }
+  .intro-earn {
+    margin-left: auto;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 12px;
+    padding: 14px 16px;
+    flex-shrink: 0;
+    min-width: 190px;
+  }
+  .intro-earn .earn-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .intro-earn .earn-tiers { display: flex; flex-direction: column; gap: 5px; }
+  .intro-earn .earn-tier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    border-radius: 7px;
+    padding: 5px 9px;
+    gap: 8px;
+  }
+  .intro-earn .earn-tier-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.88);
+    white-space: nowrap;
+  }
+  .intro-earn .earn-tier-price {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 0.85rem;
+    color: white;
+    white-space: nowrap;
+  }
+  .intro-earn .earn-amount {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: white;
+  }
+  .intro-earn .earn-label { font-size: 0.75rem; color: rgba(255,255,255,0.85); }
+
+  /* STEPS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .step-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(26,18,8,0.05);
+    position: relative;
+  }
+  .step-card::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--gold);
+    font-weight: 700;
+    z-index: 1;
+  }
+  .step-card:last-child::after { display: none; }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+    margin: 0 auto 12px;
+  }
+  .step-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; }
+  .step-card p { font-size: 0.78rem; color: #777; line-height: 1.5; }
+
+  /* REQUIREMENTS CARD */
+  .req-card {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(26,18,8,0.05);
+  }
+  .req-header {
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .req-header-icon { font-size: 1.5rem; }
+  .req-header-text h3 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem; }
+  .req-header-text p { font-size: 0.8rem; color: #888; margin-top: 2px; }
+  .req-badge {
+    margin-left: auto;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .req-badge.pflicht { background: #fdecea; color: var(--red, #c0392b); }
+  .req-badge.empfohlen { background: #e8f5ee; color: var(--green); }
+  .req-badge.optional { background: var(--cream2); color: #888; }
+  .req-chevron { font-size: 1rem; color: #bbb; transition: transform 0.25s; margin-left: 10px; }
+  .req-card.open .req-chevron { transform: rotate(180deg); }
+  .req-body {
+    display: none;
+    padding: 0 22px 20px;
+    border-top: 1px solid var(--cream2);
+  }
+  .req-card.open .req-body { display: block; }
+
+  .req-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cream2);
+  }
+  .req-item:last-child { border-bottom: none; }
+  .req-status {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .req-status.muss { background: #fdecea; color: #c0392b; }
+  .req-status.gut { background: #e8f5ee; color: var(--green); }
+  .req-status.nice { background: var(--cream2); color: #888; }
+  .req-info h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 3px; }
+  .req-info p { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .req-info .tip {
+    display: inline-block;
+    margin-top: 6px;
+    background: #fffbf0;
+    border: 1px solid rgba(200,146,42,0.3);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    color: var(--dark2);
+  }
+
+  /* EARNINGS SECTION */
+  .earnings-box {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 28px;
+    color: white;
+    margin-bottom: 28px;
+  }
+  .earnings-box h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .earnings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .earn-card {
+    background: rgba(245,240,232,0.06);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .earn-card .ec-amount {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--gold2);
+    margin-bottom: 4px;
+  }
+  .earn-card .ec-label { font-size: 0.75rem; color: rgba(245,240,232,0.6); }
+  .platform-fee {
+    background: rgba(200,146,42,0.1);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.8);
+    line-height: 1.6;
+  }
+  .platform-fee strong { color: var(--gold2); }
+
+  /* PROFILE CHECKLIST */
+  .checklist {
+    background: white;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 8px rgba(26,18,8,0.05);
+  }
+  .checklist h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cream2);
+  }
+  .cl-item:last-child { border-bottom: none; }
+  .cl-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--cream2);
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .cl-check.checked {
+    background: var(--green);
+    color: white;
+  }
+  .cl-text h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 2px; }
+  .cl-text p { font-size: 0.78rem; color: #888; }
+  .cl-required {
+    margin-left: auto;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #fdecea;
+    color: #c0392b;
+    font-weight: 700;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .cl-optional {
+    margin-left: auto;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--cream2);
+    color: #888;
+    font-weight: 700;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  /* NEW CHECKLIST ITEM ACCORDION STYLES */
+  .checklist-item {
+    border-bottom: 1px solid rgba(26,18,8,0.08);
+    overflow: hidden;
+  }
+  .checklist-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .checklist-row:hover {
+    background: rgba(200,146,42,0.05);
+  }
+  .check-circle {
+    font-size: 16px;
+    color: #999;
+    flex-shrink: 0;
+  }
+  .checklist-row strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .checklist-toggle-icon {
+    margin-left: auto;
+    font-size: 13px;
+    color: #999;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .checklist-item.open .checklist-toggle-icon {
+    transform: rotate(180deg);
+  }
+  .checklist-panel {
+    display: none;
+    padding: 0 16px 16px 52px;
+    border-top: 1px solid rgba(26,18,8,0.06);
+    background: rgba(200,146,42,0.03);
+  }
+  .checklist-item.open .checklist-panel {
+    display: block;
+  }
+  .checklist-panel .panel-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #e2dcd4;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    outline: none;
+    background: #fff;
+    margin-top: 10px;
+  }
+  .checklist-panel .panel-input:focus {
+    border-color: var(--gold);
+  }
+  .checklist-panel .panel-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    padding: 10px 18px;
+    background: var(--dark);
+    color: var(--cream);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1.5px solid rgba(200,146,42,0.25);
+  }
+  .checklist-panel .panel-link-btn:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+  .checklist-panel .panel-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: var(--cream2);
+    border: 2px dashed rgba(200,146,42,0.35);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .checklist-panel .panel-upload-label:hover {
+    border-color: var(--gold);
+    background: rgba(200,146,42,0.08);
+  }
+  .checklist-panel .panel-upload-label input {
+    display: none;
+  }
+  .checklist-panel .panel-note {
+    font-size: 12px;
+    color: #999;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* COMMUNITY SECTION */
+  .community-section {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .community-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(200,146,42,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(200,146,42,0.1) 0%, transparent 50%);
+  }
+  .community-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+  .community-stat {
+    text-align: center;
+  }
+  .community-stat .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+  .community-stat .stat-label {
+    font-size: 13px;
+    color: rgba(245,240,232,0.65);
+    margin-top: 6px;
+    display: block;
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto 48px;
+  }
+  .testimonial-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(200,146,42,0.2);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .testimonial-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .testimonial-quote {
+    font-size: 14px;
+    color: rgba(245,240,232,0.85);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+  .testimonial-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold2);
+  }
+  .testimonial-city {
+    font-size: 12px;
+    color: rgba(245,240,232,0.5);
+  }
+
+  /* CTA BAR */
+  .cta-bar {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+    border-radius: 16px;
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .cta-text h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .cta-text p { font-size: 0.9rem; color: rgba(245,240,232,0.65); }
+  .cta-buttons { display: flex; gap: 12px; margin-left: auto; flex-shrink: 0; }
+  .btn-gold {
+    padding: 13px 24px;
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-gold:hover { background: var(--gold2); }
+  .btn-light {
+    padding: 13px 24px;
+    background: rgba(245,240,232,0.1);
+    color: var(--cream);
+    border: 2px solid rgba(245,240,232,0.2);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-light:hover { background: rgba(245,240,232,0.15); }
+
+  /* FAQ */
+  .faq { margin-bottom: 40px; }
+  .faq h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+  .faq-item {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(26,18,8,0.04);
+  }
+  .faq-q {
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    gap: 12px;
+  }
+  .faq-q span { flex: 1; }
+  .faq-chevron { font-size: 0.9rem; color: #bbb; transition: transform 0.2s; }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+  .faq-a {
+    display: none;
+    padding: 0 18px 15px;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.6;
+    border-top: 1px solid var(--cream2);
+    padding-top: 12px;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .leg-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .earnings-grid { grid-template-columns: repeat(2, 1fr); }
+    .cta-bar { flex-direction: column; }
+    .cta-buttons { margin-left: 0; }
+    .intro-bar { flex-wrap: wrap; }
+    .intro-earn { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="homepage.html" class="nav-logo"><span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter</a>
+  <span style="color:#555">›</span>
+  <a href="homepage.html" class="nl">Start</a>
+  <span style="color:#555">›</span>
+  <span style="color: var(--cream2); font-size:0.85rem;">Als Anbieter starten</span>
+  <div class="nav-right">
+    <a href="START.html" class="nl">🗺️ Alle Seiten</a>
+    <a href="registrierung.html" class="nav-btn">Jetzt registrieren →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">✨ Für Anbieter</div>
+  <h1>Mehr Aufträge.<br><span>Mehr Verdienst.</span></h1>
+  <p>Registriere dich als Anbieter auf Partyretter und erreiche tausende Kunden in deiner Region. Wähle deinen Anbietertyp und erfahre, was du brauchst.</p>
+
+  <div class="type-selector">
+    <button class="type-btn active" onclick="showType('koch')">
+      <span class="type-icon">👨‍🍳</span>
+      <strong>Privatkoch &<br>Caterer</strong>
+      <span class="type-sub">Kochen & Service</span>
+    </button>
+    <button class="type-btn" onclick="showType('foodtruck')">
+      <span class="type-icon">🚚</span>
+      <strong>Foodtruck &<br>Streetfood</strong>
+      <span class="type-sub">Mobile Küche</span>
+    </button>
+    <button class="type-btn" onclick="showType('lokal')">
+      <span class="type-icon">🏛️</span>
+      <strong>Eventlocation &<br>Lokal</strong>
+      <span class="type-sub">Räumlichkeiten</span>
+    </button>
+    <button class="type-btn" onclick="showType('getraenke')">
+      <span class="type-icon">🍹</span>
+      <strong>Getränke &<br>Bar-Service</strong>
+      <span class="type-sub">Drinks & Cocktails</span>
+    </button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ===================== KOCH ===================== -->
+  <div id="type-koch" class="content-section active">
+
+    <div class="intro-bar">
+      <div class="intro-icon">👨‍🍳</div>
+      <div class="intro-text">
+        <h2>Privatkoch & Caterer</h2>
+        <p>Du kochst leidenschaftlich und möchtest bei Geburtstagen, Hochzeiten, Firmenevents oder Kochkursen auftreten? Hier erfährst du alles, was du für den Start brauchst.</p>
+      </div>
+      <div class="intro-earn">
+        <div class="earn-title">💰 Verdienst je Event-Größe</div>
+        <div class="earn-tiers">
+          <div class="earn-tier">
+            <span class="earn-tier-label">🥗 Klein (2–8 Pers.)</span>
+            <span class="earn-tier-price">ab €150</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🎉 Party (10–25 Pers.)</span>
+            <span class="earn-tier-price">ab €400</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🏆 Event (25+ Pers.)</span>
+            <span class="earn-tier-price">ab €1.000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Konto erstellen und Anbietertyp „Koch" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Profil befüllen</h4>
+        <p>Steckbrief, Fotos, Menüs und Küchenstile hinzufügen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Dokumente hochladen</h4>
+        <p>Pflichtdokumente verifizieren lassen (s.u.)</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Live gehen</h4>
+        <p>Profil veröffentlichen und erste Anfragen erhalten</p>
+      </div>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+
+    <div style="background:rgba(200,146,42,0.1);border:1.5px solid rgba(200,146,42,0.35);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">ℹ️</span>
+      <div>
+        <strong style="font-size:13.5px;color:var(--dark);">Hinweis: Informationen ohne Gewähr</strong>
+        <p style="font-size:12.5px;color:#999;margin-top:4px;line-height:1.6;">Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß unseren <a href="agb.html" style="color:var(--gold);font-weight:600;">AGB</a> selbst dafür verantwortlich, alle geltenden gesetzlichen Vorschriften einzuhalten. Partyretter übernimmt keine Haftung.</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="leg-dot" style="background:#fdecea; border: 1.5px solid #c0392b;"></div> Pflicht (ohne geht es nicht)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#e8f5ee; border: 1.5px solid #2d7a3e;"></div> Empfohlen (stärkt dein Profil)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:var(--cream2); border: 1.5px solid #bbb;"></div> Optional</div>
+    </div>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📜</div>
+        <div class="req-header-text">
+          <h3>Behördliche Anforderungen</h3>
+          <p>Gesetzlich vorgeschriebene Nachweise</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gesundheitszeugnis (§ 43 Infektionsschutzgesetz)</h4>
+            <p>Pflicht für alle, die gewerblich Lebensmittel zubereiten oder verarbeiten. Einmalig beim Gesundheitsamt beantragen. Kosten: ca. 20–40 €.</p>
+            <span class="tip">💡 Beim lokalen Gesundheitsamt beantragen – oft in 1–2 Wochen verfügbar.</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gewerbeanmeldung</h4>
+            <p>Wenn du regelmäßig und gewinnorientiert kochst, ist eine Gewerbeanmeldung beim Gewerbeamt Pflicht. Kosten: ca. 20–65 € einmalig.</p>
+            <span class="tip">💡 Online über das Gewerbeportal deiner Stadt möglich. Danach automatische Meldung ans Finanzamt.</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Lebensmittelhygieneschulung (HACCP-Kenntnisse)</h4>
+            <p>Nachweis über Schulung in Lebensmittelhygiene und HACCP-Grundsätzen (EU-Verordnung 852/2004). Oft ein eintägiges Seminar. Kosten: ca. 50–150 €.</p>
+            <span class="tip">💡 Anbieter: IHK, VHS, oder Online über ifp-online.de</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">🛡️</div>
+        <div class="req-header-text">
+          <h3>Versicherungen</h3>
+          <p>Schutz für dich und deine Kunden</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Betriebshaftpflichtversicherung</h4>
+            <p>Pflicht, um auf Partyretter aktiv zu werden. Deckt Schäden ab, die du beim Kunden oder bei Dritten verursachst (z.B. kaputte Küche, Personenschaden). Kosten: ab ca. 100 €/Jahr.</p>
+            <span class="tip">💡 Anbieter: Allianz, ERGO, Hiscox oder spezialisierte Anbieter für Gastro-Freelancer.</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Produkthaftpflicht (Lebensmittel)</h4>
+            <p>Empfohlen: Schutz gegen Ansprüche wegen Schäden durch das Essen (Lebensmittelvergiftung etc.). Oft in der Betriebshaftpflicht enthalten – nachfragen!</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status nice">○</div>
+          <div class="req-info">
+            <h4>Berufshaftpflicht (optional)</h4>
+            <p>Für professionelle Caterer empfohlen. Deckt Fehler bei der Beratung und Planung ab.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">💰</div>
+        <div class="req-header-text">
+          <h3>Steuer & Finanzen</h3>
+          <p>Was das Finanzamt wissen will</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Steuernummer / Umsatzsteuer-ID</h4>
+            <p>Nach der Gewerbeanmeldung meldest du dich beim Finanzamt und erhältst eine Steuernummer. Rechnungen müssen deine Steuernummer enthalten. Wenn du über 22.000 € Jahresumsatz hast, bist du umsatzsteuerpflichtig.</p>
+            <span class="tip">💡 Kleinunternehmerregelung (§ 19 UStG): Bis 22.000 € Umsatz keine Umsatzsteuer – einfacherer Start.</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Bankverbindung (IBAN)</h4>
+            <p>Wird für Auszahlungen von Partyretter benötigt. Ausgezahlt wird nach jedem abgeschlossenen Event innerhalb von 3 Werktagen.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Buchhaltung & Quittungen</h4>
+            <p>Alle Einnahmen müssen verbucht werden. Partyretter stellt dir automatische Einnahmenübersichten und Rechnungen zur Verfügung. Du kannst DATEV-Exports für deinen Steuerberater nutzen.</p>
+            <span class="tip">💡 Nutze Lexoffice oder sevDesk für einfache Buchhaltung – ab 10 €/Monat.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📸</div>
+        <div class="req-header-text">
+          <h3>Profil & Auftritt</h3>
+          <p>Was dein Profil braucht, um Kunden zu überzeugen</p>
+        </div>
+        <span class="req-badge empfohlen">Für Erfolg wichtig</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Profilfoto (professionell oder klar)</h4>
+            <p>Ein freundliches, klares Foto von dir – idealerweise in Kochkleidung. Kunden buchen die Person, nicht nur das Essen.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Mindestens 1 Menü mit Preisen</h4>
+            <p>Ohne Preis keine Buchung. Leg mindestens ein Menü oder eine Dienstleistung mit Preis pro Person oder Pauschalpreis an.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>3–5 Food-Fotos</h4>
+            <p>Bilder von deinen Gerichten erhöhen die Buchungsrate deutlich. Smartphone-Fotos bei gutem Licht reichen aus.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Über-mich-Text (mind. 100 Wörter)</h4>
+            <p>Erzähl deine Geschichte: Woher kommt deine Leidenschaft? Was macht dich besonders? Authentizität überzeugt.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status nice">○</div>
+          <div class="req-info">
+            <h4>Video-Vorstellung (max. 90 Sek.)</h4>
+            <p>Optional aber sehr effektiv: Ein kurzes Video von dir beim Kochen oder einer kurzen Vorstellung steigert die Buchungsrate um bis zu 40%.</p>
+          </div>
+        </div>
+        <div class="req-item" style="background:rgba(200,146,42,0.06);border-radius:10px;padding:12px 14px;border:1.5px solid rgba(200,146,42,0.25);">
+          <div class="req-status" style="background:var(--gold);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">⭐</div>
+          <div class="req-info">
+            <h4 style="display:flex;align-items:center;gap:8px;">Musterpakete anlegen <span style="background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">PRO</span></h4>
+            <p>Als Pro-Mitglied kannst du fertige Angebots-Pakete anlegen – z.B. „3-Gänge-Menü Mediterran ab 38 € / Person" oder „Sektempfang ab 22 € / Person". Kunden sehen dein Paket direkt auf der Hochzeits-Landingpage und können es sofort anfragen. <strong style="color:var(--gold);">+35% mehr Direktbuchungen</strong> laut unserer Auswertung.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EARNINGS -->
+    <div class="earnings-box">
+      <h2>💰 Was kannst du verdienen?</h2>
+      <div class="earnings-grid">
+        <div class="earn-card">
+          <div class="ec-amount">€25–45</div>
+          <div class="ec-label">pro Person / 3-Gang-Menü</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€150–350</div>
+          <div class="ec-label">pro Kochkurs (6–12 Pers.)</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€500–2.500</div>
+          <div class="ec-label">pro Event / Hochzeit</div>
+        </div>
+      </div>
+      <div class="platform-fee">
+        <strong>Partyretter-Gebühr: 6%</strong> auf den Buchungsbetrag. Alle anderen Einnahmen gehören dir. Keine Monatsgebühr – du zahlst nur, wenn du buchst wirst.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================== FOODTRUCK ===================== -->
+  <div id="type-foodtruck" class="content-section">
+
+    <div class="intro-bar">
+      <div class="intro-icon">🚚</div>
+      <div class="intro-text">
+        <h2>Foodtruck & Streetfood</h2>
+        <p>Dein Truck ist dein Büro. Melde deinen Standort an und werde von Kunden in deiner Nähe gefunden – oder bewirb dich für Events und Veranstaltungen.</p>
+      </div>
+      <div class="intro-earn">
+        <div class="earn-title">💰 Verdienst je Einsatz</div>
+        <div class="earn-tiers">
+          <div class="earn-tier">
+            <span class="earn-tier-label">📍 Standort-Tag</span>
+            <span class="earn-tier-price">ab €300</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🎪 Privatevent</span>
+            <span class="earn-tier-price">ab €500</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🎡 Festival</span>
+            <span class="earn-tier-price">ab €1.000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Konto erstellen, Typ „Foodtruck" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Truck-Profil anlegen</h4>
+        <p>Fotos, Speisekarte, Spezialisierung</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Dokumente prüfen</h4>
+        <p>TÜV, Erlaubnisse, Versicherung</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Standorte eintragen</h4>
+        <p>Wochenplan pflegen, Events bewerben</p>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+    <div class="legend">
+      <div class="legend-item"><div class="leg-dot" style="background:#fdecea; border: 1.5px solid #c0392b;"></div> Pflicht</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#e8f5ee; border: 1.5px solid #2d7a3e;"></div> Empfohlen</div>
+      <div class="legend-item"><div class="leg-dot" style="background:var(--cream2); border: 1.5px solid #bbb;"></div> Optional</div>
+    </div>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">🚛</div>
+        <div class="req-header-text">
+          <h3>Fahrzeug & Ausstattung</h3>
+          <p>Für den sicheren Betrieb deines Trucks</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>TÜV / Hauptuntersuchung aktuell</h4>
+            <p>Dein Fahrzeug muss eine gültige Hauptuntersuchung haben. Wird für die Profilverifizierung benötigt.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Zulassung als Sonderfahrzeug (Lebensmittelverkauf)</h4>
+            <p>Foodtrucks mit fest eingebauter Küche brauchen oft eine Sonderzulassung. Beim Straßenverkehrsamt prüfen lassen.</p>
+            <span class="tip">💡 Wichtig: Propangas-Anlage muss DVGW-geprüft sein (alle 2 Jahre).</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gasprüfung (bei Gasgeräten)</h4>
+            <p>Pflicht alle 2 Jahre durch einen zugelassenen Fachbetrieb. Nachweis-Aufkleber am Fahrzeug.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📜</div>
+        <div class="req-header-text">
+          <h3>Genehmigungen & Recht</h3>
+          <p>Erlaubnisse für den Betrieb im öffentlichen Raum</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gewerbeanmeldung</h4>
+            <p>Pflicht als selbständiger Foodtruck-Betreiber. Beim Gewerbeamt anmelden, Kosten: 20–65 €.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Standgenehmigung / Sondernutzungserlaubnis</h4>
+            <p>Für jeden öffentlichen Standort (Straße, Platz) brauchst du eine Genehmigung der Gemeinde. Kosten variieren stark je nach Stadt. Privatgelände oft genehmigungsfrei.</p>
+            <span class="tip">💡 Tipp: Partyretter-Events auf Privatgelände – kein Behördenaufwand für dich!</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gesundheitszeugnis + HACCP-Schulung</h4>
+            <p>Gleich wie bei Köchen: Gesundheitszeugnis nach § 43 IfSG und HACCP-Nachweis erforderlich.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Lebensmittelkontrolle / Erstregistrierung</h4>
+            <p>Melde deinen Foodtruck beim zuständigen Veterinär- und Lebensmittelüberwachungsamt. Einmalig und kostenlos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">🛡️</div>
+        <div class="req-header-text">
+          <h3>Versicherungen</h3>
+          <p>Schutz für Truck, Ware und Kunden</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>KFZ-Haftpflicht (für Foodtruck)</h4>
+            <p>Gesetzlich vorgeschrieben. Achte auf Deckung auch im gewerblichen Einsatz.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Betriebshaftpflicht</h4>
+            <p>Deckt Schäden an Kunden oder Dritten durch deinen Betrieb. Pflicht für Partyretter-Profil.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Inventarversicherung / Maschinenversicherung</h4>
+            <p>Schutz für Küchen-Equipment im Truck. Sehr empfohlen – ein Defekt kann den ganzen Tag lahmlegen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="earnings-box">
+      <h2>💰 Was kannst du verdienen?</h2>
+      <div class="earnings-grid">
+        <div class="earn-card">
+          <div class="ec-amount">€300–800</div>
+          <div class="ec-label">regulärer Standort-Tag</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€500–1.500</div>
+          <div class="ec-label">Privatevent (exklusiv)</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€1.000–3.000</div>
+          <div class="ec-label">Festival / Stadtfest</div>
+        </div>
+      </div>
+      <div class="platform-fee">
+        <strong>Partyretter-Gebühr: 6%</strong> nur auf Event-Buchungen über die Plattform. Standort-Einträge auf der Karte sind <strong>kostenlos</strong>.
+      </div>
+    </div>
+
+    <!-- STELLPLATZ-ANZEIGE & WOCHENEND-EVENTS -->
+    <div style="background:#fff;border:1.5px solid #e8e2d8;border-radius:14px;padding:22px;margin-top:20px;">
+      <h4 style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--dark);margin-bottom:6px;">📍 Deine Wochenstandorte anzeigen</h4>
+      <p style="font-size:13.5px;color:#999;margin-bottom:18px;line-height:1.6;">Lass Stammkunden wissen, wo du unter der Woche zu finden bist – auf der Foodtruck-Karte sichtbar für alle Nutzer in deiner Region.</p>
+
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:160px;background:var(--cream2);border-radius:12px;padding:18px;text-align:center;border:2px solid transparent;">
+          <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);">10 €</div>
+          <div style="font-size:13px;font-weight:600;color:#999;margin:4px 0;">/ Monat</div>
+          <div style="font-size:12px;color:#999;">Monatlich kündbar</div>
+        </div>
+        <div style="flex:1;min-width:160px;background:rgba(200,146,42,0.12);border-radius:12px;padding:18px;text-align:center;border:2px solid var(--gold);position:relative;">
+          <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--dark);font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;">SPAR-DEAL</div>
+          <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);">100 €</div>
+          <div style="font-size:13px;font-weight:600;color:#999;margin:4px 0;">/ Jahr</div>
+          <div style="font-size:12px;color:var(--gold);font-weight:700;">2 Monate gratis!</div>
+        </div>
+      </div>
+
+      <a href="foodtruck-karte.html" style="display:block;text-align:center;margin-top:16px;padding:11px;background:var(--dark);color:var(--cream);border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;border:1.5px solid rgba(200,146,42,0.25);transition:all 0.2s;" onmouseover="this.style.background='#C8922A';this.style.color='#1A1208'" onmouseout="this.style.background='#1A1208';this.style.color='#F5F0E8'">📍 Standorte eintragen →</a>
+    </div>
+
+    <div style="background:#fff;border:1.5px solid #e8e2d8;border-radius:14px;padding:22px;margin-top:16px;">
+      <h4 style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--dark);margin-bottom:6px;">🎪 Wochenend-Events ausschreiben</h4>
+      <p style="font-size:13.5px;color:#999;margin-bottom:14px;line-height:1.6;">Du stehst am Wochenende auf einem Streetfoodmarkt oder Festival? Kündige es hier an und gewinne direkt Kunden über die Plattform!</p>
+
+      <div style="background:var(--cream2);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-size:12.5px;font-weight:700;color:var(--dark);margin-bottom:8px;">💡 Beispiele:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="background:#fff;border:1px solid #e2dcd4;border-radius:20px;padding:4px 12px;font-size:12px;color:#999;">🎪 Streetfoodmarkt Ulm</span>
+          <span style="background:#fff;border:1px solid #e2dcd4;border-radius:20px;padding:4px 12px;font-size:12px;color:#999;">🍺 Stadtfest München</span>
+          <span style="background:#fff;border:1px solid #e2dcd4;border-radius:20px;padding:4px 12px;font-size:12px;color:#999;">🌿 Bio-Markt Hamburg</span>
+          <span style="background:#fff;border:1px solid #e2dcd4;border-radius:20px;padding:4px 12px;font-size:12px;color:#999;">🎶 Open Air Stuttgart</span>
+        </div>
+      </div>
+
+      <a href="event-ausschreiben.html" style="display:block;text-align:center;padding:11px;background:var(--gold);color:var(--dark);border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='#C8922A'">🎪 Event ausschreiben →</a>
+    </div>
+
+  </div>
+
+  <!-- ===================== LOKAL ===================== -->
+  <div id="type-lokal" class="content-section">
+
+    <div class="intro-bar">
+      <div class="intro-icon">🏛️</div>
+      <div class="intro-text">
+        <h2>Eventlocation & Lokal</h2>
+        <p>Du hast Räumlichkeiten, die sich perfekt für Feiern eignen? Vermiete sie für Geburtstage, Hochzeiten und Firmenfeiern über Partyretter.</p>
+      </div>
+      <div class="intro-earn">
+        <div class="earn-title">💰 Verdienst je Buchung</div>
+        <div class="earn-tiers">
+          <div class="earn-tier">
+            <span class="earn-tier-label">🥂 Kleine Feier</span>
+            <span class="earn-tier-price">ab €200</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🎂 Party (30–80 Pers.)</span>
+            <span class="earn-tier-price">ab €800</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">💍 Großes Event</span>
+            <span class="earn-tier-price">ab €2.000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Typ „Lokal / Location" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Location anlegen</h4>
+        <p>Fotos, Kapazität, Ausstattung, Preise</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Nachweise hochladen</h4>
+        <p>Gaststättenerlaubnis und Versicherung</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Buchungen annehmen</h4>
+        <p>Anfragen beantworten, Kalender pflegen</p>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📜</div>
+        <div class="req-header-text">
+          <h3>Behördliche Erlaubnisse</h3>
+          <p>Gesetzliche Grundlage für den Betrieb</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gaststättenerlaubnis (wenn Alkohol / Bewirtung)</h4>
+            <p>Wenn bei deiner Veranstaltung Alkohol ausgeschenkt oder Speisen verkauft werden, brauchst du eine Gaststättenerlaubnis nach GastG. Beim Ordnungsamt beantragen.</p>
+            <span class="tip">💡 Reine Raumvermietung ohne Bewirtung ist oft genehmigungsfrei – beim Ordnungsamt prüfen.</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Kapazitätsnachweis / Brandschutzkonzept</h4>
+            <p>Maximale Personenanzahl muss behördlich genehmigt sein. Notausgänge, Feuerlöscher und Fluchtwege müssen vorhanden sein.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>GEMA-Anmeldung (bei Musik)</h4>
+            <p>Bei Events mit Musik (auch DJ, Live-Musik) muss die GEMA informiert werden. Kosten richten sich nach Fläche und Besucherzahl.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Lärmschutz-Auflagen</h4>
+            <p>Prüfe die Lärmpegel-Vorschriften für deine Gemeinde. Bei Außenbereichen oder Abendveranstaltungen oft wichtig.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">🛡️</div>
+        <div class="req-header-text">
+          <h3>Versicherungen</h3>
+          <p>Schutz für dein Gebäude und die Gäste</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gebäudehaftpflicht / Grundstückshaftpflicht</h4>
+            <p>Pflicht: Schutz gegen Schäden, die Dritte auf deinem Gelände erleiden (Sturz, Unfall etc.).</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Veranstalterhaftpflicht</h4>
+            <p>Für Events mit Gästen dringend empfohlen. Deckt Schäden während der Veranstaltung ab. Oft als Einzel-Ereignisversicherung buchbar.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Inventarversicherung</h4>
+            <p>Schutz für Möbel, Equipment und Technik in deinen Räumen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="earnings-box">
+      <h2>💰 Was kannst du verdienen?</h2>
+      <div class="earnings-grid">
+        <div class="earn-card">
+          <div class="ec-amount">€200–600</div>
+          <div class="ec-label">kleine Räume (bis 30 Pers.)</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€600–2.000</div>
+          <div class="ec-label">mittlere Locations (bis 100 Pers.)</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€1.500–5.000</div>
+          <div class="ec-label">große Locations / Hochzeiten</div>
+        </div>
+      </div>
+      <div class="platform-fee">
+        <strong>Partyretter-Gebühr: 6%</strong> auf den Buchungsbetrag. Günstiger als andere Eventportale – und du behältst die direkte Kundenbeziehung.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================== GETRÄNKE ===================== -->
+  <div id="type-getraenke" class="content-section">
+
+    <div class="intro-bar">
+      <div class="intro-icon">🍹</div>
+      <div class="intro-text">
+        <h2>Getränke & Bar-Service</h2>
+        <p>Du bist Barkeeper, Cocktail-Artist oder Getränke-Caterer? Biete deinen Service bei Geburtstagen, Hochzeiten und Firmenevents an.</p>
+      </div>
+      <div class="intro-earn">
+        <div class="earn-title">💰 Verdienst je Event</div>
+        <div class="earn-tiers">
+          <div class="earn-tier">
+            <span class="earn-tier-label">🍹 Mobil-Bar (klein)</span>
+            <span class="earn-tier-price">ab €120</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🎉 Party (50 Pers.)</span>
+            <span class="earn-tier-price">ab €300</span>
+          </div>
+          <div class="earn-tier">
+            <span class="earn-tier-label">🏆 Großevent</span>
+            <span class="earn-tier-price">ab €800</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Typ „Getränke / Bar" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Profil anlegen</h4>
+        <p>Getränkekarte, Paket-Preise, Fotos</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Schankerlaubnis nachweisen</h4>
+        <p>Behördliche Anforderungen prüfen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Live & buchbar</h4>
+        <p>Auf Anfragen antworten</p>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">🍺</div>
+        <div class="req-header-text">
+          <h3>Erlaubnisse für Alkohol-Ausschank</h3>
+          <p>Besondere Vorschriften für Alkohol</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gaststättenerlaubnis / Schankerlaubnis</h4>
+            <p>Für den gewerblichen Alkohol-Ausschank brauchst du eine Gaststättenerlaubnis nach dem Gaststättengesetz. Beim lokalen Ordnungsamt beantragen. Dauer: 4–12 Wochen. Kosten: 100–600 €.</p>
+            <span class="tip">💡 Ausnahme: Für Einzel-Events gibt es oft eine „vorübergehende Gestattung" – günstiger und schneller.</span>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Vorübergehende Gestattung (§ 12 GastG)</h4>
+            <p>Für einzelne Veranstaltungen: Erlaubnis beim Ordnungsamt beantragen, mind. 2 Wochen vor dem Event. Günstiger als Dauerlizenz.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Jugendschutz</h4>
+            <p>Strengste Kontrolle: Kein Alkohol an Personen unter 16 (Bier/Wein) bzw. 18 Jahren (Spirituosen). Muss bei jedem Event sichergestellt werden.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Unterrichtung im Gaststättenrecht</h4>
+            <p>Nachweis über eine Unterrichtung (IHK-Kurs, 1 Tag) kann in manchen Bundesländern die Genehmigung erleichtern.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">🛡️</div>
+        <div class="req-header-text">
+          <h3>Versicherung & Gewerbeanmeldung</h3>
+          <p>Schutz und rechtliche Grundlage</p>
+        </div>
+        <span class="req-badge empfohlen">Empfehlung</span>
+        <span class="req-chevron">▾</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Gewerbeanmeldung</h4>
+            <p>Pflicht als gewerblicher Getränke-Anbieter. Beim Gewerbeamt, ca. 20–65 €.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status muss">ℹ️</div>
+          <div class="req-info">
+            <h4>Betriebshaftpflichtversicherung</h4>
+            <p>Pflicht für das Partyretter-Profil. Deckt Schäden durch deinen Bar-Service ab.</p>
+          </div>
+        </div>
+        <div class="req-item">
+          <div class="req-status gut">✓</div>
+          <div class="req-info">
+            <h4>Getränkelieferanten-Haftpflicht</h4>
+            <p>Spezialversicherung für Getränkeservice – oft günstig als Erweiterung der Betriebshaftpflicht erhältlich.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="earnings-box">
+      <h2>💰 Was kannst du verdienen?</h2>
+      <div class="earnings-grid">
+        <div class="earn-card">
+          <div class="ec-amount">€15–30</div>
+          <div class="ec-label">pro Person / Flatrate</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€300–800</div>
+          <div class="ec-label">Cocktailbar (50 Pers.)</div>
+        </div>
+        <div class="earn-card">
+          <div class="ec-amount">€800–1.800</div>
+          <div class="ec-label">Großevent + Mobil-Bar</div>
+        </div>
+      </div>
+      <div class="platform-fee">
+        <strong>Partyretter-Gebühr: 6%</strong> auf den Buchungsbetrag. Keine versteckten Kosten.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================== PROFILE CHECKLIST (shared) ===================== -->
+  <div class="checklist">
+    <h2>✅ Deine Profil-Checkliste</h2>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Konto erstellt und E-Mail bestätigt</strong>
+          <div style="font-size:12px;color:#999;">Registriere dich kostenlos und bestätige deine E-Mail</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: #fdecea; color: #c0392b; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Pflicht</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Registriere dich kostenlos und bestätige deine E-Mail-Adresse.</p>
+        <a href="registrierung.html" class="panel-link-btn">📝 Jetzt registrieren →</a>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Profil-Foto hochgeladen</strong>
+          <div style="font-size:12px;color:#999;">Klares, freundliches Foto (mind. 400×400 px)</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: #fdecea; color: #c0392b; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Pflicht</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Lade ein klares, freundliches Foto hoch (mind. 400×400 px). Kein Logo.</p>
+        <label class="panel-upload-label">
+          <span style="font-size:24px">🖼️</span>
+          <div><strong>Foto auswählen</strong><br><span style="font-size:12px;color:#999;">JPG, PNG – max. 5 MB</span></div>
+          <input type="file" accept="image/*" />
+        </label>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Steckbrief ausgefüllt</strong>
+          <div style="font-size:12px;color:#999;">Über mich, Küchenstile / Spezialisierung, Einsatzgebiet</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: #fdecea; color: #c0392b; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Pflicht</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Fülle deinen vollständigen Anbieter-Steckbrief aus.</p>
+        <a href="anbieter-profil.html" class="panel-link-btn">✏️ Steckbrief ausfüllen →</a>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Mindestens 1 Angebot / Menü mit Preis</strong>
+          <div style="font-size:12px;color:#999;">Ohne Preis kannst du nicht gebucht werden</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: #fdecea; color: #c0392b; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Pflicht</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Lege mindestens ein Angebot mit Preis an – erst dann bist du buchbar.</p>
+        <a href="anbieter-profil.html" class="panel-link-btn">🍽️ Angebot anlegen →</a>
+      </div>
+    </div>
+
+    <!-- PRO: Musterpakete -->
+    <div class="checklist-item" style="border:1.5px solid rgba(200,146,42,0.35);background:rgba(200,146,42,0.04);">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle" style="border-color:var(--gold);color:var(--gold);">⭐</span>
+        <div style="flex:1">
+          <strong>Musterpaket anlegen <span style="background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:4px;">PRO</span></strong>
+          <div style="font-size:12px;color:#999;">Fertige Angebotspakete mit Festpreis – sichtbar auf Landingpages</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: rgba(200,146,42,0.15); color: #7a4f00; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Pro-Feature</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <div style="background:rgba(200,146,42,0.08);border:1px solid rgba(200,146,42,0.2);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:#7a4f00;line-height:1.6;">
+          ✨ <strong>So funktioniert es:</strong> Als Pro-Mitglied legst du fertige Musterpakete an – z.B. <em>„3-Gänge-Menü Mediterran ab 38 € / Person"</em>, <em>„Sektempfang ab 22 € / Person"</em> oder <em>„Cocktailbar-Paket ab 18 € / Person"</em>. Diese Pakete erscheinen direkt auf unseren Themen-Landingpages (Hochzeit, Geburtstag, Firmenevents) und werden Kunden als buchbare Optionen vorgeschlagen. <strong style="color:var(--gold);">+35% mehr Direktanfragen</strong> laut unserer Auswertung.
+        </div>
+        <a href="anbieter-profil.html" class="panel-link-btn" style="background:var(--gold);color:#fff;border-color:var(--gold);">✨ Musterpaket erstellen → (Pro)</a>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Gesundheitszeugnis hochgeladen</strong>
+          <div style="font-size:12px;color:#999;">Nach Freigabe: ✅-Badge auf deinem Profil sichtbar</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: rgba(200,146,42,0.12); color: #7a4f00; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Empfehlung</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Empfehlung: Lade dein Gesundheitszeugnis (§43 IfSG) hoch. Wir prüfen intern und zeigen nach Freigabe ein <strong>✅ Geprüft</strong>-Badge auf deinem Steckbrief – das stärkt das Vertrauen bei Kunden.</p>
+        <div style="background:rgba(200,146,42,0.07);border:1px solid rgba(200,146,42,0.2);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#7a4f00;">
+          🏅 <strong>Profil-Vorteil:</strong> Anbieter mit geprüften Dokumenten erhalten <strong>40% mehr Anfragen</strong> – Kunden sehen das Badge direkt im Steckbrief.
+        </div>
+        <label class="panel-upload-label" onclick="showUploadConfirm(this)">
+          <span style="font-size:24px">📄</span>
+          <div><strong>Dokument hochladen</strong><br><span style="font-size:12px;color:#999;">PDF, JPG, PNG – max. 10 MB</span></div>
+          <input type="file" accept=".pdf,image/*" onchange="showUploadConfirm(this)" />
+        </label>
+        <div class="upload-confirm-box" style="display:none;margin-top:10px;background:rgba(39,174,96,0.1);border:1.5px solid rgba(39,174,96,0.35);border-radius:10px;padding:12px 16px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <span style="font-size:18px;flex-shrink:0;">✅</span>
+            <div>
+              <strong style="font-size:13px;color:#1a1208;">Dokument erhalten – wir prüfen es!</strong>
+              <p style="font-size:12px;color:#555;margin-top:3px;line-height:1.5;">Partyretter prüft deinen Nachweis innerhalb von 1–2 Werktagen. Nach Freigabe erscheint automatisch ein <strong>✅ Gesundheitszeugnis geprüft</strong>-Badge auf deinem Anbieterprofil.</p>
+              <p style="font-size:11.5px;color:#888;margin-top:4px;">ℹ️ Das Dokument selbst ist nur intern sichtbar – nie für Kunden.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Betriebshaftpflicht hochgeladen</strong>
+          <div style="font-size:12px;color:#999;">Nach Freigabe: 🛡️-Badge auf deinem Profil sichtbar</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: rgba(200,146,42,0.12); color: #7a4f00; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Empfehlung</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Empfehlung: Lade deine aktuelle Betriebshaftpflicht-Police hoch. Wir prüfen intern und zeigen nach Freigabe ein <strong>🛡️ Versichert</strong>-Badge auf deinem Steckbrief – Kunden sehen auf einen Blick, dass du abgesichert bist.</p>
+        <div style="background:rgba(200,146,42,0.07);border:1px solid rgba(200,146,42,0.2);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#7a4f00;">
+          🏅 <strong>Profil-Vorteil:</strong> Das 🛡️-Badge signalisiert Sicherheit und Professionalität – wichtig besonders bei größeren Events und Firmenbuchungen.
+        </div>
+        <label class="panel-upload-label">
+          <span style="font-size:24px">🛡️</span>
+          <div><strong>Police hochladen</strong><br><span style="font-size:12px;color:#999;">PDF, JPG, PNG – max. 10 MB</span></div>
+          <input type="file" accept=".pdf,image/*" onchange="showUploadConfirm(this)" />
+        </label>
+        <div class="upload-confirm-box" style="display:none;margin-top:10px;background:rgba(39,174,96,0.1);border:1.5px solid rgba(39,174,96,0.35);border-radius:10px;padding:12px 16px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <span style="font-size:18px;flex-shrink:0;">✅</span>
+            <div>
+              <strong style="font-size:13px;color:#1a1208;">Dokument erhalten – wir prüfen es!</strong>
+              <p style="font-size:12px;color:#555;margin-top:3px;line-height:1.5;">Partyretter prüft deine Police innerhalb von 1–2 Werktagen. Nach Freigabe erscheint automatisch ein <strong>🛡️ Versichert</strong>-Badge auf deinem Anbieterprofil.</p>
+              <p style="font-size:11.5px;color:#888;margin-top:4px;">ℹ️ Das Dokument selbst ist nur intern sichtbar – nie für Kunden.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Bankverbindung eingetragen</strong>
+          <div style="font-size:12px;color:#999;">IBAN für Auszahlungen im Anbieter-Dashboard</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: #fdecea; color: #c0392b; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Pflicht</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Gib deine IBAN ein, damit Auszahlungen funktionieren.</p>
+        <input type="text" class="panel-input" placeholder="DE12 3456 7890 1234 5678 90" maxlength="27" />
+        <p class="panel-note">Deine IBAN ist sicher verschlüsselt und nicht öffentlich sichtbar.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>3–5 Fotos von deiner Arbeit</strong>
+          <div style="font-size:12px;color:#999;">Events, Gerichte, Truck, Location – zeig was du kannst</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: var(--cream2); color: #888; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Empfohlen</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Zeig was du kannst! Events, Gerichte, dein Truck oder deine Location.</p>
+        <label class="panel-upload-label">
+          <span style="font-size:24px">📸</span>
+          <div><strong>Fotos auswählen (mehrere möglich)</strong><br><span style="font-size:12px;color:#999;">JPG, PNG – mind. 800px breit</span></div>
+          <input type="file" accept="image/*" multiple />
+        </label>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="checklist-row" onclick="toggleChecklistItem(this)">
+        <span class="check-circle">○</span>
+        <div style="flex:1">
+          <strong>Verfügbarkeitskalender gepflegt</strong>
+          <div style="font-size:12px;color:#999;">Zeig Kunden wann du verfügbar bist</div>
+        </div>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 10px; background: var(--cream2); color: #888; font-weight: 700; font-size: 0.7rem; flex-shrink: 0;">Empfohlen</span>
+        <span class="checklist-toggle-icon">▼</span>
+      </div>
+      <div class="checklist-panel">
+        <p class="panel-note">Trag ein, wann du verfügbar bist – Kunden sehen nur freie Termine.</p>
+        <a href="anbieter-profil.html" class="panel-link-btn">📅 Kalender pflegen →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMUNITY SECTION -->
+  <section class="community-section">
+    <div style="position:relative; text-align:center; max-width:800px; margin:0 auto;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(200,146,42,0.18);border:1px solid rgba(200,146,42,0.4);color:var(--gold2);font-size:11.5px;font-weight:700;letter-spacing:0.7px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;">🎉 Unsere Community</div>
+      <h2 style="font-family:'Fraunces',serif;font-size:clamp(28px,4vw,44px);font-weight:900;color:var(--cream);margin-bottom:14px;line-height:1.15;">Werde Teil der<br><span style="color:var(--gold);">Partyretter-Familie</span></h2>
+      <p style="font-size:16px;color:rgba(245,240,232,0.65);max-width:520px;margin:0 auto;">Über 1.200 Anbieter vertrauen Partyretter bereits – und jeden Tag werden es mehr.</p>
+
+      <div class="community-stats">
+        <div class="community-stat">
+          <span class="stat-num">1.247</span>
+          <span class="stat-label">Aktive Anbieter</span>
+        </div>
+        <div class="community-stat">
+          <span class="stat-num">18.400+</span>
+          <span class="stat-label">Zufriedene Gäste</span>
+        </div>
+        <div class="community-stat">
+          <span class="stat-num">4,8★</span>
+          <span class="stat-label">Durchschnittsbewertung</span>
+        </div>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-avatar">👨‍🍳</div>
+          <p class="testimonial-quote">"Seit ich bei Partyretter bin, habe ich dreimal so viele Anfragen wie vorher. Die Plattform hat mein Business verändert."</p>
+          <div class="testimonial-name">Marco B.</div>
+          <div class="testimonial-city">Privatkoch · München</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-avatar">🍣</div>
+          <p class="testimonial-quote">"Partyretter hat mir ermöglicht, meinen Nebenjob zum Hauptberuf zu machen. Ich bin so froh, dabei zu sein."</p>
+          <div class="testimonial-name">Yuki T.</div>
+          <div class="testimonial-city">Sushi-Koch · Düsseldorf</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-avatar">👩‍🍳</div>
+          <p class="testimonial-quote">"Endlich eine Plattform, die Köche wirklich versteht. Transparent, fair, und die Community ist fantastisch."</p>
+          <div class="testimonial-name">Elena R.</div>
+          <div class="testimonial-city">Caterer · Berlin</div>
+        </div>
+      </div>
+
+      <a href="registrierung.html" style="display:inline-block;background:var(--gold);color:var(--dark);padding:16px 40px;border-radius:10px;font-size:16px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;box-shadow:0 4px 20px rgba(200,146,42,0.35);" onmouseover="this.style.background='#e0a430';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#C8922A';this.style.transform='translateY(0)'">🚀 Jetzt Partyretter werden →</a>
+    </div>
+  </section>
+
+  <!-- CTA BAR -->
+  <div class="cta-bar">
+    <div class="cta-text">
+      <h2>Bereit loszulegen?</h2>
+      <p>Registriere dich jetzt kostenlos und erreiche tausende Kunden in deiner Region.</p>
+    </div>
+    <div class="cta-buttons">
+      <a href="registrierung.html" class="btn-gold">Jetzt kostenlos registrieren →</a>
+      <a href="preise.html" class="btn-light">Preise & Pläne ansehen</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <h2>❓ Häufige Fragen von Anbietern</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Kostet die Registrierung etwas?</span>
+        <span class="faq-chevron">▾</span>
+      </div>
+      <div class="faq-a">Nein. Die Registrierung und das Erstellen deines Profils sind komplett kostenlos. Du zahlst nur eine Provision (6%) wenn du über Partyretter gebucht wirst.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Wann bekomme ich mein Geld ausgezahlt?</span>
+        <span class="faq-chevron">▾</span>
+      </div>
+      <div class="faq-a">Nach erfolgreichem Abschluss des Events wird der Betrag abzüglich der Provision innerhalb von 3 Werktagen auf dein Konto überwiesen. Du siehst alle Zahlungen in deinem Anbieter-Dashboard.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Was passiert, wenn ein Kunde storniert?</span>
+        <span class="faq-chevron">▾</span>
+      </div>
+      <div class="faq-a">Bei Stornierung bis 7 Tage vor dem Event: Du erhältst 30% der Buchungssumme als Ausfallentschädigung. Bei späterer Stornierung: 50%. Das schützt dich vor kurzfristigen Absagen.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Muss ich alle Dokumente sofort hochladen?</span>
+        <span class="faq-chevron">▾</span>
+      </div>
+      <div class="faq-a">Du kannst dein Profil zunächst als Entwurf speichern. Um es zu veröffentlichen und buchbar zu werden, müssen die Pflichtdokumente hochgeladen und von uns geprüft werden (dauert 1–2 Werktage).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Kann ich als Anbieter selbst Preise festlegen?</span>
+        <span class="faq-chevron">▾</span>
+      </div>
+      <div class="faq-a">Ja, vollständig. Du bestimmst deine Preise pro Person, als Pauschalpreis oder als stündliche Abrechnung. Du kannst auch individuelle Angebote auf Event-Ausschreibungen machen.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Welche Unterstützung bekomme ich von Partyretter?</span>
+        <span class="faq-chevron">▾</span>
+      </div>
+      <div class="faq-a">Du bekommst: kostenloses Profil mit SEO-Optimierung, Zahlungsabwicklung & Käuferschutz, automatische Buchungsverwaltung, DATEV-kompatible Einnahmenberichte, und direkten Support per Chat oder Telefon.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showType(type) {
+    // Update buttons
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    const types = ['koch', 'foodtruck', 'lokal', 'getraenke'];
+    const idx = types.indexOf(type);
+    document.querySelectorAll('.type-btn')[idx]?.classList.add('active');
+
+    // Show section
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('type-' + type)?.classList.add('active');
+
+    // Smooth scroll to content
+    document.querySelector('.main')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function toggleReq(header) {
+    const card = header.closest('.req-card');
+    card.classList.toggle('open');
+  }
+
+  function toggleFaq(q) {
+    const item = q.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
+  function toggleChecklistItem(row) {
+    const item = row.closest('.checklist-item');
+    item.classList.toggle('open');
+  }
+
+  function showUploadConfirm(input) {
+    // Find the nearest confirm box inside the same checklist-panel
+    const panel = input.closest('.checklist-panel');
+    if (!panel) return;
+    const confirmBox = panel.querySelector('.upload-confirm-box');
+    if (!confirmBox) return;
+    // Show only if a file was actually selected
+    const fileInput = panel.querySelector('input[type=file]');
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      confirmBox.style.display = 'block';
+      // Mark the checklist row circle as done
+      const item = panel.closest('.checklist-item');
+      if (item) {
+        const circle = item.querySelector('.check-circle');
+        if (circle) {
+          circle.textContent = '✅';
+          circle.style.color = '#27ae60';
+        }
+      }
+    }
+  }
+
+  // Open all req cards by default for the active section
+  document.querySelectorAll('.req-card:first-of-type').forEach(c => c.classList.add('open'));
+</script>
+
+<footer style="background:var(--dark);color:rgba(245,240,232,0.55);padding:40px 40px 24px;margin-top:auto;">
+  <div style="max-width:1260px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;margin-bottom:32px;justify-content:space-between;">
+      <div style="min-width:200px;">
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--cream);margin-bottom:10px;"><img src="logo-v2.svg" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;filter:brightness(0) invert(1);"></div>
+        <p style="font-size:13px;line-height:1.6;max-width:240px;">Die Plattform für professionelles Event-Catering in Deutschland.</p>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Kunden</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <a href="marktplatz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Marktplatz</a>
+          <a href="kochevents.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Koch-Events</a>
+          <a href="foodtruck-karte.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Foodtruck-Karte</a>
+          <a href="event-ausschreiben.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Event ausschreiben</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Anbieter</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <a href="anbieter-onboarding.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter werden</a>
+          <a href="registrierung.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Registrierung</a>
+          <a href="anbieter-profil.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter-Profil</a>
+          <a href="buchhaltung.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Buchhaltung</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Rechtliches</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <a href="agb.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">AGB</a>
+          <a href="datenschutz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Datenschutz</a>
+          <a href="impressum.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Impressum</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(245,240,232,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <div style="font-size:12.5px;">© 2026 Partyretter. Alle Rechte vorbehalten.</div>
+      <div style="font-size:12px;">🍽️ Made with ❤️ für perfekte Events</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+</body>
+</html>

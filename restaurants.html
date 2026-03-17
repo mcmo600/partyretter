@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Restaurants für Events – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8922A;--gold2:#e0a430;--dark:#1a1209;--cream:#faf7f2;--cream2:#e8e2d8;--muted:#7a6f60;--green:#2d7a4f;--text:#2c2416;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);}
+    nav{position:sticky;top:0;z-index:100;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;color:#fff;text-decoration:none;}
+    .logo-gold{color:var(--gold);}
+    .logo-accent{color:var(--gold2);}
+    .nav-links{display:flex;gap:28px;list-style:none;}
+    .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-actions{display:flex;gap:10px;}
+    .btn-login{padding:7px 18px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:13px;font-weight:600;text-decoration:none;}
+    .btn-cta-nav{padding:8px 18px;border-radius:8px;background:var(--gold);color:var(--dark);font-size:13px;font-weight:700;text-decoration:none;}
+    .page-hero{background:linear-gradient(135deg,var(--dark) 0%,#2d1f0a 100%);padding:42px 40px 36px;text-align:center;}
+    .breadcrumb{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px;}
+    .breadcrumb a{color:var(--gold);text-decoration:none;}
+    .breadcrumb span{color:rgba(255,255,255,.4);margin:0 6px;}
+    .page-hero h1{font-family:'Fraunces',serif;font-size:38px;color:#fff;}
+    .h-gold{color:var(--gold);}
+    .page-hero p{color:rgba(255,255,255,.65);font-size:15px;margin-top:10px;max-width:520px;margin:10px auto 0;}
+    .filter-wrap{background:#fff;border-bottom:1.5px solid var(--cream2);position:sticky;top:66px;z-index:90;}
+    .filter-inner{max-width:1300px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .filter-chip{padding:7px 16px;border-radius:20px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;}
+    .filter-chip:hover,.filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    .filter-select{padding:7px 14px;border:1.5px solid var(--cream2);border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;cursor:pointer;}
+    .filter-count{margin-left:auto;font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap;}
+    .main-layout{max-width:1300px;margin:0 auto;padding:32px 40px;display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start;}
+    .sidebar{background:#fff;border:1.5px solid var(--cream2);border-radius:14px;padding:6px 0;position:sticky;top:120px;}
+    .sb-title{font-size:13px;font-weight:700;color:var(--dark);padding:12px 16px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--cream2);}
+    .sb-title a{font-size:12px;font-weight:700;color:var(--gold);text-decoration:none;}
+    .sb-group{border-bottom:1px solid var(--cream2);padding:10px 0 8px;}
+    .sb-group:last-child{border-bottom:none;}
+    .sb-label{font-size:12px;font-weight:700;color:var(--muted);padding:4px 16px 6px;text-transform:uppercase;letter-spacing:.5px;}
+    .sb-check{display:flex;align-items:center;gap:8px;padding:4px 16px;font-size:13px;cursor:pointer;}
+    .sb-check input{accent-color:var(--gold);}
+    .sb-check span{flex:1;}
+    .sb-check small{color:var(--muted);font-size:11px;}
+    .sb-range{padding:4px 16px 8px;}
+    .sb-range input[type=range]{width:100%;accent-color:var(--gold);}
+    .sb-range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;}
+    .btn-reset{display:block;margin:10px 16px 4px;padding:7px;text-align:center;border:1.5px solid var(--cream2);border-radius:8px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;}
+    .btn-reset:hover{border-color:var(--gold);color:var(--gold);}
+    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;}
+    .card{background:#fff;border-radius:18px;border:1.5px solid var(--cream2);overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:pointer;position:relative;}
+    .card:hover{box-shadow:0 8px 32px rgba(200,146,42,.15);transform:translateY(-3px);}
+    .card.wide{grid-column:1/-1;display:grid;grid-template-columns:420px 1fr;}
+    .card-img{position:relative;height:210px;overflow:hidden;}
+    .card.wide .card-img{height:100%;}
+    .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+    .card:hover .card-img img{transform:scale(1.04);}
+    .card-tag{position:absolute;top:12px;left:12px;background:rgba(200,146,42,.92);color:var(--dark);font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;backdrop-filter:blur(4px);}
+    .card-tag.blue{background:rgba(36,113,163,.92);color:#fff;}
+    .card-tag.green{background:rgba(39,174,96,.92);color:#fff;}
+    .card-tag.purple{background:rgba(142,68,173,.92);color:#fff;}
+    .card-avail{position:absolute;bottom:10px;left:10px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;backdrop-filter:blur(4px);}
+    .card-avail.free{background:rgba(39,174,96,.9);color:#fff;}
+    .card-avail.soon{background:rgba(230,126,34,.9);color:#fff;}
+    .card-avail.booked{background:rgba(192,57,43,.85);color:#fff;}
+    .card-fav{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.85);border:none;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer;}
+    .card-body{padding:14px 16px 10px;}
+    .card-name{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--dark);margin-bottom:3px;}
+    .card-sub{font-size:12.5px;color:var(--muted);margin-bottom:10px;}
+    .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+    .chip{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:var(--cream);color:var(--dark);}
+    .chip.gold{background:linear-gradient(90deg,#f5e6c0,#fdf3da);color:#7a4f00;}
+    .steckbrief{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--cream);border-radius:10px;padding:10px;}
+    .sb-item{display:flex;flex-direction:column;gap:2px;}
+    .sb-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+    .sb-item-val{font-size:12px;font-weight:600;color:var(--dark);}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 14px;border-top:1px solid var(--cream2);}
+    .card.wide .card-footer{border-top:none;border-left:1px solid var(--cream2);padding:22px;flex-direction:column;align-items:flex-start;gap:12px;}
+    .card.wide .card-body{padding:22px;}
+    .card-price{font-size:17px;font-weight:700;color:var(--gold);}
+    .card-price span{font-size:11px;color:var(--muted);font-weight:400;}
+    .card-stars{font-size:12px;color:var(--muted);margin-top:2px;}
+    .btn-book{padding:8px 18px;border-radius:8px;background:var(--dark);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:.2s;display:inline-block;}
+    .btn-book:hover{background:var(--gold);color:var(--dark);}
+    .cta-box{background:linear-gradient(135deg,var(--dark),#2d1f0a);border-radius:16px;padding:28px 32px;margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+    .cta-box h3{font-family:'Fraunces',serif;font-size:22px;color:#fff;}
+    .cta-box p{color:rgba(255,255,255,.65);font-size:14px;margin-top:6px;}
+    .btn-gold{padding:10px 24px;border-radius:9px;background:var(--gold);color:var(--dark);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;}
+    .pagination{display:flex;gap:8px;justify-content:center;margin-top:28px;}
+    .page-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;}
+    .page-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    @media(max-width:900px){
+      .main-layout{grid-template-columns:1fr;}
+      .sidebar{display:none;}
+      .card.wide{grid-template-columns:1fr;}
+      nav{padding:0 20px;}
+      .page-hero,.filter-inner,.main-layout{padding-left:20px;padding-right:20px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html"><span class="logo-gold">Mein</span><span class="logo-accent">Party</span>Retter</a>
+  <ul class="nav-links">
+    <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
+    <li><a href="foodtruck-karte.html">🚚 Foodtrucks</a></li>
+    <li><a href="homepage.html" class="active">🏠 Locations</a></li>
+    <li><a href="blog.html">📝 Blog</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-login" href="login.html">Anmelden</a>
+    <a class="btn-cta-nav" href="login.html">Inserat erstellen →</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="homepage.html">Startseite</a><span>›</span>
+    <a href="homepage.html">Locations</a><span>›</span>
+    Restaurants
+  </div>
+  <h1>🍽️ <span class="h-gold">Restaurants</span> für Events</h1>
+  <p>Privaträume, Gourmet-Abende & exklusive Dinners – finde das perfekte Restaurant für dein Event.</p>
+</div>
+
+<div class="filter-wrap">
+  <div class="filter-inner">
+    <button class="filter-chip active" onclick="filterKat('alle',this)">Alle</button>
+    <button class="filter-chip" onclick="filterKat('fine',this)">🍷 Fine Dining</button>
+    <button class="filter-chip" onclick="filterKat('italienisch',this)">🍝 Italienisch</button>
+    <button class="filter-chip" onclick="filterKat('deutsch',this)">🥨 Deutsch & Regional</button>
+    <button class="filter-chip" onclick="filterKat('asiatisch',this)">🍜 Asiatisch</button>
+    <button class="filter-chip" onclick="filterKat('steakhouse',this)">🥩 Steakhouse</button>
+    <button class="filter-chip" onclick="filterKat('rooftop',this)">🌆 Rooftop & Terrasse</button>
+    <button class="filter-chip" onclick="filterKat('privat',this)">🔒 Privaträume</button>
+    <select class="filter-select" id="sort-select" onchange="sortItems()">
+      <option value="rating">⭐ Beste Bewertung</option>
+      <option value="price-asc">💰 Preis aufsteigend</option>
+      <option value="price-desc">💰 Preis absteigend</option>
+    </select>
+    <span class="filter-count" id="result-count">8 Restaurants gefunden</span>
+  </div>
+</div>
+
+<div class="main-layout">
+  <aside class="sidebar">
+    <div class="sb-title">Filter <a href="#" onclick="resetFilters();return false;">Zurücksetzen</a></div>
+    <div class="sb-group">
+      <div class="sb-label">Verfügbarkeit</div>
+      <label class="sb-check"><input type="checkbox" checked><span>Sofort anfragen</span><small>6</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Auf Anfrage</span><small>2</small></label>
+    </div>
+    <div class="sb-group">
+      <div class="sb-label">Personenanzahl</div>
+      <div class="sb-range">
+        <input type="range" min="10" max="300" value="300" oninput="document.getElementById('cap-max').textContent='bis '+this.value+' Pers.'">
+        <div class="sb-range-labels"><span>ab 10</span><span id="cap-max">bis 300 Pers.</span></div>
+      </div>
+    </div>
+    <div class="sb-group">
+      <div class="sb-label">Stil</div>
+      <label class="sb-check"><input type="checkbox" checked><span>Fine Dining</span><small>3</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Italienisch</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Deutsch & Regional</span><small>2</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Asiatisch</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Steakhouse</span><small>1</small></label>
+      <label class="sb-check"><input type="checkbox" checked><span>Rooftop & Terrasse</span><small>1</small></label>
+    </div>
+    <div class="sb-group">
+      <div class="sb-label">Ausstattung</div>
+      <label class="sb-check"><input type="checkbox"><span>Privatraum abschließbar</span></label>
+      <label class="sb-check"><input type="checkbox"><span>AV-Technik vorhanden</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Außenbereich</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Barrierefreiheit</span></label>
+      <label class="sb-check"><input type="checkbox"><span>Parkplätze</span></label>
+    </div>
+    <div class="btn-reset" onclick="resetFilters()">Filter zurücksetzen</div>
+  </aside>
+
+  <div>
+    <div class="items-grid" id="items-grid">
+
+      <!-- ── TOP-HIGHLIGHT ── -->
+      <div class="card wide" data-kat="fine" data-preis="120" data-rating="4.9">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=720&h=500&fit=crop&auto=format" alt="Restaurant Maison"/>
+          <span class="card-tag">⭐ Top-Restaurant</span>
+          <span class="card-avail free">✓ Anfragen möglich</span>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="card-body" style="flex:1;">
+            <div class="card-name">Maison Élégance – Fine Dining & Events</div>
+            <div class="card-sub">📍 München · Maxvorstadt · gegründet 2015</div>
+            <div class="chips">
+              <span class="chip gold">🍷 Fine Dining</span>
+              <span class="chip">Privatraum</span>
+              <span class="chip">bis 80 Pers.</span>
+              <span class="chip">Gala & Firmen</span>
+            </div>
+            <div class="steckbrief">
+              <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 80 Personen</div></div>
+              <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 3 Stunden</div></div>
+              <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 60 € /Person</div></div>
+              <div class="sb-item"><div class="sb-item-label">Privatraum</div><div class="sb-item-val">Ja, abschließbar</div></div>
+              <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Französisch & Modern</div></div>
+              <div class="sb-item"><div class="sb-item-label">Events</div><div class="sb-item-val">Firmen, Gala, Hochzeit</div></div>
+            </div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:12px;font-style:italic;">
+              „Unser exklusiver Privatbereich für bis zu 80 Gäste bietet das perfekte Ambiente für Firmenevents, Galas und besondere Anlässe – inklusive persönlichem Eventservice."
+            </p>
+          </div>
+          <div class="card-footer">
+            <div>
+              <div class="card-price">ab 120 € <span>/Person</span></div>
+              <div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.9</strong> (47 Bewertungen)</div>
+            </div>
+            <a class="btn-book" href="login.html">Jetzt anfragen →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 2 ── -->
+      <div class="card" data-kat="italienisch" data-preis="55" data-rating="4.8">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=480&h=320&fit=crop&auto=format" alt="La Trattoria"/>
+          <span class="card-tag blue">🍝 Italienisch</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail free">✓ Anfragen möglich</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">La Trattoria – Authentisch Italienisch</div>
+          <div class="card-sub">📍 München · Schwabing</div>
+          <div class="chips"><span class="chip gold">🍝 Italienisch</span><span class="chip">Privatraum</span><span class="chip">bis 50 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 50 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 35 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Pasta, Pizza, Antipasti</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 55 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.8</strong> (63)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 3 ── -->
+      <div class="card" data-kat="deutsch" data-preis="45" data-rating="4.7">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=480&h=320&fit=crop&auto=format" alt="Wirtshaus"/>
+          <span class="card-tag" style="background:rgba(101,67,33,.9);color:#fff;">🥨 Bayrisch</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail free">✓ Anfragen möglich</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Zum Goldenen Hirsch – Wirtshaus & Saal</div>
+          <div class="card-sub">📍 München · Glockenbach</div>
+          <div class="chips"><span class="chip gold">🥨 Bayrisch</span><span class="chip">Festsaal</span><span class="chip">bis 120 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 120 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 4 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 30 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Schnitzel, Braten, Bier</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 45 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐½ <strong>4.7</strong> (88)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 4 ── -->
+      <div class="card" data-kat="rooftop" data-preis="90" data-rating="4.9">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=480&h=320&fit=crop&auto=format" alt="Rooftop"/>
+          <span class="card-tag purple">🌆 Rooftop</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail soon">⚡ Ab April verfügbar</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Sky Garden – Rooftop Bar & Restaurant</div>
+          <div class="card-sub">📍 München · Innenstadt · 8. OG</div>
+          <div class="chips"><span class="chip gold">🌆 Rooftop</span><span class="chip">Panoramablick</span><span class="chip">bis 60 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 60 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 3 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 80 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Besonderheit</div><div class="sb-item-val">360° Stadtpanorama</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 90 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.9</strong> (34)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 5 ── -->
+      <div class="card" data-kat="steakhouse" data-preis="75" data-rating="4.8">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=480&h=320&fit=crop&auto=format" alt="Steakhouse"/>
+          <span class="card-tag" style="background:rgba(180,30,30,.9);color:#fff;">🥩 Steakhouse</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail free">✓ Anfragen möglich</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Prime Cut – Exklusives Steakhouse</div>
+          <div class="card-sub">📍 München · Bogenhausen</div>
+          <div class="chips"><span class="chip gold">🥩 Steak</span><span class="chip">Dry Aged</span><span class="chip">bis 40 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 40 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 65 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Wagyu, Dry Aged, US-Beef</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 75 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.8</strong> (29)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 6 ── -->
+      <div class="card" data-kat="asiatisch" data-preis="50" data-rating="4.7">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=480&h=320&fit=crop&auto=format" alt="Sakura"/>
+          <span class="card-tag blue">🍜 Asiatisch</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail free">✓ Anfragen möglich</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Sakura Garden – Japanisch & Asiatisch</div>
+          <div class="card-sub">📍 München · Neuhausen</div>
+          <div class="chips"><span class="chip gold">🍜 Asiatisch</span><span class="chip">Sushi Bar</span><span class="chip">bis 45 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 45 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 40 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Küche</div><div class="sb-item-val">Sushi, Ramen, Teppanyaki</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 50 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐½ <strong>4.7</strong> (52)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 7 ── -->
+      <div class="card" data-kat="privat" data-preis="38" data-rating="4.6">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1432139509613-5c4255815697?w=480&h=320&fit=crop&auto=format" alt="Privatraum"/>
+          <span class="card-tag green">🔒 Privatraum</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail free">✓ Anfragen möglich</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Bistro Heimat – Privatraum & Catering</div>
+          <div class="card-sub">📍 Augsburg · Innenstadt</div>
+          <div class="chips"><span class="chip gold">🔒 Privatraum</span><span class="chip">Catering inkl.</span><span class="chip">bis 30 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 30 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 2 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 25 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Besonderheit</div><div class="sb-item-val">Getränkepauschale mögl.</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 38 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐½ <strong>4.6</strong> (41)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 8 ── -->
+      <div class="card" data-kat="italienisch" data-preis="65" data-rating="4.8">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=480&h=320&fit=crop&auto=format" alt="Il Giardino"/>
+          <span class="card-tag blue">🍝 Italienisch</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail soon">⚡ Begrenzt verfügbar</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Il Giardino – Gartenrestaurant & Events</div>
+          <div class="card-sub">📍 München · Bogenhausen · Garten</div>
+          <div class="chips"><span class="chip gold">🍝 Italienisch</span><span class="chip">Außenbereich</span><span class="chip">bis 80 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 80 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 3 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 45 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Besonderheit</div><div class="sb-item-val">Garten & Innenhof</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 65 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.8</strong> (36)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 9 ── -->
+      <div class="card" data-kat="privat" data-preis="58" data-rating="4.9">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=480&h=320&fit=crop&auto=format" alt="Vinothek am Markt"/>
+          <span class="card-tag" style="background:rgba(100,60,180,.88);color:#fff;">🍷 Fine Dining</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail now">✅ Jetzt buchbar</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Vinothek am Markt – Wein & Gourmet</div>
+          <div class="card-sub">📍 Würzburg · Innenstadt · Weinkeller</div>
+          <div class="chips"><span class="chip gold">🍷 Fine Dining</span><span class="chip">Weinkeller</span><span class="chip">bis 45 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 45 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 4 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 58 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Besonderheit</div><div class="sb-item-val">Historischer Weinkeller</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 58 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.9</strong> (52)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+      <!-- ── CARD 10 ── -->
+      <div class="card" data-kat="deutsch" data-preis="42" data-rating="4.8">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=480&h=320&fit=crop&auto=format" alt="Brauhaus am Schloss"/>
+          <span class="card-tag" style="background:rgba(180,100,20,.9);color:#fff;">🍺 Bayrisch</span>
+          <button class="card-fav">🤍</button>
+          <span class="card-avail soon">📅 Nächster Termin: 22. März</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Brauhaus am Schloss – Tradition & Feste</div>
+          <div class="card-sub">📍 Regensburg · Altstadt · Biergarten</div>
+          <div class="chips"><span class="chip gold">🍺 Bayrisch</span><span class="chip">Biergarten</span><span class="chip">bis 200 Pers.</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 200 Personen</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestbuchung</div><div class="sb-item-val">mind. 3 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Mindestabnahme</div><div class="sb-item-val">mind. 32 € /Person</div></div>
+            <div class="sb-item"><div class="sb-item-label">Besonderheit</div><div class="sb-item-val">Eigene Hausbrauerei</div></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div><div class="card-price">ab 42 € <span>/Person</span></div><div class="card-stars">⭐⭐⭐⭐⭐ <strong>4.8</strong> (89)</div></div>
+          <a class="btn-book" href="login.html">Anfragen</a>
+        </div>
+      </div>
+
+    </div><!-- /items-grid -->
+
+    <div class="cta-box">
+      <div>
+        <h3>Hast du ein Restaurant für Events?</h3>
+        <p>Trag dein Restaurant ein und erreiche tausende Veranstalter, die genau das suchen.</p>
+      </div>
+      <a class="btn-gold" href="login.html">Jetzt Inserat erstellen →</a>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">›</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function filterKat(kat, btn) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('.card');
+  let count = 0;
+  cards.forEach(card => {
+    const show = kat === 'alle' || card.dataset.kat === kat;
+    card.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('result-count').textContent = count + ' Restaurants gefunden';
+}
+function sortItems() {
+  const val = document.getElementById('sort-select').value;
+  const grid = document.getElementById('items-grid');
+  const cards = Array.from(grid.querySelectorAll('.card'));
+  cards.sort((a,b) => {
+    if(val==='rating') return parseFloat(b.dataset.rating)-parseFloat(a.dataset.rating);
+    if(val==='price-asc') return parseFloat(a.dataset.preis)-parseFloat(b.dataset.preis);
+    if(val==='price-desc') return parseFloat(b.dataset.preis)-parseFloat(a.dataset.preis);
+    return 0;
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+function resetFilters() {
+  document.querySelectorAll('.filter-chip')[0].click();
+  document.getElementById('sort-select').value = 'rating';
+}
+document.querySelectorAll('.card-fav').forEach(btn => {
+  btn.addEventListener('click', e => { e.stopPropagation(); btn.textContent = btn.textContent==='🤍'?'❤️':'🤍'; });
+});
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Privatköche für Events – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8922A;--gold2:#e0a430;--dark:#1A1208;--dark2:#2d1f0e;--cream:#F5F0E8;--cream2:#EDE8DF;--muted:rgba(26,18,8,.55);--text:#1A1208;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.45);}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);text-decoration:none;}
+    .nav-logo span{color:var(--gold);}
+    .nav-links{display:flex;align-items:center;gap:22px;list-style:none;}
+    .nav-links a{color:rgba(245,240,232,.75);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;white-space:nowrap;}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-actions{display:flex;gap:10px;align-items:center;}
+    .btn-login{color:rgba(245,240,232,.78);font-size:13px;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:6px;border:1px solid rgba(245,240,232,.22);transition:all .2s;}
+    .btn-login:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-cta{background:var(--gold);color:var(--dark);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;}
+    .btn-cta:hover{background:var(--gold2);transform:translateY(-1px);}
+
+    /* ── HERO ── */
+    .hero{background:linear-gradient(140deg,#0e0a05 0%,var(--dark) 55%,var(--dark2) 100%);padding:52px 40px 44px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(200,146,42,.12) 0%,transparent 65%);}
+    .hero>*{position:relative;}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,146,42,.18);border:1px solid rgba(200,146,42,.45);color:var(--gold);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:.3px;margin-bottom:18px;}
+    .hero h1{font-family:'Fraunces',serif;font-size:44px;font-weight:900;color:var(--cream);line-height:1.15;margin-bottom:12px;}
+    .hero h1 em{color:var(--gold);font-style:normal;}
+    .hero p{color:rgba(245,240,232,.65);font-size:16px;max-width:520px;margin:0 auto 24px;}
+    .hero-stats{display:flex;justify-content:center;gap:36px;margin-top:20px;}
+    .hero-stat-val{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--gold);}
+    .hero-stat-label{font-size:12px;color:rgba(245,240,232,.5);margin-top:2px;}
+
+    /* ── FILTER BAR ── */
+    .filter-bar{background:#fff;border-bottom:1.5px solid var(--cream2);position:sticky;top:66px;z-index:190;box-shadow:0 2px 8px rgba(26,18,8,.04);}
+    .filter-inner{max-width:1280px;margin:0 auto;padding:12px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .filter-chip{padding:7px 16px;border-radius:20px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+    .filter-chip:hover,.filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    .filter-count{margin-left:auto;font-size:13px;color:var(--muted);}
+    .sort-select{padding:7px 12px;border:1.5px solid var(--cream2);border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;cursor:pointer;outline:none;}
+
+    /* ── MAIN LAYOUT ── */
+    .main{max-width:1280px;margin:0 auto;padding:32px 40px 60px;}
+
+    /* ── COOK CARD ── */
+    .cook-card{background:#fff;border-radius:20px;border:1.5px solid var(--cream2);overflow:hidden;margin-bottom:28px;box-shadow:0 2px 12px rgba(26,18,8,.06);transition:box-shadow .2s;}
+    .cook-card:hover{box-shadow:0 8px 40px rgba(200,146,42,.14);}
+    .cook-head{display:grid;grid-template-columns:160px 1fr auto;gap:0;position:relative;}
+    .cook-avatar{width:160px;height:200px;display:flex;align-items:center;justify-content:center;font-size:72px;flex-shrink:0;position:relative;overflow:hidden;}
+    .cook-avatar .av-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--cream2) 0%,rgba(200,146,42,.2) 100%);}
+    .cook-avatar .av-emoji{position:relative;z-index:1;}
+    .cook-avatar .verified{position:absolute;bottom:8px;right:8px;background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;z-index:2;}
+    .cook-info{padding:20px 24px;display:flex;flex-direction:column;gap:6px;}
+    .cook-badge-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .cook-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;}
+    .badge-gold{background:rgba(200,146,42,.15);color:var(--gold);border:1px solid rgba(200,146,42,.3);}
+    .badge-dark{background:rgba(26,18,8,.08);color:var(--dark);}
+    .badge-new{background:rgba(40,167,69,.1);color:#2d7a4f;border:1px solid rgba(40,167,69,.2);}
+    .cook-name{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--dark);}
+    .cook-spec{font-size:14px;color:var(--muted);font-weight:500;}
+    .cook-loc{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+    .cook-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+    .chip{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--cream2);color:var(--dark);}
+    .chip.gold{background:rgba(200,146,42,.12);border:1px solid rgba(200,146,42,.25);color:#9a6c1a;}
+    .cook-stats{padding:20px 24px 20px 0;display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;min-width:200px;}
+    .cook-rating{display:flex;align-items:center;gap:6px;font-weight:700;font-size:15px;color:var(--dark);}
+    .cook-rating .stars{color:var(--gold);}
+    .cook-reviews{font-size:12px;color:var(--muted);}
+    .cook-price-main{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--dark);}
+    .cook-price-sub{font-size:12px;color:var(--muted);}
+    .cook-avail{font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;}
+    .avail-fast{background:rgba(40,167,69,.1);color:#2d7a4f;}
+    .avail-normal{background:rgba(200,146,42,.1);color:#9a6c1a;}
+    .avail-busy{background:rgba(220,53,69,.1);color:#b02a37;}
+
+    /* ── MENUS SECTION ── */
+    .menu-section{border-top:1.5px solid var(--cream2);padding:20px 24px;}
+    .menu-section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .menu-section-title h3{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px;}
+    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .menu-card{border:1.5px solid var(--cream2);border-radius:14px;padding:16px;position:relative;transition:all .2s;cursor:pointer;}
+    .menu-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(200,146,42,.12);}
+    .menu-card.featured{border-color:var(--gold);background:rgba(200,146,42,.04);}
+    .menu-card.featured::before{content:'Beliebteste Wahl';position:absolute;top:-1px;left:16px;background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;padding:3px 10px;border-radius:0 0 8px 8px;}
+    .menu-name{font-family:'Fraunces',serif;font-size:15px;font-weight:700;margin-bottom:6px;margin-top:8px;color:var(--dark);}
+    .menu-desc{font-size:12.5px;color:var(--muted);margin-bottom:10px;line-height:1.5;}
+    .menu-courses{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+    .menu-courses li{font-size:12.5px;color:var(--dark);display:flex;align-items:flex-start;gap:6px;line-height:1.4;}
+    .menu-courses li::before{content:'🍽';font-size:11px;margin-top:1px;flex-shrink:0;}
+    .menu-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--cream2);}
+    .menu-price{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--gold);}
+    .menu-price span{font-size:12px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:500;}
+    .menu-persons{font-size:12px;color:var(--muted);background:var(--cream2);padding:3px 8px;border-radius:10px;}
+
+
+    /* ── MENU IMAGES ── */
+    .menu-img{width:calc(100% + 32px);margin:-16px -16px 14px;height:155px;overflow:hidden;border-radius:12px 12px 0 0;}
+    .menu-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+    .menu-card:hover .menu-img img{transform:scale(1.06);}
+
+    /* ── CARD ACTIONS ── */
+    .cook-actions{border-top:1.5px solid var(--cream2);padding:14px 24px;display:flex;align-items:center;gap:12px;}
+    .btn-profil{padding:10px 22px;border-radius:8px;border:1.5px solid var(--cream2);background:#fff;font-size:13.5px;font-weight:700;color:var(--dark);text-decoration:none;transition:all .2s;cursor:pointer;font-family:'DM Sans',sans-serif;}
+    .btn-profil:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-anfragen{padding:10px 24px;border-radius:8px;background:var(--dark);color:var(--cream);font-size:13.5px;font-weight:700;text-decoration:none;transition:all .2s;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:6px;border:none;}
+    .btn-anfragen:hover{background:var(--gold);color:var(--dark);}
+    .cook-resp{margin-left:auto;font-size:12.5px;color:var(--muted);}
+
+    /* ── PAGINATION ── */
+    .pagination{display:flex;justify-content:center;gap:8px;margin-top:40px;}
+    .page-btn{width:38px;height:38px;border-radius:8px;border:1.5px solid var(--cream2);background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .page-btn.active,.page-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+
+    /* ── RESULT BANNER ── */
+    #search-banner{background:linear-gradient(90deg,#1a1209,#2d1f0a);color:#fff;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html">MeinParty<span>Retter</span></a>
+  <ul class="nav-links">
+    <li><a href="marktplatz.html">Marktplatz</a></li>
+    <li><a href="privatkoech-liste.html" class="active">Privatköche</a></li>
+    <li><a href="foodtrucks-liste.html">Foodtrucks</a></li>
+    <li><a href="restaurants.html">Restaurants</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-login" href="login.html">Anmelden</a>
+    <a class="btn-cta" href="registrierung.html">Anbieter werden</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">👨‍🍳 Geprüfte Privatköche</div>
+  <h1>Dein persönlicher Koch für<br><em>jeden Anlass</em></h1>
+  <p>Von intimen Dinner-Erlebnissen bis zum Gala-Buffet – unsere Privatköche kommen direkt zu dir nach Hause.</p>
+  <div class="hero-stats">
+    <div><div class="hero-stat-val">240+</div><div class="hero-stat-label">Geprüfte Köche</div></div>
+    <div><div class="hero-stat-val">4.87</div><div class="hero-stat-label">Ø Bewertung</div></div>
+    <div><div class="hero-stat-val">12.400+</div><div class="hero-stat-label">Zufriedene Gäste</div></div>
+    <div><div class="hero-stat-val">100%</div><div class="hero-stat-label">Versichert</div></div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-chip active" onclick="filterKueche('alle',this)">Alle Küchen</button>
+    <button class="filter-chip" onclick="filterKueche('italienisch',this)">🍝 Italienisch</button>
+    <button class="filter-chip" onclick="filterKueche('franzoesisch',this)">🥐 Französisch</button>
+    <button class="filter-chip" onclick="filterKueche('asiatisch',this)">🍜 Asiatisch</button>
+    <button class="filter-chip" onclick="filterKueche('vegan',this)">🌱 Vegan</button>
+    <button class="filter-chip" onclick="filterKueche('spanisch',this)">🥘 Spanisch</button>
+    <button class="filter-chip" onclick="filterKueche('grill',this)">🔥 Grill & BBQ</button>
+    <button class="filter-chip" onclick="filterKueche('feineDining',this)">⭐ Fine Dining</button>
+    <button class="filter-chip" onclick="filterKueche('deutsch',this)">🥨 Deutsch</button>
+    <div class="filter-count" id="result-count">15 Köche gefunden</div>
+    <select class="sort-select" onchange="sortItems(this.value)">
+      <option value="">Empfohlen</option>
+      <option value="rating">Bewertung ↓</option>
+      <option value="price-asc">Preis aufsteigend</option>
+      <option value="price-desc">Preis absteigend</option>
+    </select>
+  </div>
+</div>
+
+<div class="main" id="cookList">
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 1: Marco Bianchi – Italienisch / Fine Dining
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="italienisch feineDining" data-price="98" data-rating="4.9">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg"></div>
+        <div class="av-emoji">👨‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-gold">⭐ Top-Anbieter</span>
+          <span class="cook-badge badge-dark">Fine Dining</span>
+          <span class="cook-badge badge-dark">Bis 50 Pers.</span>
+        </div>
+        <div class="cook-name">Marco Bianchi</div>
+        <div class="cook-spec">Privatkoch · Italienische & Mediterrane Küche</div>
+        <div class="cook-loc">📍 München, Bayern</div>
+        <div class="cook-chips">
+          <span class="chip gold">Italienisch</span>
+          <span class="chip">Fine Dining</span>
+          <span class="chip">Live Cooking</span>
+          <span class="chip">Buffet</span>
+          <span class="chip">Dinner Party</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.9</div>
+          <div class="cook-reviews">138 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 110 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 89 € / Person</div>
+        </div>
+        <span class="cook-avail avail-fast">⚡ Antwortet &lt; 1h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Marco Bianchi</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <!-- Menü 1 -->
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=480&h=210&fit=crop&auto=format" alt="Frische Pasta" loading="lazy"/></div>
+          <div class="menu-name">🥗 Piccolo – Dinner für Zwei</div>
+          <div class="menu-desc">Romantisches 4-Gang-Dinner für 2–6 Personen. Frische Pasta, saisonales Gemüse, hausgemachtes Tiramisu.</div>
+          <ul class="menu-courses">
+            <li>Bruschetta mit Tomaten & Basilikum</li>
+            <li>Tagliatelle ai Tartufi (Trüffelpasta)</li>
+            <li>Saltimbocca alla Romana mit Rucola</li>
+            <li>Tiramisu al Limoncello</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">89 € <span>/ Person</span></div>
+            <div class="menu-persons">2–6 Pers.</div>
+          </div>
+        </div>
+
+        <!-- Menü 2 -->
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=480&h=210&fit=crop&auto=format" alt="Risotto ai Gamberi" loading="lazy"/></div>
+          <div class="menu-name">🍝 Famiglia – Das Festmenü</div>
+          <div class="menu-desc">5-gängiges Gala-Dinner für 8–25 Personen. Ideal für Geburtstage, Jahrestage und Firmenevents.</div>
+          <ul class="menu-courses">
+            <li>Antipasto misto (Vorspeisen-Platte)</li>
+            <li>Zuppa di Porcini (Pilzcremesuppe)</li>
+            <li>Risotto ai Gamberi e Zafferano</li>
+            <li>Ossobuco alla Milanese mit Gremolata</li>
+            <li>Panna Cotta con Fragole & Basilico</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">109 € <span>/ Person</span></div>
+            <div class="menu-persons">8–25 Pers.</div>
+          </div>
+        </div>
+
+        <!-- Menü 3 -->
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=480&h=210&fit=crop&auto=format" alt="Ital. Festbuffet" loading="lazy"/></div>
+          <div class="menu-name">🎉 Grande Festa – Buffet für Gruppen</div>
+          <div class="menu-desc">Reichhaltiges italienisches Buffet mit Live-Pasta-Station für 20–50 Personen. Inkl. Weinberatung.</div>
+          <ul class="menu-courses">
+            <li>Antipasti-Buffet (6 Komponenten)</li>
+            <li>Live Pasta-Station (3 Sorten frische Pasta)</li>
+            <li>Hauptgericht-Buffet (Fleisch & Fisch)</li>
+            <li>Dolce-Tisch mit 5 Desserts</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">72 € <span>/ Person</span></div>
+            <div class="menu-persons">20–50 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=marco">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 1 Stunde</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 2: Sophie Kühn – Französisch / Nouvelle Cuisine
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="franzoesisch feineDining" data-price="125" data-rating="5.0">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#f0e8f8,#d8c8e8);"></div>
+        <div class="av-emoji">👩‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-gold">⭐ Top-Anbieter</span>
+          <span class="cook-badge badge-dark">Nouvelle Cuisine</span>
+          <span class="cook-badge badge-dark">Bis 30 Pers.</span>
+        </div>
+        <div class="cook-name">Sophie Kühn</div>
+        <div class="cook-spec">Privatkoch · Französische & Nouvelle Cuisine</div>
+        <div class="cook-loc">📍 Hamburg, Norddeutschland</div>
+        <div class="cook-chips">
+          <span class="chip gold">Französisch</span>
+          <span class="chip">Fine Dining</span>
+          <span class="chip">Dinner Party</span>
+          <span class="chip">Weinpairing</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 5.0</div>
+          <div class="cook-reviews">82 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 125 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 118 € / Person</div>
+        </div>
+        <span class="cook-avail avail-fast">⚡ Antwortet &lt; 2h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Sophie Kühn</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=480&h=210&fit=crop&auto=format" alt="Französisches Dinner" loading="lazy"/></div>
+          <div class="menu-name">🥂 Petit Dîner – Romantisches Dinner</div>
+          <div class="menu-desc">Klassisches 4-Gang-Dinner für 2–4 Personen mit Weinempfehlung zum jedem Gang.</div>
+          <ul class="menu-courses">
+            <li>Soupe à l'Oignon gratinée</li>
+            <li>Salade Niçoise mit frischem Thunfisch</li>
+            <li>Filet de Boeuf Bourguignon</li>
+            <li>Crème Brûlée à la Vanille Bourbon</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">118 € <span>/ Person</span></div>
+            <div class="menu-persons">2–4 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=480&h=210&fit=crop&auto=format" alt="Gala Fine Dining" loading="lazy"/></div>
+          <div class="menu-name">🌹 Grand Dîner – Gala-Dinner</div>
+          <div class="menu-desc">6-gängiges Gourmet-Erlebnis für 6–20 Personen. Das Beste der französischen Haute Cuisine.</div>
+          <ul class="menu-courses">
+            <li>Amuse-Bouche (3 Kleinigkeiten)</li>
+            <li>Velouté de Champignons des Bois</li>
+            <li>Homard Thermidor (Hummer-Spezialität)</li>
+            <li>Sorbet au Champagne (Zwischengang)</li>
+            <li>Carré d'Agneau aux Herbes de Provence</li>
+            <li>Mille-Feuille aux Framboises</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">158 € <span>/ Person</span></div>
+            <div class="menu-persons">6–20 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=480&h=210&fit=crop&auto=format" alt="French Brunch" loading="lazy"/></div>
+          <div class="menu-name">🥐 Brunch Élégant – French Brunch</div>
+          <div class="menu-desc">Luxuriöser Sonntagsbrunch für 8–30 Personen mit süßen & herzhaften Spezialitäten.</div>
+          <ul class="menu-courses">
+            <li>Croissants & Pâtisseries (frisch gebacken)</li>
+            <li>Quiche Lorraine & Omelettes</li>
+            <li>Französischer Käse- & Charcuterie-Tisch</li>
+            <li>Tarte Tatin & Crêpes Suzette</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">68 € <span>/ Person</span></div>
+            <div class="menu-persons">8–30 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=sophie">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 2 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 3: David Stern – Asiatische Fusion
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="asiatisch" data-price="88" data-rating="4.8">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#e8f0f8,#c8d8e8);"></div>
+        <div class="av-emoji">👨‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-dark">Asiatische Fusion</span>
+          <span class="cook-badge badge-dark">Live Cooking</span>
+          <span class="cook-badge badge-dark">Bis 60 Pers.</span>
+        </div>
+        <div class="cook-name">David Stern</div>
+        <div class="cook-spec">Privatkoch · Asiatische Fusion & Pan-Asian Cuisine</div>
+        <div class="cook-loc">📍 Berlin, Brandenburg</div>
+        <div class="cook-chips">
+          <span class="chip gold">Asiatisch</span>
+          <span class="chip">Sushi</span>
+          <span class="chip">Dim Sum</span>
+          <span class="chip">Thai</span>
+          <span class="chip">Live Cooking</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.8</div>
+          <div class="cook-reviews">104 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 88 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 76 € / Person</div>
+        </div>
+        <span class="cook-avail avail-normal">🕐 Antwortet &lt; 4h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von David Stern</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1617196034183-421b4040d2ab?w=480&h=210&fit=crop&auto=format" alt="Sushi Platter" loading="lazy"/></div>
+          <div class="menu-name">🍣 Sushi & Maki Night</div>
+          <div class="menu-desc">Klassische japanische Sushi-Experience mit Live-Zubereitung am Tisch. 5–20 Personen.</div>
+          <ul class="menu-courses">
+            <li>Edamame & Miso-Suppe</li>
+            <li>Live Sushi-Platte (8 Sorten Nigiri & Maki)</li>
+            <li>Tempura Ebi & Karaage Huhn</li>
+            <li>Matcha-Panna Cotta mit Erdbeeren</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">76 € <span>/ Person</span></div>
+            <div class="menu-persons">5–20 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=480&h=210&fit=crop&auto=format" alt="Pan-Asian Fusion" loading="lazy"/></div>
+          <div class="menu-name">🌏 Pan-Asian Fusion Dinner</div>
+          <div class="menu-desc">Geschmacksreise durch Asien – von Japan über Thailand bis Vietnam. 6–30 Personen.</div>
+          <ul class="menu-courses">
+            <li>Tom Kha Gai (Thai-Kokossuppe)</li>
+            <li>Dim Sum Platter (5 Sorten gedämpft & gebraten)</li>
+            <li>Pad Thai Gung & Vietnamese Pho Bo</li>
+            <li>Wagyu Beef mit Teriyaki-Glasur</li>
+            <li>Mango Sticky Rice mit Kokoscreme</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">96 € <span>/ Person</span></div>
+            <div class="menu-persons">6–30 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=480&h=210&fit=crop&auto=format" alt="Dumplings & Gyoza" loading="lazy"/></div>
+          <div class="menu-name">🥟 Dumpling & Street Food Party</div>
+          <div class="menu-desc">Asiatische Street-Food-Atmosphäre mit Live-Station für 15–60 Personen. Perfekt für Firmenevents.</div>
+          <ul class="menu-courses">
+            <li>Dumpling-Station (Gyoza, Baozi, Har Gow)</li>
+            <li>Bao Bun Bar (4 verschiedene Füllungen)</li>
+            <li>Ramen-Station mit 3 Brühen</li>
+            <li>Bubble Tea & Mochi-Desserts</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">55 € <span>/ Person</span></div>
+            <div class="menu-persons">15–60 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=david">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 4 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 4: Lena Richter – Vegane Gourmetküche
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="vegan" data-price="78" data-rating="4.9">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#e8f5e8,#c8e8c8);"></div>
+        <div class="av-emoji">👩‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-gold">🌱 Vegan-Spezialistin</span>
+          <span class="cook-badge badge-dark">Bio-Zertifiziert</span>
+          <span class="cook-badge badge-dark">Bis 40 Pers.</span>
+        </div>
+        <div class="cook-name">Lena Richter</div>
+        <div class="cook-spec">Privatkoch · Vegane & Pflanzenbasierte Gourmetküche</div>
+        <div class="cook-loc">📍 Köln, Nordrhein-Westfalen</div>
+        <div class="cook-chips">
+          <span class="chip gold">Vegan</span>
+          <span class="chip">Bio</span>
+          <span class="chip">Glutenfrei möglich</span>
+          <span class="chip">Rohkost</span>
+          <span class="chip">Fine Dining</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.9</div>
+          <div class="cook-reviews">76 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 78 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 2 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 65 € / Person</div>
+        </div>
+        <span class="cook-avail avail-fast">⚡ Antwortet &lt; 1h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Lena Richter</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f1e70b?w=480&h=210&fit=crop&auto=format" alt="Veganes Gemüse-Dinner" loading="lazy"/></div>
+          <div class="menu-name">🌿 Garden Dinner – Saisonales Gemüse</div>
+          <div class="menu-desc">4-Gang-Menü mit regionalen Bio-Zutaten, saisonal angepasst. 2–8 Personen.</div>
+          <ul class="menu-courses">
+            <li>Gazpacho mit Kräuter-Croutons & Avocado</li>
+            <li>Blattsalat mit Granatapfel & Sesam-Dressing</li>
+            <li>Blumenkohl-Steak mit Chimichurri & Linsen</li>
+            <li>Aquafaba-Mousse au Chocolat Noir</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">65 € <span>/ Person</span></div>
+            <div class="menu-persons">2–8 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=480&h=210&fit=crop&auto=format" alt="World Vegan Bowls" loading="lazy"/></div>
+          <div class="menu-name">🌍 World Vegan Gala</div>
+          <div class="menu-desc">Vegane Weltküche – 5 Gänge aus 5 Kontinenten. 8–25 Personen. Wow-Erlebnis garantiert.</div>
+          <ul class="menu-courses">
+            <li>Japanische Miso-Suppe mit Wakame & Tofu</li>
+            <li>Mezze-Platte: Hummus, Taboulé, Falafel</li>
+            <li>Rotes Thai-Curry mit Jasminreis & Pak Choi</li>
+            <li>Mexikanische Enchiladas mit schwarzen Bohnen</li>
+            <li>Schokoladen-Tartelette mit Himbeer-Coulis</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">85 € <span>/ Person</span></div>
+            <div class="menu-persons">8–25 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=480&h=210&fit=crop&auto=format" alt="Plant-Based Buffet" loading="lazy"/></div>
+          <div class="menu-name">🥙 Plant-Based Buffet</div>
+          <div class="menu-desc">Üppiges veganes Buffet mit 12+ Komponenten. Ideal für Firmenevents & Hochzeiten. 20–40 Pers.</div>
+          <ul class="menu-courses">
+            <li>Salat-Bar (5 verschiedene Blattsalate)</li>
+            <li>Warme Hauptspeisen (3 Gerichte)</li>
+            <li>Rohkost-Station mit Dips & Aufschnitt</li>
+            <li>Dessert-Tisch (6 vegane Süßigkeiten)</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">45 € <span>/ Person</span></div>
+            <div class="menu-persons">20–40 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=lena">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 1 Stunde</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 5: Rafael Morales – Spanisch / Tapas
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="spanisch" data-price="95" data-rating="4.7">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#f8ece8,#e8d0c8);"></div>
+        <div class="av-emoji">👨‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-dark">Spanisch & Tapas</span>
+          <span class="cook-badge badge-dark">Live Cooking</span>
+          <span class="cook-badge badge-dark">Bis 50 Pers.</span>
+        </div>
+        <div class="cook-name">Rafael Morales</div>
+        <div class="cook-spec">Privatkoch · Spanische Küche, Tapas & Paella-Meister</div>
+        <div class="cook-loc">📍 Frankfurt, Hessen</div>
+        <div class="cook-chips">
+          <span class="chip gold">Spanisch</span>
+          <span class="chip">Tapas</span>
+          <span class="chip">Paella</span>
+          <span class="chip">Sangría</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.7</div>
+          <div class="cook-reviews">93 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 82 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 55 € / Person</div>
+        </div>
+        <span class="cook-avail avail-normal">🕐 Antwortet &lt; 3h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Rafael Morales</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1535920527002-b35e96722eb9?w=480&h=210&fit=crop&auto=format" alt="Tapas Selection" loading="lazy"/></div>
+          <div class="menu-name">🥘 Tapas para Dos</div>
+          <div class="menu-desc">Klassische spanische Tapas-Auswahl für 4–12 Personen. Entspannte Abendatmosphäre mit Sangría.</div>
+          <ul class="menu-courses">
+            <li>Pan con Tomate & Jamón Ibérico</li>
+            <li>Patatas Bravas con Alioli</li>
+            <li>Gambas al Ajillo (Knoblauchgarnelen)</li>
+            <li>Croquetas de Jamón & Pimientos de Padrón</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">55 € <span>/ Person</span></div>
+            <div class="menu-persons">4–12 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=480&h=210&fit=crop&auto=format" alt="Live Paella" loading="lazy"/></div>
+          <div class="menu-name">🥘 La Gran Paella – Live Paella Show</div>
+          <div class="menu-desc">Spektakuläre Live-Paella-Zubereitung auf 80cm Pfanne. Das Highlight jeder Feier. 15–50 Pers.</div>
+          <ul class="menu-courses">
+            <li>Gazpacho Andaluz als Willkommensdrink</li>
+            <li>Tapas-Platter zum Auftakt (6 Sorten)</li>
+            <li>Live-Paella Valenciana / Marinera / Vegetal</li>
+            <li>Crema Catalana mit karamellisiertem Zucker</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">62 € <span>/ Person</span></div>
+            <div class="menu-persons">15–50 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=480&h=210&fit=crop&auto=format" alt="Spanisches Festmenü" loading="lazy"/></div>
+          <div class="menu-name">🍷 Fiesta Española – Spanisches Fest</div>
+          <div class="menu-desc">Vollständiges spanisches Festmenü mit 5 Gängen und Flamenco-Atmosphäre. 8–30 Pers.</div>
+          <ul class="menu-courses">
+            <li>Ensalada de Bacalao (Stockfisch-Salat)</li>
+            <li>Sopa de Ajo (Knoblauchsuppe)</li>
+            <li>Cochinillo Asado (Spanferkel) oder Merluza</li>
+            <li>Tabla de Quesos Españoles</li>
+            <li>Churros con Chocolate Caliente</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">75 € <span>/ Person</span></div>
+            <div class="menu-persons">8–30 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=rafael">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 3 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 6: Stefan Müller – Grill & BBQ
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="grill" data-price="72" data-rating="4.6">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#f8f0e0,#e8d8b0);"></div>
+        <div class="av-emoji">👨‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-dark">🔥 Grill-Meister</span>
+          <span class="cook-badge badge-dark">BBQ-Champion</span>
+          <span class="cook-badge badge-dark">Bis 80 Pers.</span>
+        </div>
+        <div class="cook-name">Stefan Müller</div>
+        <div class="cook-spec">Privatkoch · Grill & BBQ · American Barbecue</div>
+        <div class="cook-loc">📍 Frankfurt, Hessen</div>
+        <div class="cook-chips">
+          <span class="chip gold">Grill & BBQ</span>
+          <span class="chip">American BBQ</span>
+          <span class="chip">Low & Slow</span>
+          <span class="chip">Outdoor Cooking</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.6</div>
+          <div class="cook-reviews">74 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 72 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 4 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 58 € / Person</div>
+        </div>
+        <span class="cook-avail avail-normal">🕐 Antwortet &lt; 6h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Stefan Müller</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=480&h=210&fit=crop&auto=format" alt="American BBQ Ribs" loading="lazy"/></div>
+          <div class="menu-name">🥩 BBQ Classics</div>
+          <div class="menu-desc">Die Klassiker des amerikanischen Barbecue für 8–20 Personen. Inkl. hausgemachte Saucen.</div>
+          <ul class="menu-courses">
+            <li>Smoked Brisket (12h Low & Slow)</li>
+            <li>Baby Back Ribs mit 3 Saucen</li>
+            <li>Coleslaw & American Potato Salad</li>
+            <li>Corn Bread & Jalapeno-Biscuits</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">58 € <span>/ Person</span></div>
+            <div class="menu-persons">8–20 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=480&h=210&fit=crop&auto=format" alt="Grill-Gala Platter" loading="lazy"/></div>
+          <div class="menu-name">🔥 Grill-Gala – Das volle Programm</div>
+          <div class="menu-desc">Vollständiges Grillmenü mit Vor- & Nachspeise. Live-Grill-Show inklusive. 15–50 Pers.</div>
+          <ul class="menu-courses">
+            <li>Nachos & Guacamole zum Willkommen</li>
+            <li>Caesar Salad mit gegrilltem Chicken</li>
+            <li>Pulled Pork Burger & Smash Burger Deluxe</li>
+            <li>Gegrilltes Gemüse & Sweet Potato Fries</li>
+            <li>S'mores-Dessert am Lagerfeuer</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">70 € <span>/ Person</span></div>
+            <div class="menu-persons">15–50 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=480&h=210&fit=crop&auto=format" alt="Tex-Mex Tacos" loading="lazy"/></div>
+          <div class="menu-name">🌮 Tex-Mex BBQ Party</div>
+          <div class="menu-desc">Tex-Mex trifft BBQ – perfekt für lockere Gartenpartys & Firmenevents. 20–80 Pers.</div>
+          <ul class="menu-courses">
+            <li>Fajita-Station (Huhn, Rind, Veggie)</li>
+            <li>Tacos al Pastor vom Spieß</li>
+            <li>Chili con Carne & Refried Beans</li>
+            <li>Churros & Tres Leches Cake</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">44 € <span>/ Person</span></div>
+            <div class="menu-persons">20–80 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=stefan">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 6 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 7: Yuki Tanaka – Japanisch / Sushi
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="asiatisch feineDining" data-price="150" data-rating="5.0">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#e8f4f8,#c0dce8);"></div>
+        <div class="av-emoji">👩‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-gold">⭐ Premium</span>
+          <span class="cook-badge badge-dark">Sushi-Meisterin</span>
+          <span class="cook-badge badge-dark">Bis 30 Pers.</span>
+        </div>
+        <div class="cook-name">Yuki Tanaka</div>
+        <div class="cook-spec">Privatkoch · Japanische Haute Cuisine & Sushi</div>
+        <div class="cook-loc">📍 Düsseldorf, Nordrhein-Westfalen</div>
+        <div class="cook-chips">
+          <span class="chip gold">Japanisch</span>
+          <span class="chip">Sushi & Sashimi</span>
+          <span class="chip">Omakase</span>
+          <span class="chip">Live Cooking</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 5.0</div>
+          <div class="cook-reviews">61 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 145 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Omakase ab 115 € / Person</div>
+        </div>
+        <span class="cook-avail avail-fast">⚡ Antwortet &lt; 2h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Yuki Tanaka</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=480&h=210&fit=crop&auto=format" alt="Japanisches Kaiseki" loading="lazy"/></div>
+          <div class="menu-name">🍣 Kaiseki Light – Einführung</div>
+          <div class="menu-desc">4-gängige japanische Erfahrung für 2–6 Personen. Perfekte Einführung in die Kaiseki-Tradition.</div>
+          <ul class="menu-courses">
+            <li>Dashi-Suppe mit Wakame & Tofu</li>
+            <li>Sashimi-Platte (5 Sorten Fisch & Meeresfrüchte)</li>
+            <li>Grilled Miso Black Cod (Yuzu-Butter)</li>
+            <li>Matcha Wagashi (handgemachte Süßigkeiten)</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">108 € <span>/ Person</span></div>
+            <div class="menu-persons">2–6 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1617196034092-6fbf2b37e62e?w=480&h=210&fit=crop&auto=format" alt="Omakase Sushi" loading="lazy"/></div>
+          <div class="menu-name">🌸 Omakase – Vertrau dem Meister</div>
+          <div class="menu-desc">8-gängiges Omakase-Erlebnis nach Yukis Wahl – saisonale Höchstküche. 4–12 Personen.</div>
+          <ul class="menu-courses">
+            <li>Zensai (Saisonales Häppchen-Trio)</li>
+            <li>Owan (Klare Suppe mit handgemachtem Tofu)</li>
+            <li>Nigiri-Parade (8 Sorten, top Qualität)</li>
+            <li>Yakimono (Gegrilltes Wagyu A5)</li>
+            <li>Gohan (Sushi-Reis mit Trüffel & Ei)</li>
+            <li>Mizugashi (Saisonale Früchte-Kreation)</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">148 € <span>/ Person</span></div>
+            <div class="menu-persons">4–12 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=480&h=210&fit=crop&auto=format" alt="Sushi Workshop" loading="lazy"/></div>
+          <div class="menu-name">🥢 Sushi Workshop & Dinner</div>
+          <div class="menu-desc">Kurs + Dinner: Lerne Sushi rollen und genieße danach ein komplettes Abendessen. 4–20 Pers.</div>
+          <ul class="menu-courses">
+            <li>Sushi-Roll-Workshop (90 min, 3 Rollen pro Person)</li>
+            <li>Miso-Suppe & Edamame</li>
+            <li>Hauptgericht: Teriyaki Lachs mit Tempura</li>
+            <li>Sesam-Eis mit Karamell-Sauce</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">98 € <span>/ Person</span></div>
+            <div class="menu-persons">4–20 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=yuki">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 2 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 8: Thomas Bergmann – Bayrisch / Regional
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="deutsch" data-price="72" data-rating="4.7">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#f5f0e0,#e5d8b8);"></div>
+        <div class="av-emoji">👨‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-dark">🥨 Bayrischer Küche</span>
+          <span class="cook-badge badge-dark">Regional</span>
+          <span class="cook-badge badge-dark">Bis 60 Pers.</span>
+        </div>
+        <div class="cook-name">Thomas Bergmann</div>
+        <div class="cook-spec">Privatkoch · Bayrische Traditionsküche & Neue Regionale Küche</div>
+        <div class="cook-loc">📍 München, Bayern</div>
+        <div class="cook-chips">
+          <span class="chip gold">Bayrisch</span>
+          <span class="chip">Regional</span>
+          <span class="chip">Saisonal</span>
+          <span class="chip">Wild & Jagd</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.7</div>
+          <div class="cook-reviews">118 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 72 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 52 € / Person</div>
+        </div>
+        <span class="cook-avail avail-normal">🕐 Antwortet &lt; 4h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Thomas Bergmann</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=480&h=210&fit=crop&auto=format" alt="Bayrisches Fest" loading="lazy"/></div>
+          <div class="menu-name">🥨 Wiesn-Wirt – Bayrisches Fest</div>
+          <div class="menu-desc">Echte bayrische Gemütlichkeit für 10–40 Personen. Mit Brezn, Weißbier und Stimmung.</div>
+          <ul class="menu-courses">
+            <li>Obazda & Brezn zum Willkommen</li>
+            <li>Leberknödelsuppe nach Oma's Rezept</li>
+            <li>Schweinshaxe mit Knödeln & Kraut</li>
+            <li>Apfelstrudel mit Vanillesauce</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">52 € <span>/ Person</span></div>
+            <div class="menu-persons">10–40 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=480&h=210&fit=crop&auto=format" alt="Wild & Jagd" loading="lazy"/></div>
+          <div class="menu-name">🌲 Wildessen – Jagd & Wald</div>
+          <div class="menu-desc">Exklusives Wildmenü mit regionalem Jagdwild. 5-Gänge für 6–20 Personen. Saisonabhängig.</div>
+          <ul class="menu-courses">
+            <li>Hirschcarpaccio mit Trüffelöl & Rucola</li>
+            <li>Wildschwein-Terrine mit Preiselbeeren</li>
+            <li>Rehragout mit Steinpilzen & Spätzle</li>
+            <li>Bayrischer Käseteller mit Honig</li>
+            <li>Zwetschgendatschi nach Großmutter-Art</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">78 € <span>/ Person</span></div>
+            <div class="menu-persons">6–20 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=480&h=210&fit=crop&auto=format" alt="Bayrische Brotzeit" loading="lazy"/></div>
+          <div class="menu-name">🍺 Brotzeit deluxe – Bayrischer Nachmittag</div>
+          <div class="menu-desc">Großes Brotzeit-Buffet bayrischer Art für 15–60 Personen. Perfekt zum Oktoberfest-Feeling.</div>
+          <ul class="menu-courses">
+            <li>Brotzeit-Platter mit 8 Käse- & Wurstsorten</li>
+            <li>Laugengebäck, Brezn, Brot (hausgemacht)</li>
+            <li>Warme Rettich-Gurkensalate & Radi-Rosen</li>
+            <li>Bayerischer Käsekuchen & Dampfnudeln</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">34 € <span>/ Person</span></div>
+            <div class="menu-persons">15–60 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=thomas">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 4 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 9: Claudia Sommer – Internationale Fusion
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="feineDining" data-price="98" data-rating="4.8">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#f0e8f5,#dcc8e8);"></div>
+        <div class="av-emoji">👩‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-gold">⭐ Top-Anbieter</span>
+          <span class="cook-badge badge-dark">Fusion</span>
+          <span class="cook-badge badge-dark">Bis 35 Pers.</span>
+        </div>
+        <div class="cook-name">Claudia Sommer</div>
+        <div class="cook-spec">Privatkoch · Internationale Fusion & Modern Fine Dining</div>
+        <div class="cook-loc">📍 Hamburg, Norddeutschland</div>
+        <div class="cook-chips">
+          <span class="chip gold">Fine Dining</span>
+          <span class="chip">Fusion</span>
+          <span class="chip">Kreativ</span>
+          <span class="chip">Allergiker-freundlich</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.8</div>
+          <div class="cook-reviews">67 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 98 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 3 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 88 € / Person</div>
+        </div>
+        <span class="cook-avail avail-fast">⚡ Antwortet &lt; 2h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Claudia Sommer</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=480&h=210&fit=crop&auto=format" alt="Fusion Around World" loading="lazy"/></div>
+          <div class="menu-name">🌍 Around The World – Reise der Aromen</div>
+          <div class="menu-desc">5-Gänge-Weltreise für 4–12 Personen. Jeder Gang inspiriert von einem anderen Kontinent.</div>
+          <ul class="menu-courses">
+            <li>Peru: Quinoa-Ceviche mit Leche de Tigre</li>
+            <li>Marokko: Harira-Suppe mit Safran</li>
+            <li>Japan: Gyoza mit Yuzu-Butter</li>
+            <li>Frankreich-Indien: Chicken Tikka Confit</li>
+            <li>Mexiko-Österreich: Schokolade-Chili-Tartelette</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">88 € <span>/ Person</span></div>
+            <div class="menu-persons">4–12 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=480&h=210&fit=crop&auto=format" alt="Modern Fine Dining" loading="lazy"/></div>
+          <div class="menu-name">💡 Modern Klassik – Das Signature-Menü</div>
+          <div class="menu-desc">Claudias Signature-Menü: Klassische Gerichte neu interpretiert. 6–20 Personen. Das Beste aus ihrer Küche.</div>
+          <ul class="menu-courses">
+            <li>Gazpacho mit Parmesan-Espuma (neu interpretiert)</li>
+            <li>Nordseekrabben-Bisque mit Trüffelöl</li>
+            <li>Entenbrust mit Miso-Glasur & Kartoffelschaum</li>
+            <li>Ziegenfrischkäse-Parfait mit Honig-Wabe</li>
+            <li>Dunkle Schokolade 72% mit Kardamom-Eis</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">108 € <span>/ Person</span></div>
+            <div class="menu-persons">6–20 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=480&h=210&fit=crop&auto=format" alt="Clean & Conscious" loading="lazy"/></div>
+          <div class="menu-name">🌿 Clean & Conscious Dinner</div>
+          <div class="menu-desc">Allergiker-freundlich, glutenfrei möglich, maximal nährstoffreich. 4–20 Personen.</div>
+          <ul class="menu-courses">
+            <li>Rote-Bete-Carpaccio mit Ziegenkäse & Walnuss</li>
+            <li>Kürbiscremesuppe mit Ingwer & Kokosmilch</li>
+            <li>Wildlachs mit Kräuter-Quinoa & Avocado-Salsa</li>
+            <li>Mandel-Panna Cotta mit Beerenkompott</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">78 € <span>/ Person</span></div>
+            <div class="menu-persons">4–20 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=claudia">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 2 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 10: Dr. Ernst Kellner – Fine Dining & Weinbegleitung
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="feineDining" data-price="125" data-rating="4.9">
+    <div class="cook-head">
+      <div class="cook-avatar">
+        <div class="av-bg" style="background:linear-gradient(135deg,#e8e8f5,#c8c8e0);"></div>
+        <div class="av-emoji">👨‍🍳</div>
+        <div class="verified">✓ Verifiziert</div>
+      </div>
+      <div class="cook-info">
+        <div class="cook-badge-row">
+          <span class="cook-badge badge-gold">⭐ Top-Anbieter</span>
+          <span class="cook-badge badge-dark">Sommelier</span>
+          <span class="cook-badge badge-dark">Bis 30 Pers.</span>
+        </div>
+        <div class="cook-name">Dr. Ernst Kellner</div>
+        <div class="cook-spec">Gourmetkoch & Sommelier · Fine Dining mit Weinbegleitung</div>
+        <div class="cook-loc">📍 Nürnberg, Bayern</div>
+        <div class="cook-chips">
+          <span class="chip gold">Fine Dining</span>
+          <span class="chip">Weinbegleitung</span>
+          <span class="chip">Gourmet</span>
+          <span class="chip">Dessert-Meister</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div>
+          <div class="cook-rating"><span class="stars">★★★★★</span> 4.9</div>
+          <div class="cook-reviews">47 Bewertungen</div>
+        </div>
+        <div>
+          <div class="cook-price-main">ab 125 €</div>
+          <div class="cook-price-sub">/ Stunde · Mindestbuchung 4 Std.</div>
+          <div class="cook-price-sub" style="margin-top:4px;">🍽 Festmenü ab 108 € / Person</div>
+        </div>
+        <span class="cook-avail avail-fast">⚡ Antwortet &lt; 1h</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-title">
+        <h3>🍽 Menüs von Dr. Ernst Kellner</h3>
+        <span style="font-size:12px;color:var(--muted);">3 Pakete verfügbar</span>
+      </div>
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1560717887-3f9bbc3f9d97?w=480&h=210&fit=crop&auto=format" alt="Wine Dinner" loading="lazy"/></div>
+          <div class="menu-name">🍷 Petit Dîner mit Weinbegleitung</div>
+          <div class="menu-desc">4-Gang-Dinner für 2–6 Personen, jeder Gang perfekt auf einen deutschen Wein abgestimmt.</div>
+          <ul class="menu-courses">
+            <li>Jacobsmuscheln mit Erbsenpüree (Grüner Veltliner)</li>
+            <li>Frankfurter Grüne Sauce – neue Interpretation</li>
+            <li>Fränkisches Kalbsfilet mit Morcheln (Spätburgunder)</li>
+            <li>Champagner-Granité mit Erdbeeren</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">108 € <span>/ Person</span></div>
+            <div class="menu-persons">2–6 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card featured">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=480&h=210&fit=crop&auto=format" alt="Grand Gourmet" loading="lazy"/></div>
+          <div class="menu-name">👑 Grand Gourmet Gala</div>
+          <div class="menu-desc">Ernst's Meisterwerk – 7-gängiges Fine-Dining-Erlebnis mit vollständiger Weinbegleitung. 4–16 Pers.</div>
+          <ul class="menu-courses">
+            <li>Beluga-Kaviar Amuse Bouche</li>
+            <li>Hummer-Bisque mit Safran-Crème</li>
+            <li>Entenleberparfait mit Sauternesgeleé</li>
+            <li>Sorbet au Calvados (Zwischengang)</li>
+            <li>Wagyu Rinderfilet Rossini-Art</li>
+            <li>Artisan-Käsewagen (7 Sorten, 3 Länder)</li>
+            <li>Soufflé Grand Marnier (live gebacken)</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">178 € <span>/ Person</span></div>
+            <div class="menu-persons">4–16 Pers.</div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-img"><img src="https://images.unsplash.com/photo-1490476523855-33e21e5a7520?w=480&h=210&fit=crop&auto=format" alt="Weinverkostung" loading="lazy"/></div>
+          <div class="menu-name">🎓 Wein & Dine – Genusserlebnis</div>
+          <div class="menu-desc">Koch-Dinner kombiniert mit Weinverkostung & Vortrag. Bildend und köstlich. 6–20 Pers.</div>
+          <ul class="menu-courses">
+            <li>Verkostung: 6 Weine aus Deutschland & Österreich</li>
+            <li>3-Gang-Menü mit Erläuterungen zu Pairings</li>
+            <li>Käseplatte mit Weinempfehlung</li>
+            <li>Rezeptkarte & Weineinkaufsliste zum Mitnehmen</li>
+          </ul>
+          <div class="menu-footer">
+            <div class="menu-price">115 € <span>/ Person</span></div>
+            <div class="menu-persons">6–20 Pers.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=ernst">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 1 Stunde</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 11: Luisa Conti – Mediterran / Vegetarisch
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="mediterran vegetarisch" data-price="82" data-rating="4.8">
+    <div class="cook-head">
+      <div class="cook-avatar"><div class="av-bg"></div><div class="av-emoji">👩‍🍳</div><div class="verified">✓ Verifiziert</div></div>
+      <div class="cook-info">
+        <div class="cook-name">Luisa Conti</div>
+        <div class="cook-tagline">Mediterrane Küche · Olivenöl, Kräuter & Meeresfrüchte</div>
+        <div class="cook-loc">📍 München · 4 km entfernt</div>
+        <div class="cook-tags">
+          <span class="cook-tag">Mediterran</span><span class="cook-tag">Vegetarisch</span><span class="cook-tag">Meeresfrüchte</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div class="cook-rating">⭐ 4.8 <span style="font-weight:400;font-size:13px;color:var(--muted);">(34)</span></div>
+        <div class="cook-price-tag">ab 82 € <span>/ Person</span></div>
+        <div class="cook-avail">✓ Verfügbar</div>
+      </div>
+    </div>
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=conti">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 2 Stunden</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 12: Kenji Nakamura – Japanisch / Sushi
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="asiatisch japanisch feineDining" data-price="130" data-rating="5.0">
+    <div class="cook-head">
+      <div class="cook-avatar"><div class="av-bg"></div><div class="av-emoji">🍣</div><div class="verified">✓ Verifiziert</div></div>
+      <div class="cook-info">
+        <div class="cook-name">Kenji Nakamura</div>
+        <div class="cook-tagline">Sushi-Meister · Omakase & Teppanyaki</div>
+        <div class="cook-loc">📍 München · 8 km entfernt</div>
+        <div class="cook-tags">
+          <span class="cook-tag">Sushi</span><span class="cook-tag">Japanisch</span><span class="cook-tag">Omakase</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div class="cook-rating">⭐ 5.0 <span style="font-weight:400;font-size:13px;color:var(--muted);">(28)</span></div>
+        <div class="cook-price-tag">ab 130 € <span>/ Person</span></div>
+        <div class="cook-avail">✓ Verfügbar</div>
+      </div>
+    </div>
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=nakamura">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 30 Minuten</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 13: Carlos Romero – Mexikanisch / Tapas
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="mexikanisch" data-price="68" data-rating="4.7">
+    <div class="cook-head">
+      <div class="cook-avatar"><div class="av-bg"></div><div class="av-emoji">🌮</div><div class="verified">✓ Verifiziert</div></div>
+      <div class="cook-info">
+        <div class="cook-name">Carlos Romero</div>
+        <div class="cook-tagline">Mexikanisch & Lateinamerikanisch · Authentische Rezepte</div>
+        <div class="cook-loc">📍 München · 6 km entfernt</div>
+        <div class="cook-tags">
+          <span class="cook-tag">Mexikanisch</span><span class="cook-tag">Tacos</span><span class="cook-tag">Barbacoa</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div class="cook-rating">⭐ 4.7 <span style="font-weight:400;font-size:13px;color:var(--muted);">(52)</span></div>
+        <div class="cook-price-tag">ab 68 € <span>/ Person</span></div>
+        <div class="cook-avail" style="color:var(--muted);">⏳ Nächste Woche</div>
+      </div>
+    </div>
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=romero">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 1 Stunde</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 14: Hannah Bauer – Deutsch / Regional
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="deutsch regional" data-price="65" data-rating="4.8">
+    <div class="cook-head">
+      <div class="cook-avatar"><div class="av-bg"></div><div class="av-emoji">🥩</div><div class="verified">✓ Verifiziert</div></div>
+      <div class="cook-info">
+        <div class="cook-name">Hannah Bauer</div>
+        <div class="cook-tagline">Deutsche Küche · Regional & Saisonal</div>
+        <div class="cook-loc">📍 München · 2 km entfernt</div>
+        <div class="cook-tags">
+          <span class="cook-tag">Deutsch</span><span class="cook-tag">Regional</span><span class="cook-tag">Saisonal</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div class="cook-rating">⭐ 4.8 <span style="font-weight:400;font-size:13px;color:var(--muted);">(67)</span></div>
+        <div class="cook-price-tag">ab 65 € <span>/ Person</span></div>
+        <div class="cook-avail">✓ Sofort buchbar</div>
+      </div>
+    </div>
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=bauer">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 1 Stunde</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       KOCH 15: Ahmad Karimi – Persisch / Orientalisch
+  ══════════════════════════════════════════════════════════ -->
+  <div class="cook-card" data-kueche="orientalisch persisch" data-price="75" data-rating="4.9">
+    <div class="cook-head">
+      <div class="cook-avatar"><div class="av-bg"></div><div class="av-emoji">🫕</div><div class="verified">✓ Verifiziert</div></div>
+      <div class="cook-info">
+        <div class="cook-name">Ahmad Karimi</div>
+        <div class="cook-tagline">Persisch & Orientalisch · Safran, Granatapfel & Pistazien</div>
+        <div class="cook-loc">📍 München · 11 km entfernt</div>
+        <div class="cook-tags">
+          <span class="cook-tag">Persisch</span><span class="cook-tag">Orientalisch</span><span class="cook-tag">Halal</span>
+        </div>
+      </div>
+      <div class="cook-stats">
+        <div class="cook-rating">⭐ 4.9 <span style="font-weight:400;font-size:13px;color:var(--muted);">(43)</span></div>
+        <div class="cook-price-tag">ab 75 € <span>/ Person</span></div>
+        <div class="cook-avail">✓ Verfügbar</div>
+      </div>
+    </div>
+    <div class="cook-actions">
+      
+      <a class="btn-anfragen" href="anfrage-stellen.html?chef=karimi">Anfragen →</a>
+      <a class="btn-anfragen" href="nachrichten.html" style="background:rgba(200,146,42,.12);color:var(--gold);border:1.5px solid rgba(200,146,42,.3);">💬 Nachricht</a>
+      <span class="cook-resp">Antwortet innerhalb von 3 Stunden</span>
+    </div>
+  </div>
+
+
+  <!-- PAGINATION -->
+  <div class="pagination">
+    <button class="page-btn">‹</button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <button class="page-btn">›</button>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+function filterKueche(filter, btn) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('.cook-card');
+  let count = 0;
+  cards.forEach(card => {
+    const k = card.dataset.kueche || '';
+    const show = filter === 'alle' || k.includes(filter);
+    card.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('result-count').textContent = count + ' Köche gefunden';
+}
+
+function sortItems(val) {
+  const list = document.getElementById('cookList');
+  const cards = Array.from(list.querySelectorAll('.cook-card'));
+  cards.sort((a, b) => {
+    if (val === 'rating') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+    if (val === 'price-asc') return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+    if (val === 'price-desc') return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+    return 0;
+  });
+  cards.forEach(c => list.appendChild(c));
+  // Move pagination back to end
+  const pag = list.querySelector('.pagination');
+  if (pag) list.appendChild(pag);
+}
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

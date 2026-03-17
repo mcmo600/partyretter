@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streitigkeiten & Dispute Resolution - Partyretter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C8922A;
+            --dark: #1A1208;
+            --cream: #F5F0E8;
+            --cream2: #EDE8DF;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background-color: var(--cream);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            height: 66px;
+            background-color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo-retter {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #2d1f15 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #e0d5c7;
+            line-height: 1.7;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        /* Process Steps */
+        .process-section {
+            margin-bottom: 80px;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .process-step {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .step-badge {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .process-step h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .process-step p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Form Section */
+        .form-section {
+            margin-bottom: 80px;
+        }
+
+        .form-wrapper {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--dark);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(200, 146, 42, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            background-color: var(--cream2);
+        }
+
+        .file-input-wrapper:hover .file-input-label {
+            border-color: var(--gold);
+            background-color: #faf7f0;
+        }
+
+        .file-input-label svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            color: var(--gold);
+        }
+
+        .file-input-wrapper input[type="file"] {
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #b07a21;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Open Cases Section */
+        .cases-section {
+            margin-bottom: 80px;
+        }
+
+        .case-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .case-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--gold);
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .case-id {
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .case-status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-status-processing {
+            background-color: #fff3e0;
+            color: #ff9800;
+        }
+
+        .case-status-resolved {
+            background-color: #e8f5e9;
+            color: #4caf50;
+        }
+
+        .case-info {
+            margin-bottom: 20px;
+        }
+
+        .case-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 14px;
+            border-bottom: 1px solid var(--cream2);
+        }
+
+        .case-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .case-info-label {
+            font-weight: 600;
+            color: #999;
+        }
+
+        .case-info-value {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--cream2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--gold);
+            width: 50%;
+            transition: width 0.3s ease;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 80px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin-top: 40px;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            padding: 25px;
+            background-color: var(--cream2);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark);
+            transition: background-color 0.3s ease;
+            border: none;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+        }
+
+        .faq-question:hover {
+            background-color: #e5dfd7;
+        }
+
+        .faq-toggle {
+            font-size: 20px;
+            color: var(--gold);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 25px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 80px;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .form-wrapper {
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">
+            MeinParty<span class="nav-logo-retter">Retter</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Startseite</a></li>
+            <li><a href="#services">Dienste</a></li>
+            <li><a href="#disputes">Streitigkeiten</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      <div class="nav-actions">
+      <a class="btn-nav-outline" href="START.html">🗺️ Alle Seiten</a>
+      <a class="btn-nav-outline" href="login.html">Anmelden</a>
+      <a class="btn-nav-cta" href="registrierung.html">Registrieren</a>
+    </div>
+  </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Streitfall melden & lösen</h1>
+        <p>Bei Partyretter nehmen wir Ihre Bedenken ernst. Unser faires Mediationsverfahren stellt sicher, dass alle Parteien gehört werden und gerechte Lösungen gefunden werden.</p>
+    </section>
+
+    <!-- Process Section -->
+    <section class="container process-section">
+        <h2 class="section-title">Unser 4-Schritt Prozess</h2>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-badge">1</div>
+                <h3>Streitfall einreichen</h3>
+                <p>Reichen Sie Ihren Streitfall innerhalb von 24 Stunden nach dem Event ein. Fügen Sie alle relevanten Informationen und Beweise hinzu.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-badge">2</div>
+                <h3>Gegenpartei informieren</h3>
+                <p>Partyretter benachrichtigt automatisch die Gegenpartei über Ihren Streitfall und fordert sie auf, Ihre Sicht darzulegen.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-badge">3</div>
+                <h3>Mediation</h3>
+                <p>Unser Team vermittelt zwischen den Parteien. Dieser Prozess dauert typischerweise 3-5 Werktage und zielt auf eine Einigung ab.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-badge">4</div>
+                <h3>Entscheidung & Erstattung</h3>
+                <p>Wir treffen eine faire Entscheidung und verarbeiten alle notwendigen Erstattungen oder Ausgleichszahlungen sofort.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="container form-section">
+        <h2 class="section-title">Neuen Streitfall einreichen</h2>
+        <div class="form-wrapper">
+            <form id="disputeForm">
+                <div class="form-group">
+                    <label for="bookingNumber">Buchungsnummer *</label>
+                    <input type="text" id="bookingNumber" name="bookingNumber" placeholder="z.B. MPR-2024-0142" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueType">Art des Problems *</label>
+                    <select id="issueType" name="issueType" required>
+                        <option value="">-- Bitte wählen --</option>
+                        <option value="no-show">Anbieter nicht erschienen</option>
+                        <option value="quality">Qualitätsmangel</option>
+                        <option value="payment">Zahlung fehlerhaft</option>
+                        <option value="other">Andere</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Beschreibung *</label>
+                    <textarea id="description" name="description" placeholder="Beschreiben Sie Ihren Streitfall detailliert..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Beweise hochladen</label>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label" for="evidence">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            <span>Dateien hochladen (Fotos, Rechnungen, etc.)</span>
+                        </label>
+                        <input type="file" id="evidence" name="evidence" multiple>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="desiredResolution">Gewünschte Lösung *</label>
+                    <select id="desiredResolution" name="desiredResolution" required>
+                        <option value="">-- Bitte wählen --</option>
+                        <option value="full-refund">Vollständige Erstattung</option>
+                        <option value="partial-refund">Teilerstattung</option>
+                        <option value="service">Nachleistung</option>
+                        <option value="other">Andere</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Streitfall einreichen</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Open Cases Section -->
+    <section class="container cases-section">
+        <h2 class="section-title">Ihre laufenden Fälle</h2>
+        <div class="case-cards">
+            <div class="case-card">
+                <div class="case-header">
+                    <div class="case-id">#MPR-2024-0142</div>
+                    <span class="case-status-badge case-status-processing">In Bearbeitung</span>
+                </div>
+                <div class="case-info">
+                    <div class="case-info-item">
+                        <span class="case-info-label">Buchung:</span>
+                        <span class="case-info-value">Marco Bianchi – Dinner 15 Pers.</span>
+                    </div>
+                    <div class="case-info-item">
+                        <span class="case-info-label">Art des Problems:</span>
+                        <span class="case-info-value">Qualitätsmangel</span>
+                    </div>
+                    <div class="case-info-item">
+                        <span class="case-info-label">Eingereicht:</span>
+                        <span class="case-info-value">10. März 2026</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">Schritt 2 von 4</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container faq-section">
+        <h2 class="section-title">Häufig gestellte Fragen</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Wie lange habe ich Zeit, einen Streitfall einzureichen?</span>
+                    <span class="faq-toggle">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sie haben bis zu 24 Stunden nach dem geplanten Ereignis Zeit, um einen Streitfall einzureichen. Dies gibt beiden Parteien ausreichend Zeit, um ihre Erfahrungen zu dokumentieren und Beweise zu sammeln. Nach dieser Frist können wir Ihren Fall leider nicht mehr bearbeiten.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Welche Beweise sollte ich hochladen?</span>
+                    <span class="faq-toggle">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Je mehr Beweise Sie haben, desto besser. Dies kann folgende Elemente umfassen: Fotos oder Videos vom Event, Nachrichten zwischen Ihnen und dem Anbieter, das Originalangebot, Zahlungsbestätigungen, Rechnungen, E-Mails und Zeugenaussagen. Je detaillierter Ihre Dokumentation, desto schneller können wir zu einer Entscheidung kommen.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Was kostet die Streitbeilegung?</span>
+                    <span class="faq-toggle">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Die Streitbeilegung durch Partyretter ist völlig kostenlos! Es gibt keine versteckten Gebühren oder Provisionen. Unser Mediationsservice ist ein kostenloser Vorteil für alle registrierten Nutzer unserer Plattform, um sicherzustellen, dass faire Lösungen gefunden werden.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Partyretter. Alle Rechte vorbehalten.</p>
+        <p>Datenschutz | Nutzungsbedingungen | Kontakt</p>
+    </footer>
+
+    <script>
+        // FAQ Accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form submission
+        const form = document.getElementById('disputeForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Danke für die Einreichung Ihres Streitfalls! Wir werden ihn in Kürze überprüfen.');
+            form.reset();
+        });
+
+        // File input display
+        const fileInput = document.getElementById('evidence');
+        const fileLabel = document.querySelector('.file-input-label');
+
+        fileInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files.length > 0) {
+                fileLabel.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>${files.length} Datei(en) ausgewählt</span>
+                `;
+            }
+        });
+    </script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

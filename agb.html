@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGB – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1A1208;
+      --dark2: #2d1f0e;
+      --gold: #C8922A;
+      --gold2: #e0a430;
+      --cream: #F5F0E8;
+      --cream2: #EDE8DF;
+      --muted: #888;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); line-height: 1.7; }
+
+    /* NAV */
+    nav {
+      background: var(--dark); height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 900; color: var(--cream); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .nav-logo span { color: var(--gold); }
+    .nav-logo img { height: 36px; width: auto; vertical-align: middle; }
+    .btn-nav { color: rgba(245,240,232,.75); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,.22); transition: all 0.2s; }
+    .btn-nav:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* LAYOUT */
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    /* HERO */
+    .hero {
+      background: var(--dark); color: var(--cream);
+      padding: 40px 24px; margin: -40px -24px 40px -24px;
+      text-align: center; border-bottom: 3px solid var(--gold);
+    }
+    .hero h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: 2rem; margin-bottom: 8px; }
+    .hero p { font-size: 0.95rem; opacity: 0.8; }
+
+    /* TOC */
+    .toc { background: white; border-radius: 12px; border: 1px solid #e8e4dc;
+      padding: 24px; margin-bottom: 40px; }
+    .toc-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .toc-list a { color: var(--gold); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .toc-list a:hover { text-decoration: underline; }
+
+    /* CONTENT */
+    .agb-content { background: white; border-radius: 12px; border: 1px solid #e8e4dc; padding: 32px; }
+    .section { margin-bottom: 32px; }
+    .section-title {
+      font-family: 'Fraunces', serif; font-weight: 900;
+      font-size: 1.3rem; color: var(--dark); margin-bottom: 16px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--gold);
+    }
+    .section-text { font-size: 0.95rem; color: #333; margin-bottom: 12px; }
+    .section-text strong { color: var(--dark); font-weight: 600; }
+    .subsection { margin-top: 16px; padding-left: 20px; }
+    .subsection-title { font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+
+    /* HIGHLIGHT BOX */
+    .highlight { background: rgba(200,146,42,0.08); border-left: 4px solid var(--gold);
+      padding: 16px 20px; margin: 20px 0; border-radius: 6px; }
+    .highlight strong { color: var(--gold); }
+
+    /* BUTTONS */
+    .btn-print { background: var(--gold); color: var(--dark); border: none;
+      padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; margin-top: 30px; transition: all 0.2s; }
+    .btn-print:hover { background: var(--gold2); transform: translateY(-2px); }
+
+    @media (max-width: 700px) {
+      .agb-content { padding: 20px; }
+      .subsection { padding-left: 0; }
+    }
+  
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html"><span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter</a>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <a href="anbieter-onboarding.html" class="btn-nav">← Info für Anbieter</a>
+    <a href="START.html" class="btn-nav">🗺️ Alle Seiten</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="hero">
+    <h1>Allgemeine Geschäftsbedingungen</h1>
+    <p>Partyretter · Alexander Moser · Laupheim · Rechtliche Grundlagen und Nutzungsbedingungen</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Inhaltsverzeichnis</div>
+    <ul class="toc-list">
+      <li><a href="#section1">§1 Geltungsbereich</a></li>
+      <li><a href="#section2">§2 Vertragsschluss</a></li>
+      <li><a href="#section3">§3 Pflichten der Anbieter</a></li>
+      <li><a href="#section3a">§3a Umgehungsverbot – Plattformtreue</a></li>
+      <li><a href="#section4">§4 Pflichten der Nutzer</a></li>
+      <li><a href="#section5">§5 Provisionen und Zahlungen</a></li>
+      <li><a href="#section6">§6 Haftungsausschluss</a></li>
+      <li><a href="#section7">§7 Datenschutz</a></li>
+      <li><a href="#section8">§8 Kündigung</a></li>
+      <li><a href="#section9">§9 Streitschlichtung</a></li>
+      <li><a href="#section10">§10 Gerichtsstand</a></li>
+    </ul>
+  </div>
+
+  <div class="agb-content">
+
+    <div class="section" id="section1">
+      <div class="section-title">§1 Geltungsbereich</div>
+      <div class="section-text">
+        Diese Allgemeinen Geschäftsbedingungen (AGB) regeln die Nutzung der Plattform Partyretter (im Folgenden „Plattform") und der darin angebotenen Dienste. Die Plattform wird betrieben von Alexander Moser, Ulmer Str. 45, 88471 Laupheim (im Folgenden „Betreiber").
+      </div>
+      <div class="section-text">
+        Die Plattform vermittelt zwischen Kunden (Personen, die Catering-, Kochkurs- oder Eventservices buchen) und Anbietern (Köche, Foodtrucks, Lokale, Getränkeanbieter etc.).
+      </div>
+    </div>
+
+    <div class="section" id="section2">
+      <div class="section-title">§2 Vertragsschluss</div>
+      <div class="section-text">
+        Die Registrierung auf der Plattform ist kostenlos. Mit der Registrierung akzeptiert der Nutzer diese AGB. Der Vertrag zwischen Kunde und Anbieter kommt mit der gegenseitigen Bestätigung durch Partyretter zustande.
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">2.1 Registrierung</div>
+        <div class="section-text">
+          Nutzer müssen sich mit gültigen Daten registrieren. Partyretter behält sich das Recht vor, Registrierungen abzulehnen oder zu löschen, wenn Verdacht auf Missbrauch besteht.
+        </div>
+      </div>
+      <div class="subsection">
+        <div class="subsection-title">2.2 Buchungsprozess</div>
+        <div class="section-text">
+          Der Kunde stellt eine Anfrage an den Anbieter. Der Anbieter kann das Angebot annehmen oder ablehnen. Eine Buchung ist erst verbindlich, wenn beide Parteien zugestimmt haben und die Zahlung erfolgt ist.
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section3">
+      <div class="section-title">§3 Pflichten der Anbieter</div>
+      <div class="section-text">
+        Anbieter sind verpflichtet, alle relevanten gesetzlichen Anforderungen einzuhalten, einschließlich:
+      </div>
+      <div class="subsection">
+        <div class="section-text">
+          <strong>• Lebensmittelhygiene & HACCP:</strong> Alle Köche und Caterer müssen eine gültige Belehrung nach § 4 LFBV und Hygiene-Grundkenntnisse nachweisen.
+        </div>
+        <div class="section-text">
+          <strong>• Gewerbeanmeldung:</strong> Jeder Anbieter muss beim zuständigen Amt gewerbe- oder handwerksmäßig angemeldet sein.
+        </div>
+        <div class="section-text">
+          <strong>• Versicherung:</strong> Anbieter müssen über eine gültige Haftpflichtversicherung verfügen.
+        </div>
+        <div class="section-text">
+          <strong>• Qualität & Zuverlässigkeit:</strong> Anbieter müssen sich an verbindliche Zusagen halten und die vereinbarte Leistung erbringen.
+        </div>
+        <div class="section-text">
+          <strong>• Transparenz:</strong> Alle Informationen im Profil müssen vollständig und korrekt sein.
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section3a" style="border:2px solid #C8922A;border-radius:12px;padding:24px 28px;background:rgba(200,146,42,0.04);">
+      <div class="section-title" style="color:#C8922A;">§3a Umgehungsverbot – Plattformtreue</div>
+      <div class="section-text">
+        <strong>Kernpflicht:</strong> Anbieter, die über Partyretter mit Kunden in Kontakt treten, sind verpflichtet, sämtliche daraus resultierenden Buchungen und Zahlungen ausschließlich über die Plattform abzuwickeln.
+      </div>
+      <div class="subsection">
+        <div class="section-text">
+          <strong>• Kontaktverbot außerhalb der Plattform:</strong> Es ist Anbietern untersagt, Kunden, die über Partyretter Kontakt aufgenommen haben, dazu aufzufordern oder zu bewegen, Buchungen, Zahlungen oder Vertragsabschlüsse außerhalb der Plattform durchzuführen.
+        </div>
+        <div class="section-text">
+          <strong>• Geltungsdauer:</strong> Das Umgehungsverbot gilt für einen Zeitraum von <strong>24 Monaten</strong> ab dem ersten Plattform-Kontakt zwischen Anbieter und Kunde, unabhängig davon, ob eine Buchung zustande kam.
+        </div>
+        <div class="section-text">
+          <strong>• Vertragsstrafe:</strong> Bei nachgewiesener Umgehung ist Partyretter berechtigt, eine Vertragsstrafe in Höhe von <strong>20 % des außerhalb der Plattform abgewickelten Transaktionswertes</strong>, mindestens jedoch <strong>250 €</strong>, zu erheben.
+        </div>
+        <div class="section-text">
+          <strong>• Profilsperrung / -löschung:</strong> Partyretter behält sich das Recht vor, das Anbieter-Profil bei einem erstmaligen Verstoß <strong>vorübergehend zu sperren</strong> und bei einem wiederholten oder schwerwiegenden Verstoß <strong>dauerhaft zu löschen</strong>. Ausstehende Auszahlungen werden bis zur Klärung eingefroren.
+        </div>
+        <div class="section-text">
+          <strong>• Meldepflicht für Kunden:</strong> Kunden, die von einem Anbieter aufgefordert werden, außerhalb der Plattform zu bezahlen, werden gebeten, dieses Verhalten über <a href="mailto:support@partyretter.de" style="color:var(--gold);">support@partyretter.de</a> zu melden. Gemeldete Verstöße werden innerhalb von 5 Werktagen geprüft.
+        </div>
+        <div class="section-text">
+          <strong>• Ausnahmen:</strong> Zulässig ist lediglich der Austausch von Logistik-Informationen (Anfahrt, Standort, Aufbauzeiten), die für die Durchführung eines bereits über die Plattform gebuchten Events notwendig sind.
+        </div>
+      </div>
+      <div class="highlight" style="margin-top:16px;background:rgba(200,146,42,0.1);border-color:rgba(200,146,42,0.4);">
+        <strong>⚠️ Hinweis:</strong> Jeder Anbieter bestätigt bei der Registrierung ausdrücklich, diesen Paragraph gelesen, verstanden und akzeptiert zu haben. Ein Verstoß stellt eine wesentliche Vertragsverletzung dar und berechtigt Partyretter zur sofortigen Vertragsauflösung.
+      </div>
+    </div>
+
+    <div class="section" id="section4">
+      <div class="section-title">§4 Pflichten der Nutzer</div>
+      <div class="section-text">
+        Alle Nutzer (Kunden und Anbieter) verpflichten sich:
+      </div>
+      <div class="subsection">
+        <div class="section-text">
+          <strong>• Nur für legale Zwecke</strong> die Plattform zu nutzen
+        </div>
+        <div class="section-text">
+          <strong>• Keine falschen oder irreführenden Informationen</strong> anzugeben
+        </div>
+        <div class="section-text">
+          <strong>• Die Plattform nicht zu hacken, scrapen oder zu missbrauchen</strong>
+        </div>
+        <div class="section-text">
+          <strong>• Verantwortung für ihr Konto</strong> zu übernehmen und Passwörter zu schützen
+        </div>
+        <div class="section-text">
+          <strong>• Alle geltenden Gesetze einzuhalten,</strong> auch nach Vermittlung durch die Plattform
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section5">
+      <div class="section-title">§5 Provisionen und Zahlungen</div>
+      <div class="section-text">
+        Partyretter verdient durch Provisionen auf erfolgreiche Buchungen, die automatisch beim Buchungsabschluss berechnet werden. Die Provisionen betragen je nach gewähltem Plan:
+      </div>
+      <div class="subsection">
+        <div class="section-text">
+          <strong>• Free-Plan: 10 % der Buchungssumme</strong> (Anbieter; erhoben vom Anbieter)
+        </div>
+        <div class="section-text">
+          <strong>• Pro-Plan: 6 % der Buchungssumme</strong> (Anbieter, zzgl. monatlichem Pauschalentgelt)
+        </div>
+        <div class="section-text">
+          <strong>• Premium-Plan: 4 % der Buchungssumme</strong> (Anbieter, zzgl. monatlichem Pauschalentgelt)
+        </div>
+        <div class="section-text">
+          <strong>• Servicegebühr für Kunden:</strong> Eine Servicegebühr von bis zu 5 % kann von Kunden erhoben werden; dies wird beim Checkout transparent ausgewiesen.
+        </div>
+      </div>
+      <div class="section-text" style="margin-top:16px;">
+        Die Zahlung erfolgt sicher über den Partyretter Payment-Service. Bei Buchungen unter 300 € erfolgt die vollständige Zahlung sofort; ab 300 € wird eine Anzahlung von 30 % fällig. Anbieter erhalten Auszahlungen innerhalb von 24 Stunden nach Event-Abschluss auf ihr hinterlegtes Bankkonto.
+      </div>
+    </div>
+
+    <div class="section" id="section6">
+      <div class="section-title">§6 Haftungsausschluss</div>
+      <div class="highlight">
+        <strong>WICHTIG:</strong> Partyretter stellt Informationen zu gesetzlichen Anforderungen lediglich als Orientierungshilfe <strong>ohne Gewähr</strong> zur Verfügung. Die Informationen sind nicht vollständig und erheben keinen Anspruch auf Rechtssicherheit. Jeder Anbieter ist selbst dafür verantwortlich, alle geltenden Gesetze und Verordnungen einzuhalten.
+      </div>
+      <div class="section-text" style="margin-top:20px;">
+        <strong>Weitere Haftungsausschlüsse:</strong>
+      </div>
+      <div class="subsection">
+        <div class="section-text">
+          Partyretter haftet nicht für Qualitätsmängel bei der Erbringung von Services, sofern diese von Anbietern verursacht werden.
+        </div>
+        <div class="section-text">
+          Partyretter haftet nicht für Datenverlust, Ausfallzeiten oder Sicherheitsverletzungen, soweit dies gesetzlich zulässig ist.
+        </div>
+        <div class="section-text">
+          Partyretter haftet nicht für Zwistigkeiten zwischen Kunden und Anbietern, die sich aus dem Services ergeben.
+        </div>
+        <div class="section-text">
+          Anbieter haften selbst für alle Schäden, die durch ihre Leistung entstehen, einschließlich Lebensmittelbedingte Erkrankungen.
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section7">
+      <div class="section-title">§7 Datenschutz</div>
+      <div class="section-text">
+        Die Verarbeitung personenbezogener Daten erfolgt gemäß der <strong>Datenschutzerklärung</strong> von Partyretter (verfügbar auf der Website). Nutzer akzeptieren die Speicherung und Verarbeitung ihrer Daten für die Funktionalität der Plattform.
+      </div>
+      <div class="section-text">
+        Kundenkonaktdaten werden nicht öffentlich gemacht. Angebote und Anfragen erfolgen über die sichere Chat-Funktion der Plattform.
+      </div>
+    </div>
+
+    <div class="section" id="section8">
+      <div class="section-title">§8 Kündigung</div>
+      <div class="section-text">
+        Nutzer können ihr Konto jederzeit kündigen. Eine Kündigung erfolgt über die Kontoeinstellungen oder per E-Mail an support@partyretter.de.
+      </div>
+      <div class="section-text">
+        Nach Kündigung können keine neuen Buchungen mehr vorgenommen werden. Bestehende Buchungen bleiben gültig und müssen erfüllt werden.
+      </div>
+      <div class="section-text">
+        Partyretter kann Konten kündigen, wenn Nutzer gegen diese AGB verstoßen oder sich illegal verhalten.
+      </div>
+    </div>
+
+    <div class="section" id="section9">
+      <div class="section-title">§9 Streitschlichtung</div>
+      <div class="section-text">
+        Bei Streitigkeiten werden die Parteien zuerst versuchen, das Problem im direkten Dialog zu lösen. Partyretter kann als Vermittler fungieren, aber nicht als Schiedsrichter.
+      </div>
+      <div class="section-text">
+        Für Beschwerden steht ein Beschwerdeverfahren über die Plattform zur Verfügung. Partyretter wird Beschwerden innerhalb von 14 Tagen prüfen.
+      </div>
+    </div>
+
+    <div class="section" id="section10">
+      <div class="section-title">§10 Gerichtsstand</div>
+      <div class="section-text">
+        Diese AGB und alle Verträge unterliegen dem Recht der Bundesrepublik Deutschland. Gerichtsstand für Kaufleute und juristische Personen ist Ulm (Baden-Württemberg). Gegenüber Verbrauchern gilt der gesetzliche Gerichtsstand.
+      </div>
+      <div class="section-text">
+        Anwendbar ist das Bürgerliche Gesetzbuch (BGB), die Verordnung (EU) 2016/679 (Datenschutz-Grundverordnung) und alle relevanten Bundesgesetze.
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:40px;">
+      <strong>Letzte Änderung:</strong> März 2026 · <strong>Status:</strong> Gültig ab Sofort
+    </div>
+
+    <button class="btn-print" onclick="window.print()">🖨️ Drucken</button>
+
+  </div>
+</div>
+
+<footer style="background:var(--dark);color:rgba(245,240,232,0.55);padding:40px 40px 24px;margin-top:auto;">
+  <div style="max-width:1260px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;margin-bottom:32px;justify-content:space-between;">
+      <div style="min-width:200px;">
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--cream);margin-bottom:10px;"><img src="logo-v2.svg" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;filter:brightness(0) invert(1);"></div>
+        <p style="font-size:13px;line-height:1.6;max-width:240px;">Die Plattform für professionelles Event-Catering in Deutschland.</p>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Kunden</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <a href="marktplatz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Marktplatz</a>
+          <a href="kochevents.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Koch-Events</a>
+          <a href="foodtruck-karte.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Foodtruck-Karte</a>
+          <a href="event-ausschreiben.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Event ausschreiben</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Anbieter</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <a href="anbieter-onboarding.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter werden</a>
+          <a href="registrierung.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Registrierung</a>
+          <a href="anbieter-profil.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter-Profil</a>
+          <a href="buchhaltung.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Buchhaltung</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Rechtliches</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <a href="agb.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">AGB</a>
+          <a href="datenschutz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Datenschutz</a>
+          <a href="impressum.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Impressum</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(245,240,232,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <div style="font-size:12.5px;">© 2026 Partyretter. Alle Rechte vorbehalten.</div>
+      <div style="font-size:12px;">🍽️ Made with ❤️ für perfekte Events</div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

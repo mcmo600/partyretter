@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anbieter-Setup – Partyretter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--green:#2D7D46}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh}
+
+/* TOP BAR */
+.top-bar{background:var(--dark);padding:16px 40px;display:flex;align-items:center;justify-content:space-between}
+.logo-text{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.2rem}
+.logo-text span{color:white}
+.top-bar-note{color:#aaa;font-size:.85rem}
+
+/* PROGRESS */
+.progress-outer{background:var(--dark2);padding:24px 40px}
+.progress-steps{display:flex;gap:0;max-width:800px;margin:0 auto;position:relative}
+.progress-steps::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:rgba(255,255,255,.15)}
+.progress-fill{position:absolute;top:18px;left:0;height:2px;background:var(--gold);transition:width .5s ease}
+.step{flex:1;text-align:center;position:relative;z-index:1}
+.step-circle{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.2);background:var(--dark2);color:#aaa;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;transition:all .3s}
+.step.done .step-circle{background:var(--green);border-color:var(--green);color:white}
+.step.active .step-circle{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+.step-label{font-size:.75rem;color:#aaa;white-space:nowrap}
+.step.active .step-label{color:white;font-weight:600}
+
+/* CONTENT */
+.wizard-wrap{max-width:760px;margin:50px auto;padding:0 20px 80px}
+.wizard-card{background:white;border-radius:24px;padding:50px;box-shadow:0 8px 40px rgba(0,0,0,.08);animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.step-badge{display:inline-block;background:var(--cream2);color:var(--gold);font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;letter-spacing:.05em}
+.wizard-card h2{font-family:'Fraunces',serif;font-weight:900;font-size:2rem;margin-bottom:8px}
+.wizard-card .sub{color:#777;font-size:.95rem;margin-bottom:36px;line-height:1.6}
+
+/* FORM ELEMENTS */
+.form-row{margin-bottom:22px}
+.form-row label{display:block;font-weight:600;font-size:.9rem;margin-bottom:8px;color:var(--dark)}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:13px 16px;border:2px solid var(--cream2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--dark);outline:none;transition:border-color .2s;background:white}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--gold)}
+.form-row textarea{height:110px;resize:vertical}
+.form-hint{font-size:.8rem;color:#999;margin-top:5px}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* TYPE CHIPS */
+.type-chips{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+.type-chip{border:2px solid var(--cream2);border-radius:16px;padding:20px 18px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:14px}
+.type-chip:hover{border-color:var(--gold);background:var(--cream)}
+.type-chip.selected{border-color:var(--gold);background:rgba(200,146,42,.06)}
+.type-chip-icon{font-size:2rem;flex-shrink:0}
+.type-chip-text strong{display:block;font-size:.95rem;margin-bottom:3px}
+.type-chip-text span{font-size:.8rem;color:#888;line-height:1.4}
+.type-chip .check{display:none;margin-left:auto;background:var(--gold);color:white;width:22px;height:22px;border-radius:50%;font-size:.75rem;align-items:center;justify-content:center;flex-shrink:0}
+.type-chip.selected .check{display:flex}
+
+/* CUISINE CHIPS */
+.cuisine-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+.cchip{border:2px solid var(--cream2);border-radius:50px;padding:8px 18px;cursor:pointer;font-size:.88rem;transition:all .2s}
+.cchip:hover{border-color:var(--gold)}
+.cchip.active{background:var(--gold);border-color:var(--gold);color:white;font-weight:600}
+
+/* PHOTO UPLOAD */
+.photo-upload-area{border:2px dashed var(--cream2);border-radius:16px;padding:40px;text-align:center;cursor:pointer;transition:all .3s;position:relative}
+.photo-upload-area:hover{border-color:var(--gold);background:var(--cream)}
+.photo-upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:2.5rem;margin-bottom:12px}
+.upload-text{font-weight:600;margin-bottom:6px}
+.upload-sub{font-size:.85rem;color:#999}
+.photo-previews{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.photo-thumb{aspect-ratio:1;border-radius:10px;background:var(--cream2);border:2px solid transparent;overflow:hidden}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+
+/* PLAN MINI */
+.plan-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px}
+.plan-mini{border:2px solid var(--cream2);border-radius:16px;padding:20px 16px;cursor:pointer;transition:all .25s;text-align:center}
+.plan-mini:hover{border-color:var(--gold)}
+.plan-mini.selected{border-color:var(--gold);background:rgba(200,146,42,.06)}
+.plan-mini h4{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:4px}
+.plan-mini .price{font-size:.85rem;color:#888;margin-bottom:10px}
+.plan-mini .popular-badge{display:inline-block;background:var(--gold);color:white;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px}
+
+/* SUCCESS */
+.success-wrap{text-align:center;padding:20px 0}
+.success-icon{font-size:5rem;margin-bottom:20px;animation:pop .5s cubic-bezier(.17,.89,.32,1.28)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success-wrap h2{font-family:'Fraunces',serif;font-weight:900;font-size:2.2rem;margin-bottom:12px;color:var(--dark)}
+.success-wrap p{color:#666;font-size:1rem;line-height:1.7;margin-bottom:32px;max-width:450px;margin-left:auto;margin-right:auto}
+.checklist-done{background:var(--cream);border-radius:16px;padding:24px;text-align:left;margin-bottom:32px}
+.checklist-done h4{font-weight:700;margin-bottom:16px;font-size:.95rem}
+.checklist-done-item{display:flex;align-items:center;gap:12px;padding:8px 0;font-size:.9rem;border-bottom:1px solid var(--cream2)}
+.checklist-done-item:last-child{border:none}
+.checklist-done-item .ck{color:var(--green);font-size:1.1rem}
+
+/* NAV BUTTONS */
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:36px}
+.btn-back{background:transparent;border:2px solid var(--cream2);color:#666;padding:13px 28px;border-radius:12px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-back:hover{border-color:var(--gold);color:var(--gold)}
+.btn-next{background:var(--gold);color:var(--dark);border:none;padding:13px 36px;border-radius:12px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-next:hover{background:var(--gold2)}
+.btn-next:disabled{opacity:.4;cursor:not-allowed}
+.progress-text{font-size:.85rem;color:#999}
+
+/* RANGE */
+.range-row{display:flex;align-items:center;gap:16px}
+.range-row input[type=range]{flex:1;height:6px;accent-color:var(--gold)}
+.range-val{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;color:var(--gold);width:80px;text-align:right}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo-text">Mein<span>Party</span>Retter</div>
+  <div class="top-bar-note">⏱ In ca. 5 Minuten fertig</div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-outer">
+  <div class="progress-steps" id="progressSteps">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    <div class="step active" id="ps1"><div class="step-circle">1</div><div class="step-label">Anbieter-Typ</div></div>
+    <div class="step" id="ps2"><div class="step-circle">2</div><div class="step-label">Profil</div></div>
+    <div class="step" id="ps3"><div class="step-circle">3</div><div class="step-label">Küche & Stil</div></div>
+    <div class="step" id="ps4"><div class="step-circle">4</div><div class="step-label">Fotos</div></div>
+    <div class="step" id="ps5"><div class="step-circle">5</div><div class="step-label">Plan & Preise</div></div>
+    <div class="step" id="ps6"><div class="step-circle">6</div><div class="step-label">Fertig! 🎉</div></div>
+  </div>
+</div>
+
+<div class="wizard-wrap">
+  <div class="wizard-card" id="wizardCard">
+
+    <!-- STEP 1: TYPE -->
+    <div id="step1">
+      <div class="step-badge">SCHRITT 1 VON 5</div>
+      <h2>Was bietest du an?</h2>
+      <p class="sub">Wähle deinen Anbieter-Typ. Du kannst mehrere Kategorien kombinieren.</p>
+      <div class="type-chips">
+        <div class="type-chip" onclick="toggleType(this)">
+          <div class="type-chip-icon">👨‍🍳</div>
+          <div class="type-chip-text"><strong>Privatkoch</strong><span>Kochen beim Kunden zuhause, persönliche Events, Abendessen</span></div>
+          <div class="check">✓</div>
+        </div>
+        <div class="type-chip" onclick="toggleType(this)">
+          <div class="type-chip-icon">🚚</div>
+          <div class="type-chip-text"><strong>Foodtruck</strong><span>Mobile Küche für Feste, Märkte, Firmenevents</span></div>
+          <div class="check">✓</div>
+        </div>
+        <div class="type-chip" onclick="toggleType(this)">
+          <div class="type-chip-icon">🍽️</div>
+          <div class="type-chip-text"><strong>Catering-Service</strong><span>Buffets, Menüs & Vollservice für Gruppen</span></div>
+          <div class="check">✓</div>
+        </div>
+        <div class="type-chip" onclick="toggleType(this)">
+          <div class="type-chip-icon">🍰</div>
+          <div class="type-chip-text"><strong>Konditor / Bäcker</strong><span>Torten, Pâtisserie, Hochzeitstorten, Gebäck</span></div>
+          <div class="check">✓</div>
+        </div>
+        <div class="type-chip" onclick="toggleType(this)">
+          <div class="type-chip-icon">🥂</div>
+          <div class="type-chip-text"><strong>Getränke & Bar</strong><span>Cocktailbar, Barista, Weinberatung, Sekttaxi</span></div>
+          <div class="check">✓</div>
+        </div>
+        <div class="type-chip" onclick="toggleType(this)">
+          <div class="type-chip-icon">👨‍💼</div>
+          <div class="type-chip-text"><strong>Servicepersonal</strong><span>Kellner, Barkeeper, Event-Hosts auf Stundenbasis</span></div>
+          <div class="check">✓</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <div></div>
+        <div>
+          <span class="progress-text">Schritt 1 von 5</span>&nbsp;&nbsp;
+          <button class="btn-next" onclick="goStep(2)">Weiter →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: PROFILE -->
+    <div id="step2" style="display:none">
+      <div class="step-badge">SCHRITT 2 VON 5</div>
+      <h2>Dein Profil</h2>
+      <p class="sub">Diese Informationen erscheinen auf deinem öffentlichen Profil. Mach dir keine Sorgen – du kannst alles später ändern.</p>
+      <div class="form-row">
+        <label>Name oder Unternehmensname *</label>
+        <input type="text" placeholder="z.B. „Küchenzauberei Max Muster" oder „Foodtruck Bella Italia"">
+      </div>
+      <div class="form-row">
+        <label>Kurzvorstellung (erscheint unter deinem Namen)</label>
+        <textarea placeholder="Beschreibe kurz, was du besonders macht. z.B. „Ich bringe das Mittelmeer in dein Wohnzimmer – frisch, saisonal, mit Leidenschaft""></textarea>
+        <div class="form-hint">Tipp: 2–3 Sätze reichen. Persönliche Geschichten performen besser als Bullet Points.</div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-row" style="margin-bottom:0">
+          <label>PLZ / Standort *</label>
+          <input type="text" placeholder="z.B. 70173 Stuttgart">
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <label>Aktionsradius (km)</label>
+          <div class="range-row">
+            <input type="range" min="10" max="200" value="50" oninput="document.getElementById('rval').textContent=this.value+' km'">
+            <span class="range-val" id="rval">50 km</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Telefonnummer (nur für Buchungsanfragen sichtbar)</label>
+        <input type="tel" placeholder="+49 170 1234567">
+      </div>
+      <div class="form-row">
+        <label>Website oder Instagram (optional)</label>
+        <input type="url" placeholder="z.B. https://www.meineküche.de oder @meinprofil">
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(1)">← Zurück</button>
+        <div>
+          <span class="progress-text">Schritt 2 von 5</span>&nbsp;&nbsp;
+          <button class="btn-next" onclick="goStep(3)">Weiter →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: CUISINE -->
+    <div id="step3" style="display:none">
+      <div class="step-badge">SCHRITT 3 VON 5</div>
+      <h2>Küchenstil & Spezialisierung</h2>
+      <p class="sub">Was kochst du am liebsten? Wähle alle passenden Kategorien – das hilft Kunden, dich zu finden.</p>
+      <div class="form-row">
+        <label>Küchenstile (Mehrfachauswahl)</label>
+        <div class="cuisine-chips">
+          <div class="cchip active" onclick="this.classList.toggle('active')">🇮🇹 Italienisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🇩🇪 Deutsch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🇯🇵 Japanisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🇲🇽 Mexikanisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🇮🇳 Indisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🥩 BBQ & Grill</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🥗 Vegan</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🌿 Vegetarisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🐟 Meeresfrüchte</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🍣 Sushi</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🥐 Französisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🫕 Orientalisch</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🥘 Tapas & Mezze</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🍰 Patisserie</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Für welche Anlässe bist du besonders geeignet?</label>
+        <div class="cuisine-chips">
+          <div class="cchip" onclick="this.classList.toggle('active')">💍 Hochzeit</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🎂 Geburtstag</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🏢 Firmenevent</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">🍽️ Privatdinner</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🎉 Party</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🎓 Abschlussfeier</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">🍷 Weinabend</div>
+          <div class="cchip" onclick="this.classList.toggle('active')">👨‍🍳 Kochkurs</div>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-row" style="margin-bottom:0">
+          <label>Mindestgästeanzahl</label>
+          <input type="number" placeholder="z.B. 2" value="2" min="1">
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <label>Maximale Gästeanzahl</label>
+          <input type="number" placeholder="z.B. 50" value="20" min="1">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(2)">← Zurück</button>
+        <div>
+          <span class="progress-text">Schritt 3 von 5</span>&nbsp;&nbsp;
+          <button class="btn-next" onclick="goStep(4)">Weiter →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: PHOTOS -->
+    <div id="step4" style="display:none">
+      <div class="step-badge">SCHRITT 4 VON 5</div>
+      <h2>Zeig dein Können 📸</h2>
+      <p class="sub">Anbieter mit Fotos erhalten <strong>3x mehr Anfragen</strong>. Lade mindestens 3 Bilder hoch – am besten von deinen besten Gerichten.</p>
+      <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+        <input type="file" id="photoInput" multiple accept="image/*" onchange="previewPhotos(this)">
+        <div class="upload-icon">📸</div>
+        <div class="upload-text">Klicke hier oder ziehe Fotos rein</div>
+        <div class="upload-sub">JPG, PNG oder WEBP · Max. 5 MB pro Bild · Empfohlen: 1200×800 px</div>
+      </div>
+      <div class="photo-previews" id="photoPreviews"></div>
+      <div style="background:var(--cream);border-radius:12px;padding:20px;margin-top:24px">
+        <strong style="font-size:.9rem;display:block;margin-bottom:10px">📸 Foto-Tipps vom Team:</strong>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85rem;color:#666">
+          <span>✓ Natürliches Tageslicht nutzen</span>
+          <span>✓ Nahaufnahmen von Gerichten</span>
+          <span>✓ Aktionsfotos beim Kochen</span>
+          <span>✓ Gedeckter Tisch vor Ort</span>
+          <span>✓ Glückliche Gäste (mit Erlaubnis)</span>
+          <span>✗ Keine unscharfen oder dunklen Fotos</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(3)">← Zurück</button>
+        <div>
+          <span class="progress-text">Schritt 4 von 5</span>&nbsp;&nbsp;
+          <button class="btn-next" onclick="goStep(5)">Weiter →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: PLAN -->
+    <div id="step5" style="display:none">
+      <div class="step-badge">SCHRITT 5 VON 5</div>
+      <h2>Plan & erste Preise</h2>
+      <p class="sub">Wähle deinen Start-Plan. Du kannst jederzeit wechseln.</p>
+      <div class="plan-mini-grid">
+        <div class="plan-mini" onclick="selectPlan(this)">
+          <h4>Free</h4>
+          <div class="price">0 € / Monat<br>+ 10 % Provision</div>
+          <div style="font-size:.8rem;color:#888">Zum Kennenlernen</div>
+        </div>
+        <div class="plan-mini selected" onclick="selectPlan(this)">
+          <div class="popular-badge">⭐ EMPFOHLEN</div>
+          <h4 style="color:var(--gold)">Pro</h4>
+          <div class="price">39 € / Monat<br>+ 6 % Provision</div>
+          <div style="font-size:.8rem;color:#888">Für aktive Anbieter</div>
+        </div>
+        <div class="plan-mini" onclick="selectPlan(this)">
+          <h4>Premium</h4>
+          <div class="price">79 € / Monat<br>+ 4 % Provision</div>
+          <div style="font-size:.8rem;color:#888">Maximale Sichtbarkeit</div>
+        </div>
+      </div>
+      <p style="font-size:.8rem;color:#999;margin-bottom:30px"><a href="preise.html" style="color:var(--gold)">Alle Plan-Details vergleichen →</a></p>
+
+      <div class="form-row">
+        <label>Dein Einstiegspreis (ab wie viel € buchst du?)</label>
+        <div class="range-row">
+          <input type="range" min="50" max="2000" step="25" value="250" oninput="document.getElementById('pval').textContent='ab '+this.value+' €'">
+          <span class="range-val" id="pval">ab 250 €</span>
+        </div>
+        <div class="form-hint">Dies erscheint auf deinem Profil als Richtwert. Du kannst für jede Anfrage individuell anbieten.</div>
+      </div>
+
+      <!-- SERVICEPERSONAL PREIS (zeigt sich wenn Typ gewählt) -->
+      <div class="form-row" id="service-staff-row" style="background:rgba(200,146,42,0.06);border:1.5px solid rgba(200,146,42,0.25);border-radius:12px;padding:16px 18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <label style="margin-bottom:0;font-weight:700;color:var(--dark);">👨‍💼 Servicepersonal anbieten</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--gold);">
+            <input type="checkbox" id="service-toggle" onchange="toggleServicePrices(this)" style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;" checked>
+            Ja, ich stelle auch Personal
+          </label>
+        </div>
+        <div id="service-prices" style="display:flex;flex-wrap:wrap;gap:14px;">
+          <div style="flex:1;min-width:150px;">
+            <div style="font-size:12px;font-weight:600;color:#888;margin-bottom:6px;">Kellner / Service</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-weight:700;color:var(--dark);">€</span>
+              <input type="number" value="18" min="10" max="80"
+                style="width:70px;padding:8px 10px;border:2px solid #e0dbd2;border-radius:8px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--dark);outline:none;"
+                onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e0dbd2'">
+              <span style="font-size:13px;color:#888;">/ Std.</span>
+            </div>
+          </div>
+          <div style="flex:1;min-width:150px;">
+            <div style="font-size:12px;font-weight:600;color:#888;margin-bottom:6px;">Barkeeper / Cocktails</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-weight:700;color:var(--dark);">€</span>
+              <input type="number" value="25" min="10" max="100"
+                style="width:70px;padding:8px 10px;border:2px solid #e0dbd2;border-radius:8px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--dark);outline:none;"
+                onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e0dbd2'">
+              <span style="font-size:13px;color:#888;">/ Std.</span>
+            </div>
+          </div>
+          <div style="flex:1;min-width:150px;">
+            <div style="font-size:12px;font-weight:600;color:#888;margin-bottom:6px;">Mindest-Stunden</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" value="4" min="1" max="12"
+                style="width:70px;padding:8px 10px;border:2px solid #e0dbd2;border-radius:8px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--dark);outline:none;"
+                onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='#e0dbd2'">
+              <span style="font-size:13px;color:#888;">Std. min.</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:#aaa;">💡 Preise erscheinen auf deinem Profil. Kunden können direkt Personal dazubuchen.</div>
+      </div>
+
+      <div class="form-row">
+        <label>Verfügbarkeit – wann bist du buchbar?</label>
+        <div class="cuisine-chips">
+          <div class="cchip active" onclick="this.classList.toggle('active')">Mo</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">Di</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">Mi</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">Do</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">Fr</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">Sa</div>
+          <div class="cchip active" onclick="this.classList.toggle('active')">So</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Buchungsvorlauf (wie viele Tage vorher müssen Kunden buchen?)</label>
+        <select>
+          <option>24 Stunden</option>
+          <option selected>3 Tage</option>
+          <option>1 Woche</option>
+          <option>2 Wochen</option>
+          <option>4 Wochen</option>
+        </select>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(4)">← Zurück</button>
+        <div>
+          <span class="progress-text">Fast geschafft!</span>&nbsp;&nbsp;
+          <button class="btn-next" onclick="goStep(6)">Profil veröffentlichen 🚀</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: SUCCESS -->
+    <div id="step6" style="display:none">
+      <div class="success-wrap">
+        <div class="success-icon">🎉</div>
+        <h2>Willkommen bei Partyretter!</h2>
+        <p>Dein Profil ist jetzt aktiv. Kunden können dich ab sofort finden und anfragen. Wir freuen uns, dich in der Partyretter-Familie zu haben!</p>
+
+        <div class="checklist-done">
+          <h4>✅ Was du gerade eingerichtet hast:</h4>
+          <div class="checklist-done-item"><span class="ck">✓</span> Anbieter-Typ ausgewählt</div>
+          <div class="checklist-done-item"><span class="ck">✓</span> Profil mit Beschreibung</div>
+          <div class="checklist-done-item"><span class="ck">✓</span> Küchenstile & Anlässe definiert</div>
+          <div class="checklist-done-item"><span class="ck">✓</span> Fotos hochgeladen</div>
+          <div class="checklist-done-item"><span class="ck">✓</span> Preise & Verfügbarkeit gesetzt</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:500px;margin:0 auto">
+          <a href="anbieter-profil.html" style="display:block;background:var(--gold);color:var(--dark);text-decoration:none;padding:14px 20px;border-radius:12px;font-weight:700;font-size:.95rem;text-align:center">Mein Profil öffnen</a>
+          <a href="anbieter-dashboard.html" style="display:block;background:white;color:var(--dark);text-decoration:none;padding:14px 20px;border-radius:12px;font-weight:700;font-size:.95rem;border:2px solid var(--cream2);text-align:center">Zum Dashboard</a>
+        </div>
+
+        <div style="margin-top:30px;background:rgba(200,146,42,.08);border:1px solid rgba(200,146,42,.2);border-radius:12px;padding:20px;text-align:left">
+          <strong style="font-size:.9rem;color:var(--gold)">💡 Nächste Schritte:</strong>
+          <div style="margin-top:12px;font-size:.85rem;color:#666;line-height:2">
+            1. Dein erstes Menü anlegen → <a href="menu-erstellen.html" style="color:var(--gold)">Menü erstellen</a><br>
+            2. Gesundheitszeugnis hochladen → <a href="anbieter-onboarding.html" style="color:var(--gold)">Dokumente</a><br>
+            3. Dein erstes Koch-Event ausschreiben → <a href="event-anlegen.html" style="color:var(--gold)">Event anlegen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 5;
+
+function goStep(n) {
+  document.getElementById('step' + currentStep).style.display = 'none';
+  document.getElementById('step' + n).style.display = 'block';
+
+  // Update progress dots
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById('ps' + i);
+    el.classList.remove('active', 'done');
+    if (i < n) el.classList.add('done');
+    if (i === n) el.classList.add('active');
+    if (i < n) el.querySelector('.step-circle').textContent = '✓';
+    else if (i === n) el.querySelector('.step-circle').textContent = i;
+    else el.querySelector('.step-circle').textContent = i;
+  }
+
+  // Update fill
+  const pct = Math.min(((n - 1) / totalSteps) * 100, 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  currentStep = n;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function toggleType(el) {
+  el.classList.toggle('selected');
+}
+
+function selectPlan(el) {
+  document.querySelectorAll('.plan-mini').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleServicePrices(cb) {
+  document.getElementById('service-prices').style.display = cb.checked ? 'flex' : 'none';
+}
+
+function previewPhotos(input) {
+  const container = document.getElementById('photoPreviews');
+  container.innerHTML = '';
+  Array.from(input.files).slice(0, 8).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const div = document.createElement('div');
+      div.className = 'photo-thumb';
+      div.innerHTML = `<img src="${e.target.result}" alt="Vorschau">`;
+      container.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

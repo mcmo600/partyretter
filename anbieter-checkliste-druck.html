@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anbieter-Checkliste – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1A1208;
+      --gold: #C8922A;
+      --cream: #F5F0E8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ===== SCREEN ONLY ===== */
+    @media screen {
+      .screen-header {
+        background: var(--dark);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .screen-header a {
+        color: rgba(255,255,255,0.6);
+        text-decoration: none;
+        font-size: 13px;
+      }
+      .screen-header a:hover { color: var(--gold); }
+      .screen-header .sep { color: rgba(255,255,255,0.3); }
+      .screen-header .logo-img { height: 28px; width: auto; }
+
+      .screen-controls {
+        background: white;
+        border-bottom: 1.5px solid #e8e2d8;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .screen-controls h1 {
+        font-family: 'Fraunces', serif;
+        font-size: 1.25rem;
+        font-weight: 900;
+        margin-right: auto;
+      }
+      .btn-print {
+        background: var(--gold);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'DM Sans', sans-serif;
+      }
+      .btn-print:hover { background: #b07a20; }
+
+      /* Type selector tabs */
+      .type-tabs {
+        background: white;
+        border-bottom: 2px solid #e8e2d8;
+        padding: 0 24px;
+        display: flex;
+        gap: 0;
+        overflow-x: auto;
+      }
+      .type-tab {
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        white-space: nowrap;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        font-family: 'DM Sans', sans-serif;
+      }
+      .type-tab.active {
+        color: var(--gold);
+        border-bottom-color: var(--gold);
+      }
+
+      /* Progress bar */
+      .progress-bar-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: white;
+        border-bottom: 1.5px solid #e8e2d8;
+        padding: 10px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      }
+      .progress-bar-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--dark);
+        white-space: nowrap;
+        min-width: 110px;
+      }
+      .progress-bar-track {
+        flex: 1;
+        height: 10px;
+        background: #ede8df;
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, var(--gold), #e0a830);
+        transition: width 0.35s ease;
+        width: 0%;
+      }
+      .progress-bar-pct {
+        font-family: 'Fraunces', serif;
+        font-size: 1.1rem;
+        font-weight: 900;
+        color: var(--gold);
+        min-width: 48px;
+        text-align: right;
+      }
+      .progress-bar-done {
+        font-size: 12px;
+        color: #aaa;
+        white-space: nowrap;
+      }
+      .progress-bar-reset {
+        font-size: 12px;
+        color: #bbb;
+        cursor: pointer;
+        padding: 4px 8px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: none;
+        font-family: 'DM Sans', sans-serif;
+        white-space: nowrap;
+      }
+      .progress-bar-reset:hover { color: var(--gold); border-color: var(--gold); }
+
+      .content { max-width: 860px; margin: 0 auto; padding: 32px 24px 60px; }
+      .print-hint {
+        background: rgba(200,146,42,0.08);
+        border: 1.5px solid rgba(200,146,42,0.25);
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 13px;
+        color: #7a4f00;
+        margin-bottom: 28px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    /* Type sections */
+    .type-section { display: none; }
+    .type-section.active { display: block; }
+
+    /* ===== SHARED LAYOUT ===== */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--dark);
+    }
+    .page-header-icon { font-size: 44px; flex-shrink: 0; }
+    .page-header h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+    .page-header p { font-size: 13.5px; color: #666; }
+    .page-header .header-meta {
+      margin-left: auto;
+      text-align: right;
+      font-size: 11.5px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+    .page-header .header-meta strong {
+      display: block;
+      font-size: 13px;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    /* Category heading */
+    .cat-heading {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 28px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #ddd;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Checklist item */
+    .cl-item {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #ede8df;
+    }
+    .cl-item:last-child { border-bottom: none; }
+
+    .cl-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #bbb;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background: white;
+      position: relative;
+    }
+    .cl-checkbox:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .cl-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 6px;
+      height: 10px;
+      border: 2.5px solid white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .cl-text h4 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 2px;
+    }
+    .cl-text p {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.5;
+    }
+    .cl-text .tip {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 11.5px;
+      color: #888;
+      font-style: italic;
+    }
+
+    .cl-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-pflicht {
+      background: #fdecea;
+      color: #c0392b;
+    }
+    .badge-empfohlen {
+      background: rgba(200,146,42,0.12);
+      color: #7a4f00;
+    }
+    .badge-optional {
+      background: #f0ede8;
+      color: #888;
+    }
+
+    /* Notes box */
+    .notes-box {
+      margin-top: 32px;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+    .notes-box h4 {
+      font-family: 'Fraunces', serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    .notes-lines { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+    .notes-line {
+      height: 1px;
+      background: #e0dbd2;
+      border: none;
+    }
+
+    /* Earnings summary */
+    .earn-summary {
+      background: var(--dark);
+      color: white;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 28px;
+      display: flex;
+      gap: 0;
+    }
+    .earn-summary-item {
+      flex: 1;
+      text-align: center;
+      padding: 0 12px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    .earn-summary-item:last-child { border-right: none; }
+    .earn-summary-item .es-amount {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+    }
+    .earn-summary-item .es-label {
+      font-size: 10.5px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* Legal notice */
+    .legal-notice {
+      margin-top: 20px;
+      font-size: 11px;
+      color: #aaa;
+      line-height: 1.6;
+      padding-top: 16px;
+      border-top: 1px solid #e0dbd2;
+    }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      body { background: white; }
+      .screen-header, .screen-controls, .type-tabs, .print-hint, .progress-bar-wrap { display: none !important; }
+
+      .content {
+        max-width: 100%;
+        padding: 20px 28px;
+      }
+
+      /* Always show the active section */
+      .type-section { display: none !important; }
+      .type-section.active { display: block !important; }
+
+      .cl-checkbox {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .cl-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .earn-summary {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page-header { border-bottom: 2px solid #000; }
+      .cat-heading { page-break-after: avoid; }
+      .cl-item { page-break-inside: avoid; }
+      .notes-box { page-break-inside: avoid; }
+
+      .print-logo-bar {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      .print-logo-bar img { height: 22px; }
+      .print-logo-bar span { font-size: 11px; color: #999; margin-left: auto; }
+    }
+    @media screen { .print-logo-bar { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- SCREEN NAVIGATION -->
+<div class="screen-header">
+  <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+  <span class="sep">›</span>
+  <a href="anbieter-onboarding.html">Anbieter werden</a>
+  <span class="sep">›</span>
+  <span style="color:rgba(255,255,255,0.9);font-size:13px;">Druckcheckliste</span>
+</div>
+
+<div class="screen-controls">
+  <h1>🖨️ Anbieter-Checkliste</h1>
+  <button class="btn-print" onclick="window.print()">🖨️ Drucken / Als PDF speichern</button>
+</div>
+
+<!-- TABS -->
+<div class="type-tabs">
+  <button class="type-tab active" onclick="switchType('koch', this)">👨‍🍳 Privatkoch & Caterer</button>
+  <button class="type-tab" onclick="switchType('foodtruck', this)">🚚 Foodtruck & Streetfood</button>
+  <button class="type-tab" onclick="switchType('lokal', this)">🏛️ Eventlocation & Lokal</button>
+  <button class="type-tab" onclick="switchType('getraenke', this)">🍹 Getränke & Bar-Service</button>
+</div>
+
+<!-- PROGRESS BAR (screen only) -->
+<div class="progress-bar-wrap" id="progressBar">
+  <span class="progress-bar-label">🎯 Fortschritt</span>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+  <span class="progress-bar-pct" id="progressPct">0%</span>
+  <span class="progress-bar-done" id="progressDone">0 / 0 erledigt</span>
+  <button class="progress-bar-reset" onclick="resetChecks()">↺ Zurücksetzen</button>
+</div>
+
+<div class="content">
+
+  <div class="print-hint">
+    ℹ️ Wähle oben deinen Anbietertyp, dann auf <strong>„Drucken"</strong> klicken oder im Browser als PDF speichern. Alle Punkte können direkt auf dem Ausdruck abgehakt werden.
+  </div>
+
+  <!-- ===================== KOCH ===================== -->
+  <div id="type-koch" class="type-section active">
+
+    <!-- Print logo (only visible when printing) -->
+    <div class="print-logo-bar">
+      <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+      <span>partyretter.de · Anbieter-Checkliste: Privatkoch & Caterer</span>
+    </div>
+
+    <div class="page-header">
+      <div class="page-header-icon">👨‍🍳</div>
+      <div>
+        <h2>Privatkoch & Caterer</h2>
+        <p>Alle Anforderungen für deinen Start auf Partyretter – abhaken und loslegen!</p>
+      </div>
+      <div class="header-meta">
+        <strong>Stand: März 2026</strong>
+        Hinweis: Ohne Gewähr
+      </div>
+    </div>
+
+    <!-- BEHÖRDLICHE ANFORDERUNGEN -->
+    <div class="cat-heading">📜 Behördliche Anforderungen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gewerbeanmeldung</h4>
+        <p>Beim Gewerbeamt deiner Stadt anmelden. Kosten: ca. 20–65 €. Danach automatische Meldung ans Finanzamt.</p>
+        <span class="tip">💡 Oft auch online über das Gewerbeportal möglich</span>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gesundheitszeugnis (§ 43 Infektionsschutzgesetz)</h4>
+        <p>Für alle, die gewerblich Lebensmittel zubereiten. Einmalig beim Gesundheitsamt beantragen. Kosten: ca. 20–40 €.</p>
+        <span class="tip">💡 Beim lokalen Gesundheitsamt – oft in 1–2 Wochen verfügbar</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Lebensmittelhygieneschulung (HACCP-Kenntnisse)</h4>
+        <p>Nachweis nach EU-Verordnung 852/2004. Eintägiges Seminar. Kosten: ca. 50–150 €.</p>
+        <span class="tip">💡 Anbieter: IHK, VHS oder Online über ifp-online.de</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <!-- VERSICHERUNGEN -->
+    <div class="cat-heading">🛡️ Versicherungen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Betriebshaftpflichtversicherung</h4>
+        <p>Deckt Schäden beim Kunden oder Dritten. Empfohlen für das Partyretter-Profil. Kosten: ab ca. 100 €/Jahr.</p>
+        <span class="tip">💡 Allianz, ERGO, Hiscox oder Gastro-Freelancer-Spezialanbieter</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Produkthaftpflicht (Lebensmittel)</h4>
+        <p>Schutz gegen Ansprüche durch Schäden durch das Essen. Oft in der Betriebshaftpflicht enthalten – nachfragen!</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Berufshaftpflicht</h4>
+        <p>Für professionelle Caterer empfohlen. Deckt Fehler bei Beratung und Planung ab.</p>
+      </div>
+      <span class="cl-badge badge-optional">Optional</span>
+    </div>
+
+    <!-- STEUER & FINANZEN -->
+    <div class="cat-heading">💰 Steuer & Finanzen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Steuernummer / Umsatzsteuer-ID</h4>
+        <p>Nach Gewerbeanmeldung beim Finanzamt erforderlich. Kleinunternehmerregelung (§ 19 UStG): bis 22.000 € Umsatz keine USt.</p>
+        <span class="tip">💡 Rechnungen müssen immer deine Steuernummer enthalten</span>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Bankverbindung (IBAN)</h4>
+        <p>Für Auszahlungen von Partyretter. Ausgezahlt innerhalb von 3 Werktagen nach jedem abgeschlossenen Event.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Buchhaltung & Quittungen</h4>
+        <p>Alle Einnahmen verbuchen. Partyretter stellt automatische Einnahmenübersichten und Rechnungen bereit.</p>
+        <span class="tip">💡 Lexoffice oder sevDesk – ab 10 €/Monat</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <!-- PROFIL & AUFTRITT -->
+    <div class="cat-heading">📸 Profil & Auftritt auf Partyretter</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Konto erstellt und E-Mail bestätigt</h4>
+        <p>Kostenlos registrieren und E-Mail-Adresse bestätigen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Profilfoto hochgeladen</h4>
+        <p>Klares, freundliches Foto – idealerweise in Kochkleidung. Mind. 400×400 px. Kunden buchen die Person!</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Steckbrief ausgefüllt</h4>
+        <p>Über-mich-Text (mind. 100 Wörter), Küchenstile, Einsatzgebiet und Radius angeben.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Mindestens 1 Menü mit Preis angelegt</h4>
+        <p>Ohne Preis keine Buchung. Pauschalpreis oder Preis pro Person angeben.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>3–5 Food-Fotos hochgeladen</h4>
+        <p>Bilder von Gerichten erhöhen Buchungsrate deutlich. Smartphone-Fotos bei gutem Licht reichen.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gesundheitszeugnis bei MPR hochgeladen</h4>
+        <p>Nach interner Prüfung: ✅-Badge auf deinem Steckbrief sichtbar → 40% mehr Anfragen.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Betriebshaftpflicht bei MPR hochgeladen</h4>
+        <p>Nach interner Prüfung: 🛡️-Badge auf deinem Steckbrief sichtbar → stärkt Vertrauen bei Firmenbuchungen.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Video-Vorstellung erstellt (max. 90 Sek.)</h4>
+        <p>Kurzes Video beim Kochen oder kurze Vorstellung. Steigert Buchungsrate um bis zu 40%.</p>
+      </div>
+      <span class="cl-badge badge-optional">Optional</span>
+    </div>
+
+</div>
+
+    <!-- NOTIZEN -->
+    <div class="notes-box">
+      <h4>📝 Meine Notizen</h4>
+      <div class="notes-lines">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+      </div>
+    </div>
+
+    <p class="legal-notice">
+      Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß den Partyretter-AGB selbst für die Einhaltung geltender gesetzlicher Vorschriften verantwortlich. Stand: März 2026 · partyretter.de
+    </p>
+  </div>
+
+  <!-- ===================== FOODTRUCK ===================== -->
+  <div id="type-foodtruck" class="type-section">
+
+    <div class="print-logo-bar">
+      <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+      <span>partyretter.de · Anbieter-Checkliste: Foodtruck & Streetfood</span>
+    </div>
+
+    <div class="page-header">
+      <div class="page-header-icon">🚚</div>
+      <div>
+        <h2>Foodtruck & Streetfood</h2>
+        <p>Alle Anforderungen für deinen Truck auf Partyretter – abhaken und loslegen!</p>
+      </div>
+      <div class="header-meta">
+        <strong>Stand: März 2026</strong>
+        Hinweis: Ohne Gewähr
+      </div>
+    </div>
+
+    <div class="cat-heading">🚛 Fahrzeug & Ausstattung</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>TÜV / Hauptuntersuchung aktuell</h4>
+        <p>Gültige HU ist Pflicht. Wird für die Profilverifizierung benötigt.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Zulassung als Sonderfahrzeug (Lebensmittelverkauf)</h4>
+        <p>Foodtrucks mit fest eingebauter Küche oft mit Sonderzulassung. Beim Straßenverkehrsamt prüfen lassen.</p>
+        <span class="tip">💡 Propangas-Anlage muss DVGW-geprüft sein (alle 2 Jahre)</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gasprüfung (bei Gasgeräten)</h4>
+        <p>Pflicht alle 2 Jahre durch zugelassenen Fachbetrieb. Nachweis-Aufkleber am Fahrzeug.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cat-heading">📜 Genehmigungen & Recht</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gewerbeanmeldung</h4>
+        <p>Pflicht als selbständiger Foodtruck-Betreiber. Beim Gewerbeamt, Kosten: 20–65 €.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Standgenehmigung / Sondernutzungserlaubnis</h4>
+        <p>Für jeden öffentlichen Standort. Privatgelände oft genehmigungsfrei.</p>
+        <span class="tip">💡 MPR-Events auf Privatgelände: kein Behördenaufwand für dich!</span>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gesundheitszeugnis (§ 43 IfSG) + HACCP-Schulung</h4>
+        <p>Wie beim Koch: Gesundheitszeugnis und HACCP-Nachweis erforderlich.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Erstregistrierung beim Lebensmittelüberwachungsamt</h4>
+        <p>Foodtruck beim Veterinär- und Lebensmittelüberwachungsamt anmelden. Einmalig und kostenlos.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cat-heading">🛡️ Versicherungen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>KFZ-Haftpflicht für Foodtruck</h4>
+        <p>Gesetzlich vorgeschrieben. Deckung auch im gewerblichen Einsatz sicherstellen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Betriebshaftpflichtversicherung</h4>
+        <p>Deckt Schäden an Kunden oder Dritten durch deinen Betrieb. Empfohlen für MPR-Profil.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Inventarversicherung / Maschinenversicherung</h4>
+        <p>Schutz für Küchen-Equipment im Truck. Sehr empfohlen – ein Defekt kann den ganzen Tag lahmlegen.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cat-heading">💰 Steuer & Finanzen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Steuernummer / Umsatzsteuer-ID</h4>
+        <p>Nach Gewerbeanmeldung beim Finanzamt. Kleinunternehmerregelung bis 22.000 € Jahresumsatz möglich.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Bankverbindung (IBAN)</h4>
+        <p>Für Auszahlungen von Buchungen über Partyretter.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cat-heading">📸 Profil auf Partyretter</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Konto erstellt und E-Mail bestätigt</h4>
+        <p>Kostenlos registrieren, Typ „Foodtruck" wählen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Truck-Profil: Fotos, Speisekarte, Spezialisierung</h4>
+        <p>Mindestens 3 Fotos des Trucks und deiner Speisen. Klare Speisekarte mit Preisen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Wochenstandorte eingetragen</h4>
+        <p>Lass Stammkunden wissen, wo du unter der Woche zu finden bist. Auf der Karte sichtbar.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Betriebshaftpflicht bei MPR hochgeladen</h4>
+        <p>Nach Prüfung: 🛡️-Badge auf deinem Profil. Stärkt Vertrauen bei Eventveranstaltern.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    
+
+</div>
+
+    <div class="notes-box">
+      <h4>📝 Meine Notizen</h4>
+      <div class="notes-lines">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+      </div>
+    </div>
+
+    <p class="legal-notice">
+      Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß den Partyretter-AGB selbst für die Einhaltung geltender gesetzlicher Vorschriften verantwortlich. Stand: März 2026 · partyretter.de
+    </p>
+  </div>
+
+  <!-- ===================== LOKAL ===================== -->
+  <div id="type-lokal" class="type-section">
+
+    <div class="print-logo-bar">
+      <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+      <span>partyretter.de · Anbieter-Checkliste: Eventlocation & Lokal</span>
+    </div>
+
+    <div class="page-header">
+      <div class="page-header-icon">🏛️</div>
+      <div>
+        <h2>Eventlocation & Lokal</h2>
+        <p>Alle Anforderungen für deine Location auf Partyretter – abhaken und loslegen!</p>
+      </div>
+      <div class="header-meta">
+        <strong>Stand: März 2026</strong>
+        Hinweis: Ohne Gewähr
+      </div>
+    </div>
+
+    <div class="cat-heading">📜 Behördliche Erlaubnisse</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gaststättenerlaubnis</h4>
+        <p>Beim Ordnungsamt beantragen, wenn Speisen oder Getränke ausgeschenkt werden. Dauer: 4–12 Wochen. Kosten: 200–800 €.</p>
+        <span class="tip">💡 Reine Raumvermietung ohne Ausschank oft erlaubnisfrei – prüfen!</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gewerbeanmeldung</h4>
+        <p>Für gewerbliche Vermietung. Beim Gewerbeamt, Kosten: 20–65 €.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Baugenehmigung / Nutzungsänderung</h4>
+        <p>Falls Räume nicht ursprünglich als Veranstaltungsraum genehmigt sind, beim Bauamt prüfen lassen.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Versammlungsstättenverordnung (VStättVO)</h4>
+        <p>Ab 200 Personen Kapazität gelten besondere Auflagen zu Fluchtwegen, Brandschutz und Aufsicht.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cat-heading">🛡️ Versicherungen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gebäudehaftpflichtversicherung</h4>
+        <p>Deckt Schäden durch die Location-Nutzung. Pflicht für MPR-Profil.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Inventarversicherung</h4>
+        <p>Schutz für Mobiliar, Technik und Ausstattung gegen Beschädigung durch Mieter.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Veranstalterhaftpflicht</h4>
+        <p>Falls du als Vermieter auch Veranstaltungen mitorganisierst. Optional aber sehr empfohlen.</p>
+      </div>
+      <span class="cl-badge badge-optional">Optional</span>
+    </div>
+
+    <div class="cat-heading">💰 Steuer & Finanzen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Steuernummer / Umsatzsteuer-ID</h4>
+        <p>Vermietung für Events ist steuerpflichtig. Umsatzsteuerpflicht ab 22.000 € Jahresumsatz.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Bankverbindung (IBAN)</h4>
+        <p>Für Auszahlungen von Buchungen über Partyretter.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>GEMA-Anmeldung (bei Musiknutzung)</h4>
+        <p>Falls in deiner Location Musik gespielt wird – jährliche GEMA-Pauschalanmeldung möglich.</p>
+        <span class="tip">💡 Pauschalvertrag für Veranstaltungsräume auf gema.de</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cat-heading">📸 Profil auf Partyretter</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Konto erstellt und E-Mail bestätigt</h4>
+        <p>Kostenlos registrieren, Typ „Lokal / Location" wählen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Location-Fotos (mind. 5 Fotos)</h4>
+        <p>Innenraum, verschiedene Bestuhlung, Außenbereich, Küche/Bar. Zeig den Raum bei Tageslicht und Abendstimmung.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Kapazität, Ausstattung und Preise eingetragen</h4>
+        <p>Maximale Personenzahl, verfügbare Technik, Preise pro Stunde/Tag klar angeben.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Verfügbarkeitskalender gepflegt</h4>
+        <p>Gesperrte Termine einpflegen, damit keine Doppelbuchungen entstehen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Versicherungsnachweis bei MPR hochgeladen</h4>
+        <p>Nach Prüfung: 🛡️-Badge auf deinem Profil. Wichtig für Firmen-Events und Hochzeitsplaner.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    
+
+</div>
+
+    <div class="notes-box">
+      <h4>📝 Meine Notizen</h4>
+      <div class="notes-lines">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+      </div>
+    </div>
+
+    <p class="legal-notice">
+      Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß den Partyretter-AGB selbst für die Einhaltung geltender gesetzlicher Vorschriften verantwortlich. Stand: März 2026 · partyretter.de
+    </p>
+  </div>
+
+  <!-- ===================== GETRÄNKE ===================== -->
+  <div id="type-getraenke" class="type-section">
+
+    <div class="print-logo-bar">
+      <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+      <span>partyretter.de · Anbieter-Checkliste: Getränke & Bar-Service</span>
+    </div>
+
+    <div class="page-header">
+      <div class="page-header-icon">🍹</div>
+      <div>
+        <h2>Getränke & Bar-Service</h2>
+        <p>Alle Anforderungen für deinen Bar-Service auf Partyretter – abhaken und loslegen!</p>
+      </div>
+      <div class="header-meta">
+        <strong>Stand: März 2026</strong>
+        Hinweis: Ohne Gewähr
+      </div>
+    </div>
+
+    <div class="cat-heading">🍺 Erlaubnisse für Alkohol-Ausschank</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gaststättenerlaubnis / Schankerlaubnis</h4>
+        <p>Für gewerblichen Alkohol-Ausschank beim Ordnungsamt. Dauer: 4–12 Wochen. Kosten: 100–600 €.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Vorübergehende Gestattung (§ 12 GastG)</h4>
+        <p>Für einzelne Veranstaltungen: beim Ordnungsamt beantragen, mind. 2 Wochen vor dem Event. Günstiger als Dauerlizenz.</p>
+        <span class="tip">💡 Ideal für den Start: pro Event beantragen statt sofort Dauerlizenz</span>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Jugendschutz sichergestellt</h4>
+        <p>Kein Alkohol an Personen unter 16 (Bier/Wein) bzw. 18 Jahren (Spirituosen). Muss bei jedem Event kontrolliert werden.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Unterrichtung im Gaststättenrecht (IHK)</h4>
+        <p>Eintägiger Kurs. Kann in manchen Bundesländern die Genehmigung erleichtern oder ersetzen.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cat-heading">🛡️ Versicherung & Gewerbeanmeldung</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Gewerbeanmeldung</h4>
+        <p>Pflicht als gewerblicher Getränke-Anbieter. Beim Gewerbeamt, ca. 20–65 €.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Betriebshaftpflichtversicherung</h4>
+        <p>Deckt Schäden durch deinen Bar-Service. Empfohlen für MPR-Profil. Kosten: ab ca. 100 €/Jahr.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Getränkelieferanten-Haftpflicht</h4>
+        <p>Spezialversicherung für Getränkeservice – oft günstig als Erweiterung der Betriebshaftpflicht.</p>
+      </div>
+      <span class="cl-badge badge-optional">Optional</span>
+    </div>
+
+    <div class="cat-heading">💰 Steuer & Finanzen</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Steuernummer / Umsatzsteuer-ID</h4>
+        <p>Nach Gewerbeanmeldung beim Finanzamt. Kleinunternehmerregelung bis 22.000 € Jahresumsatz möglich.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Bankverbindung (IBAN)</h4>
+        <p>Für Auszahlungen von Buchungen über Partyretter.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cat-heading">📸 Profil auf Partyretter</div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Konto erstellt und E-Mail bestätigt</h4>
+        <p>Kostenlos registrieren, Typ „Getränke / Bar" wählen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Getränkekarte, Paket-Preise und Fotos</h4>
+        <p>Bar-Aufbau-Fotos, Cocktailkarte mit Preisen, Pakete für verschiedene Event-Größen anlegen.</p>
+      </div>
+      <span class="cl-badge badge-pflicht">Pflicht</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Schankerlaubnis / Gestattung bei MPR hochgeladen</h4>
+        <p>Nach Prüfung: ✅-Badge auf deinem Profil. Pflichtnachweis für Kunden mit alkoholhaltigen Events.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Betriebshaftpflicht bei MPR hochgeladen</h4>
+        <p>Nach Prüfung: 🛡️-Badge auf deinem Profil. Stärkt Vertrauen bei Hochzeits- und Firmenkunden.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    <div class="cl-item">
+      <input type="checkbox" class="cl-checkbox">
+      <div class="cl-text">
+        <h4>Equipment-Liste angegeben (Bar-Aufbau)</h4>
+        <p>Welche Ausstattung bringst du mit? Mobile Bar, Shaker, Gläser, Beschriftung etc. – schafft Klarheit für Kunden.</p>
+      </div>
+      <span class="cl-badge badge-empfohlen">Empfehlung</span>
+    </div>
+
+    
+
+</div>
+
+    <div class="notes-box">
+      <h4>📝 Meine Notizen</h4>
+      <div class="notes-lines">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+        <hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line"><hr class="notes-line">
+      </div>
+    </div>
+
+    <p class="legal-notice">
+      Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß den Partyretter-AGB selbst für die Einhaltung geltender gesetzlicher Vorschriften verantwortlich. Stand: März 2026 · partyretter.de
+    </p>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+  function switchType(type, btn) {
+    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.type-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('type-' + type).classList.add('active');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const activeSection = document.querySelector('.type-section.active');
+    if (!activeSection) return;
+    const all = activeSection.querySelectorAll('.cl-checkbox');
+    const done = activeSection.querySelectorAll('.cl-checkbox:checked');
+    const total = all.length;
+    const checked = done.length;
+    const pct = total === 0 ? 0 : Math.round((checked / total) * 100);
+
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressDone').textContent = checked + ' / ' + total + ' erledigt';
+
+    // Color feedback
+    const fill = document.getElementById('progressFill');
+    if (pct === 100) {
+      fill.style.background = 'linear-gradient(90deg, #27ae60, #2ecc71)';
+      document.getElementById('progressPct').style.color = '#27ae60';
+    } else {
+      fill.style.background = 'linear-gradient(90deg, var(--gold), #e0a830)';
+      document.getElementById('progressPct').style.color = 'var(--gold)';
+    }
+  }
+
+  function resetChecks() {
+    const activeSection = document.querySelector('.type-section.active');
+    if (!activeSection) return;
+    activeSection.querySelectorAll('.cl-checkbox').forEach(cb => cb.checked = false);
+    // Reset item styles
+    activeSection.querySelectorAll('.cl-item').forEach(item => {
+      item.style.opacity = '';
+      item.querySelector('.cl-text h4').style.textDecoration = '';
+    });
+    updateProgress();
+  }
+
+  // Listen to all checkboxes
+  document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('cl-checkbox')) {
+      const item = e.target.closest('.cl-item');
+      if (e.target.checked) {
+        item.style.opacity = '0.6';
+        item.querySelector('.cl-text h4').style.textDecoration = 'line-through';
+      } else {
+        item.style.opacity = '';
+        item.querySelector('.cl-text h4').style.textDecoration = '';
+      }
+      updateProgress();
+    }
+  });
+
+  // Init on load
+  document.addEventListener('DOMContentLoaded', updateProgress);
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

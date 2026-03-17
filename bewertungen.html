@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bewertung hinterlegen – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1A1208;
+      --dark2: #2d1f0e;
+      --gold: #C8922A;
+      --gold2: #e0a430;
+      --cream: #F5F0E8;
+      --cream2: #EDE8DF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* NAVIGATION */
+    nav {
+      background: var(--dark);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--cream);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      flex: 1;
+      margin: 0 40px;
+    }
+
+    .nav-links a {
+      color: rgba(245,240,232,0.8);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-nav-outline {
+      background: transparent;
+      color: var(--cream);
+      border: 1.5px solid rgba(200,146,42,0.4);
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-nav-outline:hover {
+      background: rgba(200,146,42,0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-nav-cta {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1.5px solid var(--gold);
+      cursor: pointer;
+    }
+
+    .btn-nav-cta:hover {
+      background: var(--gold2);
+      border-color: var(--gold2);
+    }
+
+    /* MAIN CONTENT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .page-header h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    /* REVIEW FORM */
+    .review-form-section {
+      background: white;
+      border: 1.5px solid #e8e4dc;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    /* STAR RATING */
+    .star-rating {
+      display: flex;
+      gap: 12px;
+      font-size: 32px;
+    }
+
+    .star {
+      cursor: pointer;
+      color: #ddd;
+      transition: all 0.2s;
+      transform: scale(1);
+    }
+
+    .star:hover,
+    .star.active {
+      color: var(--gold);
+      transform: scale(1.15);
+    }
+
+    /* TEXT INPUT */
+    textarea,
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      border: 1.5px solid #e8e4dc;
+      border-radius: 8px;
+      background: #fafaf8;
+      color: var(--dark);
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus,
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* FILE UPLOAD */
+    .file-upload-area {
+      border: 2px dashed #d0c4b8;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      background: #fafaf8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--gold);
+      background: rgba(200,146,42,0.04);
+    }
+
+    .file-upload-area.dragover {
+      border-color: var(--gold);
+      background: rgba(200,146,42,0.08);
+    }
+
+    .file-upload-icon { font-size: 28px; margin-bottom: 8px; }
+
+    .file-upload-text {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .file-upload-hint {
+      font-size: 12px;
+      color: #999;
+    }
+
+    input[type="file"] { display: none; }
+
+    .file-preview {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .file-item {
+      background: var(--cream2);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-item button {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* BUTTONS */
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--dark);
+      border: 1.5px solid #e8e4dc;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      background: var(--cream2);
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      border: 1.5px solid var(--gold);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold2);
+      border-color: var(--gold2);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* RATING BREAKDOWN */
+    .rating-breakdown {
+      background: white;
+      border: 1.5px solid #e8e4dc;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .breakdown-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+
+    .breakdown-avg {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .breakdown-avg .avg-score {
+      font-family: 'Fraunces', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .breakdown-avg .avg-stars {
+      font-size: 20px;
+      color: var(--gold);
+    }
+
+    .breakdown-avg .avg-count {
+      font-size: 12px;
+      color: #999;
+      margin-left: 12px;
+      border-left: 1px solid #ddd;
+      padding-left: 12px;
+    }
+
+    .breakdown-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .breakdown-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .breakdown-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark);
+      width: 40px;
+      text-align: right;
+    }
+
+    .breakdown-progress {
+      flex: 1;
+      height: 8px;
+      background: #e8e4dc;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .breakdown-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .breakdown-pct {
+      font-size: 12px;
+      color: #999;
+      width: 35px;
+      text-align: right;
+    }
+
+    /* REVIEWS LIST */
+    .reviews-section {
+      margin-top: 48px;
+    }
+
+    .reviews-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+
+    .review-card {
+      background: white;
+      border: 1.5px solid #e8e4dc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+    }
+
+    .review-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 4px 12px rgba(200,146,42,0.1);
+    }
+
+    .review-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+      flex-shrink: 0;
+    }
+
+    .review-info {
+      flex: 1;
+    }
+
+    .review-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+
+    .review-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .review-stars {
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .review-text {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .review-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .review-image {
+      width: 100%;
+      height: 80px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: #999;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .empty-state-text {
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        margin: 0;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .review-form-section {
+        padding: 24px;
+      }
+
+      .star-rating {
+        font-size: 28px;
+      }
+
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html"><span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter</a>
+  <ul class="nav-links">
+    <li><a href="marktplatz.html">Marktplatz</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="anbieter-onboarding.html">Anbieter werden</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-nav-outline" href="START.html">🗺️ Alle Seiten</a>
+    <a class="btn-nav-outline" href="login.html">Anmelden</a>
+    <a class="btn-nav-cta" href="registrierung.html">Registrieren</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1>⭐ Deine Bewertung</h1>
+    <p>Teile dein Feedback mit anderen Partygängern</p>
+  </div>
+
+  <!-- RATING BREAKDOWN -->
+  <div class="rating-breakdown">
+    <div class="breakdown-title">Das sagen unsere Kunden</div>
+    <div class="breakdown-avg">
+      <div class="avg-score">4,7</div>
+      <div class="avg-stars">★★★★★</div>
+      <div class="avg-count">basierend auf 432 Bewertungen</div>
+    </div>
+
+    <div class="breakdown-bars">
+      <div class="breakdown-bar">
+        <div class="breakdown-label">5★</div>
+        <div class="breakdown-progress">
+          <div class="breakdown-fill" style="width: 70%"></div>
+        </div>
+        <div class="breakdown-pct">302</div>
+      </div>
+      <div class="breakdown-bar">
+        <div class="breakdown-label">4★</div>
+        <div class="breakdown-progress">
+          <div class="breakdown-fill" style="width: 18%"></div>
+        </div>
+        <div class="breakdown-pct">78</div>
+      </div>
+      <div class="breakdown-bar">
+        <div class="breakdown-label">3★</div>
+        <div class="breakdown-progress">
+          <div class="breakdown-fill" style="width: 8%"></div>
+        </div>
+        <div class="breakdown-pct">34</div>
+      </div>
+      <div class="breakdown-bar">
+        <div class="breakdown-label">2★</div>
+        <div class="breakdown-progress">
+          <div class="breakdown-fill" style="width: 3%"></div>
+        </div>
+        <div class="breakdown-pct">13</div>
+      </div>
+      <div class="breakdown-bar">
+        <div class="breakdown-label">1★</div>
+        <div class="breakdown-progress">
+          <div class="breakdown-fill" style="width: 1%"></div>
+        </div>
+        <div class="breakdown-pct">5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW FORM -->
+  <div class="review-form-section">
+    <h2 style="font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 900; margin-bottom: 28px; color: var(--dark);">Deine Bewertung</h2>
+
+    <form id="reviewForm">
+      <!-- EVENT SELECTION -->
+      <div class="form-group">
+        <label>Welche Event hast du gebucht? *</label>
+        <select style="width: 100%; padding: 12px 14px; border: 1.5px solid #e8e4dc; border-radius: 8px; background: #fafaf8; color: var(--dark); font-size: 14px;">
+          <option value="">-- Bitte Event auswählen --</option>
+          <option value="koch1">Markus Kochevent "Pasta Night" – 15.03.2026</option>
+          <option value="koch2">Anna Catering "Hochzeitsmenü" – 22.03.2026</option>
+          <option value="koch3">Stefan Fingerfood "Apéro Time" – 20.03.2026</option>
+        </select>
+      </div>
+
+      <!-- STAR RATING -->
+      <div class="form-group">
+        <label>Wie hat dir die Event gefallen? *</label>
+        <div class="star-rating" id="starRating">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
+        </div>
+        <input type="hidden" id="ratingValue" value="">
+      </div>
+
+      <!-- NAME -->
+      <div class="form-group">
+        <label>Dein Name *</label>
+        <input type="text" placeholder="z.B. Max Mustermann" required>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+        <label>E-Mail *</label>
+        <input type="email" placeholder="deine@email.de" required>
+      </div>
+
+      <!-- REVIEW TEXT -->
+      <div class="form-group">
+        <label>Was möchtest du uns mitteilen? *</label>
+        <textarea placeholder="Erzähl uns von deinem Erlebnis... Die Dekoration war super, der DJ hat großartig gemacht, das Essen war lecker..." required></textarea>
+      </div>
+
+      <!-- PHOTO UPLOAD -->
+      <div class="form-group">
+        <label>Fotos von deiner Event (optional)</label>
+        <div class="file-upload-area" id="uploadArea">
+          <div class="file-upload-icon">📷</div>
+          <div class="file-upload-text">Klick zum Hochladen oder zieh deine Bilder hier rein</div>
+          <div class="file-upload-hint">JPG, PNG – maximal 5 MB pro Foto</div>
+          <input type="file" id="fileInput" accept="image/*" multiple>
+        </div>
+        <div class="file-preview" id="filePreview"></div>
+      </div>
+
+      <!-- TERMS -->
+      <div class="form-group">
+        <label style="display: flex; align-items: center; gap: 8px; font-weight: normal;">
+          <input type="checkbox" required style="width: 18px; height: 18px; cursor: pointer;">
+          Ich bin damit einverstanden, dass meine Bewertung auf der Plattform veröffentlicht wird
+        </label>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="history.back()">Abbrechen</button>
+        <button type="submit" class="btn btn-primary">✓ Bewertung absenden</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- EXISTING REVIEWS -->
+  <div class="reviews-section">
+    <h2 class="reviews-title">Neueste Bewertungen</h2>
+
+    <!-- REVIEW 1 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">MS</div>
+        <div class="review-info">
+          <div class="review-name">Maria Schmidt</div>
+          <div class="review-meta">
+            <span class="review-stars">★★★★★</span>
+            <span>5 Sterne</span>
+            <span>vor 2 Tagen</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-text">Absolut fantastisch! Markus hat für unsere Geburtstagsfeier gekocht und alle Gäste waren begeistert. Die Pasta war großartig, der Service war perfekt und die ganze Organisation hat super geklappt. Sehr gerne wieder!</div>
+      <div class="review-images">
+        <div class="review-image" style="background: linear-gradient(135deg, #C8922A, #e0a430);"></div>
+        <div class="review-image" style="background: linear-gradient(135deg, #e0a430, #C8922A);"></div>
+      </div>
+    </div>
+
+    <!-- REVIEW 2 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">PB</div>
+        <div class="review-info">
+          <div class="review-name">Peter Bauer</div>
+          <div class="review-meta">
+            <span class="review-stars">★★★★☆</span>
+            <span>4 Sterne</span>
+            <span>vor 1 Woche</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-text">Sehr guter Service und leckeres Essen. Die Angebote auf der Platform sind vielfältig und einfach zu durchsuchen. Ein kleiner Minuspunkt: die Kommunikation mit dem Anbieter hätte etwas schneller gehen können.</div>
+    </div>
+
+    <!-- REVIEW 3 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">SK</div>
+        <div class="review-info">
+          <div class="review-name">Silvia König</div>
+          <div class="review-meta">
+            <span class="review-stars">★★★★★</span>
+            <span>5 Sterne</span>
+            <span>vor 10 Tagen</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-text">Anna's Catering hat unsere Hochzeit unvergesslich gemacht! Die Menüs waren kreativ, die Präsentation wunderschön und das ganze Team war äußerst professionell. Jederzeit wieder!</div>
+    </div>
+
+    <!-- REVIEW 4 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">JM</div>
+        <div class="review-info">
+          <div class="review-name">Jonas Meyer</div>
+          <div class="review-meta">
+            <span class="review-stars">★★★☆☆</span>
+            <span>3 Sterne</span>
+            <span>vor 3 Wochen</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-text">Das Essen war gut, aber die Anlieferung verzögerte sich um 30 Minuten. Die Qualität stimmte, könnte aber beim nächsten Mal schneller gehen. Preisleistung ist in Ordnung.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // STAR RATING HANDLER
+  const stars = document.querySelectorAll('.star');
+  const ratingValue = document.getElementById('ratingValue');
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      const value = star.dataset.value;
+      ratingValue.value = value;
+
+      stars.forEach(s => {
+        if (s.dataset.value <= value) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+    });
+
+    star.addEventListener('mouseover', () => {
+      const value = star.dataset.value;
+      stars.forEach(s => {
+        if (s.dataset.value <= value) {
+          s.style.color = '#C8922A';
+        } else {
+          s.style.color = '#ddd';
+        }
+      });
+    });
+  });
+
+  document.getElementById('starRating').addEventListener('mouseleave', () => {
+    const selected = ratingValue.value;
+    stars.forEach(s => {
+      if (selected && s.dataset.value <= selected) {
+        s.style.color = '#C8922A';
+      } else {
+        s.style.color = '#ddd';
+      }
+    });
+  });
+
+  // FILE UPLOAD HANDLER
+  const uploadArea = document.getElementById('uploadArea');
+  const fileInput = document.getElementById('fileInput');
+  const filePreview = document.getElementById('filePreview');
+
+  uploadArea.addEventListener('click', () => fileInput.click());
+
+  uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+  });
+
+  uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+  });
+
+  uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+
+  fileInput.addEventListener('change', () => {
+    handleFiles(fileInput.files);
+  });
+
+  function handleFiles(files) {
+    filePreview.innerHTML = '';
+
+    Array.from(files).forEach((file, index) => {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'file-item';
+      fileItem.innerHTML = `
+        📄 ${file.name.substring(0, 20)}...
+        <button type="button" onclick="this.parentElement.remove()">✕</button>
+      `;
+      filePreview.appendChild(fileItem);
+    });
+  }
+
+  // FORM SUBMIT
+  document.getElementById('reviewForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const rating = document.getElementById('ratingValue').value;
+    if (!rating) {
+      alert('Bitte bewerte die Event mit Sternen!');
+      return;
+    }
+
+    alert('Danke für deine Bewertung! Sie wird in Kürze freigeschaltet.');
+    document.getElementById('reviewForm').reset();
+    document.getElementById('filePreview').innerHTML = '';
+
+    setTimeout(() => {
+      window.location.href = 'kunden-dashboard.html';
+    }, 1500);
+  });
+</script>
+
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Nachrichten – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--text:#1A1208;--muted:rgba(26,18,8,.55);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;color:var(--text);background:#f5f3ef;height:100vh;display:flex;flex-direction:column;}
+    nav{background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.45);flex-shrink:0;}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);text-decoration:none;}
+    .nav-logo span{color:var(--gold);}
+    .btn-nav{color:rgba(245,240,232,.75);font-size:13px;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:6px;border:1px solid rgba(245,240,232,.22);}
+    .msg-layout{display:flex;flex:1;overflow:hidden;}
+
+    /* SIDEBAR */
+    .msg-sidebar{width:320px;background:#fff;border-right:1.5px solid #e8e2d8;display:flex;flex-direction:column;flex-shrink:0;}
+    .msg-sidebar-header{padding:16px 18px;border-bottom:1px solid #e8e2d8;display:flex;align-items:center;justify-content:space-between;}
+    .msg-sidebar-title{font-family:'Fraunces',serif;font-size:17px;font-weight:900;color:var(--dark);}
+    .btn-compose{background:var(--dark);color:var(--cream);border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+    .btn-compose:hover{background:var(--gold);color:var(--dark);}
+    .msg-search{padding:12px 16px;border-bottom:1px solid #e8e2d8;}
+    .msg-search input{width:100%;padding:9px 14px;border:1.5px solid #e2dcd4;border-radius:8px;font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;background:#faf8f5;}
+    .msg-search input:focus{border-color:var(--gold);}
+    .conv-list{flex:1;overflow-y:auto;}
+    .conv-item{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;transition:all .15s;border-bottom:1px solid #f5f3ef;}
+    .conv-item:hover{background:var(--cream2);}
+    .conv-item.active{background:rgba(200,146,42,.08);border-left:3px solid var(--gold);}
+    .conv-item.unread{background:rgba(200,146,42,.05);}
+    .conv-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--cream2);}
+    .conv-info{flex:1;min-width:0;}
+    .conv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
+    .conv-name{font-size:14px;font-weight:700;color:var(--dark);}
+    .conv-time{font-size:11.5px;color:var(--muted);}
+    .conv-preview{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .conv-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+    /* CHAT AREA */
+    .chat-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+    .chat-header{padding:14px 24px;background:#fff;border-bottom:1.5px solid #e8e2d8;display:flex;align-items:center;gap:14px;}
+    .chat-header-av{width:42px;height:42px;border-radius:50%;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .chat-header-name{font-size:15px;font-weight:700;color:var(--dark);}
+    .chat-header-sub{font-size:12.5px;color:var(--muted);}
+    .chat-header-actions{margin-left:auto;display:flex;gap:8px;}
+    .btn-action{padding:7px 14px;background:var(--cream2);border:1.5px solid #e2dcd4;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .15s;}
+    .btn-action:hover{border-color:var(--gold);}
+
+    /* EVENT CONTEXT BANNER */
+    .event-context{background:rgba(200,146,42,.08);border-bottom:1px solid rgba(200,146,42,.2);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;font-size:13px;}
+    .ec-info{display:flex;align-items:center;gap:10px;}
+    .ec-badge{background:var(--gold);color:var(--dark);font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;}
+    .ec-text{color:var(--dark);}
+
+    /* MESSAGES */
+    .chat-messages{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px;background:#f9f7f4;}
+    .msg{display:flex;gap:10px;align-items:flex-end;max-width:72%;}
+    .msg.own{align-self:flex-end;flex-direction:row-reverse;}
+    .msg-av{width:30px;height:30px;border-radius:50%;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+    .bubble{padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.6;}
+    .msg:not(.own) .bubble{background:#fff;border:1.5px solid #e8e2d8;border-radius:0 16px 16px 16px;color:var(--dark);}
+    .msg.own .bubble{background:var(--dark);color:var(--cream);border-radius:16px 0 16px 16px;}
+    .msg-time{font-size:11px;color:var(--muted);margin-top:4px;text-align:right;}
+    .msg.own .msg-time{text-align:left;}
+
+    /* SYSTEM MESSAGE */
+    .sys-msg{text-align:center;font-size:12.5px;color:var(--muted);padding:6px 16px;background:var(--cream2);border-radius:20px;align-self:center;}
+
+    /* OFFER BUBBLE */
+    .offer-card{background:#fff;border:1.5px solid rgba(200,146,42,.4);border-radius:14px;padding:16px;margin-top:6px;max-width:320px;}
+    .offer-title{font-size:13.5px;font-weight:700;color:var(--dark);margin-bottom:6px;}
+    .offer-details{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.5;}
+    .offer-price{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--gold);margin-bottom:10px;}
+    .offer-btns{display:flex;gap:8px;}
+    .btn-accept-offer{flex:1;padding:9px;background:var(--dark);color:var(--cream);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+    .btn-accept-offer:hover{background:var(--gold);color:var(--dark);}
+    .btn-decline-offer{flex:1;padding:9px;background:transparent;color:var(--muted);border:1.5px solid #e2dcd4;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+    /* INPUT */
+    .chat-input{padding:14px 24px;background:#fff;border-top:1.5px solid #e8e2d8;display:flex;gap:10px;align-items:flex-end;}
+    .chat-input-field{flex:1;padding:11px 16px;border:1.5px solid #e2dcd4;border-radius:12px;font-size:14.5px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#faf8f5;outline:none;resize:none;max-height:120px;transition:border-color .2s;line-height:1.5;}
+    .chat-input-field:focus{border-color:var(--gold);background:#fff;}
+    .btn-send{width:44px;height:44px;border-radius:12px;background:var(--dark);color:var(--cream);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .btn-send:hover{background:var(--gold);color:var(--dark);}
+    .btn-attach{width:44px;height:44px;border-radius:12px;background:var(--cream2);border:1.5px solid #e2dcd4;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .btn-attach:hover{border-color:var(--gold);}
+  
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="homepage.html"><span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter</a>
+  <a href="javascript:history.back()" class="btn-nav">← Zurück</a>
+  <a href="START.html" class="btn-nav">🗺️ Alle Seiten</a>
+</nav>
+
+<div class="msg-layout">
+  <!-- SIDEBAR -->
+  <div class="msg-sidebar">
+    <div class="msg-sidebar-header">
+      <div class="msg-sidebar-title">Nachrichten</div>
+      <button class="btn-compose" onclick="alert('Neue Nachricht – Empfänger suchen')">+ Neu</button>
+    </div>
+    <div class="msg-search"><input type="text" placeholder="🔍 Suchen ..." /></div>
+    <div class="conv-list">
+      <!-- Konv 1 -->
+      <div class="conv-item active unread" onclick="loadConv(this,0)">
+        <div class="conv-av">👨‍🍳</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Marco Bianchi</span><span class="conv-time">14:22</span></div>
+          <div class="conv-preview">Wo findet das Event genau statt?</div>
+        </div>
+        <div class="conv-unread-dot"></div>
+      </div>
+      <!-- Konv 2 -->
+      <div class="conv-item unread" onclick="loadConv(this,1)">
+        <div class="conv-av">🚚</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Taco Loco Foodtruck</span><span class="conv-time">12:05</span></div>
+          <div class="conv-preview">Wir haben noch 2 Termine frei!</div>
+        </div>
+        <div class="conv-unread-dot"></div>
+      </div>
+      <!-- Konv 3 -->
+      <div class="conv-item unread" onclick="loadConv(this,2)">
+        <div class="conv-av">👩‍🍳</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Sophie Kühn</span><span class="conv-time">11:40</span></div>
+          <div class="conv-preview">Das 6-Gang-Menü passt perfekt!</div>
+        </div>
+        <div class="conv-unread-dot"></div>
+      </div>
+      <!-- Konv 4 -->
+      <div class="conv-item" onclick="loadConv(this,3)">
+        <div class="conv-av">🏠</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Villa am See</span><span class="conv-time">Gestern</span></div>
+          <div class="conv-preview">Der Termin am 15. April ist frei.</div>
+        </div>
+      </div>
+      <!-- Konv 5 -->
+      <div class="conv-item" onclick="loadConv(this,4)">
+        <div class="conv-av">🍣</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Yuki Tanaka</span><span class="conv-time">Gestern</span></div>
+          <div class="conv-preview">Klingt super! Ich bin dabei 🎉</div>
+        </div>
+      </div>
+      <!-- Konv 6 -->
+      <div class="conv-item" onclick="loadConv(this,5)">
+        <div class="conv-av">🔥</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Stefan Müller BBQ</span><span class="conv-time">Montag</span></div>
+          <div class="conv-preview">Für 50 Personen benötige ich...</div>
+        </div>
+      </div>
+      <!-- Konv 7 -->
+      <div class="conv-item" onclick="loadConv(this,6)">
+        <div class="conv-av">🎉</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Partyretter</span><span class="conv-time">Montag</span></div>
+          <div class="conv-preview">✅ Buchung #2847 bestätigt!</div>
+        </div>
+      </div>
+      <!-- Konv 8 -->
+      <div class="conv-item" onclick="loadConv(this,7)">
+        <div class="conv-av">🌱</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Lena Richter</span><span class="conv-time">Sonntag</span></div>
+          <div class="conv-preview">Das vegane Buffet-Paket wäre ideal</div>
+        </div>
+      </div>
+      <!-- Konv 9 -->
+      <div class="conv-item" onclick="loadConv(this,8)">
+        <div class="conv-av">🥘</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Rafael Morales</span><span class="conv-time">Samstag</span></div>
+          <div class="conv-preview">La Gran Paella – ich brauche Platz</div>
+        </div>
+      </div>
+      <!-- Konv 10 -->
+      <div class="conv-item" onclick="loadConv(this,9)">
+        <div class="conv-av">🍷</div>
+        <div class="conv-info">
+          <div class="conv-top"><span class="conv-name">Dr. Ernst Kellner</span><span class="conv-time">Fr.</span></div>
+          <div class="conv-preview">Weinbegleitung inkl. – kein Problem</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-area">
+    <div class="chat-header">
+      <div class="chat-header-av" id="chatAv">👨‍🍳</div>
+      <div>
+        <div class="chat-header-name" id="chatName">Marco Bianchi</div>
+        <div class="chat-header-sub" id="chatSub">Koch · Pasta Perfetta Anfrage</div>
+      </div>
+      <div class="chat-header-actions">
+        <a href="anbieter-profil.html" class="btn-action" id="chatProfileLink">👤 Profil</a>
+        <a href="#" class="btn-action" onclick="alert('Buchung öffnen')">📋 Buchung</a>
+        <a href="#" class="btn-action" onclick="alert('Anfrage stellen')">📝 Anfrage</a>
+      </div>
+    </div>
+
+    <div class="event-context">
+      <div class="ec-info">
+        <span class="ec-badge">Event</span>
+        <span class="ec-text" id="chatEventText">📅 Geburtstag Sabrina · 22. März 2026 · 30 Gäste</span>
+      </div>
+      <a href="kunden-dashboard.html" style="font-size:12.5px;color:var(--gold);font-weight:700;text-decoration:none;">Event öffnen →</a>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="sys-msg">Konversation gestartet am 10. März 2026</div>
+
+      <div class="msg">
+        <div class="msg-av">👨‍🍳</div>
+        <div>
+          <div class="bubble">Hallo! Danke für deine Anfrage. Ich habe mir die Details angeschaut – das klingt nach einem wunderbaren Event! 🎉</div>
+          <div class="msg-time">10:15</div>
+        </div>
+      </div>
+
+      <div class="msg own">
+        <div class="msg-av">👤</div>
+        <div>
+          <div class="bubble">Hallo Marco! Super, ich freue mich, dass es passt. Hast du Erfahrung mit größeren Gruppen für ein Pasta-Menü?</div>
+          <div class="msg-time">10:22</div>
+        </div>
+      </div>
+
+      <div class="msg">
+        <div class="msg-av">👨‍🍳</div>
+        <div>
+          <div class="bubble">Ja, absolut! Ich habe regelmäßig Events für 20–50 Personen. Für 30 Gäste ist das ideal – ich schlage folgendes Menü vor:</div>
+          <div class="offer-card">
+            <div class="offer-title">🍝 Angebot: Pasta Perfetta für 30 Pers.</div>
+            <div class="offer-details">
+              • Vorspeise: Bruschetta al Pomodoro<br>
+              • Hauptspeise: Spaghetti Carbonara & Risotto<br>
+              • Dessert: Tiramisù classico<br>
+              • Inkl. Einkauf, Zubereitung & Service
+            </div>
+            <div class="offer-price">2.670 € Gesamt</div>
+            <div class="offer-btns">
+              <button class="btn-accept-offer" onclick="alert('Angebot angenommen! Buchung wird erstellt...')">✓ Annehmen</button>
+              <button class="btn-decline-offer" onclick="alert('Angebot abgelehnt')">Ablehnen</button>
+            </div>
+          </div>
+          <div class="msg-time">10:45</div>
+        </div>
+      </div>
+
+      <div class="msg own">
+        <div class="msg-av">👤</div>
+        <div>
+          <div class="bubble">Das klingt perfekt! Eine kurze Frage: Eine Person in der Gruppe ist vegan – wäre eine vegane Alternative zum Carbonara möglich?</div>
+          <div class="msg-time">11:02</div>
+        </div>
+      </div>
+
+      <div class="msg">
+        <div class="msg-av">👨‍🍳</div>
+        <div>
+          <div class="bubble">Natürlich! Kein Problem – ich mache für die vegane Person ein Pasta al Pomodoro mit frischen Tomaten und Basilikum. Das ist automatisch vegan und schmeckt genauso gut. 🌱</div>
+          <div class="msg-time">11:08</div>
+        </div>
+      </div>
+
+      <div class="sys-msg">Heute · 14:22</div>
+
+      <div class="msg">
+        <div class="msg-av">👨‍🍳</div>
+        <div>
+          <div class="bubble">Noch eine Frage: Wo findet das Event genau statt? Ich komme gerne zu euch – ich bringe alles mit, inklusive Kochequipment. Ich brauche nur eine normale Küche mit Herd. 🍳</div>
+          <div class="msg-time">14:22</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <button class="btn-attach" onclick="alert('Datei anhängen')">📎</button>
+      <textarea class="chat-input-field" id="msgInput" placeholder="Nachricht schreiben ..." rows="1" onkeydown="handleKey(event)"></textarea>
+      <button class="btn-send" onclick="sendMsg()">→</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Konversations-Daten ──────────────────────────────────────────────
+const CONVERSATIONS = [
+  {
+    name: 'Marco Bianchi', av: '👨‍🍳', sub: 'Koch · Italiana-Menü · Geburtstag 22. März',
+    event: '📅 Geburtstag Sabrina · 22. März 2026 · 30 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: false, text: 'Hallo! Danke für deine Anfrage. Ich habe mir die Details angeschaut – das klingt nach einem wunderbaren Event! 🎉', time: '10:15' },
+      { own: true,  text: 'Hallo Marco! Super, ich freue mich, dass es passt. Hast du Erfahrung mit größeren Gruppen für ein Pasta-Menü?', time: '10:22' },
+      { own: false, text: 'Ja, absolut! Ich mache regelmäßig Events für 20–50 Personen. Für 30 Gäste ist das ideal – ich schlage folgendes Menü vor:', time: '10:35',
+        offer: { title: '🍝 Angebot: Pasta Perfetta für 30 Pers.', details: '• Vorspeise: Bruschetta al Pomodoro\n• Hauptspeise: Spaghetti Carbonara & Risotto\n• Dessert: Tiramisù classico\n• Inkl. Einkauf, Zubereitung & Service', price: '2.850 € Gesamt' }},
+      { own: true,  text: 'Das klingt perfekt! Eine Person in der Gruppe ist vegan – wäre eine Alternative möglich?', time: '11:02' },
+      { own: false, text: 'Kein Problem! Ich mache für die vegane Person Pasta al Pomodoro mit frischen Tomaten und Basilikum. Automatisch vegan und genauso lecker. 🌱', time: '11:08' },
+      { own: true,  text: 'Wunderbar! Dann nehme ich das Angebot an. Wann brauchst du eine Anzahlung?', time: '13:45' },
+      { own: false, text: 'Ich schicke dir jetzt eine Buchungsbestätigung per E-Mail. 30% Anzahlung bis 15. März wäre super. Wo findet das Event genau statt?', time: '14:22' },
+    ]
+  },
+  {
+    name: 'Taco Loco Foodtruck', av: '🚚', sub: 'Foodtruck · Gartenparty · 18. April',
+    event: '📅 Gartenparty Familie Hoffmann · 18. April 2026 · 60 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Hallo! Ich suche einen Foodtruck für unsere Gartenparty am 18. April in München-Schwabing. Wir sind ca. 60 Personen.', time: '09:30' },
+      { own: false, text: 'Hallo! Super, das klingt nach Spaß! 🌮 Der 18. April ist noch frei. Habt ihr einen Stromanschluss vor Ort? Wir brauchen mind. 16A.', time: '09:45' },
+      { own: true,  text: 'Ja, wir haben eine Außensteckdose. Wie lange braucht ihr zum Aufbauen?', time: '09:52' },
+      { own: false, text: 'Wir kommen ca. 90 Minuten vorher. Der Aufbau dauert 30–45 Minuten. Service dann 3–4 Stunden. Wir haben noch 2 Termine frei im April!', time: '10:03' },
+      { own: false, text: 'Hier unser Angebot:', time: '10:05',
+        offer: { title: '🌮 Taco Loco – Gartenparty-Paket', details: '• 5 Stunden Foodtruck-Service\n• Mexikanisches Buffet: Tacos, Burritos, Nachos\n• Inkl. vegetarische Optionen\n• Auf- & Abbau inklusive', price: '1.800 € Pauschal' }},
+      { own: true,  text: 'Perfekt! Das nehmen wir. Macht ihr auch eine vegane Option?', time: '12:05' },
+    ]
+  },
+  {
+    name: 'Sophie Kühn', av: '👩‍🍳', sub: 'Koch · Französisches Gala-Dinner · Firmenfeier',
+    event: '📅 Jahresfeier MediaAG · 5. Mai 2026 · 16 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Guten Tag Frau Kühn! Wir planen eine exklusive Jahresfeier für 16 Personen. Hätten Sie Interesse und Zeit am 5. Mai?', time: '14:00' },
+      { own: false, text: 'Guten Tag! Ja, der 5. Mai ist noch verfügbar. Ein 6-Gang Grand Dîner für 16 Personen – das klingt wunderschön! 🌹', time: '14:18' },
+      { own: true,  text: 'Könnten Sie uns ein Angebot machen? Wir haben unser Budget bei ca. 150–180€ pro Person.', time: '14:25' },
+      { own: false, text: 'Sehr gut, das passt perfekt. Ich schlage mein Grand Dîner vor:', time: '14:40',
+        offer: { title: '🌹 Grand Dîner – 6 Gänge für 16 Pers.', details: '• Amuse-Bouche Trio\n• Velouté de Champignons\n• Homard Thermidor\n• Champagner-Sorbet\n• Carré d\'Agneau\n• Mille-Feuille aux Framboises\n• Weinbegleitung optional +55€/Person', price: '2.640 € gesamt (165€/P)' }},
+      { own: true,  text: 'Wunderbar! Das 6-Gang-Menü passt perfekt zu unserer Veranstaltung. Wir möchten auch die Weinbegleitung dazu.', time: '11:40' },
+    ]
+  },
+  {
+    name: 'Villa am See', av: '🏠', sub: 'Location · Hochzeit · Sommer 2026',
+    event: '📅 Hochzeit Mia & Jonas · 15. August 2026 · 80 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Guten Tag! Wir planen unsere Hochzeit für ca. 80 Gäste und sind auf der Suche nach einer schönen Außenlocation am Wasser. Haben Sie im August noch Termine?', time: '10:05' },
+      { own: false, text: 'Herzlich willkommen! Wie romantisch – herzlichen Glückwunsch zur Hochzeit! 🎊 Im August haben wir noch einige Termine. Welches Datum schwebt Ihnen vor?', time: '10:22' },
+      { own: true,  text: 'Am liebsten wäre es uns Mitte August. Der 15. August wäre ideal.', time: '10:30' },
+      { own: false, text: 'Der 15. August ist tatsächlich noch frei! Die Villa fasst bis zu 120 Gäste. Für 80 Personen ist der Innen- und Außenbereich perfekt. Möchten Sie eine Besichtigung vereinbaren?', time: '10:45' },
+      { own: true,  text: 'Sehr gerne! Wann wäre das möglich?', time: '11:00' },
+      { own: false, text: 'Nächsten Samstag um 14 Uhr oder Sonntag um 11 Uhr – was passt Ihnen besser? Ich schicke Ihnen vorab eine Preisliste zu.', time: '11:08' },
+      { own: true,  text: 'Samstag um 14 Uhr passt uns perfekt!', time: '11:15' },
+      { own: false, text: 'Wunderbar! Der Termin am 15. April für die Besichtigung ist eingetragen. Bis Samstag! 🌟', time: '11:20' },
+    ]
+  },
+  {
+    name: 'Yuki Tanaka', av: '🍣', sub: 'Koch · Omakase-Dinner · Firmenessen',
+    event: '📅 Business Dinner TechGmbH · 28. März 2026 · 8 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Hallo Yuki! Wir suchen jemanden für ein exklusives Business Dinner für 8 Personen – Geschäftsführer und Key Clients. Maximal hochwertig, bitte!', time: '09:15' },
+      { own: false, text: 'Hallo! Oh, das klingt nach meinem Spezialgebiet! Für Business Dinners empfehle ich mein Omakase-Menü – 8 Gänge, saisonal, japanische Haute Cuisine. 🌸', time: '09:28' },
+      { own: true,  text: 'Perfekt! Budget ist kein Problem – es soll unvergesslich sein. Wann wären Sie verfügbar?', time: '09:35' },
+      { own: false, text: 'Klingt super! Ich bin dabei. 🎉 Der 28. März passt sehr gut. Ich schlage folgendes vor:', time: '09:40',
+        offer: { title: '🌸 Omakase Premium für 8 Pers.', details: '• 8-gängiges Kaiseki/Omakase-Menü\n• Inkl. Wagyu A5 & Hummer\n• Weinbegleitung (japanischer Sake + Wein)\n• Professionelles Service-Set\n• An- und Abreise inkl.', price: '1.840 € gesamt (230€/P)' }},
+      { own: true,  text: 'Ausgezeichnet! Das nehmen wir sofort. Klingt super! Ich bin dabei 🎉', time: '16:22' },
+    ]
+  },
+  {
+    name: 'Stefan Müller BBQ', av: '🔥', sub: 'Koch · BBQ-Gala · Sommerfest',
+    event: '📅 Firmensommerfest Schmidt GmbH · 12. Juli 2026 · 80 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Hi Stefan! Wir planen unser Firmensommerfest für ca. 80 Personen. BBQ wäre der perfekte Rahmen. Hast du Zeit im Juli?', time: '13:10' },
+      { own: false, text: 'Hey! Klar, Juli ist meine Lieblingssaison für BBQ! 🔥 80 Personen – das machen wir groß. Wann genau?', time: '13:22' },
+      { own: true,  text: 'Am 12. Juli, von 16–22 Uhr. Wir haben einen großen Firmenparkplatz als Eventgelände.', time: '13:30' },
+      { own: false, text: 'Der 12. Juli ist noch frei! Für 50 Personen benötige ich drei Grills und ausreichend Platz für die Fleischstationen. Hier mein Angebot:', time: '13:45',
+        offer: { title: '🔥 BBQ-Gala Firmenfest 80 Pers.', details: '• Grill-Gala inkl. Tex-Mex & American BBQ\n• Brisket, Ribs, Pulled Pork, vegane Optionen\n• 4 Stunden Service\n• Auf-/Abbau, Equipment & Team', price: '4.200 € pauschal' }},
+      { own: true,  text: 'Respekt, das klingt richtig gut! Können wir das Angebot auf das volle Tex-Mex-Paket erweitern?', time: '14:00' },
+    ]
+  },
+  {
+    name: 'Partyretter Support', av: '🎉', sub: 'Buchungsbestätigung & Support',
+    event: '📋 Buchung #2847 · Marco Bianchi · 22. März 2026',
+    profile: 'kunden-dashboard.html',
+    messages: [
+      { own: false, text: '✅ Buchung #2847 bestätigt!\n\nDeine Buchung mit Marco Bianchi für den 22. März 2026 wurde erfolgreich bestätigt. Die Anzahlung (30%) ist bis zum 15. März fällig.', time: 'Mo 09:00' },
+      { own: false, text: '📧 Du erhältst in Kürze eine Bestätigungs-E-Mail mit allen Details und der Zahlungsaufforderung.', time: 'Mo 09:01' },
+      { own: true,  text: 'Danke! Wann genau kommt die E-Mail? Und wie zahle ich die Anzahlung?', time: 'Mo 09:15' },
+      { own: false, text: 'Die E-Mail ist bereits unterwegs. Du kannst die Anzahlung bequem per SEPA-Überweisung oder Kreditkarte über dein Dashboard bezahlen. Falls du Fragen hast, sind wir jederzeit für dich da! 😊', time: 'Mo 09:20' },
+      { own: true,  text: 'Perfekt! Noch eine Frage: Was passiert wenn Marco krank wird?', time: 'Mo 09:30' },
+      { own: false, text: 'Kein Stress! Du bist durch unsere Buchungsversicherung abgesichert. Bei kurzfristiger Absage des Anbieters erstattet Partyretter 100% deiner Zahlung zurück ODER vermittelt dir innerhalb von 2h einen gleichwertigen Ersatzkoch. 🛡️', time: 'Mo 09:35' },
+    ]
+  },
+  {
+    name: 'Lena Richter', av: '🌱', sub: 'Koch · Veganes Buffet · Produktlaunch',
+    event: '📅 Produktlaunch GreenCorp · 3. April 2026 · 35 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Hallo Lena! Wir sind eine nachhaltige Brand und suchen eine vegane Köchin für unseren Produktlaunch. 35 Gäste, Köln, 3. April.', time: '10:00' },
+      { own: false, text: 'Oh, das passt perfekt zu mir! 🌱 Ich koche seit Jahren ausschließlich vegan und Bio. Für 35 Personen wäre mein World Vegan Gala oder das Plant-Based Buffet ideal.', time: '10:15' },
+      { own: true,  text: 'Das vegane Buffet klingt sehr interessant! Was genau ist enthalten?', time: '10:22' },
+      { own: false, text: 'Das Plant-Based Buffet umfasst 12+ Komponenten: Salat-Bar, 3 warme Hauptgerichte, Rohkost-Station und einen Dessert-Tisch mit 6 veganen Süßigkeiten. Alles 100% bio, regional, saisonal.', time: '10:30' },
+      { own: false, text: 'Hier mein Angebot für euch:', time: '10:32',
+        offer: { title: '🌿 Plant-Based Buffet 35 Pers.', details: '• 12+ vegane & bio Buffetkomponenten\n• Salat-Bar (5 Sorten), 3 Hauptspeisen\n• Rohkost-Station mit Dips\n• Dessert-Tisch (6 Süßigkeiten)\n• Inkl. Einkauf & Service', price: '2.030 € gesamt (58€/P)' }},
+      { own: true,  text: 'Das vegane Buffet-Paket wäre ideal für uns! Perfekte Wahl für einen grünen Produktlaunch. Können wir buchen?', time: '11:40' },
+    ]
+  },
+  {
+    name: 'Rafael Morales', av: '🥘', sub: 'Koch · La Gran Paella · Hochzeitsfeier',
+    event: '📅 Hochzeitsfeier Müller/Garcia · 8. Juni 2026 · 45 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: '¡Hola Rafael! Wir sind ein deutsch-spanisches Paar und möchten unsere Hochzeit mit einer authentischen Live-Paella feiern. 45 Gäste, 8. Juni.', time: '14:30' },
+      { own: false, text: '¡Qué romántico! 🇪🇸 Das ist eine wunderschöne Idee! Für eine deutsch-spanische Hochzeit ist La Gran Paella mein absolutes Signature-Erlebnis. Der 8. Juni ist noch frei!', time: '14:45' },
+      { own: true,  text: 'Super! Wie groß muss die Pfanne sein und braucht ihr spezielles Equipment?', time: '14:52' },
+      { own: false, text: 'Für 45 Personen verwende ich meine 90cm Paella-Pfanne – das ist spektakulär! La Gran Paella – ich brauche Platz von ca. 3x3m und Strom (16A) oder Gas.', time: '15:00' },
+      { own: false, text: 'Mein Angebot für eure Hochzeit:', time: '15:02',
+        offer: { title: '🥘 La Gran Paella Wedding 45 Pers.', details: '• Live-Paella-Show (90cm Pfanne!)\n• Gazpacho & Tapas-Auftakt\n• Paella Valenciana + Marinera\n• Crema Catalana als Dessert\n• Sangría-Service inklusive', price: '3.240 € gesamt (72€/P)' }},
+      { own: true,  text: 'Das ist wunderschön! Wir haben einen großen Garten. Dann nehmen wir Gas – kein Problem. Wann müsst ihr anreisen?', time: '16:10' },
+    ]
+  },
+  {
+    name: 'Dr. Ernst Kellner', av: '🍷', sub: 'Koch · Grand Gourmet Gala · Jubiläum',
+    event: '📅 Firmen-Jubiläum Kellner Consult · 1. Mai 2026 · 12 Gäste',
+    profile: 'anbieter-profil.html',
+    messages: [
+      { own: true,  text: 'Guten Tag Herr Kellner! Für das 25-jährige Firmenjubiläum suchen wir ein absolutes Highlight-Dinner. Budget offen, Qualität höchste Priorität.', time: '09:00' },
+      { own: false, text: 'Guten Tag! Herzlichen Glückwunsch zum 25-jährigen Jubiläum! 🥂 Für solch einen besonderen Anlass empfehle ich mein Grand Gourmet Gala – 7 Gänge, mit Beluga-Kaviar, Wagyu A5 und Weinbegleitung.', time: '09:15' },
+      { own: true,  text: 'Das klingt exquisit! Können Sie mir mehr Details nennen?', time: '09:22' },
+      { own: false, text: 'Natürlich. Der 7-Gang-Ablauf: Kaviar Amuse, Hummer-Bisque, Entenleberpastete, Champagner-Sorbet, Wagyu Rossini, Käsewagen (7 Sorten) und abschließend ein live gebackenes Grand Marnier Soufflé. Weinbegleitung ist inklusive.', time: '09:35' },
+      { own: false, text: 'Hier mein Angebot:', time: '09:36',
+        offer: { title: '👑 Grand Gourmet Gala 12 Pers.', details: '• 7 Gänge inkl. Beluga-Kaviar & Wagyu A5\n• Vollständige Weinbegleitung (7 Weine)\n• Käsewagen mit 7 Sorten\n• Live-Soufflé am Tisch\n• Weißes Handschuh-Service-Team', price: '2.820 € gesamt (235€/P)' }},
+      { own: true,  text: 'Hervorragend! Weinbegleitung inkl. – kein Problem. Können Sie bitte die Buchung bestätigen?', time: '11:00' },
+      { own: false, text: 'Mit Freude! Ich sende Ihnen in den nächsten 30 Minuten die Buchungsbestätigung. Der 1. Mai wird unvergesslich! 🍷', time: '11:05' },
+    ]
+  }
+];
+
+let currentConv = 0;
+
+function renderMessages(idx) {
+  const c = CONVERSATIONS[idx];
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML = `<div class="sys-msg">Konversation mit ${c.name}</div>`;
+  c.messages.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'msg' + (m.own ? ' own' : '');
+    let inner = '';
+    if (m.own) {
+      inner = `<div class="msg-av">👤</div><div><div class="bubble">${m.text.replace(/\n/g,'<br>')}</div><div class="msg-time">${m.time}</div></div>`;
+    } else {
+      let offerHtml = '';
+      if (m.offer) {
+        offerHtml = `<div class="offer-card">
+          <div class="offer-title">${m.offer.title}</div>
+          <div class="offer-details">${m.offer.details.replace(/\n/g,'<br>')}</div>
+          <div class="offer-price">${m.offer.price}</div>
+          <div class="offer-btns">
+            <button class="btn-accept-offer" onclick="alert('Angebot angenommen! ✅')">✓ Annehmen</button>
+            <button class="btn-decline-offer" onclick="alert('Angebot abgelehnt')">Ablehnen</button>
+          </div></div>`;
+      }
+      inner = `<div class="msg-av">${c.av}</div><div><div class="bubble">${m.text.replace(/\n/g,'<br>')}${offerHtml}</div><div class="msg-time">${m.time}</div></div>`;
+    }
+    div.innerHTML = inner;
+    msgs.appendChild(div);
+  });
+  msgs.scrollTop = msgs.scrollHeight;
+  document.getElementById('chatName').textContent = c.name;
+  document.getElementById('chatAv').textContent = c.av;
+  document.getElementById('chatSub').textContent = c.sub;
+  document.getElementById('chatEventText').textContent = c.event;
+  document.getElementById('chatProfileLink').href = c.profile;
+}
+
+function loadConv(el, idx) {
+  document.querySelectorAll('.conv-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  el.querySelector('.conv-unread-dot')?.remove();
+  currentConv = idx;
+  renderMessages(idx);
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+}
+
+function sendMsg() {
+  const inp = document.getElementById('msgInput');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg own';
+  div.innerHTML = `<div class="msg-av">👤</div><div><div class="bubble">${txt}</div><div class="msg-time">Jetzt</div></div>`;
+  msgs.appendChild(div);
+  inp.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  const c = CONVERSATIONS[currentConv];
+  setTimeout(() => {
+    const reply = document.createElement('div');
+    reply.className = 'msg';
+    const responses = [
+      'Verstanden! Ich kümmere mich darum. 👍',
+      'Super, danke für deine Nachricht! Ich melde mich gleich.',
+      'Perfekt! Das klingt gut. Ich prüfe das kurz.',
+      'Danke! Ich bestätige das innerhalb der nächsten Stunde.',
+    ];
+    const r = responses[Math.floor(Math.random() * responses.length)];
+    reply.innerHTML = `<div class="msg-av">${c.av}</div><div><div class="bubble">${r}</div><div class="msg-time">Jetzt</div></div>`;
+    msgs.appendChild(reply);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1200);
+}
+
+// Initialisierung
+document.addEventListener('DOMContentLoaded', () => renderMessages(0));
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

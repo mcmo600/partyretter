@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partyretter – Alle Seiten</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1A1208;
+      --dark2: #2d1f0e;
+      --gold: #C8922A;
+      --gold2: #e0a430;
+      --cream: #F5F0E8;
+      --cream2: #EDE8DF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; }
+
+    /* HERO */
+    .hero {
+      background: var(--dark);
+      padding: 48px 40px 36px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,146,42,0.2) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(200,146,42,0.2); border: 1px solid rgba(200,146,42,0.4);
+      color: var(--gold); font-size: 0.75rem; letter-spacing: 2px;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+      margin-bottom: 16px; font-weight: 600;
+    }
+    .hero h1 {
+      font-family: 'Fraunces', serif; font-weight: 900;
+      font-size: 2.8rem; color: var(--cream); margin-bottom: 12px;
+      position: relative;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p { color: rgba(245,240,232,0.7); font-size: 1.05rem; max-width: 600px; margin: 0 auto 24px; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+      position: relative;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-val { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 900; color: var(--gold); }
+    .hero-stat-label { font-size: 0.75rem; color: rgba(245,240,232,0.5); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    /* SECTION */
+    .section { margin-bottom: 40px; }
+    .section-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+    }
+    .section-icon { font-size: 1.5rem; }
+    .section-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.3rem; }
+    .section-desc { font-size: 0.85rem; color: #888; margin-top: 2px; }
+
+    /* PAGE CARDS */
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;
+    }
+    .page-card {
+      background: white; border: 1.5px solid #e8e4dc; border-radius: 16px;
+      padding: 20px 22px; text-decoration: none; color: var(--dark);
+      transition: all 0.22s; display: block; position: relative; overflow: hidden;
+    }
+    .page-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--gold); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .page-card:hover { border-color: var(--gold); box-shadow: 0 6px 24px rgba(200,146,42,0.14); transform: translateY(-2px); }
+    .page-card:hover::before { transform: scaleX(1); }
+    .page-card:active { transform: translateY(0); }
+
+    .card-icon { font-size: 2rem; margin-bottom: 10px; }
+    .card-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem; margin-bottom: 5px; }
+    .card-desc { font-size: 0.8rem; color: #777; line-height: 1.5; }
+    .card-tag {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 0.68rem; font-weight: 600; margin-top: 10px;
+    }
+    .tag-public { background: rgba(52,152,219,0.12); color: #1a5fa8; }
+    .tag-kunde { background: rgba(52,152,219,0.12); color: #1a5fa8; }
+    .tag-koch { background: rgba(200,146,42,0.15); color: var(--dark); }
+    .tag-anbieter { background: rgba(243,156,18,0.15); color: #7a4f00; }
+    .tag-admin { background: rgba(155,89,182,0.15); color: #6a0dad; }
+    .tag-steuer { background: rgba(46,204,113,0.15); color: #155724; }
+
+    /* FLOW DIAGRAM */
+    .flow {
+      background: white; border: 1px solid #e8e4dc; border-radius: 16px;
+      padding: 28px; margin-bottom: 40px;
+    }
+    .flow-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 20px; }
+    .flow-steps {
+      display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+    }
+    .flow-step {
+      background: var(--cream2); border-radius: 10px; padding: 12px 16px;
+      text-align: center; flex: 1; min-width: 100px; cursor: pointer;
+      transition: all 0.2s; text-decoration: none; color: var(--dark);
+    }
+    .flow-step:hover { background: var(--gold); color: var(--dark); }
+    .flow-step .step-icon { font-size: 1.3rem; margin-bottom: 4px; }
+    .flow-step .step-label { font-size: 0.75rem; font-weight: 600; }
+    .flow-arrow { font-size: 1.2rem; color: #ccc; padding: 0 6px; flex-shrink: 0; }
+
+    /* NOTICE */
+    .notice {
+      background: rgba(200,146,42,0.08); border: 1px solid rgba(200,146,42,0.3);
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 30px;
+      display: flex; align-items: flex-start; gap: 12px; font-size: 0.88rem;
+    }
+    .notice-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .notice strong { display: block; margin-bottom: 3px; }
+
+    /* ADMIN QUICKLAUNCH */
+    .admin-bar {
+      background: var(--dark); border-radius: 14px; padding: 20px 24px;
+      margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .admin-bar-text { color: var(--cream); }
+    .admin-bar-text strong { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--gold); display: block; }
+    .admin-bar-text span { font-size: 0.82rem; color: rgba(245,240,232,0.6); }
+    .admin-bar-btn {
+      background: var(--gold); color: var(--dark); border: none;
+      padding: 12px 24px; border-radius: 10px; font-weight: 700;
+      font-size: 0.9rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      text-decoration: none; white-space: nowrap; transition: background 0.2s;
+    }
+    .admin-bar-btn:hover { background: var(--gold2); }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🗺️ Prototype Navigator</div>
+  <h1>Mein<span>PartyRetter</span></h1>
+  <p>Alle Seiten auf einem Blick. Klicke auf eine Karte, um die Seite zu öffnen und zu testen.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val">48</div><div class="hero-stat-label">Seiten</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">4</div><div class="hero-stat-label">Rollen</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">100%</div><div class="hero-stat-label">Klickbar</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- NOTICE -->
+  <div class="notice">
+    <div class="notice-icon">💡</div>
+    <div>
+      <strong>So testest du den Prototypen</strong>
+      Dies ist ein vollständig klickbarer HTML-Prototyp. Alle Seiten sind miteinander verknüpft. Klicke auf Buttons, fülle Formulare aus, navigiere zwischen Dashboards — alles funktioniert wie die echte App. Daten werden nicht gespeichert (Prototyp).
+    </div>
+  </div>
+
+  <!-- ADMIN QUICKLAUNCH -->
+  <div class="admin-bar">
+    <div class="admin-bar-text">
+      <strong>⚡ Admin-Bereich</strong>
+      <span>Alle Nutzer, Buchungen, Einnahmen, Steuerberater-Export und Plattform-Einstellungen</span>
+    </div>
+    <a href="admin-dashboard.html" class="admin-bar-btn">🏛️ Admin Dashboard öffnen →</a>
+  </div>
+
+  <!-- USER JOURNEY FLOW: Kunde -->
+  <div class="flow">
+    <div class="flow-title">👤 Kunden-Journey: Koch anfragen</div>
+    <div class="flow-steps">
+      <a href="homepage.html" class="flow-step"><div class="step-icon">🏠</div><div class="step-label">Homepage</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="marktplatz.html" class="flow-step"><div class="step-icon">🛒</div><div class="step-label">Marktplatz</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="anfrage-stellen.html?chef=marco" class="flow-step"><div class="step-icon">✉️</div><div class="step-label">Anfrage senden</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="buchung-bestaetigung.html" class="flow-step"><div class="step-icon">✅</div><div class="step-label">Buchen + Zahlen</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="nachrichten.html" class="flow-step"><div class="step-icon">💬</div><div class="step-label">Chat</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="kunden-dashboard.html" class="flow-step"><div class="step-icon">📊</div><div class="step-label">Dashboard</div></a>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-title">🚚 Kunden-Journey: Foodtruck finden</div>
+    <div class="flow-steps">
+      <a href="homepage.html" class="flow-step"><div class="step-icon">🏠</div><div class="step-label">Homepage</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="foodtruck-karte.html" class="flow-step"><div class="step-icon">🗺️</div><div class="step-label">Karte</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="buchung-bestaetigung.html" class="flow-step"><div class="step-icon">✅</div><div class="step-label">Buchen</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="event-ausschreiben.html" class="flow-step"><div class="step-icon">📋</div><div class="step-label">Event ausschreiben</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="nachrichten.html" class="flow-step"><div class="step-icon">💬</div><div class="step-label">Angebote</div></a>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-title">👨‍🍳 Anbieter-Journey: Starten & buchen werden</div>
+    <div class="flow-steps">
+      <a href="anbieter-onboarding.html" class="flow-step" style="background:rgba(200,146,42,0.1)"><div class="step-icon">ℹ️</div><div class="step-label">Was brauch ich?</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="registrierung.html" class="flow-step" style="background:rgba(200,146,42,0.1)"><div class="step-icon">📝</div><div class="step-label">Registrieren</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="anbieter-profil.html" class="flow-step" style="background:rgba(200,146,42,0.1)"><div class="step-icon">🪪</div><div class="step-label">Profil aufbauen</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="event-ausschreiben.html" class="flow-step" style="background:rgba(200,146,42,0.1)"><div class="step-icon">📣</div><div class="step-label">Event-Pinnwand</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="nachrichten.html" class="flow-step" style="background:rgba(200,146,42,0.1)"><div class="step-icon">💬</div><div class="step-label">Anfragen</div></a>
+      <div class="flow-arrow">→</div>
+      <a href="steuerdaten.html" class="flow-step" style="background:rgba(200,146,42,0.1)"><div class="step-icon">🧾</div><div class="step-label">Steuer</div></a>
+    </div>
+  </div>
+
+  <!-- ─── NEU HINZUGEFÜGT ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">✨</div>
+      <div><div class="section-title">Neu hinzugefügt (Session 3)</div><div class="section-desc">5 neue Seiten – Preise, Wizard, Landingpage, Benachrichtigungen, Blog</div></div>
+    </div>
+    <div class="cards-grid">
+      <a href="preise.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">💰</div>
+        <div class="card-name">Preisseite</div>
+        <div class="card-desc">Transparentes Preismodell: Free / Pro / Premium für Anbieter, Service-Gebühr für Kunden. Mit Vergleichstabelle, FAQ und Provision-Rechner.</div>
+        <span class="card-tag tag-public">✨ Neu</span>
+      </a>
+      <a href="onboarding-wizard.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">🧙</div>
+        <div class="card-name">Onboarding-Wizard</div>
+        <div class="card-desc">5-Schritte Setup in 5 Minuten: Anbieter-Typ → Profil → Küche & Stil → Fotos → Plan & Preise → Fertig! Mit Progress-Bar und Foto-Vorschau.</div>
+        <span class="card-tag tag-anbieter">✨ Neu</span>
+      </a>
+      <a href="landingpage-hochzeit.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">💍</div>
+        <div class="card-name">Landingpage Hochzeit</div>
+        <div class="card-desc">Kategorie-Landingpage für Hochzeits-Catering: Anbieter-Grid, Pakete, Budget-Rechner, Testimonials und How-it-Works.</div>
+        <span class="card-tag tag-public">✨ Neu</span>
+      </a>
+      <a href="nachrichten.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">🔔</div>
+        <div class="card-name">Benachrichtigungs-Center</div>
+        <div class="card-desc">Vollständiges Notification Center: Buchungen, Nachrichten, Bewertungen, Zahlungen. Mit Filter-Tabs, Einstellungen und "Alle gelesen"-Funktion.</div>
+        <span class="card-tag tag-anbieter">✨ Neu</span>
+      </a>
+      <a href="blog.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">📖</div>
+        <div class="card-name">Blog & Inspiration</div>
+        <div class="card-desc">Blog mit Artikeln, Rezepten, Food Trends und Eventplanung-Tipps. Mit Sidebar, Newsletter, Tag-Cloud, Kategorie-Filter und Suchfeld.</div>
+        <span class="card-tag tag-public">✨ Neu</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── ÖFFENTLICHE SEITEN ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🌐</div>
+      <div><div class="section-title">Öffentliche Seiten</div><div class="section-desc">Für alle Besucher sichtbar – kein Login nötig</div></div>
+    </div>
+    <div class="cards-grid">
+      <a href="homepage.html" class="page-card">
+        <div class="card-icon">🏠</div>
+        <div class="card-name">Homepage</div>
+        <div class="card-desc">Landingpage mit Hero-Bereich, Kategorien, Features und CTA-Buttons zum Marktplatz & Registrierung.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="marktplatz.html" class="page-card">
+        <div class="card-icon">🛒</div>
+        <div class="card-name">Marktplatz</div>
+        <div class="card-desc">Alle Anbieter suchen und filtern: Köche, Foodtrucks, Getränke, Lokale. Mit Kategorie- und Preisfilter. 10 Profile.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="privatkoech-liste.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">👨‍🍳</div>
+        <div class="card-name">Privatköche – 10 Profile</div>
+        <div class="card-desc">10 Privatköche mit je 3 kompletten Menüpaketen (Preise, Gänge, Personenzahl). Filter & Sortierung. Neu!</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="kochevents.html" class="page-card">
+        <div class="card-icon">🍽️</div>
+        <div class="card-name">Koch-Events</div>
+        <div class="card-desc">Öffentliche Koch-Events und Kochkurse entdecken, buchen und bewerten. Mit Datums- und Stadtfilter.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="kochevent.html" class="page-card">
+        <div class="card-icon">🎪</div>
+        <div class="card-name">Event-Detailseite</div>
+        <div class="card-desc">Detailansicht eines Koch-Events: Programm, Bewertungen, Host-Info und Buchungs-Widget mit Preisberechnung.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="anfrage-stellen.html?chef=marco" class="page-card">
+        <div class="card-icon">✉️</div>
+        <div class="card-name">Anfrage stellen</div>
+        <div class="card-desc">4-Schritt Wizard: Eventyp → Details → Nachricht → Zusammenfassung. Lädt Koch-Info via URL-Parameter (?chef=marco/lisa/thanh).</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="foodtruck-karte.html" class="page-card">
+        <div class="card-icon">🗺️</div>
+        <div class="card-name">Foodtruck Karte</div>
+        <div class="card-desc">Foodtrucks nach Tag, Uhrzeit und Ort finden. Kartenansicht + Listenansicht. Foodtrucks können Standorte eintragen.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="event-ausschreiben.html" class="page-card">
+        <div class="card-icon">📋</div>
+        <div class="card-name">Event ausschreiben</div>
+        <div class="card-desc">Reverse Marktplatz: Kunden schreiben Events aus, Anbieter bewerben sich. Auch Anbieter-Initiativen (freie Slots).</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="anbieter-onboarding.html" class="page-card">
+        <div class="card-icon">ℹ️</div>
+        <div class="card-name">Anbieter-Info</div>
+        <div class="card-desc">Was brauche ich als Anbieter? Alle Pflichten, Genehmigungen und Dokumente je Typ: Koch, Foodtruck, Lokal, Getränke.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="agb.html" class="page-card">
+        <div class="card-icon">📋</div>
+        <div class="card-name">AGB & Rechtliches</div>
+        <div class="card-desc">Allgemeine Geschäftsbedingungen: Geltungsbereich, Vertragsschluss, Pflichten, Provisionen, Haftungsausschluss und Gerichtsstand.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="impressum.html" class="page-card">
+        <div class="card-icon">ℹ️</div>
+        <div class="card-name">Impressum</div>
+        <div class="card-desc">Angaben gemäß TMG: Unternehmensangaben, Vertreter, Verantwortlich für Inhalte, Haftungshinweise, Datenschutz, Online-Streitbeilegung.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="buchung-bestaetigung.html" class="page-card">
+        <div class="card-icon">✅</div>
+        <div class="card-name">Buchung bestätigen</div>
+        <div class="card-desc">Verbindliche Buchung + Zahlung: Kontaktdaten, Event-Details, Zahlungsart (Überweisung/PayPal/Karte/SEPA), AGB, Käuferschutz.</div>
+        <span class="card-tag tag-kunde">Kunde</span>
+      </a>
+            <a href="restaurants.html" class="page-card">
+        <div class="card-icon">🍽️</div>
+        <div class="card-name">Restaurants</div>
+        <div class="card-desc">Übersicht aller registrierten Restaurants in der Nähe.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="foodtrucks-liste.html" class="page-card">
+        <div class="card-icon">🚚</div>
+        <div class="card-name">Foodtrucks-Liste</div>
+        <div class="card-desc">Verzeichnis aller verfügbaren Foodtrucks mit Filter und Suche.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      <a href="event-zubehoer.html" class="page-card">
+        <div class="card-icon">🎉</div>
+        <div class="card-name">Event-Zubehör</div>
+        <div class="card-desc">Dekoration, Musik, Equipment und weitere Event-Accessoires.</div>
+        <span class="card-tag tag-public">Öffentlich</span>
+      </a>
+      
+        <div class="card-icon">🔐</div>
+        <div class="card-name">Login</div>
+        <div class="card-desc">Einloggen als Kunde oder Anbieter. Zwei-Panel-Layout mit Statistiken. Google-Login-Platzhalter.</div>
+        <span class="card-tag tag-public">Auth</span>
+      </a>
+      <a href="registrierung.html" class="page-card">
+        <div class="card-icon">📝</div>
+        <div class="card-name">Registrierung</div>
+        <div class="card-desc">4-Schritte-Wizard: Rolle wählen (Kunde / Koch / Foodtruck / Lokal) → Zugangsdaten → Details → Fertig.</div>
+        <span class="card-tag tag-public">Auth</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── KUNDEN ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">👤</div>
+      <div><div class="section-title">Kunden-Bereich</div><div class="section-desc">Für registrierte Kunden – Events planen, Anbieter buchen, Nachrichten</div></div>
+    </div>
+    <div class="cards-grid">
+      <a href="kunden-dashboard.html" class="page-card">
+        <div class="card-icon">📊</div>
+        <div class="card-name">Kunden-Dashboard</div>
+        <div class="card-desc">Übersicht: Buchungen, Events, Merkliste, Umkreissuche, Nachrichten-Vorschau. Mit Sidebar-Navigation.</div>
+        <span class="card-tag tag-kunde">Kunde</span>
+      </a>
+      <a href="event-anlegen.html" class="page-card">
+        <div class="card-icon">🎉</div>
+        <div class="card-name">Event anlegen</div>
+        <div class="card-desc">5-Schritte-Wizard: Event-Typ → Details → Services → Budget → Veröffentlichen. Mit Budget-Slider.</div>
+        <span class="card-tag tag-kunde">Kunde</span>
+      </a>
+      <a href="nachrichten.html" class="page-card">
+        <div class="card-icon">💬</div>
+        <div class="card-name">Nachrichten</div>
+        <div class="card-desc">Split-Pane Chat: Konversationsliste + Chat-Bereich mit Angebots-Karten. Enter-to-Send, Auto-Antwort-Demo.</div>
+        <span class="card-tag tag-kunde">Alle Nutzer</span>
+      </a>
+      <a href="bewertungen.html" class="page-card">
+        <div class="card-icon">⭐</div>
+        <div class="card-name">Bewertungen hinterlegen</div>
+        <div class="card-desc">Kunden können Events bewerten mit Sternen, Text und Fotos. Rating-Breakdown, Event-Auswahl, Bewertungs-Historie.</div>
+        <span class="card-tag tag-kunde">Kunde</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── KÖCHE ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">👨‍🍳</div>
+      <div><div class="section-title">Koch-Bereich</div><div class="section-desc">Für registrierte Köche und Caterer – Menüs, Einkaufszettel, Anfragen</div></div>
+    </div>
+    <div class="cards-grid">
+      <a href="koch-dashboard.html" class="page-card">
+        <div class="card-icon">👨‍🍳</div>
+        <div class="card-name">Koch-Dashboard</div>
+        <div class="card-desc">Anfragen annehmen/ablehnen, Menü-Übersicht, Einkaufszettel-Vorschau, Einnahmen-Liste, Steuer-Widget.</div>
+        <span class="card-tag tag-koch">Koch</span>
+      </a>
+      <a href="menu-erstellen.html" class="page-card">
+        <div class="card-icon">📋</div>
+        <div class="card-name">Menü erstellen</div>
+        <div class="card-desc">Gänge mit Zutaten, Fotos, Preiskalkulator mit Marge-Slider, Live-Einkaufszettel-Vorschau.</div>
+        <span class="card-tag tag-koch">Koch</span>
+      </a>
+      <a href="einkaufszettel.html" class="page-card">
+        <div class="card-icon">🛍️</div>
+        <div class="card-name">Einkaufszettel</div>
+        <div class="card-desc">Auto-generiert aus Menü-Zutaten. Personenzahl anpassen, Preise skalieren, Abhak-Funktion, PDF-Export.</div>
+        <span class="card-tag tag-koch">Koch</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── ANBIETER ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🚚</div>
+      <div><div class="section-title">Anbieter-Bereich</div><div class="section-desc">Für alle Anbieter: Köche, Foodtrucks, Getränke, Lokale</div></div>
+    </div>
+    <div class="cards-grid">
+      <a href="anbieter-profil.html" class="page-card">
+        <div class="card-icon">🪪</div>
+        <div class="card-name">Anbieter-Profil (Steckbrief)</div>
+        <div class="card-desc">Profil aufbauen: Küchenstile (klickbare Chips), Fotos, Bio, Vorschau-Overlay, Entwurf speichern oder veröffentlichen.</div>
+        <span class="card-tag tag-anbieter">Alle Anbieter</span>
+      </a>
+      <a href="anbieter-dashboard.html" class="page-card">
+        <div class="card-icon">🚚</div>
+        <div class="card-name">Anbieter-Dashboard</div>
+        <div class="card-desc">Angebot-Einstellungen, Verfügbarkeitskalender, Anfragen, Bewertungen, Profil-Vervollständigung.</div>
+        <span class="card-tag tag-anbieter">Foodtruck / Lokal</span>
+      </a>
+      <a href="anbieter-funktionen.html" class="page-card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-name">Anbieter-Funktionen</div>
+        <div class="card-desc">Verwaltung aller Anbieter-Funktionen, Einstellungen und Konfiguration.</div>
+        <span class="card-tag tag-anbieter">Alle Anbieter</span>
+      </a>
+
+      <a href="steuerdaten.html" class="page-card">
+        <div class="card-icon">🧾</div>
+        <div class="card-name">Steuerdaten</div>
+        <div class="card-desc">Einnahmen/Ausgaben Übersicht, alle Buchungen, Steuerberater-Export (DATEV, Excel, PDF, E-Mail direkt).</div>
+        <span class="card-tag tag-steuer">Alle Anbieter</span>
+      </a>
+      <a href="buchhaltung.html" class="page-card">
+        <div class="card-icon">💰</div>
+        <div class="card-name">Buchhaltung & Abrechnungen</div>
+        <div class="card-desc">Einnahmen-Tabelle, Fahrtkosten-Kalkulator mit Haversine-Formel (PLZ-Entfernung), Quittungs-Upload, Steuerzusammenfassung.</div>
+        <span class="card-tag tag-steuer">Alle Anbieter</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── ADMIN ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🏛️</div>
+      <div><div class="section-title">Admin-Bereich (Alexander)</div><div class="section-desc">Vollständige Plattform-Kontrolle, Nutzerverwaltung, Finanzen, Steuerberater</div></div>
+    </div>
+    <div class="cards-grid">
+      <a href="admin-dashboard.html" class="page-card" style="border-color:var(--gold);background:linear-gradient(135deg,white,rgba(200,146,42,0.04));">
+        <div class="card-icon">⚡</div>
+        <div class="card-name">Admin Dashboard</div>
+        <div class="card-desc">Plattform-KPIs, Nutzerverwaltung, Buchungsübersicht, Einnahmen, Streitfälle, Steuerberater-Export, Einstellungen.</div>
+        <span class="card-tag tag-admin">⚡ Admin only</span>
+      </a>
+      <a href="werbekunden-dashboard.html" class="page-card">
+        <div class="card-icon">📊</div>
+        <div class="card-name">Werbekunden-Dashboard</div>
+        <div class="card-desc">Verwaltung von Werbekunden und deren Kampagnen.</div>
+        <span class="card-tag tag-admin">Admin</span>
+      </a>
+      <a href="werbung-schalten.html" class="page-card">
+        <div class="card-icon">📢</div>
+        <div class="card-name">Werbung schalten</div>
+        <div class="card-desc">Verwaltung von Werbekampagnen und Anzeigen auf der Plattform.</div>
+        <span class="card-tag tag-admin">Admin</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── ALLE SEITEN KOMPAKT ─── -->
+  <div class="flow">
+    <div class="flow-title">📑 Alle 43 Seiten im Schnellzugriff</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:4px;">
+      <a href="homepage.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🏠 Homepage</a>
+      <a href="marktplatz.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🛒 Marktplatz</a>
+      <a href="kochevents.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🍽️ Koch-Events</a>
+      <a href="kochevent.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🎪 Event-Detail</a>
+      <a href="anfrage-stellen.html?chef=marco" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">✉️ Anfrage stellen</a>
+      <a href="foodtruck-karte.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🗺️ Foodtruck-Karte</a>
+      <a href="event-ausschreiben.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">📋 Event ausschreiben</a>
+      <a href="buchung-bestaetigung.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">✅ Buchung+Zahlung</a>
+      <a href="anbieter-onboarding.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">ℹ️ Anbieter-Info</a>
+      <a href="agb.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">📋 AGB & Recht</a>
+      <a href="login.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🔐 Login</a>
+      <a href="registrierung.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">📝 Registrierung</a>
+      <a href="kunden-dashboard.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">👤 Kunden-Dash</a>
+      <a href="event-anlegen.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🎉 Event anlegen</a>
+      <a href="koch-dashboard.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">👨‍🍳 Koch-Dash</a>
+      <a href="menu-erstellen.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">📋 Menü erstellen</a>
+      <a href="einkaufszettel.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🛍️ Einkaufszettel</a>
+      <a href="anbieter-profil.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🪪 Anbieter-Profil</a>
+      <a href="anbieter-dashboard.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🚚 Anbieter-Dash</a>
+      <a href="steuerdaten.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">🧾 Steuerdaten</a>
+      <a href="buchhaltung.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">💰 Buchhaltung</a>
+      <a href="nachrichten.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">💬 Nachrichten</a>
+      <a href="bewertungen.html" style="text-decoration:none;background:var(--cream2);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:600;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--cream2)'">⭐ Bewertungen</a>
+      <a href="admin-dashboard.html" style="text-decoration:none;background:rgba(200,146,42,0.15);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.15)'">⚡ Admin-Dash</a>
+      <a href="preise.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">💰 Preise ✨</a>
+      <a href="onboarding-wizard.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">🧙 Wizard ✨</a>
+      <a href="landingpage-hochzeit.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">💍 Hochzeit ✨</a>
+      <a href="nachrichten.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">🔔 Notifications ✨</a>
+      <a href="blog.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">📖 Blog ✨</a>
+      <a href="privatkoech-liste.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">👨‍🍳 Privatköche ✨</a>
+      <a href="email-benachrichtigungen.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">📧 E-Mail Notif. ✨</a>
+      <a href="streitigkeiten.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">⚖️ Streitigkeiten ✨</a>
+      <a href="affiliate-programm.html" style="text-decoration:none;background:rgba(200,146,42,0.12);border-radius:8px;padding:10px 12px;font-size:0.82rem;font-weight:700;color:var(--dark);transition:all 0.2s;display:block;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='rgba(200,146,42,0.12)'">🤝 Affiliate ✨</a>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer style="background:var(--dark);padding:20px 40px;text-align:center;">
+  <div style="color:rgba(245,240,232,0.4);font-size:0.8rem;">Partyretter Prototyp · 48 Seiten verbunden · HTML/CSS/JS Prototyp · Zuletzt aktualisiert: 13. März 2026</div>
+</footer>
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

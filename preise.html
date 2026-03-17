@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preise – Partyretter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:#1A1208; --dark2:#2d1f0e; --gold:#C8922A; --gold2:#e0a430;
+  --cream:#F5F0E8; --cream2:#EDE8DF; --green:#2D7D46; --red:#C0392B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+
+/* NAV */
+nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{height:36px}
+.nav-logo span{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:#ccc;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.btn-nav{background:var(--gold);color:var(--dark);border:none;padding:8px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:none}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);padding:80px 40px 60px;text-align:center;color:white}
+.hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.2;margin-bottom:16px}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:1.15rem;color:#ccc;max-width:560px;margin:0 auto 32px}
+.toggle-wrap{display:inline-flex;background:rgba(255,255,255,.1);border-radius:50px;padding:4px;gap:4px}
+.toggle-btn{padding:10px 28px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .25s}
+.toggle-btn.active{background:var(--gold);color:var(--dark)}
+.toggle-btn:not(.active){background:transparent;color:white}
+
+/* SECTION */
+.section{padding:70px 40px;max-width:1200px;margin:0 auto}
+.section-title{font-family:'Fraunces',serif;font-weight:900;font-size:2rem;text-align:center;margin-bottom:8px}
+.section-sub{text-align:center;color:#666;margin-bottom:50px;font-size:1rem}
+
+/* ANBIETER PRICING */
+#provider-plans{display:block}
+#customer-plans{display:none}
+
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:50px}
+@media(max-width:900px){.plans-grid{grid-template-columns:1fr}}
+
+.plan-card{background:white;border-radius:20px;padding:36px 30px;border:2px solid transparent;position:relative;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.plan-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.plan-card.popular{border-color:var(--gold);box-shadow:0 8px 40px rgba(200,146,42,.2)}
+.badge-popular{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--dark);font-size:.75rem;font-weight:700;padding:5px 18px;border-radius:20px;white-space:nowrap}
+.plan-name{font-family:'Fraunces',serif;font-weight:900;font-size:1.4rem;margin-bottom:6px}
+.plan-desc{color:#777;font-size:.9rem;margin-bottom:24px;line-height:1.5}
+.plan-price{display:flex;align-items:baseline;gap:4px;margin-bottom:6px}
+.plan-price .amount{font-family:'Fraunces',serif;font-weight:900;font-size:2.8rem;color:var(--dark)}
+.plan-price .per{color:#999;font-size:.9rem}
+.plan-price-note{font-size:.8rem;color:#999;margin-bottom:28px}
+.plan-features{list-style:none;margin-bottom:30px}
+.plan-features li{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:.9rem;border-bottom:1px solid #f0ece4}
+.plan-features li:last-child{border:none}
+.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+.plan-features li.cross::before{content:'✗';color:#ccc}
+.btn-plan{width:100%;padding:14px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;border:2px solid var(--gold);font-family:'DM Sans',sans-serif;transition:all .25s}
+.btn-plan.primary{background:var(--gold);color:var(--dark)}
+.btn-plan.primary:hover{background:var(--gold2)}
+.btn-plan.outline{background:transparent;color:var(--gold)}
+.btn-plan.outline:hover{background:var(--cream)}
+
+/* PROVISION TABLE */
+.provision-card{background:white;border-radius:20px;padding:40px;margin-bottom:30px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.provision-card h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;margin-bottom:10px}
+.provision-card p{color:#666;margin-bottom:24px;font-size:.95rem}
+.prov-table{width:100%;border-collapse:collapse}
+.prov-table th{background:var(--dark);color:var(--gold);padding:12px 16px;text-align:left;font-size:.85rem;font-weight:600}
+.prov-table th:first-child{border-radius:10px 0 0 0}
+.prov-table th:last-child{border-radius:0 10px 0 0}
+.prov-table td{padding:12px 16px;font-size:.9rem;border-bottom:1px solid var(--cream2)}
+.prov-table tr:last-child td{border:none}
+.prov-table tr:hover td{background:var(--cream)}
+.prov-highlight{color:var(--gold);font-weight:700}
+
+/* COMPARE TABLE */
+.compare-wrap{overflow-x:auto;margin-bottom:50px}
+.compare-table{width:100%;border-collapse:collapse;min-width:600px}
+.compare-table th{padding:14px 20px;text-align:center;font-size:.85rem;font-weight:600}
+.compare-table th:first-child{text-align:left;width:260px}
+.compare-table th.col-free{background:#f8f5f0;color:#666}
+.compare-table th.col-pro{background:var(--gold);color:var(--dark)}
+.compare-table th.col-premium{background:var(--dark);color:var(--gold)}
+.compare-table td{padding:12px 20px;text-align:center;font-size:.9rem;border-bottom:1px solid #eee}
+.compare-table td:first-child{text-align:left;font-weight:500}
+.compare-table tr:nth-child(even) td{background:#fafaf8}
+.check{color:var(--green);font-size:1.1rem}
+.cross{color:#ddd;font-size:1.1rem}
+.partial{color:var(--gold);font-size:.85rem;font-weight:600}
+
+/* FAQ */
+.faq-list{max-width:760px;margin:0 auto}
+.faq-item{background:white;border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.faq-q{padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.95rem}
+.faq-q:hover{background:var(--cream)}
+.faq-arrow{transition:transform .3s;color:var(--gold);font-size:1.2rem}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-a.open{max-height:200px;padding:0 24px 20px}
+.faq-a p{color:#666;font-size:.9rem;line-height:1.7}
+
+/* TRUST */
+.trust-strip{background:var(--dark);padding:50px 40px;text-align:center}
+.trust-strip h2{font-family:'Fraunces',serif;font-weight:900;color:white;font-size:1.8rem;margin-bottom:12px}
+.trust-strip p{color:#aaa;margin-bottom:30px;font-size:.95rem}
+.trust-grid{display:flex;justify-content:center;gap:50px;flex-wrap:wrap}
+.trust-stat{text-align:center}
+.trust-stat .num{font-family:'Fraunces',serif;font-weight:900;font-size:2rem;color:var(--gold)}
+.trust-stat .lbl{color:#aaa;font-size:.85rem;margin-top:4px}
+
+/* FOOTER */
+footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:40px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-col h4{color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;color:#aaa;text-decoration:none;font-size:.85rem;margin-bottom:8px;transition:color .2s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;font-size:.8rem;color:#666}
+
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+  </div>
+  <ul class="nav-links">
+    <li><a href="homepage.html">Start</a></li>
+    <li><a href="marktplatz.html">Marktplatz</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+  <a href="registrierung.html" class="btn-nav">Kostenlos starten</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Transparent. Fair.<br><span>Ohne versteckte Gebühren.</span></h1>
+  <p>Wähle das Modell, das zu dir passt – als Anbieter oder als Veranstalter.</p>
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" onclick="showPlans('provider')">Ich bin Anbieter</button>
+    <button class="toggle-btn" onclick="showPlans('customer')">Ich suche einen Profi</button>
+  </div>
+</div>
+
+<!-- ANBIETER PLANS -->
+<div id="provider-plans">
+  <div class="section">
+    <p class="section-title">Anbieter-Modelle</p>
+    <p class="section-sub">Starte kostenlos – zahle nur wenn du verdienst.</p>
+
+    <div class="plans-grid">
+
+      <!-- FREE -->
+      <div class="plan-card">
+        <div class="plan-name">🆓 Free</div>
+        <p class="plan-desc">Perfekt zum Reinschnuppern – kein Risiko, kein Abo.</p>
+        <div class="plan-price"><span class="amount">0 €</span><span class="per">/Monat</span></div>
+        <p class="plan-price-note">+ 10 % Provision pro Buchung</p>
+        <ul class="plan-features">
+          <li>Profil mit 3 Fotos</li>
+          <li>Bis zu 3 Menüs</li>
+          <li>Buchungsanfragen erhalten</li>
+          <li>Bewertungen sammeln</li>
+          <li class="cross">Keine Prioritätslistung</li>
+          <li class="cross">Kein Stellplatz-Eintrag</li>
+          <li class="cross">Keine Analytics</li>
+        </ul>
+        <button class="btn-plan outline" onclick="location.href='registrierung.html'">Kostenlos starten</button>
+      </div>
+
+      <!-- PRO -->
+      <div class="plan-card popular">
+        <div class="badge-popular">⭐ BELIEBTESTE WAHL</div>
+        <div class="plan-name" style="color:var(--gold)">🚀 Pro</div>
+        <p class="plan-desc">Für aktive Anbieter, die regelmäßig Buchungen wollen.</p>
+        <div class="plan-price"><span class="amount">39 €</span><span class="per">/Monat</span></div>
+        <p class="plan-price-note">oder 390 € / Jahr (2 Monate gratis) · + 6 % Provision</p>
+        <ul class="plan-features">
+          <li>Profil mit unbegrenzt Fotos</li>
+          <li>Unbegrenzt Menüs & Events</li>
+          <li>Prioritätslistung im Marktplatz</li>
+          <li>Stellplatz-Eintrag (Foodtruck)</li>
+          <li>Echtzeit-Analytics</li>
+          <li>Chat mit Kunden</li>
+          <li>Buchhaltungs-Tools</li>
+        </ul>
+        <button class="btn-plan primary" onclick="location.href='registrierung.html'">Pro starten</button>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan-card">
+        <div class="plan-name">💎 Premium</div>
+        <p class="plan-desc">Maximale Sichtbarkeit für etablierte Profis und Teams.</p>
+        <div class="plan-price"><span class="amount">79 €</span><span class="per">/Monat</span></div>
+        <p class="plan-price-note">oder 790 € / Jahr (2 Monate gratis) · + 4 % Provision</p>
+        <ul class="plan-features">
+          <li>Alles aus Pro</li>
+          <li>Top-Platzierung (Tagesbasis)</li>
+          <li>Eigene Landingpage-URL</li>
+          <li>Featured in Newsletter</li>
+          <li>Dedicated Account-Manager</li>
+          <li>Kalender-Sync (Google, iCal, Outlook)</li>
+          <li>Mehrere Mitarbeiter-Accounts</li>
+        </ul>
+        <button class="btn-plan outline" onclick="location.href='registrierung.html'">Premium anfragen</button>
+      </div>
+
+    </div>
+
+    <!-- PROVISION TABLE -->
+    <div class="provision-card">
+      <h3>Provisions-Modell im Überblick</h3>
+      <p>Die Provision wird automatisch beim Buchungsabschluss berechnet. Keine versteckten Kosten – du siehst den Betrag immer vorher.</p>
+      <table class="prov-table">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Provision</th>
+            <th>Monatliches Abo</th>
+            <th>Buchungsvolumen Beispiel (500 €)</th>
+            <th>Du erhältst</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Free</td>
+            <td class="prov-highlight">10 %</td>
+            <td>0 €</td>
+            <td>500 €</td>
+            <td><strong>450 €</strong></td>
+          </tr>
+          <tr>
+            <td style="color:var(--gold);font-weight:700">Pro</td>
+            <td class="prov-highlight">6 %</td>
+            <td>39 €</td>
+            <td>500 €</td>
+            <td><strong>470 €</strong> netto*</td>
+          </tr>
+          <tr>
+            <td>Premium</td>
+            <td class="prov-highlight">4 %</td>
+            <td>79 €</td>
+            <td>500 €</td>
+            <td><strong>480 €</strong> netto*</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- COMPARE -->
+    <h2 class="section-title" style="margin-bottom:30px">Alle Features im Vergleich</h2>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-free">Free</th>
+            <th class="col-pro">Pro</th>
+            <th class="col-premium">Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="4" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">PROFIL & SICHTBARKEIT</td></tr>
+          <tr><td>Profilfotos</td><td>3</td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
+          <tr><td>Prioritäts-Listing</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓ Top</span></td></tr>
+          <tr><td>Eigene URL</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Newsletter-Featured</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="4" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUCHUNG & KOMMUNIKATION</td></tr>
+          <tr><td>Menüs & Angebote</td><td>3</td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
+          <tr><td>Koch-Events veröffentlichen</td><td><span class="partial">1/Monat</span></td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
+          <tr><td>Direktnachrichten</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Kalender-Sync</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="4" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUSINESS TOOLS</td></tr>
+          <tr><td>Buchhaltung & km-Rechner</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Analytics & Statistiken</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓ Erweitert</span></td></tr>
+          <tr><td>Stellplatz-Eintrag (Foodtruck)</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Mehrere Mitarbeiter-Accounts</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓ bis 5</span></td></tr>
+          <tr><td>Account-Manager</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER PLANS -->
+<div id="customer-plans">
+  <div class="section">
+    <p class="section-title">Für Veranstalter & Privatkunden</p>
+    <p class="section-sub">Buchungen sind für Kunden kostenlos – du zahlst nur eine Servicegebühr.</p>
+
+    <div class="plans-grid" style="grid-template-columns:repeat(2,1fr);max-width:800px;margin:0 auto 50px">
+
+      <div class="plan-card">
+        <div class="plan-name">🎉 Buchung</div>
+        <p class="plan-desc">Einfach anfragen, vergleichen und buchen – kein Abo nötig.</p>
+        <div class="plan-price"><span class="amount">0 €</span><span class="per">/Monat</span></div>
+        <p class="plan-price-note">+ 3 % Servicegebühr auf den Buchungsbetrag</p>
+        <ul class="plan-features">
+          <li>Unbegrenzt Anfragen stellen</li>
+          <li>Angebote vergleichen</li>
+          <li>Sicher zahlen (Escrow)</li>
+          <li>Bewertungen abgeben</li>
+          <li>Chat mit Anbietern</li>
+        </ul>
+        <button class="btn-plan primary" onclick="location.href='marktplatz.html'">Jetzt suchen</button>
+      </div>
+
+      <div class="plan-card popular">
+        <div class="badge-popular">🏢 FÜR FIRMEN</div>
+        <div class="plan-name" style="color:var(--gold)">🏢 Business</div>
+        <p class="plan-desc">Für Unternehmen die regelmäßig Events & Catering buchen.</p>
+        <div class="plan-price"><span class="amount">29 €</span><span class="per">/Monat</span></div>
+        <p class="plan-price-note">Servicegebühr entfällt · Team-Accounts · Rechnungsstellung</p>
+        <ul class="plan-features">
+          <li>Alle Buchungs-Features</li>
+          <li>Keine Servicegebühr</li>
+          <li>Team-Zugang (5 Nutzer)</li>
+          <li>Sammelrechnung monatlich</li>
+          <li>Dedizierter Support</li>
+          <li>Rabattverhandlungen</li>
+        </ul>
+        <button class="btn-plan primary" onclick="location.href='registrierung.html'">Business anfragen</button>
+      </div>
+
+    </div>
+
+    <div class="provision-card" style="max-width:800px;margin:0 auto 30px">
+      <h3>So funktioniert die Buchung</h3>
+      <p>Partyretter schützt dich durch ein sicheres Zahlungssystem. Der Betrag wird erst freigegeben, wenn der Event stattgefunden hat.</p>
+      <div style="display:flex;gap:30px;margin-top:20px;flex-wrap:wrap">
+        <div style="flex:1;min-width:180px;text-align:center;padding:20px;background:var(--cream);border-radius:12px">
+          <div style="font-size:2rem;margin-bottom:8px">🔍</div>
+          <strong style="font-size:.9rem">1. Suchen</strong>
+          <p style="font-size:.8rem;color:#777;margin-top:6px">Anbieter finden & anfragen</p>
+        </div>
+        <div style="flex:1;min-width:180px;text-align:center;padding:20px;background:var(--cream);border-radius:12px">
+          <div style="font-size:2rem;margin-bottom:8px">💬</div>
+          <strong style="font-size:.9rem">2. Anfragen</strong>
+          <p style="font-size:.8rem;color:#777;margin-top:6px">Angebot erhalten & kommunizieren</p>
+        </div>
+        <div style="flex:1;min-width:180px;text-align:center;padding:20px;background:var(--cream);border-radius:12px">
+          <div style="font-size:2rem;margin-bottom:8px">💳</div>
+          <strong style="font-size:.9rem">3. Buchen</strong>
+          <p style="font-size:.8rem;color:#777;margin-top:6px">Sicher & versichert bezahlen</p>
+        </div>
+        <div style="flex:1;min-width:180px;text-align:center;padding:20px;background:var(--cream);border-radius:12px">
+          <div style="font-size:2rem;margin-bottom:8px">⭐</div>
+          <strong style="font-size:.9rem">4. Genießen</strong>
+          <p style="font-size:.8rem;color:#777;margin-top:6px">Bewertung abgeben & fertig</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <h2>Vertrauen durch Transparenz</h2>
+  <p>Keine Überraschungen. Keine versteckten Gebühren. Nur faire Preise.</p>
+  <div class="trust-grid">
+    <div class="trust-stat"><div class="num">1.247</div><div class="lbl">Aktive Anbieter</div></div>
+    <div class="trust-stat"><div class="num">18.400+</div><div class="lbl">Zufriedene Gäste</div></div>
+    <div class="trust-stat"><div class="num">4.8 ★</div><div class="lbl">Ø Bewertung</div></div>
+    <div class="trust-stat"><div class="num">0 €</div><div class="lbl">Versteckte Kosten</div></div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <h2 class="section-title">Häufige Fragen</h2>
+  <p class="section-sub">Noch Fragen? Wir antworten.</p>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Kann ich jederzeit meinen Plan wechseln?
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-a"><p>Ja! Du kannst jederzeit upgraden oder downgraden. Bei einem Upgrade wird der neue Plan sofort aktiv. Bei einem Downgrade greift dieser zum Ende des Abrechnungszeitraums.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Wie wird die Provision berechnet?
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-a"><p>Die Provision wird auf den Nettobuchungsbetrag (ohne MwSt.) berechnet und automatisch beim Zahlungseingang einbehalten. Du siehst in deinem Dashboard immer den genauen Betrag vor Buchungsabschluss.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Gibt es eine Mindestvertragslaufzeit?
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-a"><p>Nein. Du kannst monatlich buchen und monatlich kündigen. Beim Jahresabo sparst du 2 Monate, kannst aber ebenfalls jederzeit kündigen – du erhältst dann eine anteilige Rückerstattung.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Was passiert wenn eine Buchung storniert wird?
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-a"><p>Bei Stornierungen bis 14 Tage vor dem Event erhältst du eine vollständige Erstattung ohne Provision. Spätere Stornierungen richten sich nach dem vereinbarten Stornierungsmodell in deinem Angebot.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Ist eine Kreditkarte für den Start nötig?
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-a"><p>Für den Free-Plan benötigst du keine Kreditkarte. Für Pro und Premium kannst du per SEPA-Lastschrift oder Kreditkarte zahlen.</p></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Partyretter</h4>
+      <a href="homepage.html">Start</a>
+      <a href="marktplatz.html">Marktplatz</a>
+      <a href="kochevents.html">Koch-Events</a>
+      <a href="preise.html">Preise</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Anbieter</h4>
+      <a href="anbieter-onboarding.html">Anbieter werden</a>
+      <a href="anbieter-vorteile.html">Warum MPR?</a>
+      <a href="preise.html">Preismodell</a>
+      <a href="buchhaltung.html">Buchhaltung</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kategorien</h4>
+      <a href="landingpage-hochzeit.html">Hochzeit & Feier</a>
+      <a href="marktplatz.html">Privatkoch</a>
+      <a href="foodtruck-karte.html">Foodtruck</a>
+      <a href="kochevents.html">Koch-Events</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="agb.html">AGB</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Partyretter GmbH · Alle Rechte vorbehalten</span>
+    <span>Made with ❤️ für bessere Events</span>
+  </div>
+</footer>
+
+<script>
+function showPlans(type) {
+  document.getElementById('provider-plans').style.display = type === 'provider' ? 'block' : 'none';
+  document.getElementById('customer-plans').style.display = type === 'customer' ? 'block' : 'none';
+  document.querySelectorAll('.toggle-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', (type === 'provider' && i === 0) || (type === 'customer' && i === 1));
+  });
+}
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  const arrow = el.querySelector('.faq-arrow');
+  ans.classList.toggle('open');
+  arrow.style.transform = ans.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+</script>
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+</body>
+</html>

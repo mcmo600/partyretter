@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anbieter-Steckbrief – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; color: #1A1208; background: #F5F0E8; }
+
+    /* NAV */
+    nav {
+      background: #1A1208; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 32px; height: 64px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4); position: sticky; top:0; z-index:100;
+    }
+    .nav-logo { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:#F5F0E8; text-decoration:none; }
+    .nav-logo span { color:#C8922A; }
+    .nav-back { color:rgba(245,240,232,0.75); text-decoration:none; font-size:14px; font-weight:500; display:flex; align-items:center; gap:6px; }
+    .nav-back:hover { color:#C8922A; }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: linear-gradient(135deg, #1A1208 0%, #2d1f0e 100%);
+      padding: 48px 32px 40px; text-align: center;
+    }
+    .page-header h1 { font-family:'Fraunces',serif; font-size:36px; font-weight:900; color:#F5F0E8; margin-bottom:10px; }
+    .page-header p { color:rgba(245,240,232,0.65); font-size:16px; }
+
+    /* TYPE TABS */
+    .type-tabs {
+      display: flex; justify-content: center; gap: 12px;
+      padding: 28px 24px 0; flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: #fff; border: 2px solid rgba(26,18,8,0.12); color: rgba(26,18,8,0.55);
+      padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .tab-btn.active { background: #C8922A; border-color: #C8922A; color: #1A1208; }
+    .tab-btn:hover:not(.active) { border-color: #C8922A; color: #C8922A; }
+
+    /* SECTIONS */
+    .profile-section { display: none; padding: 28px 24px 60px; max-width: 1100px; margin: 0 auto; }
+    .profile-section.active { display: block; }
+
+    /* CARD */
+    .card {
+      background: #fff; border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(26,18,8,0.08); margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 20px 28px; border-bottom: 1px solid rgba(26,18,8,0.07);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .card-header h2 { font-family:'Fraunces',serif; font-size:20px; font-weight:700; }
+    .card-header .card-icon { font-size:22px; }
+    .card-body { padding: 28px; }
+
+    /* FORM ELEMENTS */
+    label { display:block; font-size:13px; font-weight:600; color:rgba(26,18,8,0.65); margin-bottom:6px; }
+    input[type=text], input[type=number], input[type=email], input[type=url],
+    textarea, select {
+      width:100%; padding:11px 14px; border:1.5px solid rgba(26,18,8,0.15);
+      border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px;
+      color:#1A1208; background:#fff; transition:border-color 0.2s; outline:none;
+    }
+    input:focus, textarea:focus, select:focus { border-color:#C8922A; }
+    textarea { resize:vertical; min-height:90px; }
+    .field-group { display:grid; gap:16px; margin-bottom:16px; }
+    .col2 { grid-template-columns: 1fr 1fr; }
+    .col3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    /* PRICING MODE TOGGLE */
+    .pricing-mode-toggle { display:flex; gap:0; border:1.5px solid rgba(200,146,42,0.35); border-radius:10px; overflow:hidden; margin-bottom:18px; }
+    .price-mode-btn { flex:1; padding:9px 12px; background:transparent; border:none; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; color:rgba(26,18,8,0.5); cursor:pointer; transition:all 0.2s; text-align:center; }
+    .price-mode-btn:not(:last-child) { border-right:1.5px solid rgba(200,146,42,0.35); }
+    .price-mode-btn.active { background:var(--gold); color:#fff; }
+    .price-mode-section { display:none; }
+    .price-mode-section.visible { display:grid; }
+    .festpreis-hint { background:rgba(200,146,42,0.10); border:1px solid rgba(200,146,42,0.25); border-radius:8px; padding:10px 14px; font-size:12.5px; color:rgba(26,18,8,0.65); margin-bottom:14px; line-height:1.5; }
+
+    /* PROFILE PHOTO */
+    .photo-upload {
+      width:120px; height:120px; border-radius:16px;
+      background:linear-gradient(135deg,rgba(200,146,42,0.15),rgba(200,146,42,0.30));
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; border:2px dashed rgba(200,146,42,0.50);
+      font-size:32px; gap:6px; transition:all 0.2s; flex-shrink:0;
+    }
+    .photo-upload:hover { border-color:#C8922A; background:rgba(200,146,42,0.20); }
+    .photo-upload span { font-size:11px; font-weight:600; color:rgba(26,18,8,0.50); }
+    .photo-upload input[type=file] { display:none; }
+
+    /* TAGS INPUT */
+    .tags-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .tag {
+      background:#F5F0E8; color:#1A1208; font-size:12px; font-weight:600;
+      padding:5px 12px; border-radius:20px; display:flex; align-items:center; gap:6px;
+    }
+    .tag .remove { cursor:pointer; color:#C8922A; font-weight:700; font-size:14px; line-height:1; }
+    .tag-add-row { display:flex; gap:8px; margin-top:8px; }
+    .btn-tag-add {
+      background:rgba(200,146,42,0.12); border:1.5px solid rgba(200,146,42,0.40);
+      color:#C8922A; padding:8px 16px; border-radius:8px; font-size:13px;
+      font-weight:600; cursor:pointer; transition:all 0.2s; white-space:nowrap;
+      font-family:'DM Sans',sans-serif;
+    }
+    .btn-tag-add:hover { background:#C8922A; color:#1A1208; }
+    /* Clickable cuisine chips */
+    .cuisine-chip {
+      display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+      border: 1.5px solid #ddd8cc; background: white; cursor: pointer;
+      transition: all 0.18s; user-select: none; color: #777;
+    }
+    .cuisine-chip:hover {
+      border-color: var(--gold); color: var(--dark);
+      background: rgba(200,146,42,0.07);
+    }
+    .cuisine-chip.selected {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark);
+      font-weight: 700;
+      box-shadow: 0 3px 14px rgba(200,146,42,0.45);
+      transform: translateY(-1px) scale(1.03);
+    }
+    .cuisine-chip.selected::after {
+      content: '✓';
+      font-size: 0.7rem;
+      font-weight: 900;
+      background: rgba(26,18,8,0.18);
+      border-radius: 50%;
+      width: 16px; height: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: 2px; flex-shrink: 0;
+    }
+
+    /* MENU ITEMS */
+    .menu-item {
+      border:1.5px solid rgba(26,18,8,0.10); border-radius:12px;
+      margin-bottom:20px; overflow:hidden;
+    }
+    .menu-item-header {
+      background:#F5F0E8; padding:14px 20px; display:flex;
+      align-items:center; justify-content:space-between; cursor:pointer;
+    }
+    .menu-item-header h4 { font-family:'Fraunces',serif; font-size:16px; }
+    .menu-item-body { padding:20px; }
+
+    .food-photo-upload {
+      width:100%; height:160px; border-radius:10px;
+      background:linear-gradient(135deg,rgba(200,146,42,0.08),rgba(200,146,42,0.18));
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; border:2px dashed rgba(200,146,42,0.40); gap:8px;
+      transition:all 0.2s; margin-bottom:16px; position:relative; overflow:hidden;
+    }
+    .food-photo-upload:hover { border-color:#C8922A; }
+    .food-photo-upload .photo-emoji { font-size:36px; }
+    .food-photo-upload span { font-size:12px; color:rgba(26,18,8,0.50); font-weight:600; }
+    .food-photo-upload img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; border-radius:8px; display:none;
+    }
+    .food-photo-upload input[type=file] { display:none; }
+
+    /* INGREDIENTS TABLE */
+    .ingredients-section { margin-top:20px; }
+    .ingredients-section h5 {
+      font-family:'Fraunces',serif; font-size:15px; margin-bottom:12px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .ingr-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .ingr-table th {
+      text-align:left; padding:8px 10px; background:#F5F0E8;
+      font-size:12px; font-weight:600; color:rgba(26,18,8,0.60);
+    }
+    .ingr-table th:first-child { border-radius:8px 0 0 8px; }
+    .ingr-table th:last-child { border-radius:0 8px 8px 0; }
+    .ingr-table td { padding:6px 4px; border-bottom:1px solid rgba(26,18,8,0.06); }
+    .ingr-table td input {
+      padding:7px 10px; font-size:13px; border-radius:6px;
+    }
+    .ingr-table td input[type=number] { width:80px; text-align:right; }
+    .ingr-table .total-cell {
+      font-weight:700; color:#C8922A; padding:6px 10px; text-align:right; min-width:70px;
+    }
+    .ingr-table .del-btn {
+      background:none; border:none; cursor:pointer; color:rgba(26,18,8,0.30);
+      font-size:16px; padding:4px 8px; transition:color 0.2s;
+    }
+    .ingr-table .del-btn:hover { color:#e05a5a; }
+
+    .ingr-footer {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top:12px; padding-top:12px; border-top:2px solid rgba(26,18,8,0.08);
+    }
+    .ingr-total-label { font-size:13px; color:rgba(26,18,8,0.55); }
+    .ingr-total-value { font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:#C8922A; }
+    .price-breakdown {
+      background:#F5F0E8; border-radius:10px; padding:14px 18px; margin-top:12px;
+    }
+    .price-breakdown-row { display:flex; justify-content:space-between; font-size:13px; padding:3px 0; }
+    .price-breakdown-row.total { font-weight:700; font-size:15px; border-top:1px solid rgba(26,18,8,0.15); margin-top:6px; padding-top:8px; }
+
+    /* BUTTONS */
+    .btn-primary {
+      background:#1A1208; color:#F5F0E8; padding:12px 24px; border-radius:8px;
+      font-size:14px; font-weight:700; cursor:pointer; border:1.5px solid rgba(200,146,42,0.40);
+      font-family:'DM Sans',sans-serif; transition:all 0.2s; display:inline-flex;
+      align-items:center; gap:8px;
+    }
+    .btn-primary:hover { background:#C8922A; color:#1A1208; border-color:#C8922A; transform:translateY(-1px); }
+    .btn-outline {
+      background:transparent; color:#F5F0E8; padding:10px 20px; border-radius:8px;
+      font-size:13px; font-weight:700; cursor:pointer;
+      border:1.5px solid rgba(200,146,42,0.35); font-family:'DM Sans',sans-serif;
+      transition:all 0.2s; display:inline-flex; align-items:center; gap:6px;
+    }
+    .btn-outline:hover { background:#C8922A; color:#1A1208; border-color:#C8922A; }
+    .btn-danger {
+      background:rgba(220,50,50,0.08); color:#c0392b; padding:8px 14px;
+      border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;
+      border:1px solid rgba(220,50,50,0.20); font-family:'DM Sans',sans-serif;
+      transition:all 0.2s;
+    }
+    .btn-danger:hover { background:rgba(220,50,50,0.15); }
+    .btn-add-ingr {
+      background:rgba(200,146,42,0.08); color:#C8922A; padding:7px 14px;
+      border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;
+      border:1px dashed rgba(200,146,42,0.40); font-family:'DM Sans',sans-serif;
+      transition:all 0.2s;
+    }
+    .btn-add-ingr:hover { background:rgba(200,146,42,0.18); }
+
+    /* DAY PICKER */
+    .day-picker { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+    .day-chip {
+      padding:8px 14px; border-radius:20px; font-size:13px; font-weight:600;
+      cursor:pointer; border:1.5px solid rgba(26,18,8,0.15); color:rgba(26,18,8,0.50);
+      transition:all 0.2s; user-select:none; background:#fff;
+    }
+    .day-chip:hover { border-color:#C8922A; color:#1A1208; background:rgba(200,146,42,0.07); }
+    .day-chip.selected {
+      background:#C8922A; border-color:#C8922A; color:#1A1208;
+      font-weight:700; box-shadow:0 3px 12px rgba(200,146,42,0.40);
+      transform:translateY(-1px);
+    }
+
+    /* CONDITION CHIPS */
+    .condition-list { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+    .condition-item {
+      display:flex; align-items:center; gap:10px; background:#F5F0E8;
+      border-radius:8px; padding:10px 14px; font-size:13px;
+    }
+    .condition-item input[type=checkbox] { width:16px; height:16px; accent-color:#C8922A; }
+
+    /* SAVE BAR */
+    .save-bar {
+      position:sticky; bottom:0; background:#1A1208; padding:16px 32px;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 -4px 20px rgba(0,0,0,0.25);
+    }
+    .save-bar-text { color:rgba(245,240,232,0.70); font-size:13px; }
+    .save-bar-text strong { color:#F5F0E8; }
+
+    /* MATERIALS SECTION */
+    .material-row {
+      display:flex; gap:10px; align-items:center; margin-bottom:10px;
+    }
+    .material-row input { flex:1; }
+
+    /* AVAILABILITY PREVIEW */
+    .avail-preview {
+      background:#F5F0E8; border-radius:10px; padding:16px 20px; margin-top:8px;
+    }
+    .avail-preview p { font-size:13px; color:rgba(26,18,8,0.65); }
+    .avail-highlight { color:#C8922A; font-weight:700; }
+
+    /* Kollaps */
+    .collapse-toggle { transition:transform 0.2s; font-size:18px; }
+    .collapsed .collapse-toggle { transform:rotate(-90deg); }
+    .collapsible-body { overflow:hidden; }
+
+    @media(max-width:680px) {
+      .col2, .col3 { grid-template-columns:1fr; }
+      .save-bar { flex-direction:column; gap:12px; text-align:center; }
+    }
+  
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html"><span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter</a>
+  <a class="nav-back" href="homepage.html">← Zurück zur Startseite</a>
+</nav>
+
+<div class="page-header">
+  <h1>Anbieter-Steckbrief</h1>
+  <p>Füll deinen Steckbrief aus – Kunden sehen genau, was du anbietest.</p>
+</div>
+
+<!-- TYPE TABS -->
+<div class="type-tabs">
+  <button class="tab-btn active" onclick="switchTab('koch')">👨‍🍳 Koch / Koch-Team</button>
+  <button class="tab-btn" onclick="switchTab('getraenke')">🍾 Getränkelieferant</button>
+  <button class="tab-btn" onclick="switchTab('location')">🏛️ Location</button>
+  <button class="tab-btn" onclick="switchTab('imbiss')">🚚 Imbisswagen</button>
+  <button class="tab-btn" onclick="switchTab('service')">🤵 Servicepersonal</button>
+</div>
+
+<!-- ═══════════════ KOCH SECTION ═══════════════ -->
+<div id="section-koch" class="profile-section active">
+
+  <!-- Basisdaten -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">👤</span>
+      <h2>Persönliche Angaben</h2>
+    </div>
+    <div class="card-body">
+      <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+        <label style="cursor:pointer;">
+          <div class="photo-upload" onclick="this.parentElement.querySelector('input').click()">
+            <span style="font-size:36px;">📷</span>
+            <span>Foto hochladen</span>
+          </div>
+          <input type="file" accept="image/*" onchange="previewPhoto(this)" />
+        </label>
+        <div style="flex:1;min-width:260px;">
+          <div class="field-group col2">
+            <div><label>Vorname *</label><input type="text" placeholder="z.B. Marco" /></div>
+            <div><label>Nachname *</label><input type="text" placeholder="z.B. Bianchi" /></div>
+          </div>
+          <div class="field-group col2">
+            <div><label>Stadt / PLZ *</label><input type="text" placeholder="z.B. München, 80331" /></div>
+            <div><label>Aktionsradius (km)</label><input type="number" placeholder="50" /></div>
+          </div>
+          <div class="field-group">
+            <div>
+              <label>Kurzbeschreibung / Bio *</label>
+              <textarea placeholder="Beschreib dich kurz: Dein Hintergrund, deine Leidenschaft, was dich besonders macht…"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group col3" style="margin-top:16px;">
+        <div><label>Jahre Erfahrung</label><input type="number" placeholder="z.B. 8" /></div>
+        <div><label>Max. Gäste</label><input type="number" placeholder="z.B. 60" /></div>
+        <div>
+          <label>Einsatzbereich</label>
+          <select>
+            <option>Privat &amp; Firmen</option>
+            <option>Nur Privat</option>
+            <option>Nur Firmen</option>
+            <option>Events &amp; Hochzeiten</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:8px;">
+        <label>Küchenstile (Tags) <span style="font-weight:400;color:#999;font-size:0.78rem;">– Klicken zum Auswählen / Abwählen</span></label>
+
+        <!-- Predefined clickable chips -->
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px;">
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🍝 Italienisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥖 Französisch</span>
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🌿 Mediterran</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥨 Deutsch / Klassisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍣 Japanisch / Sushi</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥢 Asiatisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🌮 Mexikanisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥙 Türkisch / Arabisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🌶️ Indisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍔 American / Burger</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🔥 Grill &amp; BBQ</span>
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">✨ Fine Dining</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥗 Vegan</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🌱 Vegetarisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🐟 Seafood / Fisch</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍷 Weinküche</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧆 Tapas / Mezze</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🎂 Patisserie</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍺 Hausmannskost</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🌾 Bio / Regional</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧑‍🍳 Fusion</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍱 Saisonal</span>
+        </div>
+
+        <!-- Still allow free custom tags -->
+        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+          <input type="text" id="new-tag-input" placeholder="Eigener Tag hinzufügen…" style="max-width:200px;" onkeydown="if(event.key==='Enter')addTag('style-tags','new-tag-input')" />
+          <button class="btn-tag-add" onclick="addTag('style-tags','new-tag-input')">+ Hinzufügen</button>
+        </div>
+        <div class="tags-row" id="style-tags" style="margin-top:8px;min-height:0;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menüvorschläge -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">🍽️</span>
+      <h2>Menüvorschläge</h2>
+    </div>
+    <div class="card-body">
+      <p style="font-size:14px;color:rgba(26,18,8,0.55);margin-bottom:20px;">
+        Füge deine Gerichte hinzu. Pro Gericht kannst du ein Foto, eine Beschreibung und alle Zutaten mit Mengen und Preisen hinterlegen – der Einkaufspreis wird automatisch berechnet.
+      </p>
+
+      <div id="menu-items-container">
+        <!-- Menu Item 1 (vorbefüllt) -->
+        <div class="menu-item" id="menu-0">
+          <div class="menu-item-header" onclick="toggleMenu('menu-0')">
+            <h4>🍝 &nbsp;Tagliatelle al Ragù – Hauptgang</h4>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <span style="font-size:13px;color:#C8922A;font-weight:600;" id="menu-0-cost">Zutaten: 0,00 €</span>
+              <span class="collapse-toggle">▼</span>
+              <button class="btn-danger" onclick="event.stopPropagation();removeMenu('menu-0')">Entfernen</button>
+            </div>
+          </div>
+          <div class="menu-item-body collapsible-body" id="menu-0-body">
+            <div class="field-group col3">
+              <div>
+                <label>Gerichtsname *</label>
+                <input type="text" value="Tagliatelle al Ragù" onchange="updateMenuTitle('menu-0',this.value)" />
+              </div>
+              <div>
+                <label>Kategorie</label>
+                <select>
+                  <option>Vorspeise</option>
+                  <option selected>Hauptgang</option>
+                  <option>Dessert</option>
+                  <option>Snack / Fingerfood</option>
+                  <option>Beilagen</option>
+                </select>
+              </div>
+              <div>
+                <label>Preis pro Person (€)</label>
+                <input type="number" placeholder="28" value="28" />
+              </div>
+            </div>
+            <div>
+              <label>Beschreibung</label>
+              <textarea placeholder="Beschreib das Gericht…">Hausgemachte Tagliatelle mit langsam geschmortem Rinderragù, frischem Parmesan und Basilikum. Regional und saisonal.</textarea>
+            </div>
+
+            <!-- Foto Upload -->
+            <div style="margin-top:16px;">
+              <label>Gericht-Foto</label>
+              <label style="cursor:pointer;display:block;">
+                <div class="food-photo-upload" id="fpu-menu-0" onclick="this.parentElement.querySelector('input').click()">
+                  <span class="photo-emoji">🍝</span>
+                  <span>Foto klicken oder hierher ziehen</span>
+                  <img id="fpu-img-menu-0" />
+                </div>
+                <input type="file" accept="image/*" onchange="previewFoodPhoto(this,'menu-0')" />
+              </label>
+            </div>
+
+            <!-- Zutaten / Einkaufskosten -->
+            <div class="ingredients-section">
+              <h5>🛒 Zutaten &amp; Einkaufskosten</h5>
+              <table class="ingr-table">
+                <thead>
+                  <tr>
+                    <th style="width:34%">Zutat</th>
+                    <th style="width:13%">Menge</th>
+                    <th style="width:9%">Einheit</th>
+                    <th style="width:22%">Kilopreis <span style="font-weight:400;font-size:10.5px;">(€/kg · Stk · l)</span></th>
+                    <th style="width:13%;text-align:right">Gesamt</th>
+                    <th style="width:5%"></th>
+                  </tr>
+                </thead>
+                <tbody id="ingr-menu-0">
+                  <tr>
+                    <td><input type="text" value="Tagliatelle (frisch)" /></td>
+                    <td><input type="number" class="ingr-menge" value="200" min="0" step="any" oninput="calcRow(this)" /></td>
+                    <td><select class="ingr-einheit" style="padding:6px 4px;font-size:12.5px;border-radius:6px;border:1.5px solid rgba(26,18,8,0.15);width:100%;" onchange="calcRow(this)"><option>g</option><option>kg</option><option>ml</option><option>l</option><option>Stück</option><option>Bund</option><option>EL</option><option>TL</option></select></td>
+                    <td><input type="number" class="ingr-kilopreis" value="12" min="0" step="any" oninput="calcRow(this)" placeholder="€/kg" /></td>
+                    <td class="total-cell">2,40 €</td>
+                    <td><button class="del-btn" onclick="removeRow(this)">✕</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value="Rinderhackfleisch" /></td>
+                    <td><input type="number" class="ingr-menge" value="150" min="0" step="any" oninput="calcRow(this)" /></td>
+                    <td><select class="ingr-einheit" style="padding:6px 4px;font-size:12.5px;border-radius:6px;border:1.5px solid rgba(26,18,8,0.15);width:100%;" onchange="calcRow(this)"><option>g</option><option>kg</option><option>ml</option><option>l</option><option>Stück</option><option>Bund</option></select></td>
+                    <td><input type="number" class="ingr-kilopreis" value="18" min="0" step="any" oninput="calcRow(this)" placeholder="€/kg" /></td>
+                    <td class="total-cell">2,70 €</td>
+                    <td><button class="del-btn" onclick="removeRow(this)">✕</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value="Dosentomaten" /></td>
+                    <td><input type="number" class="ingr-menge" value="100" min="0" step="any" oninput="calcRow(this)" /></td>
+                    <td><select class="ingr-einheit" style="padding:6px 4px;font-size:12.5px;border-radius:6px;border:1.5px solid rgba(26,18,8,0.15);width:100%;" onchange="calcRow(this)"><option>g</option><option>kg</option><option>ml</option><option>l</option><option>Stück</option><option>Bund</option></select></td>
+                    <td><input type="number" class="ingr-kilopreis" value="4" min="0" step="any" oninput="calcRow(this)" placeholder="€/kg" /></td>
+                    <td class="total-cell">0,40 €</td>
+                    <td><button class="del-btn" onclick="removeRow(this)">✕</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value="Parmesan" /></td>
+                    <td><input type="number" class="ingr-menge" value="30" min="0" step="any" oninput="calcRow(this)" /></td>
+                    <td><select class="ingr-einheit" style="padding:6px 4px;font-size:12.5px;border-radius:6px;border:1.5px solid rgba(26,18,8,0.15);width:100%;" onchange="calcRow(this)"><option>g</option><option>kg</option><option>ml</option><option>l</option><option>Stück</option><option>Bund</option></select></td>
+                    <td><input type="number" class="ingr-kilopreis" value="35" min="0" step="any" oninput="calcRow(this)" placeholder="€/kg" /></td>
+                    <td class="total-cell">1,05 €</td>
+                    <td><button class="del-btn" onclick="removeRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="margin-top:10px;">
+                <button class="btn-add-ingr" onclick="addIngredientRow('menu-0')">+ Zutat hinzufügen</button>
+              </div>
+              <div class="ingr-footer">
+                <div>
+                  <div class="ingr-total-label">Einkaufskosten (pro Person)</div>
+                </div>
+                <div class="ingr-total-value" id="ingr-total-menu-0">6,55 €</div>
+              </div>
+              <div class="price-breakdown">
+                <div class="price-breakdown-row"><span>Einkauf Zutaten</span><span id="pb-ingr-menu-0">6,55 €</span></div>
+                <div class="price-breakdown-row"><span>Kochaufwand / Arbeitszeit</span><span>—</span></div>
+                <div class="price-breakdown-row"><span>Angebotspreis (Kunde zahlt)</span><span>28,00 €</span></div>
+                <div class="price-breakdown-row total"><span>Marge pro Person</span><span style="color:#C8922A;" id="pb-margin-menu-0">21,45 €</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-outline" onclick="addMenuItem()" style="width:100%;justify-content:center;padding:14px;">
+        + Neues Gericht hinzufügen
+      </button>
+    </div>
+  </div>
+
+  <!-- Materialien & Ausstattung -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">🔧</span>
+      <h2>Materialien &amp; Ausstattung</h2>
+    </div>
+    <div class="card-body">
+      <p style="font-size:14px;color:rgba(26,18,8,0.55);margin-bottom:20px;">
+        Klicke an, was zutrifft – oder füge eigene Einträge hinzu.
+      </p>
+
+      <!-- ICH BRINGE MIT -->
+      <div style="margin-bottom:24px;">
+        <label>🎒 Ich bringe mit <span style="font-weight:400;color:#999;font-size:0.78rem;">– Klicken zum Auswählen</span></label>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;" id="chips-bring">
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🔪 Profimesser-Set</span>
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🪵 Schneidbretter</span>
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">👨‍🍳 Kochschürzen</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍳 Pfannen &amp; Töpfe</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥄 Kochutensilien</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥘 Serviergeschirr</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍽️ Teller &amp; Besteck</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🥗 Salatschüsseln</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🫙 Zutaten (alles inklusive)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧂 Gewürze &amp; Kräuter</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🎨 Deko &amp; Anrichtung</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧾 Menükarten</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🔥 Mobiles Induktionsfeld</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">❄️ Kühlboxen</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">📦 Transportboxen</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🫕 Wok</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧲 Stabmixer / Mixer</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">⚖️ Küchenwaage</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🌡️ Fleischthermometer</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🪄 Sous-vide-Gerät</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">☕ Kaffeemaschine</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🎂 Backequipment</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍶 Serviertabletts</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧴 Reinigungsmittel</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🪣 Spülbecken (mobil)</span>
+        </div>
+        <div class="tag-add-row" style="margin-top:10px;">
+          <input type="text" id="bring-custom-input" placeholder="Eigenes Material hinzufügen…" style="max-width:260px;" onkeydown="if(event.key==='Enter')addMaterialChip('chips-bring','bring-custom-input')" />
+          <button class="btn-tag-add" onclick="addMaterialChip('chips-bring','bring-custom-input')">+ Hinzufügen</button>
+        </div>
+      </div>
+
+      <!-- ICH BENÖTIGE VOR ORT -->
+      <div>
+        <label>📍 Ich benötige vor Ort <span style="font-weight:400;color:#999;font-size:0.78rem;">– Klicken zum Auswählen</span></label>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;" id="chips-need">
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🔥 Backofen (mind. 200°C)</span>
+          <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🍳 Herdplatten (mind. 4)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">❄️ Kühlschrank</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧊 Gefrierfach</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">💧 Fließendes Wasser (warm &amp; kalt)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🚿 Handwaschbecken</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🚰 Wasseranschluss (extern)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🏗️ Arbeitsfläche (mind. 2 m)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🔌 Steckdosen (mind. 4)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🔌 230V Stromanschluss</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">⚡ 400V Drehstrom</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">💡 Ausreichend Beleuchtung</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🗑️ Mülleimer &amp; Entsorgung</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">📦 Lagerplatz für Zutaten</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🛒 Zutaten durch Gastgeber besorgt</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍽️ Vorhandenes Geschirr nutzbar</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🧴 Geschirrspüler</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🪣 Spülmöglichkeit</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🎪 Überdachung / Zelt (Outdoor)</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🪑 Tische &amp; Stühle</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🏺 Große Kochtöpfe vorhanden</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🌡️ Kühlmöglichkeit vorhanden</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🍶 Servierwagen</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🎭 Abstellfläche für Ausrüstung</span>
+          <span class="cuisine-chip" onclick="toggleCuisine(this)">🔇 Ruhige Küchenzone</span>
+        </div>
+        <div class="tag-add-row" style="margin-top:10px;">
+          <input type="text" id="need-custom-input" placeholder="Eigenen Bedarf hinzufügen…" style="max-width:260px;" onkeydown="if(event.key==='Enter')addMaterialChip('chips-need','need-custom-input')" />
+          <button class="btn-tag-add" onclick="addMaterialChip('chips-need','need-custom-input')">+ Hinzufügen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preise & Verfügbarkeit -->
+  <div class="card" id="verfuegbarkeit">
+    <div class="card-header"><span class="card-icon">💶</span><h2>Preise &amp; Verfügbarkeit</h2></div>
+    <div class="card-body">
+
+      <!-- Pricing mode selector -->
+      <label style="margin-bottom:8px;">Abrechnungsmodell</label>
+      <div class="pricing-mode-toggle">
+        <button class="price-mode-btn active" onclick="setPriceMode('stundenlohn',this)">⏱ Stundenlohn</button>
+        <button class="price-mode-btn" onclick="setPriceMode('festpreis',this)">🍽 Festpreis Menü</button>
+        <button class="price-mode-btn" onclick="setPriceMode('beides',this)">✨ Beides anbieten</button>
+      </div>
+
+      <!-- Stundenlohn fields -->
+      <div id="price-stundenlohn" class="price-mode-section visible field-group col3">
+        <div><label>Stundensatz ab (€ / Std.)</label><input type="number" id="kp-stundensatz" placeholder="85" value="85" oninput="updatePreviewPrice()" /></div>
+        <div><label>Min. Einsatzdauer (Std.)</label><input type="number" placeholder="3" /></div>
+        <div><label>Min. Gästeanzahl</label><input type="number" placeholder="5" /></div>
+      </div>
+
+      <!-- Festpreis fields -->
+      <div id="price-festpreis" class="price-mode-section field-group" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="festpreis-hint" style="grid-column:1/-1;">
+          💡 Beim Festpreis-Menü legst du einen Gesamtpreis pro Person fest – ideal für klar definierte Menüs. Kunden wissen sofort, was sie zahlen.
+        </div>
+        <div><label>Festpreis pro Person (€)</label><input type="number" id="kp-festpreis-person" placeholder="65" oninput="updatePreviewPrice()" /></div>
+        <div><label>Festpreis Gesamt ab (€) <span style="font-weight:400;font-size:11px;opacity:0.6;">optional</span></label><input type="number" placeholder="325" /></div>
+        <div><label>Min. Personenanzahl</label><input type="number" placeholder="5" /></div>
+        <div><label>Max. Personenanzahl</label><input type="number" placeholder="60" /></div>
+        <div><label>Menü-Name</label><input type="text" placeholder="z.B. 3-Gänge-Menü Mediterran" /></div>
+        <div><label>Gänge</label><select><option>2 Gänge</option><option selected>3 Gänge</option><option>4 Gänge</option><option>5 Gänge</option><option>Fingerfood-Buffet</option></select></div>
+      </div>
+
+      <!-- Beides: show both -->
+      <div id="price-beides" class="price-mode-section" style="display:none;gap:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px;background:#f9f6f1;border-radius:10px;border:1px solid rgba(200,146,42,0.2);">
+          <div style="grid-column:1/-1;font-weight:700;font-size:13px;color:var(--dark);margin-bottom:4px;">⏱ Stundenlohn</div>
+          <div><label>Stundensatz ab (€ / Std.)</label><input type="number" id="kp-stundensatz-b" placeholder="85" value="85" oninput="updatePreviewPrice()" /></div>
+          <div><label>Min. Einsatzdauer (Std.)</label><input type="number" placeholder="3" /></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px;background:#f9f6f1;border-radius:10px;border:1px solid rgba(200,146,42,0.2);">
+          <div style="grid-column:1/-1;font-weight:700;font-size:13px;color:var(--dark);margin-bottom:4px;">🍽 Festpreis Menü</div>
+          <div><label>Festpreis pro Person (€)</label><input type="number" id="kp-festpreis-b" placeholder="65" oninput="updatePreviewPrice()" /></div>
+          <div><label>Menü-Name</label><input type="text" placeholder="z.B. 3-Gänge Mediterran" /></div>
+          <div><label>Min. Personenanzahl</label><input type="number" placeholder="5" /></div>
+          <div><label>Max. Personenanzahl</label><input type="number" placeholder="60" /></div>
+        </div>
+      </div>
+      <div style="margin-top:8px;">
+        <label>Verfügbare Tage</label>
+        <div class="day-picker">
+          <div class="day-chip" onclick="toggleDay(this)">Mo</div>
+          <div class="day-chip selected" onclick="toggleDay(this)">Di</div>
+          <div class="day-chip selected" onclick="toggleDay(this)">Mi</div>
+          <div class="day-chip selected" onclick="toggleDay(this)">Do</div>
+          <div class="day-chip selected" onclick="toggleDay(this)">Fr</div>
+          <div class="day-chip selected" onclick="toggleDay(this)">Sa</div>
+          <div class="day-chip" onclick="toggleDay(this)">So</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <label style="font-size:13px;font-weight:700;color:var(--dark);">Zeiten pro Wochentag</label>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;font-size:13px;">
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;">
+            <span style="font-weight:700;color:var(--muted)">Mo</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;">
+            <span style="font-weight:700;color:var(--muted)">Di</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;">
+            <span style="font-weight:700;color:var(--muted)">Mi</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;">
+            <span style="font-weight:700;color:var(--muted)">Do</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:#fff8ee;border:1.5px solid var(--gold);border-radius:8px;">
+            <span style="font-weight:700;color:var(--gold)">Fr</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option selected>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option selected>23:00</option><option>00:00</option></select></div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:#fff8ee;border:1.5px solid var(--gold);border-radius:8px;">
+            <span style="font-weight:700;color:var(--gold)">Sa</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option selected>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option selected>00:00</option></select></div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;">
+            <span style="font-weight:700;color:var(--muted)">So</span>
+            <div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div>
+            <div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div>
+          </div>
+        </div>
+      </div>
+      <div class="field-group col2" style="margin-top:12px;">
+        <div><label>Vorlaufzeit (Tage)</label><input type="number" placeholder="3" value="3" /></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end koch section -->
+
+<!-- ═══════════════ GETRÄNKE SECTION ═══════════════ -->
+<div id="section-getraenke" class="profile-section">
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">👤</span><h2>Unternehmensprofil</h2></div>
+    <div class="card-body">
+      <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+        <label style="cursor:pointer;">
+          <div class="photo-upload" onclick="this.parentElement.querySelector('input').click()">
+            <span style="font-size:36px;">🏢</span><span>Logo hochladen</span>
+          </div>
+          <input type="file" accept="image/*" />
+        </label>
+        <div style="flex:1;min-width:260px;">
+          <div class="field-group col2">
+            <div><label>Unternehmensname *</label><input type="text" placeholder="z.B. Vinothek Müller GmbH" /></div>
+            <div><label>Ansprechpartner</label><input type="text" placeholder="Vorname Nachname" /></div>
+          </div>
+          <div class="field-group col2">
+            <div><label>Hauptstandort *</label><input type="text" placeholder="z.B. München" /></div>
+            <div><label>Lieferradius (km)</label><input type="number" placeholder="80" /></div>
+          </div>
+          <div><label>Kurzbeschreibung</label><textarea placeholder="Beschreib dein Angebot kurz…"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">🍷</span><h2>Angebot &amp; Sortiment</h2></div>
+    <div class="card-body">
+      <label>Getränkekategorien <span style="font-weight:400;color:#999;font-size:0.78rem;">– Klicken zum Auswählen / Abwählen</span></label>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;" id="drink-chip-wrap">
+        <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🍷 Rotwein</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥂 Weißwein</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🌹 Rosé</span>
+        <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🍾 Sekt</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥂 Champagner</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍾 Prosecco</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍾 Cava</span>
+        <span class="cuisine-chip selected" onclick="toggleCuisine(this)">🍺 Bier (Flasche)</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍺 Fassbier / Zapfanlage</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍺 Craft Beer</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🌾 Weizenbier</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🚴 Radler</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍺 Alkoholfreies Bier</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥃 Whiskey / Bourbon</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍹 Rum</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🌿 Gin</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍸 Vodka</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🌵 Tequila</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🌿 Kräuterlikör</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍑 Obstler / Schnaps</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍹 Cocktails</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥤 Longdrinks</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍸 Aperol Spritz</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🌸 Hugo</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍋 Caipirinha</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍷 Sangria</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🔥 Glühwein / Punsch</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">❄️ Mocktails (alkoholfrei)</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🎉 Party Punch / Bowle</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥂 Sekt-Aperitif-Paket</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥤 Softdrinks</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🧃 Säfte &amp; Nektar</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">💧 Wasser (Still)</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">💧 Wasser (Sprudelnd)</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍋 Limonaden</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍋 Hausgemachte Limonade</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">⚡ Energy Drinks</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🧊 Eistee</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍒 Schorlen</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍹 Biermischgetränke</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍎 Cidre / Cider</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍯 Met / Mead</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🫧 Fassbrause</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🥛 Smoothies</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">☕ Kaffee &amp; Espresso</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🫖 Tee-Sortiment</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍵 Heißgetränke</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🧉 Matcha / Specialty Coffee</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🍹 Bar-Komplettservice</span>
+        <span class="cuisine-chip" onclick="toggleCuisine(this)">🎊 Getränke-Flatrate</span>
+      </div>
+      <div class="tag-add-row" style="margin-top:10px;">
+        <input type="text" id="drink-tag-input" placeholder="Eigene Kategorie hinzufügen…" style="max-width:240px;" onkeydown="if(event.key==='Enter')addDrinkChip()" />
+        <button class="btn-tag-add" onclick="addDrinkChip()">+ Hinzufügen</button>
+      </div>
+
+      <div class="field-group col3" style="margin-top:20px;">
+        <div><label>Preis pro Person ab (€)</label><input type="number" placeholder="6" /></div>
+        <div><label>Min. Personenanzahl</label><input type="number" placeholder="10" /></div>
+        <div><label>Max. Personenanzahl</label><input type="number" placeholder="500" /></div>
+      </div>
+      <div class="field-group col2">
+        <div><label>Mindestbestellwert (€)</label><input type="number" placeholder="150" /></div>
+        <div><label>Vorlaufzeit (Tage)</label><input type="number" placeholder="5" /></div>
+      </div>
+
+      <div style="margin-top:8px;">
+        <label>Leistungen im Preis enthalten</label>
+        <div class="condition-list">
+          <label class="condition-item"><input type="checkbox" checked /><span>Lieferung zum Veranstaltungsort</span></label>
+          <label class="condition-item"><input type="checkbox" checked /><span>Aufbau &amp; Aufstellung</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Abholung nach dem Event</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Barkeeper / Servicepersonal</span></label>
+          <label class="condition-item"><input type="checkbox" checked /><span>Kühlung &amp; Transport-Equipment</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Zapfanlage leihweise</span></label>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <label>Individuelle Pakete / Beschreibung</label>
+        <div id="drink-packages">
+          <div class="material-row">
+            <input type="text" value="Weinpaket Premium: Rot + Weiß + Sekt, 3 Flaschen/Tisch" />
+            <button class="del-btn" onclick="this.parentElement.remove()">✕</button>
+          </div>
+          <div class="material-row">
+            <input type="text" value="Bierpaket Wiesn: Fassbier + Softdrinks Flatrate" />
+            <button class="del-btn" onclick="this.parentElement.remove()">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-ingr" style="margin-top:8px;" onclick="addMaterial('drink-packages')">+ Paket hinzufügen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">📅</span><h2>Verfügbarkeit</h2></div>
+    <div class="card-body">
+      <label>Verfügbare Wochentage</label>
+      <div class="day-picker">
+        <div class="day-chip selected" onclick="toggleDay(this)">Mo</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Di</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Mi</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Do</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Fr</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Sa</div>
+        <div class="day-chip" onclick="toggleDay(this)">So</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end getraenke section -->
+
+<!-- ═══════════════ LOCATION SECTION ═══════════════ -->
+<div id="section-location" class="profile-section">
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">🏛️</span><h2>Location-Profil</h2></div>
+    <div class="card-body">
+      <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+        <label style="cursor:pointer;">
+          <div class="photo-upload" onclick="this.parentElement.querySelector('input').click()" style="width:160px;height:110px;">
+            <span style="font-size:32px;">📸</span><span>Hauptfoto</span>
+          </div>
+          <input type="file" accept="image/*" />
+        </label>
+        <div style="flex:1;min-width:260px;">
+          <div class="field-group col2">
+            <div><label>Name der Location *</label><input type="text" placeholder="z.B. Trattoria Bella Vista" /></div>
+            <div><label>Art der Location</label>
+              <select>
+                <option>Restaurant</option><option>Festsaal</option>
+                <option>Eventlocation</option><option>Landgut / Schloss</option>
+                <option>Dachterrasse</option><option>Loft / Industrieraum</option>
+                <option>Outdoor / Garten</option><option>Sonstiges</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-group col2">
+            <div><label>Straße &amp; Hausnummer *</label><input type="text" placeholder="Musterstr. 12" /></div>
+            <div><label>Stadt &amp; PLZ *</label><input type="text" placeholder="80331 München" /></div>
+          </div>
+          <div><label>Beschreibung der Location</label>
+            <textarea placeholder="Beschreib deine Location, Atmosphäre, Besonderheiten…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <label>Weitere Fotos (Galerie)</label>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+          <label style="cursor:pointer;">
+            <div style="width:100px;height:80px;border:2px dashed rgba(200,146,42,0.40);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;">+</div>
+            <input type="file" accept="image/*" style="display:none;" />
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">📐</span><h2>Raumdetails &amp; Kapazität</h2></div>
+    <div class="card-body">
+      <div class="field-group col3">
+        <div><label>Max. Personen (Sitzen)</label><input type="number" placeholder="80" /></div>
+        <div><label>Max. Personen (Stehend)</label><input type="number" placeholder="120" /></div>
+        <div><label>Fläche (m²)</label><input type="number" placeholder="200" /></div>
+      </div>
+      <label style="margin-top:12px;">Ausstattung / Features</label>
+      <div class="condition-list" style="margin-top:6px;">
+        <label class="condition-item"><input type="checkbox" checked /><span>Bestuhlung vorhanden</span></label>
+        <label class="condition-item"><input type="checkbox" checked /><span>Eigene Küche / Küchenausstattung</span></label>
+        <label class="condition-item"><input type="checkbox" /><span>Bühne / Podium</span></label>
+        <label class="condition-item"><input type="checkbox" checked /><span>Beamer / Leinwand</span></label>
+        <label class="condition-item"><input type="checkbox" checked /><span>Soundanlage</span></label>
+        <label class="condition-item"><input type="checkbox" /><span>Parkplätze vorhanden</span></label>
+        <label class="condition-item"><input type="checkbox" /><span>Übernachtungsmöglichkeit</span></label>
+        <label class="condition-item"><input type="checkbox" checked /><span>Barrierefreier Zugang</span></label>
+        <label class="condition-item"><input type="checkbox" /><span>Außenbereich / Garten</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">📅</span><h2>Verfügbarkeit &amp; Zeiten</h2></div>
+    <div class="card-body">
+      <label>Verfügbare Wochentage</label>
+      <div class="day-picker">
+        <div class="day-chip" onclick="toggleDay(this)">Mo</div>
+        <div class="day-chip" onclick="toggleDay(this)">Di</div>
+        <div class="day-chip" onclick="toggleDay(this)">Mi</div>
+        <div class="day-chip" onclick="toggleDay(this)">Do</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Fr</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Sa</div>
+        <div class="day-chip" onclick="toggleDay(this)">So</div>
+      </div>
+      <div style="margin-top:16px;">
+        <label style="font-size:13px;font-weight:700;color:var(--dark);">Zeiten pro Wochentag</label>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;font-size:13px;">
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;"><span style="font-weight:700;color:var(--muted)">Mo</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div></div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;"><span style="font-weight:700;color:var(--muted)">Di</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div></div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;"><span style="font-weight:700;color:var(--muted)">Mi</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div></div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;"><span style="font-weight:700;color:var(--muted)">Do</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div></div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:#fff8ee;border:1.5px solid var(--gold);border-radius:8px;"><span style="font-weight:700;color:var(--gold)">Fr</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option selected>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option selected>23:00</option><option>00:00</option></select></div></div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:#fff8ee;border:1.5px solid var(--gold);border-radius:8px;"><span style="font-weight:700;color:var(--gold)">Sa</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option selected>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option selected>00:00</option></select></div></div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:8px;align-items:center;padding:6px 10px;background:var(--cream);border-radius:8px;"><span style="font-weight:700;color:var(--muted)">So</span><div><label style="font-size:11px;color:var(--muted)">Von</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option><option>20:00</option></select></div><div><label style="font-size:11px;color:var(--muted)">Bis</label><select style="width:100%;border:1.5px solid var(--cream2);border-radius:7px;padding:5px 8px;font-size:13px;background:#fff;"><option>—</option><option>18:00</option><option>20:00</option><option>22:00</option><option>23:00</option><option>00:00</option></select></div></div>
+        </div>
+      </div>
+      <div class="field-group col2" style="margin-top:12px;">
+        <div><label>Vorlaufzeit (Tage)</label><input type="number" placeholder="7" value="7" /></div>
+      </div>
+      <div style="margin-top:8px;">
+        <label>Gesperrte Daten (z.B. Betriebsferien)</label>
+        <input type="text" placeholder="z.B. 24.12.–02.01., 15.08." />
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">💶</span><h2>Preise &amp; Bedingungen</h2></div>
+    <div class="card-body">
+      <div class="field-group col2">
+        <div><label>Raummiete (€ / Event)</label><input type="number" placeholder="0 = kostenlos bei Mindestverzehr" /></div>
+        <div><label>Mindestverzehr (€)</label><input type="number" placeholder="1500" /></div>
+      </div>
+      <div class="field-group col2">
+        <div><label>Preis pro Person (€)</label><input type="number" placeholder="—" /></div>
+        <div><label>Kaution (€)</label><input type="number" placeholder="200" /></div>
+      </div>
+      <div style="margin-top:8px;">
+        <label>Bedingungen &amp; Auflagen</label>
+        <div class="condition-list" style="margin-top:6px;">
+          <label class="condition-item"><input type="checkbox" checked /><span>Getränke müssen vom Betreiber bezogen werden</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Externer Caterer erlaubt</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Eigene Getränke gestattet (gegen Korkgeld)</span></label>
+          <label class="condition-item"><input type="checkbox" checked /><span>Musik bis max. 22:00 Uhr</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Rauchen im Außenbereich gestattet</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Hunde erlaubt</span></label>
+        </div>
+        <div style="margin-top:12px;">
+          <label>Weitere Bedingungen (Freitext)</label>
+          <textarea placeholder="z.B. Auf- und Abbauzeiten, Reinigung, spezielle Regeln…"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end location section -->
+
+<!-- ═══════════════ IMBISS SECTION ═══════════════ -->
+<div id="section-imbiss" class="profile-section">
+  <div class="card">
+    <div class="card-header"><span class="card-icon">🚚</span><h2>Imbisswagen-Profil</h2></div>
+    <div class="card-body">
+      <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+        <label style="cursor:pointer;">
+          <div class="photo-upload" onclick="this.parentElement.querySelector('input').click()">
+            <span style="font-size:36px;">🚚</span><span>Foto hochladen</span>
+          </div>
+          <input type="file" accept="image/*" />
+        </label>
+        <div style="flex:1;min-width:260px;">
+          <div class="field-group col2">
+            <div><label>Name des Foodtrucks *</label><input type="text" placeholder="z.B. Burger Brothers" /></div>
+            <div><label>Küche / Spezialität</label><select><option>Burger</option><option>Pizza</option><option>Asiatisch</option><option>BBQ / Grill</option><option>Mexikanisch</option><option>Vegan</option><option>Desserts</option><option>Sonstiges</option></select></div>
+          </div>
+          <div class="field-group col2">
+            <div><label>Standort / Region *</label><input type="text" placeholder="z.B. Hamburg & Schleswig-Holstein" /></div>
+            <div><label>Fahrtradius (km)</label><input type="number" placeholder="100" /></div>
+          </div>
+          <div><label>Beschreibung</label><textarea placeholder="Was macht euren Foodtruck besonders?"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">🍔</span><h2>Speisenangebot &amp; Preise</h2></div>
+    <div class="card-body">
+      <p style="font-size:14px;color:rgba(26,18,8,0.55);margin-bottom:16px;">Füge deine Gerichte mit Fotos und Preisen hinzu.</p>
+      <div id="imbiss-menu-container">
+        <div class="menu-item" style="border:1.5px solid rgba(26,18,8,0.10);border-radius:12px;padding:20px;margin-bottom:16px;">
+          <div class="field-group col3">
+            <div><label>Gericht</label><input type="text" value="Classic Cheeseburger" /></div>
+            <div><label>Preis (€)</label><input type="number" value="9.50" /></div>
+            <div><label>Kategorie</label><select><option>Hauptgericht</option><option>Snack</option><option>Dessert</option><option>Getränk</option></select></div>
+          </div>
+          <div><label>Beschreibung</label><input type="text" placeholder="Kurze Beschreibung…" value="180g Beef-Patty, Cheddar, hausgemachte Sauce, Brioche-Bun" /></div>
+          <div style="margin-top:12px;">
+            <label>Foto</label>
+            <label style="cursor:pointer;display:block;max-width:160px;">
+              <div class="food-photo-upload" style="height:100px;" onclick="this.parentElement.querySelector('input').click()">
+                <span class="photo-emoji" style="font-size:24px;">🍔</span><span>Foto hochladen</span>
+              </div>
+              <input type="file" accept="image/*" style="display:none;" />
+            </label>
+          </div>
+        </div>
+      </div>
+      <button class="btn-outline" onclick="addImbissItem()" style="width:100%;justify-content:center;padding:12px;">+ Gericht hinzufügen</button>
+      <div class="field-group col2" style="margin-top:20px;">
+        <div><label>Menüpreis pro Person ab (€)</label><input type="number" placeholder="12" /></div>
+        <div><label>Mindestbestellwert (€)</label><input type="number" placeholder="300" /></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">⚙️</span><h2>Technische Anforderungen</h2></div>
+    <div class="card-body">
+      <div class="condition-list">
+        <label class="condition-item"><input type="checkbox" checked /><span>Stromanschluss 230V erforderlich</span></label>
+        <label class="condition-item"><input type="checkbox" /><span>Stromanschluss 400V (Drehstrom) erforderlich</span></label>
+        <label class="condition-item"><input type="checkbox" checked /><span>Wasseranschluss erforderlich</span></label>
+        <label class="condition-item"><input type="checkbox" /><span>Eigenes Aggregat vorhanden (autark)</span></label>
+        <label class="condition-item"><input type="checkbox" checked /><span>Stellfläche min. 6x3m erforderlich</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">📅</span><h2>Verfügbarkeit</h2></div>
+    <div class="card-body">
+      <label>Verfügbare Wochentage</label>
+      <div class="day-picker">
+        <div class="day-chip" onclick="toggleDay(this)">Mo</div>
+        <div class="day-chip" onclick="toggleDay(this)">Di</div>
+        <div class="day-chip" onclick="toggleDay(this)">Mi</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Do</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Fr</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Sa</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">So</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SERVICE SECTION ═══════════════ -->
+<div id="section-service" class="profile-section">
+  <div class="card">
+    <div class="card-header"><span class="card-icon">🤵</span><h2>Servicepersonal-Profil</h2></div>
+    <div class="card-body">
+      <div class="field-group col2">
+        <div><label>Name / Agentur *</label><input type="text" placeholder="z.B. Elite Event Service GmbH" /></div>
+        <div><label>Hauptstandort *</label><input type="text" placeholder="z.B. Frankfurt am Main" /></div>
+      </div>
+      <div class="field-group col3">
+        <div><label>Verfügbare Mitarbeiter</label><input type="number" placeholder="12" /></div>
+        <div><label>Einsatzradius (km)</label><input type="number" placeholder="150" /></div>
+        <div><label>Sprachen</label><input type="text" placeholder="DE, EN, FR…" /></div>
+      </div>
+      <div><label>Beschreibung</label><textarea placeholder="Erfahrung, Zertifizierungen, besondere Kompetenzen…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">📋</span><h2>Leistungsangebot</h2></div>
+    <div class="card-body">
+      <label>Tätigkeiten (Tags)</label>
+      <div class="tags-row" id="service-tags">
+        <span class="tag">Kellner/in <span class="remove" onclick="removeTag(this)">×</span></span>
+        <span class="tag">Barkeeper <span class="remove" onclick="removeTag(this)">×</span></span>
+        <span class="tag">Empfangspersonal <span class="remove" onclick="removeTag(this)">×</span></span>
+      </div>
+      <div class="tag-add-row" style="margin-top:10px;">
+        <input type="text" id="service-tag-input" placeholder="z.B. Cloakroom, Security, Event-Moderator…" style="max-width:280px;" onkeydown="if(event.key==='Enter')addTag('service-tags','service-tag-input')" />
+        <button class="btn-tag-add" onclick="addTag('service-tags','service-tag-input')">+ Hinzufügen</button>
+      </div>
+      <div class="field-group col3" style="margin-top:20px;">
+        <div><label>Stundensatz ab (€)</label><input type="number" placeholder="18" /></div>
+        <div><label>Min. Einsatzdauer (Std.)</label><input type="number" placeholder="4" /></div>
+        <div><label>Min. Mitarbeiteranzahl</label><input type="number" placeholder="1" /></div>
+      </div>
+      <div style="margin-top:8px;">
+        <label>Inbegriffen</label>
+        <div class="condition-list">
+          <label class="condition-item"><input type="checkbox" checked /><span>Einheitliche Dienstkleidung</span></label>
+          <label class="condition-item"><input type="checkbox" checked /><span>Einweisung &amp; Briefing</span></label>
+          <label class="condition-item"><input type="checkbox" /><span>Fahrtkosten inklusive</span></label>
+          <label class="condition-item"><input type="checkbox" checked /><span>Haftpflichtversicherung</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-icon">📅</span><h2>Verfügbarkeit</h2></div>
+    <div class="card-body">
+      <label>Verfügbare Wochentage</label>
+      <div class="day-picker">
+        <div class="day-chip selected" onclick="toggleDay(this)">Mo</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Di</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Mi</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Do</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Fr</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">Sa</div>
+        <div class="day-chip selected" onclick="toggleDay(this)">So</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE BAR -->
+<div class="save-bar" id="save-bar">
+  <span class="save-bar-text" id="save-bar-text">Steckbrief wird <strong>nicht öffentlich</strong> bis du auf "Veröffentlichen" drückst.</span>
+  <div style="display:flex;gap:12px;">
+    <button class="btn-outline" style="color:rgba(245,240,232,0.70);border-color:rgba(245,240,232,0.20);" onclick="showVorschau()">👁 Vorschau</button>
+    <button class="btn-outline" style="color:rgba(245,240,232,0.70);border-color:rgba(245,240,232,0.20);" onclick="showSaved(false)">💾 Entwurf speichern</button>
+    <button class="btn-primary" id="publish-btn" onclick="showSaved(true)">🚀 Veröffentlichen</button>
+  </div>
+</div>
+
+<!-- PREVIEW OVERLAY -->
+<div id="preview-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;overflow-y:auto;padding:30px 20px;">
+  <div style="max-width:680px;margin:0 auto;background:white;border-radius:16px;overflow:hidden;position:relative;">
+    <div style="background:var(--dark);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <span style="color:var(--gold);font-weight:700;font-size:0.9rem;">👁 Vorschau – So sehen Kunden deinen Steckbrief</span>
+      <button onclick="document.getElementById('preview-overlay').style.display='none'" style="background:none;border:none;color:rgba(245,240,232,0.7);font-size:1.3rem;cursor:pointer;">✕</button>
+    </div>
+    <div style="padding:28px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;">
+        <div style="width:80px;height:80px;border-radius:50%;background:var(--dark2);display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0;">👨‍🍳</div>
+        <div>
+          <div style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;" id="prev-name">Marco Bianchi</div>
+          <div style="font-size:0.85rem;color:#777;margin-top:3px;">📍 München · Koch &amp; Caterer</div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;" id="prev-tags">
+            <span style="background:#f0ece4;padding:3px 10px;border-radius:10px;font-size:0.75rem;font-weight:600;">🍝 Italienisch</span>
+            <span style="background:#f0ece4;padding:3px 10px;border-radius:10px;font-size:0.75rem;font-weight:600;">🌿 Mediterran</span>
+            <span style="background:#f0ece4;padding:3px 10px;border-radius:10px;font-size:0.75rem;font-weight:600;">✨ Fine Dining</span>
+          </div>
+        </div>
+        <div style="margin-left:auto;text-align:right;">
+          <div id="prev-price-block" style="text-align:right;">
+            <div style="font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--gold);" id="prev-price-main">ab 85 €<span style="font-size:0.75rem;font-family:'DM Sans',sans-serif;font-weight:400;color:#999;"> / Std.</span></div>
+            <div id="prev-price-secondary" style="font-size:0.8rem;color:#C8922A;margin-top:2px;font-weight:600;display:none;"></div>
+          </div>
+          <div style="font-size:0.8rem;color:#777;margin-top:4px;">⭐ 4.9 · 47 Bewertungen</div>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid #f0ece4;margin-bottom:18px;">
+      <div style="font-size:0.87rem;color:#555;line-height:1.7;margin-bottom:18px;">
+        Leidenschaftlicher Koch mit 12 Jahren Erfahrung in der gehobenen Gastronomie. Spezialisiert auf italienische und mediterrane Küche – von intimen Dinner-Erlebnissen bis zu Festbanketten für 60 Gäste.
+      </div>
+      <div style="background:#f9f6f1;border-radius:10px;padding:14px 16px;margin-bottom:18px;">
+        <div style="font-weight:700;margin-bottom:8px;font-size:0.88rem;">📋 Details</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.83rem;color:#555;">
+          <span>✓ Bis 60 Gäste</span><span>✓ Kochort: Bei dir zuhause</span>
+          <span>✓ 12 Jahre Erfahrung</span><span>✓ Lebensmittelhygiene-Zertifikat</span>
+          <span>✓ Haftpflichtversichert</span><span>✓ Einkaufen inklusive</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button onclick="document.getElementById('preview-overlay').style.display='none';showSaved(true)" style="padding:12px 24px;background:var(--gold);color:var(--dark);border:none;border-radius:10px;font-family:'Fraunces',serif;font-size:1rem;font-weight:900;cursor:pointer;">🚀 Jetzt veröffentlichen</button>
+        <button onclick="document.getElementById('preview-overlay').style.display='none'" style="padding:12px 20px;background:white;border:1.5px solid #ddd;border-radius:10px;font-size:0.9rem;cursor:pointer;">Weiter bearbeiten</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PRICING MODE TOGGLE ──
+let currentPriceMode = 'stundenlohn';
+function setPriceMode(mode, btn) {
+  currentPriceMode = mode;
+  // toggle button styles
+  document.querySelectorAll('.price-mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // show/hide sections
+  const sl = document.getElementById('price-stundenlohn');
+  const fp = document.getElementById('price-festpreis');
+  const bd = document.getElementById('price-beides');
+  if (sl) { sl.classList.remove('visible'); sl.style.display = 'none'; }
+  if (fp) { fp.classList.remove('visible'); fp.style.display = 'none'; }
+  if (bd) { bd.style.display = 'none'; }
+  if (mode === 'stundenlohn') { sl.style.display = 'grid'; sl.classList.add('visible'); }
+  else if (mode === 'festpreis') { fp.style.display = 'grid'; fp.classList.add('visible'); }
+  else { bd.style.display = 'flex'; bd.style.flexDirection = 'column'; }
+  updatePreviewPrice();
+}
+
+function updatePreviewPrice() {
+  const mainEl = document.getElementById('prev-price-main');
+  const secEl  = document.getElementById('prev-price-secondary');
+  if (!mainEl) return;
+  if (currentPriceMode === 'stundenlohn') {
+    const v = document.getElementById('kp-stundensatz')?.value || 85;
+    mainEl.innerHTML = `ab ${v} €<span style="font-size:0.75rem;font-family:'DM Sans',sans-serif;font-weight:400;color:#999;"> / Std.</span>`;
+    secEl.style.display = 'none';
+  } else if (currentPriceMode === 'festpreis') {
+    const v = document.getElementById('kp-festpreis-person')?.value || 65;
+    mainEl.innerHTML = `ab ${v} €<span style="font-size:0.75rem;font-family:'DM Sans',sans-serif;font-weight:400;color:#999;"> / Person</span>`;
+    secEl.style.display = 'none';
+  } else {
+    const vs = document.getElementById('kp-stundensatz-b')?.value || 85;
+    const vf = document.getElementById('kp-festpreis-b')?.value || 65;
+    mainEl.innerHTML = `ab ${vs} €<span style="font-size:0.75rem;font-family:'DM Sans',sans-serif;font-weight:400;color:#999;"> / Std.</span>`;
+    secEl.style.display = 'block';
+    secEl.innerHTML = `🍽 Festpreis-Menü ab ${vf} € / Person`;
+  }
+}
+
+// ── TAB SWITCHING ──
+function switchTab(type) {
+  document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + type).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── DAY TOGGLE ──
+function toggleDay(el) { el.classList.toggle('selected'); }
+
+// ── TAG SYSTEM ──
+function addTag(containerId, inputId) {
+  const input = document.getElementById(inputId);
+  const val = input.value.trim();
+  if (!val) return;
+  const container = document.getElementById(containerId);
+  const tag = document.createElement('span');
+  tag.className = 'tag';
+  tag.innerHTML = `${val} <span class="remove" onclick="removeTag(this)">×</span>`;
+  container.appendChild(tag);
+  input.value = '';
+}
+function removeTag(btn) { btn.parentElement.remove(); }
+
+// ── INGREDIENT CALCULATION ──
+function calcRow(input) {
+  const row = input.closest('tr');
+  const menge     = parseFloat(row.querySelector('.ingr-menge')?.value)     || 0;
+  const einheit   = row.querySelector('.ingr-einheit')?.value || 'g';
+  const kilopreis = parseFloat(row.querySelector('.ingr-kilopreis')?.value) || 0;
+
+  let total;
+  switch (einheit) {
+    case 'g':  total = (kilopreis / 1000) * menge; break;  // Kilopreis ÷ 1000 × Gramm
+    case 'kg': total = kilopreis * menge;           break;  // direkt kg × Preis/kg
+    case 'ml': total = (kilopreis / 1000) * menge;  break;  // Literpreis ÷ 1000 × ml
+    case 'l':  total = kilopreis * menge;           break;  // direkt l × Preis/l
+    default:   total = kilopreis * menge;           break;  // Stück/Bund/EL/TL: Preis pro Einheit
+  }
+
+  row.querySelector('.total-cell').textContent = total.toFixed(2).replace('.',',') + ' €';
+  const menuId = row.closest('tbody').id.replace('ingr-', '');
+  recalcTotal(menuId);
+}
+
+function recalcTotal(menuId) {
+  const tbody = document.getElementById('ingr-' + menuId);
+  if (!tbody) return;
+  let sum = 0;
+  tbody.querySelectorAll('.total-cell').forEach(cell => {
+    sum += parseFloat(cell.textContent.replace(',','.').replace(' €','')) || 0;
+  });
+  const fmt = sum.toFixed(2).replace('.',',') + ' €';
+  const el = document.getElementById('ingr-total-' + menuId);
+  const pb = document.getElementById('pb-ingr-' + menuId);
+  const cost = document.getElementById('menu-' + menuId.split('-')[1] + '-cost');
+  if (el) el.textContent = fmt;
+  if (pb) pb.textContent = fmt;
+  if (cost) cost.textContent = 'Zutaten: ' + fmt;
+  // margin
+  const priceInput = document.querySelector('#menu-' + menuId.split('-')[1] + ' input[type=number]');
+  const margin = document.getElementById('pb-margin-' + menuId);
+  if (margin && priceInput) {
+    const sellPrice = parseFloat(priceInput.value) || 0;
+    const m = sellPrice - sum;
+    margin.textContent = m.toFixed(2).replace('.',',') + ' €';
+  }
+}
+
+function removeRow(btn) {
+  const row = btn.closest('tr');
+  const menuId = row.closest('tbody').id.replace('ingr-', '');
+  row.remove();
+  recalcTotal(menuId);
+}
+
+function addIngredientRow(menuId) {
+  const tbody = document.getElementById('ingr-' + menuId);
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Zutat eingeben…" /></td>
+    <td><input type="number" class="ingr-menge" value="0" min="0" step="any" oninput="calcRow(this)" /></td>
+    <td><select class="ingr-einheit" style="padding:6px 4px;font-size:12.5px;border-radius:6px;border:1.5px solid rgba(26,18,8,0.15);width:100%;" onchange="calcRow(this)">
+      <option>g</option><option>kg</option><option>ml</option><option>l</option>
+      <option>Stück</option><option>Bund</option><option>EL</option><option>TL</option>
+    </select></td>
+    <td><input type="number" class="ingr-kilopreis" value="0" min="0" step="any" oninput="calcRow(this)" placeholder="€/kg" /></td>
+    <td class="total-cell">0,00 €</td>
+    <td><button class="del-btn" onclick="removeRow(this)">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+// ── ADD MENU ITEM ──
+let menuCount = 1;
+function addMenuItem() {
+  const id = 'menu-' + menuCount++;
+  const container = document.getElementById('menu-items-container');
+  const div = document.createElement('div');
+  div.className = 'menu-item';
+  div.id = id;
+  div.innerHTML = `
+    <div class="menu-item-header" onclick="toggleMenu('${id}')">
+      <h4>🍴 &nbsp;Neues Gericht</h4>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span style="font-size:13px;color:#C8922A;font-weight:600;" id="${id}-cost">Zutaten: 0,00 €</span>
+        <span class="collapse-toggle">▼</span>
+        <button class="btn-danger" onclick="event.stopPropagation();removeMenu('${id}')">Entfernen</button>
+      </div>
+    </div>
+    <div class="menu-item-body collapsible-body" id="${id}-body">
+      <div class="field-group col3">
+        <div><label>Gerichtsname *</label><input type="text" placeholder="z.B. Tiramisu" onchange="updateMenuTitle('${id}',this.value)" /></div>
+        <div><label>Kategorie</label><select><option>Vorspeise</option><option>Hauptgang</option><option>Dessert</option><option>Snack / Fingerfood</option><option>Beilagen</option></select></div>
+        <div><label>Preis pro Person (€)</label><input type="number" placeholder="12" /></div>
+      </div>
+      <div><label>Beschreibung</label><textarea placeholder="Beschreib das Gericht…"></textarea></div>
+      <div style="margin-top:16px;">
+        <label>Gericht-Foto</label>
+        <label style="cursor:pointer;display:block;">
+          <div class="food-photo-upload" id="fpu-${id}" onclick="this.parentElement.querySelector('input').click()">
+            <span class="photo-emoji">🍴</span>
+            <span>Foto klicken oder hierher ziehen</span>
+            <img id="fpu-img-${id}" />
+          </div>
+          <input type="file" accept="image/*" onchange="previewFoodPhoto(this,'${id}')" />
+        </label>
+      </div>
+      <div class="ingredients-section">
+        <h5>🛒 Zutaten &amp; Einkaufskosten</h5>
+        <table class="ingr-table">
+          <thead><tr>
+            <th style="width:34%">Zutat</th><th style="width:13%">Menge</th>
+            <th style="width:9%">Einheit</th><th style="width:22%">Kilopreis <span style="font-weight:400;font-size:10.5px;">(€/kg · Stk · l)</span></th>
+            <th style="width:13%;text-align:right">Gesamt</th><th style="width:5%"></th>
+          </tr></thead>
+          <tbody id="ingr-${id}"></tbody>
+        </table>
+        <div style="margin-top:10px;">
+          <button class="btn-add-ingr" onclick="addIngredientRow('${id}')">+ Zutat hinzufügen</button>
+        </div>
+        <div class="ingr-footer">
+          <div><div class="ingr-total-label">Einkaufskosten (pro Person)</div></div>
+          <div class="ingr-total-value" id="ingr-total-${id}">0,00 €</div>
+        </div>
+        <div class="price-breakdown">
+          <div class="price-breakdown-row"><span>Einkauf Zutaten</span><span id="pb-ingr-${id}">0,00 €</span></div>
+          <div class="price-breakdown-row"><span>Angebotspreis (Kunde zahlt)</span><span>—</span></div>
+          <div class="price-breakdown-row total"><span>Marge pro Person</span><span style="color:#C8922A;" id="pb-margin-${id}">—</span></div>
+        </div>
+      </div>
+    </div>`;
+  container.appendChild(div);
+}
+
+function removeMenu(id) {
+  if (confirm('Gericht wirklich entfernen?')) document.getElementById(id).remove();
+}
+
+function updateMenuTitle(id, val) {
+  document.querySelector('#' + id + ' .menu-item-header h4').textContent = '🍴 \u00a0' + (val || 'Neues Gericht');
+}
+
+function toggleMenu(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('collapsed');
+  const body = document.getElementById(id + '-body');
+  body.style.display = el.classList.contains('collapsed') ? 'none' : '';
+}
+
+// ── PHOTO PREVIEWS ──
+function previewFoodPhoto(input, menuId) {
+  const file = input.files[0];
+  if (!file) return;
+  const img = document.getElementById('fpu-img-' + menuId);
+  const wrap = document.getElementById('fpu-' + menuId);
+  img.src = URL.createObjectURL(file);
+  img.style.display = 'block';
+  wrap.querySelector('.photo-emoji').style.display = 'none';
+  wrap.querySelector('span:not(.photo-emoji)').style.display = 'none';
+}
+
+// ── MATERIALS ──
+function addMaterial(containerId) {
+  const div = document.createElement('div');
+  div.className = 'material-row';
+  div.innerHTML = `<input type="text" placeholder="Eingabe…" /><button class="del-btn" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById(containerId).appendChild(div);
+  div.querySelector('input').focus();
+}
+
+// ── IMBISS MENU ITEMS ──
+function addImbissItem() {
+  const container = document.getElementById('imbiss-menu-container');
+  const div = document.createElement('div');
+  div.className = 'menu-item';
+  div.style.cssText = 'border:1.5px solid rgba(26,18,8,0.10);border-radius:12px;padding:20px;margin-bottom:16px;';
+  div.innerHTML = `
+    <div class="field-group col3">
+      <div><label>Gericht</label><input type="text" placeholder="Gerichtsname…" /></div>
+      <div><label>Preis (€)</label><input type="number" placeholder="9.50" /></div>
+      <div><label>Kategorie</label><select><option>Hauptgericht</option><option>Snack</option><option>Dessert</option><option>Getränk</option></select></div>
+    </div>
+    <div><label>Beschreibung</label><input type="text" placeholder="Kurze Beschreibung…" /></div>
+    <div style="margin-top:10px;display:flex;gap:10px;align-items:center;">
+      <label style="cursor:pointer;">
+        <div class="food-photo-upload" style="height:80px;max-width:120px;" onclick="this.parentElement.querySelector('input').click()">
+          <span style="font-size:20px;">📷</span><span style="font-size:10px;">Foto</span>
+        </div>
+        <input type="file" accept="image/*" style="display:none;" />
+      </label>
+      <button class="btn-danger" onclick="this.closest('.menu-item').remove()">Gericht entfernen</button>
+    </div>`;
+  container.appendChild(div);
+}
+
+// ── CUISINE CHIP TOGGLE ──
+function toggleCuisine(el) {
+  el.classList.toggle('selected');
+}
+
+function addMaterialChip(wrapId, inputId) {
+  const input = document.getElementById(inputId);
+  const val = input.value.trim();
+  if (!val) return;
+  const wrap = document.getElementById(wrapId);
+  const chip = document.createElement('span');
+  chip.className = 'cuisine-chip selected';
+  chip.onclick = function(){ toggleCuisine(this); };
+  chip.textContent = val;
+  wrap.appendChild(chip);
+  input.value = '';
+}
+
+function addDrinkChip() {
+  const input = document.getElementById('drink-tag-input');
+  const val = input.value.trim();
+  if (!val) return;
+  const wrap = document.getElementById('drink-chip-wrap');
+  const chip = document.createElement('span');
+  chip.className = 'cuisine-chip selected';
+  chip.onclick = function(){ toggleCuisine(this); };
+  chip.textContent = val;
+  wrap.appendChild(chip);
+  input.value = '';
+}
+
+// ── VORSCHAU ──
+function showVorschau() {
+  document.getElementById('preview-overlay').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SAVE / PUBLISH ──
+function showSaved(publish) {
+  if (publish) {
+    const btn = document.getElementById('publish-btn');
+    btn.textContent = '✅ Veröffentlicht!';
+    btn.style.background = '#2ecc71';
+    document.getElementById('save-bar-text').innerHTML =
+      '🟢 Dein Profil ist jetzt <strong>live und sichtbar</strong> für Kunden! <a href="anbieter-profil.html" style="color:var(--gold);font-weight:700;">Profil ansehen →</a>';
+    document.getElementById('save-bar').style.background = '#1a3a1a';
+    setTimeout(() => {
+      btn.textContent = '✏️ Bearbeiten';
+      btn.style.background = 'transparent';
+      btn.style.border = '1.5px solid rgba(245,240,232,0.4)';
+    }, 3000);
+  } else {
+    const btn = event.currentTarget;
+    btn.textContent = '✅ Entwurf gespeichert';
+    btn.style.color = '#2ecc71';
+    setTimeout(() => { btn.textContent = '💾 Entwurf speichern'; btn.style.color = ''; }, 2500);
+  }
+}
+
+// Init totals
+document.addEventListener('DOMContentLoaded', () => {
+  recalcTotal('menu-0');
+});
+</script>
+
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+</body>
+</html>

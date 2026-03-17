@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Event Zubehör – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --gold:#C8922A;--gold2:#e0a430;--dark:#1a1209;--cream:#faf7f2;--cream2:#e8e2d8;
+      --muted:#7a6f60;--green:#2d7a4f;--text:#2c2416;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;color:#fff;text-decoration:none;display:flex;align-items:center;gap:2px;}
+    .logo-gold{color:var(--gold);}
+    .logo-accent{color:var(--gold2);}
+    .nav-links{display:flex;gap:28px;list-style:none;}
+    .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;}
+    .nav-links a:hover{color:var(--gold);}
+    .nav-actions{display:flex;gap:10px;align-items:center;}
+    .btn-login{padding:7px 18px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:.2s;}
+    .btn-login:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-cta-nav{padding:8px 18px;border-radius:8px;background:var(--gold);color:var(--dark);font-size:13px;font-weight:700;text-decoration:none;transition:.2s;}
+    .btn-cta-nav:hover{background:var(--gold2);}
+
+    /* HERO */
+    .page-hero{background:linear-gradient(135deg,var(--dark) 0%,#2d1f0a 100%);padding:42px 40px 36px;text-align:center;}
+    .breadcrumb{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px;}
+    .breadcrumb a{color:var(--gold);text-decoration:none;}
+    .breadcrumb span{color:rgba(255,255,255,.4);margin:0 6px;}
+    .page-hero h1{font-family:'Fraunces',serif;font-size:38px;color:#fff;line-height:1.15;}
+    .page-hero h1 .h-gold{color:var(--gold);}
+    .page-hero p{color:rgba(255,255,255,.65);font-size:15px;margin-top:10px;max-width:520px;margin-left:auto;margin-right:auto;}
+
+    /* FILTER BAR */
+    .filter-wrap{background:#fff;border-bottom:1.5px solid var(--cream2);position:sticky;top:60px;z-index:90;}
+    .filter-inner{max-width:1300px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .filter-chip{padding:7px 16px;border-radius:20px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;}
+    .filter-chip:hover,.filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    .filter-select{padding:7px 14px;border:1.5px solid var(--cream2);border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;cursor:pointer;}
+    .filter-count{margin-left:auto;font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap;}
+
+    /* LAYOUT */
+    .main-layout{max-width:1300px;margin:0 auto;padding:32px 40px;display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start;}
+
+    /* SIDEBAR */
+    .sidebar{background:#fff;border:1.5px solid var(--cream2);border-radius:14px;padding:6px 0;position:sticky;top:120px;}
+    .sb-title{font-size:13px;font-weight:700;color:var(--dark);padding:12px 16px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--cream2);}
+    .sb-title a{font-size:12px;font-weight:700;color:var(--gold);text-decoration:none;}
+    .sb-group{border-bottom:1px solid var(--cream2);padding:10px 0 8px;}
+    .sb-group:last-child{border-bottom:none;}
+    .sb-label{font-size:12px;font-weight:700;color:var(--muted);padding:4px 16px 6px;text-transform:uppercase;letter-spacing:.5px;}
+    .sb-chips{display:flex;flex-wrap:wrap;gap:6px;padding:4px 16px 8px;}
+    .sb-chip{padding:5px 12px;border-radius:20px;border:1.5px solid var(--cream2);background:#fff;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;}
+    .sb-chip:hover{border-color:var(--gold);color:var(--gold);}
+    .sb-chip.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    .sb-range{padding:4px 16px 8px;}
+    .sb-range input[type=range]{width:100%;accent-color:var(--gold);}
+    .sb-range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;}
+    .btn-reset{display:block;margin:10px 16px 4px;padding:7px;text-align:center;border:1.5px solid var(--cream2);border-radius:8px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;}
+    .btn-reset:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* ITEM CARD */
+    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+    .item-card{background:#fff;border-radius:18px;border:1.5px solid var(--cream2);overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:pointer;position:relative;}
+    .item-card:hover{box-shadow:0 8px 32px rgba(200,146,42,.15);transform:translateY(-3px);}
+    .item-img{position:relative;height:200px;overflow:hidden;}
+    .item-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+    .item-card:hover .item-img img{transform:scale(1.04);}
+    .item-tag{position:absolute;top:12px;left:12px;background:rgba(200,146,42,.92);color:var(--dark);font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;backdrop-filter:blur(4px);}
+    .item-tag.blue{background:rgba(36,113,163,.92);color:#fff;}
+    .item-tag.purple{background:rgba(142,68,173,.92);color:#fff;}
+    .item-tag.green{background:rgba(39,174,96,.92);color:#fff;}
+    .item-fav{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.85);border:none;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer;backdrop-filter:blur(4px);}
+    .item-body{padding:14px 16px 10px;}
+    .item-name{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+    .item-sub{font-size:12.5px;color:var(--muted);margin-bottom:10px;}
+    .item-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+    .chip{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:var(--cream);color:var(--dark);}
+    .chip.gold{background:linear-gradient(90deg,#f5e6c0,#fdf3da);color:#7a4f00;}
+    .steckbrief{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--cream);border-radius:10px;padding:10px;}
+    .sb-item{display:flex;flex-direction:column;gap:2px;}
+    .sb-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+    .sb-item-val{font-size:12px;font-weight:600;color:var(--dark);}
+    .item-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 14px;border-top:1px solid var(--cream2);}
+    .item-price{font-size:17px;font-weight:700;color:var(--gold);}
+    .item-price span{font-size:11px;color:var(--muted);font-weight:400;}
+    .item-rating{font-size:12px;color:var(--muted);margin-top:2px;}
+    .item-rating span{color:var(--dark);font-weight:600;}
+    .btn-anfragen{padding:8px 18px;border-radius:8px;background:var(--dark);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:.2s;}
+    .btn-anfragen:hover{background:var(--gold);color:var(--dark);}
+
+    /* WIDE HIGHLIGHT */
+    .item-card.wide{grid-column:1/-1;display:grid;grid-template-columns:380px 1fr;border-radius:18px;}
+    .item-card.wide .item-img{height:100%;border-radius:0;}
+    .item-card.wide .item-body{padding:22px;}
+    .item-card.wide .item-footer{border-top:none;border-left:1px solid var(--cream2);padding:22px;flex-direction:column;align-items:flex-start;gap:12px;}
+
+    /* ANBIETER CTA */
+    .anbieter-cta{background:linear-gradient(135deg,var(--dark),#2d1f0a);border-radius:16px;padding:28px 32px;margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+    .anbieter-cta h3{font-family:'Fraunces',serif;font-size:22px;color:#fff;}
+    .anbieter-cta p{color:rgba(255,255,255,.65);font-size:14px;margin-top:6px;}
+    .btn-cta-gold{padding:10px 24px;border-radius:9px;background:var(--gold);color:var(--dark);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;transition:.2s;}
+    .btn-cta-gold:hover{background:var(--gold2);}
+
+    /* PAGINATION */
+    .pagination{display:flex;gap:8px;justify-content:center;margin-top:28px;}
+    .page-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;}
+    .page-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    .page-btn:hover:not(.active){border-color:var(--gold);color:var(--gold);}
+
+    @media(max-width:900px){
+      .main-layout{grid-template-columns:1fr;}
+      .sidebar{display:none;}
+      .item-card.wide{grid-template-columns:1fr;}
+      .item-card.wide .item-img{height:200px;}
+      nav{padding:0 20px;}
+      .page-hero{padding:32px 20px 28px;}
+      .filter-inner{padding:14px 20px;}
+      .main-layout{padding:24px 20px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html">
+    <span class="logo-gold">Mein</span><span class="logo-accent">Party</span>Retter
+  </a>
+  <ul class="nav-links">
+    <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
+    <li><a href="foodtruck-karte.html">🚚 Foodtrucks</a></li>
+    <li><a href="event-zubehoer.html" style="color:var(--gold);">🎪 Event Zubehör</a></li>
+    <li><a href="blog.html">📝 Blog</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-login" href="login.html">Anmelden</a>
+    <a class="btn-cta-nav" href="login.html">Inserat erstellen →</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="homepage.html">Startseite</a><span>›</span>Event Zubehör
+  </div>
+  <h1>🎪 <span class="h-gold">Event Zubehör</span> mieten</h1>
+  <p>Fotoboxen, Hüpfburgen, LED-Mobiliar & mehr – alles für dein perfektes Event.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-wrap">
+  <div class="filter-inner">
+    <button class="filter-chip active" onclick="filterKat('alle', this)">Alle</button>
+    <button class="filter-chip" onclick="filterKat('fotobox', this)">📸 Fotobox</button>
+    <button class="filter-chip" onclick="filterKat('huepfburg', this)">🏰 Hüpfburg</button>
+    <button class="filter-chip" onclick="filterKat('moebel', this)">🪑 LED-Mobiliar</button>
+    <button class="filter-chip" onclick="filterKat('zelt', this)">⛺ Zelte & Pavillons</button>
+    <button class="filter-chip" onclick="filterKat('beleuchtung', this)">💡 Beleuchtung</button>
+    <button class="filter-chip" onclick="filterKat('ton', this)">🎵 Ton & DJ-Technik</button>
+    <button class="filter-chip" onclick="filterKat('buehne', this)">🎤 Bühne & Podest</button>
+    <button class="filter-chip" onclick="filterKat('catering', this)">🍽️ Catering-Zubehör</button>
+    <button class="filter-chip" onclick="filterKat('deko', this)">🎨 Deko & Ballons</button>
+    <button class="filter-chip" onclick="filterKat('spiele', this)">🎯 Spiele & Attraktionen</button>
+    <select class="filter-select" id="sort-select" onchange="sortItems()">
+      <option value="rating">⭐ Beste Bewertung</option>
+      <option value="price-asc">💰 Preis aufsteigend</option>
+      <option value="price-desc">💰 Preis absteigend</option>
+    </select>
+    <span class="filter-count" id="result-count">18 Artikel gefunden</span>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-title">Filter <a href="#" onclick="resetFilters();return false;">Zurücksetzen</a></div>
+
+    <div class="sb-group">
+      <div class="sb-label">Verfügbarkeit</div>
+      <div class="sb-chips">
+        <div class="sb-chip active" onclick="toggleSbChip(this)">Sofort verfügbar <small style="opacity:.6">11</small></div>
+        <div class="sb-chip active" onclick="toggleSbChip(this)">Auf Anfrage <small style="opacity:.6">7</small></div>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Tagespreis</div>
+      <div class="sb-range">
+        <input type="range" min="50" max="2000" value="2000" oninput="document.getElementById('price-max').textContent='bis '+this.value+'€'">
+        <div class="sb-range-labels"><span>ab 50€</span><span id="price-max">bis 2000€</span></div>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Kategorie</div>
+      <div class="sb-chips">
+        <div class="sb-chip active" onclick="filterKat('alle',this)">Alle</div>
+        <div class="sb-chip" onclick="filterKat('fotobox',this)">📸 Fotobox <small style="opacity:.6">3</small></div>
+        <div class="sb-chip" onclick="filterKat('huepfburg',this)">🏰 Hüpfburg <small style="opacity:.6">3</small></div>
+        <div class="sb-chip" onclick="filterKat('moebel',this)">🪑 LED-Mobiliar <small style="opacity:.6">2</small></div>
+        <div class="sb-chip" onclick="filterKat('zelt',this)">⛺ Zelte & Pavillons <small style="opacity:.6">2</small></div>
+        <div class="sb-chip" onclick="filterKat('beleuchtung',this)">💡 Beleuchtung <small style="opacity:.6">2</small></div>
+        <div class="sb-chip" onclick="filterKat('ton',this)">🎵 Ton & DJ-Technik <small style="opacity:.6">2</small></div>
+        <div class="sb-chip" onclick="filterKat('buehne',this)">🎤 Bühne & Podest <small style="opacity:.6">1</small></div>
+        <div class="sb-chip" onclick="filterKat('catering',this)">🍽️ Catering-Zubehör <small style="opacity:.6">1</small></div>
+        <div class="sb-chip" onclick="filterKat('deko',this)">🎨 Deko & Ballons <small style="opacity:.6">1</small></div>
+        <div class="sb-chip" onclick="filterKat('spiele',this)">🎯 Spiele & Attraktionen <small style="opacity:.6">1</small></div>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Aufbau</div>
+      <div class="sb-chips">
+        <div class="sb-chip active" onclick="toggleSbChip(this)">Mit Aufbauservice <small style="opacity:.6">12</small></div>
+        <div class="sb-chip" onclick="toggleSbChip(this)">Nur Selbstaufbau <small style="opacity:.6">6</small></div>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-label">Region</div>
+      <div class="sb-chips">
+        <div class="sb-chip active" onclick="toggleSbChip(this)">Bayern <small style="opacity:.6">7</small></div>
+        <div class="sb-chip active" onclick="toggleSbChip(this)">NRW <small style="opacity:.6">4</small></div>
+        <div class="sb-chip active" onclick="toggleSbChip(this)">Berlin & BB <small style="opacity:.6">3</small></div>
+        <div class="sb-chip active" onclick="toggleSbChip(this)">Bundesweit <small style="opacity:.6">4</small></div>
+      </div>
+    </div>
+    <div class="btn-reset" onclick="resetFilters()">Alle Filter zurücksetzen</div>
+  </aside>
+
+  <!-- ITEMS GRID -->
+  <div>
+    <div class="items-grid" id="items-grid">
+
+      <!-- ── TOP-HIGHLIGHT: Fotobox ── -->
+      <div class="item-card wide" data-kat="fotobox" data-preis="290" data-rating="5.0">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=720&h=500&fit=crop&auto=format" alt="Fotobox Premium"/>
+          <span class="item-tag">📸 Top-Anbieter</span>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Fotobox Premium – Sofortdruck & GIF</div>
+          <div class="item-sub">📍 München · Bayern · bundesweit auf Anfrage</div>
+          <div class="item-chips">
+            <span class="chip gold">📸 Fotobox</span>
+            <span class="chip">Sofortdruck</span>
+            <span class="chip">GIF & Boomerang</span>
+            <span class="chip">Requisiten inklusive</span>
+          </div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Auflösung</div><div class="sb-item-val">DSLR 24 MP</div></div>
+            <div class="sb-item"><div class="sb-item-label">Drucke</div><div class="sb-item-val">Unbegrenzt</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Inklusive (60 Min.)</div></div>
+            <div class="sb-item"><div class="sb-item-label">Online-Galerie</div><div class="sb-item-val">Ja, 30 Tage</div></div>
+          </div>
+          <p style="font-size:13px;color:var(--muted);margin-top:12px;font-style:italic;">
+            „Unsere Fotobox war der Hit auf jeder Party – Sofortdruck, GIF-Funktion und über 200 Requisiten inklusive. Unvergessliche Momente für alle Gäste."
+          </p>
+        </div>
+        <div class="item-footer">
+          <div>
+            <div class="item-price">ab 290 € <span>/Event</span></div>
+            <div class="item-rating">⭐ 5.0 <span>(89)</span> · Aufbau inklusive</div>
+          </div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 2: Hüpfburg ── -->
+      <div class="item-card" data-kat="huepfburg" data-preis="180" data-rating="4.8">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=480&h=320&fit=crop&auto=format" alt="Hüpfburg"/>
+          <span class="item-tag green">🏰 Hüpfburg</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Hüpfburg Deluxe – Schloss & Rutsche</div>
+          <div class="item-sub">📍 München · 50 km Umkreis</div>
+          <div class="item-chips"><span class="chip gold">🏰 Hüpfburg</span><span class="chip">Rutsche</span><span class="chip">bis 8 Jahre</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Größe</div><div class="sb-item-val">5 × 4 × 3,5 m</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 8 Kinder</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Inklusive (45 Min.)</div></div>
+            <div class="sb-item"><div class="sb-item-label">Strom</div><div class="sb-item-val">230V Hausanschluss</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 180 € <span>/Tag</span></div><div class="item-rating">⭐ 4.8 <span>(62)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 3: LED-Mobiliar ── -->
+      <div class="item-card" data-kat="moebel" data-preis="350" data-rating="4.9">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=480&h=320&fit=crop&auto=format" alt="LED Mobiliar"/>
+          <span class="item-tag purple">🪑 LED-Mobiliar</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">LED Lounge – Komplettset Weiß</div>
+          <div class="item-sub">📍 Augsburg · Bayern</div>
+          <div class="item-chips"><span class="chip gold">🪑 LED-Mobiliar</span><span class="chip">Farbwechsel</span><span class="chip">Akku-betrieben</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Set enthält</div><div class="sb-item-val">6 Stühle + 2 Tische</div></div>
+            <div class="sb-item"><div class="sb-item-label">Laufzeit</div><div class="sb-item-val">8–12 Stunden</div></div>
+            <div class="sb-item"><div class="sb-item-label">Fernbedienung</div><div class="sb-item-val">Ja, 16 Farben</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Selbstaufbau</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 350 € <span>/Event</span></div><div class="item-rating">⭐ 4.9 <span>(34)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 4: Zelt ── -->
+      <div class="item-card" data-kat="zelt" data-preis="450" data-rating="4.7">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=480&h=320&fit=crop&auto=format" alt="Festzelt"/>
+          <span class="item-tag">⛺ Zelt</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Festzelt Classic – 6 × 12 m</div>
+          <div class="item-sub">📍 Nürnberg · Franken · Bayern</div>
+          <div class="item-chips"><span class="chip gold">⛺ Festzelt</span><span class="chip">Wetterfest</span><span class="chip">Boden inklusive</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Fläche</div><div class="sb-item-val">72 m² (ca. 70 Pers.)</div></div>
+            <div class="sb-item"><div class="sb-item-label">Seitenwände</div><div class="sb-item-val">Ja, inkl.</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Mit Team (3 h)</div></div>
+            <div class="sb-item"><div class="sb-item-label">Beleuchtung</div><div class="sb-item-val">Grundbeleuchtung inkl.</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 450 € <span>/Tag</span></div><div class="item-rating">⭐ 4.7 <span>(28)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 5: Beleuchtung ── -->
+      <div class="item-card" data-kat="beleuchtung" data-preis="220" data-rating="4.8">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=480&h=320&fit=crop&auto=format" alt="Event Beleuchtung"/>
+          <span class="item-tag purple">💡 Beleuchtung</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Lichtshow Komplett – LED & Moving Heads</div>
+          <div class="item-sub">📍 Frankfurt · Mitte Deutschland</div>
+          <div class="item-chips"><span class="chip gold">💡 Beleuchtung</span><span class="chip">Moving Heads</span><span class="chip">Lasershow</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Technik</div><div class="sb-item-val">8× Moving Heads</div></div>
+            <div class="sb-item"><div class="sb-item-label">Steuerung</div><div class="sb-item-val">DMX-Pult</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Techniker inklusive</div></div>
+            <div class="sb-item"><div class="sb-item-label">Fläche</div><div class="sb-item-val">bis 500 m²</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 220 € <span>/Abend</span></div><div class="item-rating">⭐ 4.8 <span>(45)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 6: Ton & DJ ── -->
+      <div class="item-card" data-kat="ton" data-preis="280" data-rating="4.9">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=480&h=320&fit=crop&auto=format" alt="DJ Technik"/>
+          <span class="item-tag blue">🎵 DJ-Technik</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Sound & DJ-Set Premium – PA bis 500 Pers.</div>
+          <div class="item-sub">📍 Hamburg · Norddeutschland</div>
+          <div class="item-chips"><span class="chip gold">🎵 Ton</span><span class="chip">PA-Anlage</span><span class="chip">DJ-Pult</span><span class="chip">Mikrofon</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Leistung</div><div class="sb-item-val">2× 1.000 W Tops</div></div>
+            <div class="sb-item"><div class="sb-item-label">DJ-Equipment</div><div class="sb-item-val">Pioneer CDJ-3000</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Techniker inklusive</div></div>
+            <div class="sb-item"><div class="sb-item-label">Reichweite</div><div class="sb-item-val">bis 500 Personen</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 280 € <span>/Abend</span></div><div class="item-rating">⭐ 4.9 <span>(57)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 7: Fotobox Selfie ── -->
+      <div class="item-card" data-kat="fotobox" data-preis="199" data-rating="4.7">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=480&h=320&fit=crop&auto=format" alt="Selfie Station"/>
+          <span class="item-tag">📸 Fotobox</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Selfie Station – Open Air Mirror</div>
+          <div class="item-sub">📍 Berlin · Brandenburg</div>
+          <div class="item-chips"><span class="chip gold">📸 Fotobox</span><span class="chip">Spiegelfotobox</span><span class="chip">Digital-Sharing</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Format</div><div class="sb-item-val">Spiegeldisplay 55"</div></div>
+            <div class="sb-item"><div class="sb-item-label">Sharing</div><div class="sb-item-val">WhatsApp & E-Mail</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Inklusive (30 Min.)</div></div>
+            <div class="sb-item"><div class="sb-item-label">Animationen</div><div class="sb-item-val">individuell gestaltbar</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 199 € <span>/Event</span></div><div class="item-rating">⭐ 4.7 <span>(43)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 8: Hüpfburg Kombi ── -->
+      <div class="item-card" data-kat="huepfburg" data-preis="240" data-rating="4.9">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=480&h=320&fit=crop&auto=format" alt="Hüpfburg Kombi"/>
+          <span class="item-tag green">🏰 Hüpfburg</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Erlebnis-Kombi – Hüpfburg + Bällebad</div>
+          <div class="item-sub">📍 Stuttgart · Baden-Württemberg</div>
+          <div class="item-chips"><span class="chip gold">🏰 Hüpfburg</span><span class="chip">Bällebad</span><span class="chip">Kletterwand</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Größe</div><div class="sb-item-val">7 × 5 × 4 m</div></div>
+            <div class="sb-item"><div class="sb-item-label">Altersgruppe</div><div class="sb-item-val">2–12 Jahre</div></div>
+            <div class="sb-item"><div class="sb-item-label">Kapazität</div><div class="sb-item-val">bis 12 Kinder</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Inklusive (60 Min.)</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 240 € <span>/Tag</span></div><div class="item-rating">⭐ 4.9 <span>(38)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+      <!-- ── ITEM 9: Deko & Ballons ── -->
+      <div class="item-card" data-kat="deko" data-preis="150" data-rating="4.8">
+        <div class="item-img">
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=480&h=320&fit=crop&auto=format" alt="Ballondeko"/>
+          <span class="item-tag" style="background:rgba(231,76,60,.9);color:#fff;">🎨 Deko</span>
+          <button class="item-fav">🤍</button>
+        </div>
+        <div class="item-body">
+          <div class="item-name">Ballon & Deko Service – Komplettpaket</div>
+          <div class="item-sub">📍 Köln · NRW · bundesweit</div>
+          <div class="item-chips"><span class="chip gold">🎨 Deko</span><span class="chip">Ballonbogen</span><span class="chip">Tischdeko</span></div>
+          <div class="steckbrief">
+            <div class="sb-item"><div class="sb-item-label">Paket</div><div class="sb-item-val">Bogen + Tische + Eingang</div></div>
+            <div class="sb-item"><div class="sb-item-label">Farben</div><div class="sb-item-val">Wunschfarben möglich</div></div>
+            <div class="sb-item"><div class="sb-item-label">Aufbau</div><div class="sb-item-val">Dekorateurin inklusive</div></div>
+            <div class="sb-item"><div class="sb-item-label">Abbau</div><div class="sb-item-val">Auf Anfrage</div></div>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div><div class="item-price">ab 150 € <span>/Event</span></div><div class="item-rating">⭐ 4.8 <span>(72)</span></div></div>
+          <button class="btn-anfragen">Anfragen</button>
+        </div>
+      </div>
+
+    </div><!-- /items-grid -->
+
+    <!-- ANBIETER CTA -->
+    <div class="anbieter-cta">
+      <div>
+        <h3>Hast du Event-Zubehör zu vermieten?</h3>
+        <p>Trag deine Fotobox, Hüpfburg oder Dekoration ein und erreiche tausende Veranstalter.</p>
+      </div>
+      <a class="btn-cta-gold" href="login.html">Jetzt Inserat erstellen →</a>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">›</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function filterKat(kat, btn) {
+  // Sync top filter chips
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    const oc = c.getAttribute('onclick') || '';
+    c.classList.toggle('active', oc.includes("'" + kat + "'"));
+  });
+  // Sync sidebar category chips
+  document.querySelectorAll('.sb-chips .sb-chip[onclick*="filterKat"]').forEach(c => {
+    const oc = c.getAttribute('onclick') || '';
+    c.classList.toggle('active', oc.includes("'" + kat + "'"));
+  });
+  const cards = document.querySelectorAll('.item-card');
+  let count = 0;
+  cards.forEach(card => {
+    const k = card.dataset.kat || '';
+    const show = kat === 'alle' || k === kat;
+    card.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('result-count').textContent = count + ' Artikel gefunden';
+}
+
+function toggleSbChip(el) {
+  el.classList.toggle('active');
+}
+
+function sortItems() {
+  const val = document.getElementById('sort-select').value;
+  const grid = document.getElementById('items-grid');
+  const cards = Array.from(grid.querySelectorAll('.item-card'));
+  cards.sort((a, b) => {
+    if (val === 'rating') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+    if (val === 'price-asc') return parseFloat(a.dataset.preis) - parseFloat(b.dataset.preis);
+    if (val === 'price-desc') return parseFloat(b.dataset.preis) - parseFloat(a.dataset.preis);
+    return 0;
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+
+function resetFilters() {
+  filterKat('alle', document.querySelectorAll('.filter-chip')[0]);
+  document.getElementById('sort-select').value = 'rating';
+  document.querySelectorAll('.sb-chips .sb-chip').forEach(c => {
+    if (!c.getAttribute('onclick').includes('filterKat')) c.classList.add('active');
+  });
+}
+
+document.querySelectorAll('.item-fav').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+  });
+});
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

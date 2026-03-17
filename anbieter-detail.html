@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anbieter-Profil | Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --dark:#1A1208; --gold:#C8922A; --cream:#F5F0E8; --muted:rgba(26,18,8,.5); }
+    body { font-family:'DM Sans',sans-serif; color:var(--dark); background:var(--cream); padding-bottom:100px; }
+
+    nav { background:var(--dark); display:flex; align-items:center; justify-content:space-between; padding:0 20px; height:56px; position:sticky; top:0; z-index:100; }
+    .nav-logo { font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:var(--cream); text-decoration:none; }
+    .nav-logo span { color:var(--gold); }
+    .nav-back { color:rgba(245,240,232,0.75); text-decoration:none; font-size:14px; font-weight:500; display:flex; align-items:center; gap:6px; }
+    .nav-back:hover { color:var(--gold); }
+
+    .hero { position:relative; height:300px; overflow:hidden; }
+    .hero img { width:100%; height:100%; object-fit:cover; display:block; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(26,18,8,.92) 0%, rgba(26,18,8,.35) 55%, transparent 100%); }
+    .hero-tag { position:absolute; top:16px; left:16px; background:var(--gold); color:var(--dark); font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; }
+    .hero-fav { position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; border:none; }
+    .hero-content { position:absolute; bottom:20px; left:20px; right:20px; }
+    .hero-name { font-family:'Fraunces',serif; font-size:24px; font-weight:900; color:var(--cream); margin-bottom:6px; }
+    .hero-meta { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .hero-loc { color:rgba(245,240,232,0.8); font-size:13px; }
+    .hero-stars { color:var(--gold); font-size:14px; font-weight:600; }
+    .hero-reviews { color:rgba(245,240,232,0.65); font-size:13px; }
+
+    .quick-stats { display:grid; grid-template-columns:repeat(3,1fr); background:#fff; border-bottom:1px solid rgba(26,18,8,.08); }
+    .stat-item { text-align:center; padding:16px 8px; border-right:1px solid rgba(26,18,8,.08); }
+    .stat-item:last-child { border-right:none; }
+    .stat-val { font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:var(--gold); }
+    .stat-label { font-size:11px; color:var(--muted); margin-top:2px; }
+
+    .section { background:#fff; margin:12px 0; padding:20px; }
+    .section-title { font-family:'Fraunces',serif; font-size:17px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+
+    .chip-row { display:flex; flex-wrap:wrap; gap:7px; }
+    .chip { padding:5px 12px; border-radius:20px; font-size:12px; font-weight:600; background:var(--cream); color:var(--dark); border:1.5px solid rgba(26,18,8,.12); }
+    .chip.gold { background:rgba(200,146,42,.12); border-color:rgba(200,146,42,.3); color:var(--gold); }
+
+    .about-text { font-size:14px; line-height:1.7; color:rgba(26,18,8,.8); }
+
+    .offer-list { display:flex; flex-direction:column; gap:12px; }
+    .offer-item { border:1.5px solid rgba(26,18,8,.1); border-radius:12px; padding:16px; }
+    .offer-item.featured { border-color:var(--gold); }
+    .offer-item.featured::after { content:'Empfohlen'; float:right; background:var(--gold); color:var(--dark); font-size:10px; font-weight:700; padding:3px 8px; border-radius:10px; margin-top:-2px; }
+    .offer-name { font-weight:700; font-size:15px; margin-bottom:4px; }
+    .offer-desc { font-size:13px; color:var(--muted); margin-bottom:10px; line-height:1.5; }
+    .offer-includes { list-style:none; margin-bottom:12px; }
+    .offer-includes li { font-size:13px; padding:3px 0; display:flex; align-items:center; gap:7px; }
+    .offer-includes li::before { content:'✓'; color:var(--gold); font-weight:700; }
+    .offer-footer { display:flex; align-items:center; justify-content:space-between; }
+    .offer-price { font-family:'Fraunces',serif; font-size:20px; font-weight:700; }
+    .offer-price span { font-size:13px; font-family:'DM Sans',sans-serif; font-weight:400; color:var(--muted); }
+    .offer-btn { background:var(--dark); color:var(--cream); border:none; border-radius:8px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; }
+    .offer-btn:hover { background:var(--gold); color:var(--dark); }
+    .offer-item.featured .offer-btn { background:var(--gold); color:var(--dark); }
+
+    .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+    .gallery-grid img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; }
+
+    .reviews { display:flex; flex-direction:column; gap:14px; }
+    .review { padding:14px; background:var(--cream); border-radius:10px; }
+    .review-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+    .reviewer { display:flex; align-items:center; gap:8px; }
+    .reviewer-avatar { width:34px; height:34px; border-radius:50%; object-fit:cover; }
+    .reviewer-name { font-weight:600; font-size:13px; }
+    .reviewer-date { font-size:11px; color:var(--muted); }
+    .review-stars { color:var(--gold); font-size:13px; }
+    .review-text { font-size:13px; line-height:1.6; color:rgba(26,18,8,.8); }
+
+    .avail-dates { display:flex; gap:8px; flex-wrap:wrap; }
+    .avail-date { padding:6px 12px; border-radius:8px; font-size:12px; font-weight:600; background:rgba(200,146,42,.12); color:var(--gold); border:1px solid rgba(200,146,42,.25); }
+
+    .response-bar { display:flex; align-items:center; gap:10px; background:rgba(200,146,42,.08); border-radius:10px; padding:12px 14px; margin-top:14px; }
+    .response-bar p { font-size:13px; color:rgba(26,18,8,.75); }
+    .response-bar strong { color:var(--dark); }
+
+    .sticky-cta { position:fixed; bottom:0; left:0; right:0; background:#fff; padding:12px 20px; box-shadow:0 -4px 20px rgba(26,18,8,.12); display:flex; align-items:center; gap:12px; z-index:90; }
+    .cta-price-block { flex:1; }
+    .cta-price { font-family:'Fraunces',serif; font-size:22px; font-weight:700; }
+    .cta-price-sub { font-size:11px; color:var(--muted); }
+    .cta-btn { background:var(--gold); color:var(--dark); border:none; border-radius:10px; padding:13px 24px; font-size:15px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; display:inline-block; }
+    .cta-btn:hover { background:var(--dark); color:var(--cream); }
+    .cta-msg-btn { background:var(--cream); color:var(--dark); border:1.5px solid rgba(26,18,8,.15); border-radius:10px; padding:12px 16px; font-size:14px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; }
+  
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="homepage.html" class="nav-back">← Zurück</a>
+  <a href="homepage.html" class="nav-logo">Party<span>Retter</span></a>
+  <div style="width:70px;"></div>
+</nav>
+
+<!-- Content injected by JS based on URL ?type= param -->
+<div id="page-content"></div>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <div class="cta-price-block">
+    <div class="cta-price" id="cta-price">ab 45 € <span style="font-size:14px;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif;">/Std.</span></div>
+    <div class="cta-price-sub" id="cta-sub">inkl. Beratung & Lieferung</div>
+  </div>
+  <a href="anfrage-stellen.html" class="cta-msg-btn">💬</a>
+  <a href="anfrage-stellen.html" class="cta-btn">Anfrage stellen</a>
+</div>
+
+<script>
+const profiles = {
+
+  getraenke: {
+    tag: '🍷 Weinservice',
+    img: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&h=640&fit=crop&auto=format',
+    name: 'Vinothek Müller – Wein & Sekt',
+    loc: '📍 Nürnberg · 12 km entfernt',
+    stars: '★★★★★',
+    rating: '4,8',
+    reviews: '24',
+    stats: [{val:'<2h',lbl:'Antwortzeit'},{val:'12 J.',lbl:'Erfahrung'},{val:'300+',lbl:'Events'}],
+    chips: ['Wein','Sekt','Prosecco','Alkoholfrei','Lieferung','Beratung inkl.','bis 500 Pers.'],
+    about: 'Willkommen bei Vinothek Müller! Ich beliefere eure Feiern, Hochzeiten und Firmenevents mit erlesenen Weinen, Sekten und alkoholfreien Alternativen. Mein Service umfasst persönliche Beratung, Lieferung an euren Veranstaltungsort und auf Wunsch auch eine Weinverkostung für eure Gäste.',
+    avail: ['Sa. 15. März','So. 16. März','Fr. 21. März','Sa. 29. März'],
+    responseNote: 'Antwortet in der Regel <strong>innerhalb von 2 Stunden</strong> · 95% Buchungsrate',
+    offers: [
+      { name:'Basis-Paket', desc:'Getränkelieferung für kleine Feiern bis 30 Pers.', items:['Wein, Sekt & Wasser','Lieferung an Veranstaltungsort','persönliche Beratung vorab'], price:'45 €', unit:'/Std.', featured:false },
+      { name:'Premium-Paket', desc:'Komplettservice mit Weinbegleitung & Kellnerservice', items:['Kuratiertes Wein-Menü zur Speise','Kellner für Ausschank vor Ort','bis 80 Personen','Auf- & Abbau inklusive'], price:'90 €', unit:'/Std.', featured:true },
+      { name:'Event-Flatrate', desc:'Alles-inklusive für große Events & Hochzeiten', items:['Unbegrenzte Getränke (Pauschale)','bis 200 Personen','2 Kellner inklusive','Gläser & Besteck gestellt'], price:'ab 1.200 €', unit:'/Event', featured:false }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1560840067-ddcaeb7831d2?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=300&h=300&fit=crop'
+    ],
+    reviewList: [
+      { name:'Katrin B.', date:'Januar 2025', stars:'★★★★★', text:'Super Service! Herr Müller hat uns perfekt beraten und die Lieferung lief reibungslos. Der Wein war traumhaft – alle Gäste waren begeistert!' },
+      { name:'Stefan W.', date:'November 2024', stars:'★★★★★', text:'Für unser Firmenevent haben wir den Premium-Service gebucht. Absolut professionell, die Weinauswahl war exzellent und passte perfekt zum Menü.' },
+      { name:'Marie L.', date:'Oktober 2024', stars:'★★★★☆', text:'Toller Service und guter Wein. Die Lieferung war pünktlich und die Beratung sehr kompetent. Klare Empfehlung!' }
+    ],
+    ctaPrice: 'ab 45 €',
+    ctaUnit: '/Std.',
+    ctaSub: 'inkl. Beratung & Lieferung'
+  },
+
+  foodtruck: {
+    tag: '🚚 Foodtruck',
+    img: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=800&h=640&fit=crop&auto=format',
+    name: 'Asia Street Food – Foodtruck',
+    loc: '📍 Augsburg · 65 km entfernt',
+    stars: '★★★★★',
+    rating: '4,8',
+    reviews: '33',
+    stats: [{val:'<3h',lbl:'Antwortzeit'},{val:'5 J.',lbl:'Erfahrung'},{val:'150+',lbl:'Events'}],
+    chips: ['Asiatisch','Thai','Wok','Vegan möglich','bis 250 Pers.','Strom selbst'],
+    about: 'Unser Asia Street Food Truck bringt authentische asiatische Küche direkt auf eure Veranstaltung! Von Thai-Currys über Wok-Gerichte bis hin zu frischen Frühlingsrollen – wir kochen alles frisch vor Ort. Ideal für Festivals, Firmenevents, Geburtstage und Hochzeiten.',
+    avail: ['Sa. 15. März','Fr. 21. März','So. 23. März','Sa. 29. März'],
+    responseNote: 'Antwortet in der Regel <strong>innerhalb von 3 Stunden</strong> · 92% Buchungsrate',
+    offers: [
+      { name:'Halbtagspaket', desc:'Bis zu 4 Stunden Standzeit – perfekt für kleinere Events', items:['4 Stunden Standzeit','bis 100 Portionen','2 Hauptgerichte nach Wahl','Auf- & Abbau inklusive'], price:'650 €', unit:'/Halbtag', featured:false },
+      { name:'Ganztagespaket', desc:'Voller Tag – ideal für Festivals & große Feiern', items:['bis 8 Stunden Standzeit','bis 250 Portionen','4 Gerichte + Getränke','Auf- & Abbau inklusive','vegane Option inklusive'], price:'1.100 €', unit:'/Tag', featured:true },
+      { name:'Firmenevent-Paket', desc:'Maßgeschneidertes Paket für Firmenevents', items:['Individuelles Menü','Personalisiertes Branding möglich','Getränkeservice optional','Angebot auf Anfrage'], price:'Auf Anfrage', unit:'', featured:false }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop'
+    ],
+    reviewList: [
+      { name:'Jonas F.', date:'Februar 2025', stars:'★★★★★', text:'Der Asia Truck war der absolute Hit auf unserer Firmenfeier! Frisches, leckeres Essen und super freundliches Team. Alle waren begeistert!' },
+      { name:'Sandra M.', date:'Dezember 2024', stars:'★★★★★', text:'Für unser Straßenfest haben wir den Truck gebucht – perfekter Service, pünktlich, professionell und das Essen war köstlich!' },
+      { name:'Tim K.', date:'Oktober 2024', stars:'★★★★☆', text:'Toller Foodtruck mit großer Auswahl. Die veganen Optionen waren besonders gut. Gerne wieder!' }
+    ],
+    ctaPrice: 'ab 650 €',
+    ctaUnit: '/Tag',
+    ctaSub: 'inkl. Auf- & Abbau'
+  },
+
+  torte: {
+    tag: '🎂 Konditorei',
+    img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=640&fit=crop&auto=format',
+    name: 'Süße Kreationen – Hochzeitstorten',
+    loc: '📍 München · 4 km entfernt',
+    stars: '★★★★★',
+    rating: '4,9',
+    reviews: '56',
+    stats: [{val:'<1h',lbl:'Antwortzeit'},{val:'10 J.',lbl:'Erfahrung'},{val:'500+',lbl:'Torten'}],
+    chips: ['Hochzeitstorten','Geburtstagstorten','Vegan möglich','Glutenfrei möglich','Motivtorten','individuell'],
+    about: 'Jede Torte ist ein Kunstwerk – bei Süße Kreationen entstehen handgefertigte Torten für jeden Anlass. Ob klassische Hochzeitstorte, ausgefallene Motivtorte oder vegane Alternative – wir setzen eure Wünsche liebevoll um. Probiertermine sind nach Absprache möglich.',
+    avail: ['ab sofort verfügbar','Lieferzeit: 2–3 Wochen'],
+    responseNote: 'Antwortet in der Regel <strong>innerhalb von 1 Stunde</strong> · 99% Kundenzufriedenheit',
+    offers: [
+      { name:'Standard-Torte', desc:'Klassische Torte für bis zu 20 Personen', items:['2–3 Etagen','Fondant oder Buttercreme','Grunddeko inklusive','1 Probiertermin'], price:'ab 120 €', unit:'', featured:false },
+      { name:'Premium-Hochzeitstorte', desc:'Traumhafte Hochzeitstorte als Mittelpunkt eurer Feier', items:['3–5 Etagen','individuelle Gestaltung','Zuckerblumen & Fondant-Dekor','Lieferung & Aufbau vor Ort','Probiertermin inklusive'], price:'ab 350 €', unit:'', featured:true },
+      { name:'Motiv- & Thematorte', desc:'Ausgefallene Torten nach euren Wünschen', items:['Komplett individuell','jedes Thema möglich','Figuren aus Fondant','Preis je nach Aufwand'], price:'ab 180 €', unit:'', featured:false }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1562777717-dc6984f65a63?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=300&h=300&fit=crop'
+    ],
+    reviewList: [
+      { name:'Anna S.', date:'März 2025', stars:'★★★★★', text:'Wir hatten eine 4-stöckige Hochzeitstorte bestellt und sie war absolut perfekt! Wunderschön anzusehen und unglaublich lecker. Alle Gäste waren begeistert!' },
+      { name:'Michael R.', date:'Januar 2025', stars:'★★★★★', text:'Geburtstagstorte für meine Frau – sie hat Tränen in den Augen gehabt! Die Detailarbeit war unglaublich, und der Geschmack war himmlisch.' },
+      { name:'Laura B.', date:'Dezember 2024', stars:'★★★★★', text:'Vegane Torte für unsere Firmenfeier – man hätte nicht gemerkt, dass sie vegan ist. Grandios!' }
+    ],
+    ctaPrice: 'ab 120 €',
+    ctaUnit: '',
+    ctaSub: 'je nach Größe & Gestaltung'
+  },
+
+  catering: {
+    tag: '🥗 Catering',
+    img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&h=640&fit=crop&auto=format',
+    name: 'GreenTable – Veganes Catering',
+    loc: '📍 Ingolstadt · 82 km entfernt',
+    stars: '★★★★★',
+    rating: '4,7',
+    reviews: '38',
+    stats: [{val:'<2h',lbl:'Antwortzeit'},{val:'6 J.',lbl:'Erfahrung'},{val:'180+',lbl:'Events'}],
+    chips: ['Vegan','Vegetarisch','Bio','Buffet','Menü','bis 200 Pers.'],
+    about: 'GreenTable steht für frisches, nachhaltiges und leckeres veganes Catering. Wir glauben, dass pflanzliche Küche nicht auf Genuss verzichten muss – ganz im Gegenteil! Unser Buffet-Service begeistert Fleischesser und Veganer gleichermaßen. Ideal für Firmenevents, Geburtstage und nachhaltige Hochzeiten.',
+    avail: ['Sa. 22. März','Sa. 29. März','So. 30. März','Fr. 4. April'],
+    responseNote: 'Antwortet in der Regel <strong>innerhalb von 2 Stunden</strong> · 94% Buchungsrate',
+    offers: [
+      { name:'Buffet – Klein', desc:'Veganes Buffet für bis zu 30 Personen', items:['5 warme & kalte Gerichte','Brot & Aufstriche','Getränke optional','Auf- & Abbau'], price:'18 €', unit:'/Person', featured:false },
+      { name:'Buffet – Groß', desc:'Großes Buffet für Events bis 100 Personen', items:['8 Gerichte inkl. Dessert','Salat- & Suppenbuffet','Servicepersonal inkl.','Geschirr & Besteck gestellt'], price:'26 €', unit:'/Person', featured:true },
+      { name:'Menü-Service', desc:'Mehrgängiges Menü am Tisch serviert', items:['4-Gänge-Menü','Tischservice inklusive','individuelle Menüplanung','ab 20 Personen'], price:'42 €', unit:'/Person', featured:false }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1547592180-85f173990554?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=300&h=300&fit=crop'
+    ],
+    reviewList: [
+      { name:'Petra G.', date:'Februar 2025', stars:'★★★★★', text:'Veganes Catering auf unserem Firmenevent – auch die Fleischesser im Team waren begeistert! Frisch, bunt und unglaublich lecker.' },
+      { name:'David K.', date:'Dezember 2024', stars:'★★★★★', text:'Für unsere nachhaltige Hochzeit die perfekte Wahl. Das Team war super professionell und das Essen war ein Highlight!' },
+      { name:'Claudia M.', date:'November 2024', stars:'★★★★☆', text:'Tolles Buffet für unsere Geburtstagsfeier. Viele positive Kommentare der Gäste. Die Portionen hätten etwas größer sein dürfen.' }
+    ],
+    ctaPrice: 'ab 18 €',
+    ctaUnit: '/Person',
+    ctaSub: 'inkl. Buffet & Service'
+  }
+};
+
+// Determine which profile to show
+const params = new URLSearchParams(window.location.search);
+const type = params.get('type') || 'getraenke';
+const p = profiles[type] || profiles['getraenke'];
+
+// Update sticky CTA
+document.getElementById('cta-price').innerHTML = p.ctaPrice + ' <span style="font-size:14px;font-weight:400;color:var(--muted);font-family:\'DM Sans\',sans-serif;">' + p.ctaUnit + '</span>';
+document.getElementById('cta-sub').textContent = p.ctaSub;
+
+// Render page
+const offersHTML = p.offers.map(o => `
+  <div class="offer-item${o.featured ? ' featured' : ''}">
+    <div class="offer-name">${o.name}</div>
+    <div class="offer-desc">${o.desc}</div>
+    <ul class="offer-includes">${o.items.map(i => `<li>${i}</li>`).join('')}</ul>
+    <div class="offer-footer">
+      <div class="offer-price">${o.price} <span>${o.unit}</span></div>
+      <a href="anfrage-stellen.html" class="offer-btn">Anfragen</a>
+    </div>
+  </div>`).join('');
+
+const galleryHTML = p.gallery.map(src => `<img src="${src}" alt="Bild" />`).join('');
+
+const reviewsHTML = p.reviewList.map(r => `
+  <div class="review">
+    <div class="review-header">
+      <div class="reviewer">
+        <img class="reviewer-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=68&h=68&fit=crop" alt="${r.name}" />
+        <div><div class="reviewer-name">${r.name}</div><div class="reviewer-date">${r.date}</div></div>
+      </div>
+      <div class="review-stars">${r.stars}</div>
+    </div>
+    <p class="review-text">${r.text}</p>
+  </div>`).join('');
+
+const availHTML = p.avail.map(d => `<span class="avail-date">${d}</span>`).join('');
+const statsHTML = p.stats.map(s => `<div class="stat-item"><div class="stat-val">${s.val}</div><div class="stat-label">${s.lbl}</div></div>`).join('');
+const chipsHTML = p.chips.map((c,i) => `<span class="chip${i===p.chips.length-1?' gold':''}">${c}</span>`).join('');
+
+document.getElementById('page-content').innerHTML = `
+  <div class="hero">
+    <img src="${p.img}" alt="${p.name}" />
+    <div class="hero-overlay"></div>
+    <span class="hero-tag">${p.tag}</span>
+    <button class="hero-fav" onclick="this.textContent=this.textContent==='🤍'?'❤️':'🤍'">🤍</button>
+    <div class="hero-content">
+      <div class="hero-name">${p.name}</div>
+      <div class="hero-meta">
+        <div class="hero-loc">${p.loc}</div>
+        <div class="hero-stars">${p.stars}</div>
+        <div class="hero-reviews">${p.rating} (${p.reviews} Bewertungen)</div>
+      </div>
+    </div>
+  </div>
+  <div class="quick-stats">${statsHTML}</div>
+  <div class="section">
+    <div class="section-title">📋 Über diesen Anbieter</div>
+    <p class="about-text">${p.about}</p>
+    <div style="margin-top:14px;"><div class="chip-row">${chipsHTML}</div></div>
+    <div class="response-bar"><span style="font-size:20px;">⚡</span><p>${p.responseNote}</p></div>
+  </div>
+  <div class="section">
+    <div class="section-title">📅 Verfügbarkeit</div>
+    <div class="avail-dates">${availHTML}</div>
+  </div>
+  <div class="section">
+    <div class="section-title">💼 Angebote & Preise</div>
+    <div class="offer-list">${offersHTML}</div>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px;">* Individuelle Anfragen und Sonderwünsche gerne auf Anfrage.</p>
+  </div>
+  <div class="section">
+    <div class="section-title">📸 Impressionen</div>
+    <div class="gallery-grid">${galleryHTML}</div>
+  </div>
+  <div class="section">
+    <div class="section-title">⭐ Bewertungen</div>
+    <div style="text-align:center;padding:14px;background:var(--cream);border-radius:10px;margin-bottom:16px;">
+      <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:900;color:var(--gold);line-height:1;">${p.rating}</div>
+      <div style="color:var(--gold);font-size:16px;letter-spacing:2px;">${p.stars}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;">${p.reviews} Bewertungen</div>
+    </div>
+    <div class="reviews">${reviewsHTML}</div>
+  </div>`;
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Anbieter-Dashboard – Partyretter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--text:#1A1208;--muted:rgba(26,18,8,.55);--sidebar:240px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;color:var(--text);background:#f5f3ef;display:flex;}
+    .sidebar{width:var(--sidebar);background:var(--dark);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
+    .sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(245,240,232,.1);}
+    .sb-logo a{font-family:'Fraunces',serif;font-size:17px;font-weight:900;color:var(--cream);text-decoration:none;}
+    .sb-logo a span{color:var(--gold);}
+    .sb-logo .badge{display:inline-block;background:rgba(200,146,42,.18);color:var(--gold2);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-top:4px;}
+    .sb-user{padding:14px 20px;border-bottom:1px solid rgba(245,240,232,.08);display:flex;align-items:center;gap:10px;}
+    .av{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:16px;}
+    .sb-name{font-size:13px;font-weight:700;color:var(--cream);}
+    .sb-sub{font-size:11px;color:rgba(245,240,232,.5);}
+    .sb-nav{flex:1;padding:10px 0;}
+    .nav-sec{padding:8px 20px 4px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(245,240,232,.3);}
+    .ni{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13.5px;font-weight:600;color:rgba(245,240,232,.72);text-decoration:none;transition:all .15s;cursor:pointer;border:none;background:none;width:100%;text-align:left;}
+    .ni:hover{background:rgba(245,240,232,.06);color:var(--cream);}
+    .ni.active{background:rgba(200,146,42,.15);color:var(--gold);border-left:3px solid var(--gold);}
+    .ni .ic{font-size:16px;width:20px;text-align:center;}
+    .ni .bdg{margin-left:auto;background:var(--gold);color:var(--dark);font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;}
+    .sb-foot{padding:14px 20px;border-top:1px solid rgba(245,240,232,.08);}
+    .sb-foot a{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(245,240,232,.5);text-decoration:none;}
+    .main{margin-left:var(--sidebar);flex:1;min-height:100vh;}
+    .topbar{background:#fff;border-bottom:1px solid #e8e2d8;padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+    .pt{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--dark);}
+    .btn-p{background:var(--dark);color:var(--cream);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid rgba(200,146,42,.25);transition:all .2s;cursor:pointer;font-family:'DM Sans',sans-serif;}
+    .btn-p:hover{background:var(--gold);color:var(--dark);border-color:var(--gold);}
+    .content{padding:28px 32px;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+    .sc{background:#fff;border-radius:14px;padding:18px;border:1.5px solid #e8e2d8;box-shadow:0 2px 8px rgba(26,18,8,.05);}
+    .sc-lbl{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;}
+    .sc-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);}
+    .sc-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+    .two-col{display:grid;grid-template-columns:1fr 340px;gap:22px;margin-bottom:22px;}
+    .card{background:#fff;border-radius:14px;border:1.5px solid #e8e2d8;padding:22px;box-shadow:0 2px 8px rgba(26,18,8,.05);margin-bottom:18px;}
+    .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .ct{font-family:'Fraunces',serif;font-size:17px;font-weight:900;color:var(--dark);}
+    .cl{font-size:13px;color:var(--gold);font-weight:700;text-decoration:none;}
+
+    /* ANGEBOT SETTINGS */
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f0ece4;}
+    .setting-row:last-child{border-bottom:none;}
+    .setting-info{flex:1;}
+    .setting-name{font-size:14px;font-weight:700;color:var(--dark);}
+    .setting-sub{font-size:12.5px;color:var(--muted);margin-top:2px;}
+    .setting-value{font-size:14px;font-weight:700;color:var(--gold);margin-right:12px;}
+    .btn-edit{padding:6px 14px;background:var(--cream2);border:1.5px solid #e2dcd4;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--dark);font-family:'DM Sans',sans-serif;transition:all .15s;}
+    .btn-edit:hover{border-color:var(--gold);}
+
+    /* TOGGLE */
+    .toggle{width:44px;height:24px;background:#e2dcd4;border-radius:12px;cursor:pointer;position:relative;transition:background .2s;}
+    .toggle.on{background:var(--gold);}
+    .toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+    .toggle.on::after{transform:translateX(20px);}
+
+    /* AVAILABILITY CALENDAR */
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+    .cal-day{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
+    .cal-day.empty{background:transparent;cursor:default;}
+    .cal-day.available{background:#fff;border:1.5px solid #e2dcd4;color:var(--dark);}
+    .cal-day.available:hover{border-color:var(--gold);}
+    .cal-day.booked{background:var(--gold);color:var(--dark);font-weight:900;}
+    .cal-day.blocked{background:var(--cream2);color:var(--muted);}
+    .cal-day.today{border:2px solid var(--dark);font-weight:900;}
+    .cal-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px;}
+    .cal-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;}
+
+    /* CHART */
+    .chart-card{background:#fff;border-radius:14px;border:1.5px solid #e8e2d8;padding:22px;box-shadow:0 2px 8px rgba(26,18,8,.05);margin-bottom:22px;}
+    .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+    .chart-title{font-family:'Fraunces',serif;font-size:17px;font-weight:900;color:var(--dark);}
+    .chart-badge{font-size:11.5px;font-weight:700;background:rgba(39,174,96,.12);color:#27ae60;padding:4px 10px;border-radius:20px;}
+    .bar-chart{display:flex;align-items:flex-end;gap:10px;height:140px;padding-bottom:28px;position:relative;border-bottom:2px solid #f0ece4;}
+    .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;}
+    .bar{width:100%;border-radius:6px 6px 0 0;transition:all .3s;cursor:pointer;position:relative;}
+    .bar.gold{background:linear-gradient(180deg,var(--gold2),var(--gold));}
+    .bar.gold:hover{background:linear-gradient(180deg,#ffd070,var(--gold2));transform:scaleY(1.03);transform-origin:bottom;}
+    .bar.dim{background:#e8e2d8;}
+    .bar-val{font-size:10.5px;font-weight:700;color:var(--dark);position:absolute;top:-18px;width:100%;text-align:center;white-space:nowrap;}
+    .bar-month{position:absolute;bottom:-22px;font-size:10.5px;color:var(--muted);font-weight:600;text-align:center;width:100%;}
+    .chart-total{display:flex;gap:32px;margin-top:18px;padding-top:12px;}
+    .ct-item{display:flex;flex-direction:column;gap:2px;}
+    .ct-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+    .ct-value{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--dark);}
+    .ct-value.green{color:#27ae60;}
+
+    /* PERFORMANCE ROW */
+    .perf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+    .perf-card{background:#fff;border-radius:12px;border:1.5px solid #e8e2d8;padding:16px;text-align:center;}
+    .perf-icon{font-size:1.6rem;margin-bottom:6px;}
+    .perf-val{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--dark);margin-bottom:2px;}
+    .perf-label{font-size:11.5px;color:var(--muted);font-weight:600;}
+    .perf-trend{font-size:11px;margin-top:4px;font-weight:700;}
+    .up{color:#27ae60;}
+    .down{color:#e74c3c;}
+
+    /* BEWERTUNGEN */
+    .review-mini{padding:12px 0;border-bottom:1px solid #f0ece4;}
+    .review-mini:last-child{border-bottom:none;}
+    .rv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+    .rv-name{font-size:13.5px;font-weight:700;color:var(--dark);}
+    .rv-stars{color:var(--gold);font-size:12.5px;}
+    .rv-date{font-size:11.5px;color:var(--muted);}
+    .rv-text{font-size:13px;color:rgba(26,18,8,.7);line-height:1.5;}
+
+    /* TAX WIDGET */
+    .tax-widget{background:#fff;border:2px solid rgba(200,146,42,.3);border-radius:14px;padding:20px;}
+    .tax-widget h3{font-family:'Fraunces',serif;font-size:16px;font-weight:900;color:var(--dark);margin-bottom:4px;}
+    .tax-widget p{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+    .tr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0ece4;font-size:13.5px;}
+    .tr:last-of-type{border-bottom:none;}
+    .tl{color:var(--muted);}
+    .tv{font-weight:700;color:var(--dark);}
+    .btn-tax{width:100%;margin-top:12px;padding:11px;background:var(--dark);color:var(--cream);border:1.5px solid rgba(200,146,42,.25);border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:block;text-align:center;transition:all .2s;}
+    .btn-tax:hover{background:var(--gold);color:var(--dark);}
+
+    @media(max-width:900px){.stats-row{grid-template-columns:1fr 1fr;}.two-col{grid-template-columns:1fr;}.sidebar{transform:translateX(-100%);}.main{margin-left:0;}}
+  </style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-logo">
+    <a href="homepage.html">Mein<span>Party</span>Retter</a>
+    <div class="badge" id="roleLabel">Foodtruck-Konto</div>
+  </div>
+  <div class="sb-user">
+    <div class="av">🚚</div>
+    <div><div class="sb-name">Taco Loco</div><div class="sb-sub">Berlin · Foodtruck</div></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-sec">Übersicht</div>
+    <a class="ni active" href="anbieter-dashboard.html"><span class="ic">🏠</span> Dashboard</a>
+    <a class="ni" href="nachrichten.html"><span class="ic">💬</span> Nachrichten <span class="bdg">4</span></a>
+    <a class="ni" href="nachrichten.html"><span class="ic">🔔</span> Benachrichtigungen <span class="bdg">8</span></a>
+    <div class="nav-sec" style="margin-top:8px;">Mein Angebot</div>
+    <a class="ni" href="anbieter-profil.html"><span class="ic">👤</span> Mein Profil</a>
+    <a class="ni" href="menu-erstellen.html"><span class="ic">📦</span> Produkte/Speisen</a>
+    <a class="ni" href="anbieter-profil.html#verfuegbarkeit"><span class="ic">📅</span> Verfügbarkeit</a>
+    <a class="ni" href="angebot-erstellen.html"><span class="ic">📝</span> Inserat bearbeiten</a>
+    <div class="nav-sec" style="margin-top:8px;">Buchungen</div>
+    <a class="ni" href="buchung-bestaetigung.html"><span class="ic">📋</span> Eingehende Anfragen <span class="bdg">4</span></a>
+    <a class="ni" href="buchung-bestaetigung.html"><span class="ic">✅</span> Bestätigt</a>
+    <div class="nav-sec" style="margin-top:8px;">Finanzen</div>
+    <a class="ni" href="steuerdaten.html"><span class="ic">📊</span> Einnahmen & Steuer</a>
+    <a class="ni" href="buchhaltung.html"><span class="ic">💰</span> Buchhaltung</a>
+    <a class="ni" href="steuerdaten.html"><span class="ic">📤</span> Steuerberater</a>
+    <div class="nav-sec" style="margin-top:8px;">Mehr entdecken</div>
+    <a class="ni" href="event-ausschreiben.html"><span class="ic">📋</span> Event-Pinnwand</a>
+    <a class="ni" href="foodtruck-karte.html"><span class="ic">🗺️</span> Foodtruck-Karte</a>
+    <div class="nav-sec" style="margin-top:8px;">Konto</div>
+    <a class="ni" href="werbung-schalten.html"><span class="ic">📢</span> Werbung schalten</a>
+    <a class="ni" href="profil.html"><span class="ic">⚙️</span> Einstellungen</a>
+    <a class="ni" href="START.html"><span class="ic">🗺️</span> Alle Seiten</a>
+  </nav>
+  <div class="sb-foot"><a href="login.html"><span>🚪</span> Abmelden</a></div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="pt">Mein Anbieter-Dashboard</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="anbieter-profil.html" class="btn-p">📝 Inserat bearbeiten</a>
+    </div>
+  </div>
+  <div class="content">
+    <div style="margin-bottom:22px;">
+      <h1 style="font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--dark);margin-bottom:4px;">Hallo, Taco Loco! 🚚</h1>
+      <p style="font-size:14px;color:var(--muted);">Du hast 4 neue Anfragen und bist für 3 Events diesen Monat gebucht.</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="sc"><div class="sc-lbl">Neue Anfragen</div><div class="sc-val">4</div><div class="sc-sub" style="color:#C8922A;">⚡ Bitte antworten</div></div>
+      <div class="sc"><div class="sc-lbl">Events diesen Monat</div><div class="sc-val">3</div><div class="sc-sub">1 noch ausstehend</div></div>
+      <div class="sc"><div class="sc-lbl">Einnahmen März</div><div class="sc-val">2.400 €</div><div class="sc-sub" style="color:#27ae60;">↑ +15% vs. Feb</div></div>
+      <div class="sc"><div class="sc-lbl">Profilaufrufe</div><div class="sc-val">127</div><div class="sc-sub" style="color:#27ae60;">↑ +23 diese Woche</div></div>
+    </div>
+
+    <!-- UMSATZ CHART -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">📈 Umsatzentwicklung 2026</div>
+        <div class="chart-badge">↑ +41% zum Vorjahr</div>
+      </div>
+      <div class="bar-chart" id="revenueChart">
+        <!-- JS fills this -->
+      </div>
+      <div class="chart-total">
+        <div class="ct-item"><div class="ct-label">Gesamt Q1</div><div class="ct-value">7.200 €</div></div>
+        <div class="ct-item"><div class="ct-label">Durchschnitt / Monat</div><div class="ct-value">2.400 €</div></div>
+        <div class="ct-item"><div class="ct-label">Bestes Monat</div><div class="ct-value green">2.800 €</div></div>
+        <div class="ct-item"><div class="ct-label">Events gesamt</div><div class="ct-value">11</div></div>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE GRID -->
+    <div class="perf-grid">
+      <div class="perf-card">
+        <div class="perf-icon">⚡</div>
+        <div class="perf-val">3.2h</div>
+        <div class="perf-label">Ø Antwortzeit</div>
+        <div class="perf-trend up">↑ Sehr gut – Top 15%</div>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">🎯</div>
+        <div class="perf-val">78%</div>
+        <div class="perf-label">Buchungsrate</div>
+        <div class="perf-trend up">↑ +8% vs. Vormonat</div>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">⭐</div>
+        <div class="perf-val">4.7</div>
+        <div class="perf-label">Ø Bewertung</div>
+        <div class="perf-trend up">89 Bewertungen gesamt</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <!-- ANGEBOT EINSTELLUNGEN -->
+        <div class="card">
+          <div class="ch"><div class="ct">Mein Angebot</div><a href="anbieter-profil.html" class="cl">Bearbeiten</a></div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Grundpreis</div><div class="setting-sub">Mindestbuchungspreis pro Event</div></div>
+            <div class="setting-value">800 €</div>
+            <button class="btn-edit" onclick="editSetting('Grundpreis','800')">Ändern</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Mindestbestellmenge</div><div class="setting-sub">Mindestanzahl Portionen</div></div>
+            <div class="setting-value">50 Portionen</div>
+            <button class="btn-edit" onclick="editSetting('Mindestbestellmenge','50')">Ändern</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Einsatzradius</div><div class="setting-sub">Ab Berlin-Mitte</div></div>
+            <div class="setting-value">80 km</div>
+            <button class="btn-edit" onclick="editSetting('Einsatzradius','80')">Ändern</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Fahrtkosten</div><div class="setting-sub">Pro km über 20km Radius</div></div>
+            <div class="setting-value">0,80 €/km</div>
+            <button class="btn-edit" onclick="editSetting('Fahrtkosten','0.80')">Ändern</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Buchungsvorlaufzeit</div><div class="setting-sub">Mindestvorlaufzeit für Buchungen</div></div>
+            <div class="setting-value">7 Tage</div>
+            <button class="btn-edit" onclick="editSetting('Vorlaufzeit','7')">Ändern</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Sofort buchbar</div><div class="setting-sub">Buchungen ohne manuelle Bestätigung</div></div>
+            <div class="toggle on" onclick="toggleSwitch(this)"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-name">Aktiv / Verfügbar</div><div class="setting-sub">Profil auf Marktplatz sichtbar</div></div>
+            <div class="toggle on" onclick="toggleSwitch(this)"></div>
+          </div>
+        </div>
+
+        <!-- ANFRAGEN -->
+        <div class="card">
+          <div class="ch"><div class="ct">Offene Anfragen (4)</div></div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="border:1.5px solid rgba(200,146,42,.3);border-radius:10px;padding:14px;background:rgba(200,146,42,.04);">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:14px;font-weight:700;">Gartenparty Max M. – 80 Gäste</span>
+                <span style="background:rgba(200,146,42,.15);color:#8b5e00;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;">Neu</span>
+              </div>
+              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">📅 05. April · Grünwald · ~600 Portionen · Budget: 900 €</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn-p" style="padding:8px 14px;font-size:12.5px;" onclick="alert('Anfrage angenommen!')">✓ Annehmen</button>
+                <button class="btn-edit" onclick="window.location='nachrichten.html'">💬 Nachricht</button>
+                <button class="btn-edit" style="color:var(--muted);">Ablehnen</button>
+              </div>
+            </div>
+            <div style="border:1.5px solid #e8e2d8;border-radius:10px;padding:14px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:14px;font-weight:700;">Firmenevent TechStart – 120 Gäste</span>
+                <span style="background:rgba(200,146,42,.15);color:#8b5e00;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;">Neu</span>
+              </div>
+              <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">📅 15. April · Berlin · Budget: 1.200 €</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn-p" style="padding:8px 14px;font-size:12.5px;" onclick="alert('Anfrage angenommen!')">✓ Annehmen</button>
+                <button class="btn-edit" onclick="window.location='nachrichten.html'">💬 Nachricht</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BEWERTUNGEN -->
+        <div class="card">
+          <div class="ch"><div class="ct">Letzte Bewertungen ★ 4.7</div><a href="bewertungen.html" class="cl">Alle 89 →</a></div>
+          <div class="review-mini"><div class="rv-top"><span class="rv-name">Thomas K.</span><span class="rv-stars">★★★★★</span><span class="rv-date">März 2026</span></div><p class="rv-text">Absolut genial! Taco Loco hat unsere Gartenparty gerettet. Schnelle Aufbauzeit, leckeres Essen und ein super Team.</p></div>
+          <div class="review-mini"><div class="rv-top"><span class="rv-name">Sarah M.</span><span class="rv-stars">★★★★☆</span><span class="rv-date">Feb 2026</span></div><p class="rv-text">Top Qualität, pünktlich, freundliches Personal. Nächstes Mal wieder!</p></div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <!-- KALENDER -->
+        <div class="card">
+          <div class="ch"><div class="ct">Verfügbarkeit März</div></div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:8px;">
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">Mo</div>
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">Di</div>
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">Mi</div>
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">Do</div>
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">Fr</div>
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">Sa</div>
+            <div style="text-align:center;font-size:10.5px;font-weight:700;color:var(--muted);padding:4px 0;">So</div>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-legend" style="margin-top:10px;">
+            <span><span class="cal-dot" style="background:var(--gold);"></span>Gebucht</span>
+            <span><span class="cal-dot" style="background:var(--cream2);border:1px solid #ddd;"></span>Gesperrt</span>
+            <span><span class="cal-dot" style="background:#fff;border:1px solid #ddd;"></span>Frei</span>
+          </div>
+        </div>
+
+        <!-- STEUER -->
+        <div class="tax-widget">
+          <h3>📊 Steuerübersicht Q1 2026</h3>
+          <p>Automatisch von Partyretter erfasst.</p>
+          <div class="tr"><span class="tl">Einnahmen (brutto)</span><span class="tv">7.200 €</span></div>
+          <div class="tr"><span class="tl">MwSt. 19% (abzuführen)</span><span class="tv">1.148 €</span></div>
+          <div class="tr"><span class="tl">Fahrtkosten (absetzbar)</span><span class="tv">– 340 €</span></div>
+          <div class="tr"><span class="tl">Netto-Gewinn (ca.)</span><span class="tv" style="color:var(--gold);">5.712 €</span></div>
+          <a class="btn-tax" href="steuerdaten.html">Steuerberater-Bereich →</a>
+        </div>
+
+        <!-- PROFIL COMPLETENESS -->
+        <div class="card">
+          <div class="ch"><div class="ct">Profil-Vollständigkeit</div></div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Grunddaten</span><span style="color:#27ae60;font-weight:700;">✓</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Fotos (mind. 3)</span><span style="color:#27ae60;font-weight:700;">✓ (5 Fotos)</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Speisekarte</span><span style="color:#27ae60;font-weight:700;">✓</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Steuerdaten hinterlegt</span><span style="color:var(--gold);font-weight:700;">⚠ Fehlt</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span>Bankverbindung</span><span style="color:var(--gold);font-weight:700;">⚠ Fehlt</span></div>
+          </div>
+          <div style="height:8px;background:var(--cream2);border-radius:4px;overflow:hidden;margin-bottom:8px;">
+            <div style="height:100%;width:72%;background:var(--gold);border-radius:4px;"></div>
+          </div>
+          <div style="font-size:12.5px;color:var(--muted);">72% vollständig – <a href="anbieter-profil.html" style="color:var(--gold);font-weight:700;text-decoration:none;">jetzt vervollständigen</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── REVENUE CHART ──
+  const months = [
+    { m: 'Okt', v: 900 }, { m: 'Nov', v: 1200 }, { m: 'Dez', v: 1800 },
+    { m: 'Jan', v: 1900 }, { m: 'Feb', v: 2100 }, { m: 'Mär', v: 2400, cur: true }
+  ];
+  const maxV = Math.max(...months.map(x => x.v));
+  const chartEl = document.getElementById('revenueChart');
+  months.forEach(({ m, v, cur }) => {
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const pct = Math.round((v / maxV) * 100);
+    col.innerHTML = `
+      <div class="bar ${cur ? 'gold' : 'dim'}" style="height:${pct}%">
+        <div class="bar-val">${v >= 1000 ? (v/1000).toFixed(1)+'k' : v}</div>
+      </div>
+      <div class="bar-month">${m}</div>`;
+    chartEl.appendChild(col);
+  });
+
+  // ── CALENDAR ──
+  const cal = document.getElementById('calGrid');
+  const booked = [5, 12, 19, 22];
+  const blocked = [16, 17, 23, 24, 30, 31];
+  for (let i = 1; i <= 31; i++) {
+    const d = document.createElement('div');
+    d.className = 'cal-day';
+    d.textContent = i;
+    if (booked.includes(i)) d.classList.add('booked');
+    else if (blocked.includes(i)) d.classList.add('blocked');
+    else d.classList.add('available');
+    if (i === 10) d.classList.add('today');
+    d.onclick = () => { if (!booked.includes(i)) d.classList.toggle('blocked'); };
+    cal.appendChild(d);
+  }
+  function toggleSwitch(el) { el.classList.toggle('on'); }
+  function editSetting(name, val) {
+    const nv = prompt('Neuer Wert für ' + name + ':', val);
+    if (nv !== null) alert(name + ' wurde auf "' + nv + '" aktualisiert.');
+  }
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+<script src="cookie-banner.js"></script>
+</body>
+</html>

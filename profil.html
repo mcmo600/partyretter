@@ -1,0 +1,544 @@
+<!-- Partyretter – Öffentliche Profilseite (eBay KA Stil) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root { --dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#ede8df;--muted:#6b5e4e;--green:#2a7a3b;--red:#d93025; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#f4f4f4;color:var(--dark);}
+
+/* NAV */
+.top-nav{background:var(--dark);height:52px;display:flex;align-items:center;padding:0 24px;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.top-nav .logo{font-family:'Fraunces',serif;font-size:18px;color:var(--cream);}
+.top-nav .logo span{color:var(--gold);}
+.nav-actions{display:flex;align-items:center;gap:12px;}
+.nav-back{color:rgba(245,240,232,0.6);font-size:13px;text-decoration:none;}
+.nav-back:hover{color:var(--cream);}
+.nav-btn{padding:7px 16px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;border:none;text-decoration:none;}
+.nav-btn.outline{background:transparent;border:1px solid rgba(245,240,232,0.3);color:var(--cream);}
+.nav-btn.gold{background:var(--gold);color:#fff;}
+
+/* BREADCRUMB */
+.breadcrumb{background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 24px;font-size:13px;color:var(--muted);}
+.breadcrumb a{color:var(--gold);text-decoration:none;}
+
+/* LAYOUT */
+.profile-layout{max-width:1100px;margin:0 auto;padding:24px 16px 60px;display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;}
+
+/* PHOTO GALLERY */
+.photo-gallery{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.gallery-main{height:320px;background:linear-gradient(135deg,#2d1f0e 0%,#1A1208 100%);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;cursor:pointer;}
+.gallery-main-badge{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,0.7);color:#fff;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
+.gallery-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#3d2f1e,#2d1f0e);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:opacity 0.15s;}
+.gallery-thumb:hover{opacity:0.8;}
+.gallery-thumb.more{position:relative;}
+.gallery-thumb.more::after{content:'+8 Fotos';position:absolute;inset:0;background:rgba(0,0,0,0.6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+
+/* PROFILE HEADER */
+.profile-header{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:16px;}
+.profile-top{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px;}
+.profile-avatar{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;}
+.profile-info{flex:1;}
+.profile-name{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--dark);line-height:1.2;}
+.profile-headline{font-size:14px;color:var(--muted);margin-top:4px;}
+.profile-badges{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.badge-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.badge-chip.gold{background:rgba(200,146,42,0.12);color:var(--gold);border:1px solid rgba(200,146,42,0.3);}
+.badge-chip.green{background:#d1fae5;color:var(--green);}
+.badge-chip.blue{background:#e0f2fe;color:#0369a1;}
+
+.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #f0f0f0;padding-top:16px;}
+.pstat{text-align:center;}
+.pstat:not(:last-child){border-right:1px solid #f0f0f0;}
+.pstat-num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--dark);}
+.pstat-label{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* SECTIONS */
+.white-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:16px;}
+.section-title{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+/* TAGS */
+.tag-list{display:flex;gap:7px;flex-wrap:wrap;}
+.tag{padding:6px 13px;background:var(--cream);border-radius:20px;font-size:13px;color:var(--dark);}
+.tag.gold{background:rgba(200,146,42,0.1);color:var(--gold);border:1px solid rgba(200,146,42,0.25);}
+
+/* PAKETE */
+.pakete-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.paket-card{border:1px solid #eee;border-radius:10px;padding:16px;transition:all 0.15s;cursor:pointer;}
+.paket-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(200,146,42,0.15);}
+.paket-card.featured{border-color:var(--gold);background:#fffbf5;position:relative;}
+.paket-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:0 0 6px 6px;}
+.paket-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.paket-desc{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;}
+.paket-price{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--gold);}
+.paket-price small{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);font-weight:400;}
+.paket-features{margin-top:10px;list-style:none;font-size:12px;color:var(--muted);}
+.paket-features li{margin-bottom:4px;}
+.paket-features li::before{content:'✓ ';color:var(--green);font-weight:700;}
+
+/* MENÜ PREVIEW */
+.menu-accordion{border:1px solid #eee;border-radius:9px;overflow:hidden;}
+.menu-gang{padding:14px 16px;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background 0.15s;}
+.menu-gang:last-child{border-bottom:none;}
+.menu-gang:hover{background:#fafafa;}
+.menu-gang-title{font-size:14px;font-weight:600;color:var(--dark);display:flex;align-items:center;justify-content:space-between;}
+.menu-gang-desc{font-size:13px;color:var(--muted);margin-top:4px;}
+
+/* EINKAUFSLISTE FEATURE */
+.shopping-feature{background:linear-gradient(135deg,#fffbf5,#fff9ee);border:1px solid rgba(200,146,42,0.25);border-radius:10px;padding:18px;}
+.sf-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px;}
+.sf-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.sf-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;}
+.sf-input{flex:1;padding:9px 12px;border:2px solid #e8e8e8;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.sf-input:focus{border-color:var(--gold);}
+.sf-btn{padding:9px 16px;background:var(--gold);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;}
+.sf-delivery{display:flex;gap:8px;margin-top:8px;}
+.del-btn{flex:1;padding:8px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;text-align:center;}
+.del-btn.rewe{background:#e2001a;color:#fff;}
+.del-btn.edeka{background:#f5c900;color:var(--dark);}
+
+/* BEWERTUNGEN */
+.review-card{border-bottom:1px solid #f0f0f0;padding:16px 0;}
+.review-card:last-child{border-bottom:none;padding-bottom:0;}
+.review-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px;}
+.review-ava{width:38px;height:38px;border-radius:50%;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.review-meta{flex:1;}
+.review-name{font-size:14px;font-weight:700;color:var(--dark);}
+.review-event{font-size:12px;color:var(--muted);}
+.review-stars{color:var(--gold);font-size:13px;}
+.review-text{font-size:14px;color:var(--dark);line-height:1.6;font-style:italic;}
+
+/* STICKY BOOKING CARD */
+.booking-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 4px 20px rgba(26,18,8,0.12);position:sticky;top:72px;}
+.booking-price{margin-bottom:16px;}
+.booking-price-num{font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:var(--dark);}
+.booking-price-unit{font-size:14px;color:var(--muted);margin-left:4px;}
+.booking-rating{display:flex;align-items:center;gap:6px;margin-top:4px;}
+.booking-rating .stars{color:var(--gold);font-size:14px;}
+.booking-rating .count{font-size:13px;color:var(--muted);}
+
+.booking-form{}
+.bf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.bf-group{display:flex;flex-direction:column;gap:4px;}
+.bf-label{font-size:11px;font-weight:700;color:var(--dark);}
+.bf-input, .bf-select{padding:10px 12px;border:2px solid #e8e8e8;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--dark);outline:none;width:100%;}
+.bf-input:focus, .bf-select:focus{border-color:var(--gold);}
+
+.btn-anfragen{width:100%;padding:15px;background:var(--gold);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:12px;transition:background 0.15s;}
+.btn-anfragen:hover{background:var(--gold2);}
+.btn-msg{width:100%;padding:12px;background:none;color:var(--dark);border:2px solid #e8e8e8;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.btn-msg:hover{border-color:var(--dark);}
+
+.booking-guarantee{display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 12px;background:#f8fdf9;border-radius:8px;font-size:12px;color:var(--muted);}
+.booking-guarantee .icon{font-size:18px;}
+
+.price-breakdown{margin-top:16px;padding-top:14px;border-top:1px solid #f0f0f0;}
+.pb-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px;}
+.pb-row.total{font-weight:700;color:var(--dark);font-size:14px;padding-top:8px;border-top:1px solid #e8e8e8;margin-top:4px;}
+
+/* VERFÜGBARKEIT */
+.avail-days{display:flex;gap:6px;flex-wrap:wrap;}
+.avail-chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;background:#d1fae5;color:var(--green);}
+.unavail-chip{background:#fee2e2;color:var(--red);}
+
+/* KARTE / LOCATION */
+.location-map{height:140px;background:linear-gradient(135deg,#e8f0e8,#d5e8d5);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);margin-top:12px;}
+
+/* REPORT LINK */
+.report-link{text-align:center;margin-top:20px;}
+.report-link a{font-size:12px;color:var(--muted);text-decoration:underline;cursor:pointer;}
+</style>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <div class="logo"><img src="logo-v2.svg" alt="Partyretter" style="height:38px;width:auto;filter:brightness(0) invert(1);opacity:0.92;"></div>
+  <div class="nav-actions">
+    <a href="#" class="nav-back">← Suche</a>
+    <a href="registrierung.html" class="nav-btn outline">Anmelden</a>
+    <a href="registrierung.html" class="nav-btn gold">Registrieren</a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Startseite</a> › <a href="#">Köche</a> › <a href="#">München</a> › Marco Bianchi
+</div>
+
+<!-- PROFILE LAYOUT -->
+<div class="profile-layout">
+
+  <!-- LEFT: PROFILE CONTENT -->
+  <div>
+
+    <!-- FOTO GALLERY -->
+    <div class="photo-gallery">
+      <div class="gallery-main">
+        🍝
+        <div class="gallery-main-badge">📸 13 Fotos ansehen</div>
+      </div>
+      <div class="gallery-thumbs">
+        <div class="gallery-thumb">🥗</div>
+        <div class="gallery-thumb">🍷</div>
+        <div class="gallery-thumb">🍮</div>
+        <div class="gallery-thumb">🥩</div>
+        <div class="gallery-thumb more"><div style="background:rgba(0,0,0,0.5);color:#fff;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;">+8</div></div>
+      </div>
+    </div>
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+      <div class="profile-top">
+        <div class="profile-avatar">👨‍🍳</div>
+        <div class="profile-info">
+          <div class="profile-name">Marco Bianchi</div>
+          <div class="profile-headline">Privatkoch · Mediterran & Italienisch · München</div>
+          <div class="profile-badges">
+            <span class="badge-chip gold">⭐ Master Koch</span>
+            <span class="badge-chip green">✓ Verifiziert</span>
+            <span class="badge-chip blue">⚡ Antwortet in &lt;2h</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="pstat"><div class="pstat-num">4,9</div><div class="pstat-label">⭐ Bewertung</div></div>
+        <div class="pstat"><div class="pstat-num">47</div><div class="pstat-label">Bewertungen</div></div>
+        <div class="pstat"><div class="pstat-num">62</div><div class="pstat-label">Events</div></div>
+        <div class="pstat"><div class="pstat-num">12 J.</div><div class="pstat-label">Erfahrung</div></div>
+      </div>
+    </div>
+
+    <!-- ÜBER MICH -->
+    <div class="white-card">
+      <div class="section-title"><span>👤</span> Über mich</div>
+      <p style="font-size:14px;line-height:1.7;color:var(--dark);margin-bottom:14px;">
+        Ich bin seit über 12 Jahren als Privatkoch tätig und habe mich auf mediterrane und italienische Küche spezialisiert. Meine Leidenschaft ist es, aus frischen, regionalen Zutaten unvergessliche Erlebnisse zu zaubern — egal ob romantisches Dinner für 2 oder Gala-Abend für 60 Gäste.
+      </p>
+      <p style="font-size:14px;line-height:1.7;color:var(--dark);margin-bottom:16px;">
+        Ich kümmere mich um alles: Einkauf, Zubereitung, Service und Cleanup. Du brauchst dich um nichts zu kümmern — außer zu genießen.
+      </p>
+      <div class="tag-list">
+        <span class="tag">🍝 Mediterran</span>
+        <span class="tag">🇮🇹 Italienisch</span>
+        <span class="tag">🍷 Weinbegleitung</span>
+        <span class="tag">🥗 Vegetarisch möglich</span>
+        <span class="tag">🧹 Cleanup inklusive</span>
+        <span class="tag">🛒 Einkauf inklusive</span>
+      </div>
+    </div>
+
+    <!-- PAKETE -->
+    <div class="white-card">
+      <div class="section-title"><span>💼</span> Meine Pakete</div>
+      <div class="pakete-grid">
+        <div class="paket-card">
+          <div class="paket-name">🌙 Dinner für 2</div>
+          <div class="paket-desc">Romantisches 3-Gang-Menü für 2 Personen. Inkl. Einkauf & Cleanup.</div>
+          <div class="paket-price">180 € <small>gesamt</small></div>
+          <ul class="paket-features">
+            <li>3-Gang-Menü</li>
+            <li>Einkauf inklusive</li>
+            <li>Tischdekoration</li>
+            <li>Cleanup inklusive</li>
+          </ul>
+        </div>
+        <div class="paket-card featured">
+          <div class="paket-badge">BELIEBT</div>
+          <div class="paket-name">🎉 Party (bis 20 Pers.)</div>
+          <div class="paket-desc">Abendessen oder Buffet für bis zu 20 Gäste. Das Rundum-Sorglos-Paket.</div>
+          <div class="paket-price">ab 65 € <small>/Std.</small></div>
+          <ul class="paket-features">
+            <li>Wunschmenü</li>
+            <li>Einkauf inklusive</li>
+            <li>Service 4-5 Std.</li>
+            <li>Cleanup inklusive</li>
+          </ul>
+        </div>
+        <div class="paket-card">
+          <div class="paket-name">🏆 Großevent (bis 60)</div>
+          <div class="paket-desc">Für größere Events mit bis zu 60 Gästen. Koch-Team auf Anfrage.</div>
+          <div class="paket-price">ab 85 € <small>/Std.</small></div>
+          <ul class="paket-features">
+            <li>Koch-Team verfügbar</li>
+            <li>Eventplanung</li>
+            <li>Diätoptionen</li>
+            <li>Vorab-Verkostung</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENÜ VORSCHAU -->
+    <div class="white-card">
+      <div class="section-title"><span>🍽️</span> Beispiel-Menü: Mediterraner Abend</div>
+      <div class="menu-accordion">
+        <div class="menu-gang">
+          <div class="menu-gang-title">Vorspeise <span style="font-size:12px;color:var(--muted);">▼</span></div>
+          <div class="menu-gang-desc">Burrata mit Tomaten-Confit, Rucola & Olivenöl · oder · Carpaccio vom Rind mit Parmesan</div>
+        </div>
+        <div class="menu-gang">
+          <div class="menu-gang-title">Hauptgang <span style="font-size:12px;color:var(--muted);">▼</span></div>
+          <div class="menu-gang-desc">Saltimbocca vom Kalbsrücken mit Salbei-Butter, Tagliatelle & Ratatouille · (veg: Gnocchi al Pesto)</div>
+        </div>
+        <div class="menu-gang">
+          <div class="menu-gang-title">Dessert <span style="font-size:12px;color:var(--muted);">▼</span></div>
+          <div class="menu-gang-desc">Panna Cotta mit Beeren-Coulis & Amaretti</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:10px;">💡 Menü wird individuell auf deine Wünsche und Unverträglichkeiten angepasst.</div>
+
+      <!-- EINKAUFSLISTE FEATURE -->
+      <div class="shopping-feature" style="margin-top:16px;">
+        <div class="sf-title">🛒 Einkaufsliste für dieses Menü erstellen</div>
+        <div class="sf-sub">Gib die Gästezahl ein — die komplette Einkaufsliste wird automatisch berechnet. Dann direkt bei REWE oder EDEKA bestellen.</div>
+        <div class="sf-row">
+          <input type="number" class="sf-input" placeholder="Anzahl Gäste" value="10" id="sf-guests" />
+          <button class="sf-btn" onclick="genList()">📋 Liste erstellen</button>
+        </div>
+        <div class="sf-delivery">
+          <button class="del-btn rewe" onclick="window.open('https://www.rewe.de','_blank')">🛒 REWE Lieferung</button>
+          <button class="del-btn edeka" onclick="window.open('https://www.edeka.de','_blank')">🛒 EDEKA Lieferung</button>
+        </div>
+        <div id="sf-result" style="display:none;margin-top:12px;padding:12px;background:#fff;border-radius:8px;border:1px solid #e8e8e8;">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;">Einkaufsliste für <span id="sf-n">10</span> Personen:</div>
+          <div id="sf-list" style="font-size:13px;line-height:2;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERFÜGBARKEIT -->
+    <div class="white-card">
+      <div class="section-title"><span>📅</span> Verfügbarkeit</div>
+      <div class="avail-days" style="margin-bottom:12px;">
+        <span class="avail-chip">Freitag</span>
+        <span class="avail-chip">Samstag</span>
+        <span class="avail-chip">Sonntag</span>
+        <span class="unavail-chip">Mo–Do: auf Anfrage</span>
+      </div>
+      <div style="font-size:13px;color:var(--muted);">⏰ Buchung min. 1 Tag im Voraus · 📍 München & Umkreis 100 km</div>
+    </div>
+
+    <!-- BEWERTUNGEN -->
+    <div class="white-card">
+      <div class="section-title"><span>⭐</span> Bewertungen (47)</div>
+
+      <!-- RATING OVERVIEW -->
+      <div style="display:flex;align-items:center;gap:24px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f0f0f0;">
+        <div style="text-align:center;">
+          <div style="font-family:'Fraunces',serif;font-size:48px;font-weight:700;color:var(--dark);line-height:1;">4.9</div>
+          <div style="color:var(--gold);font-size:18px;margin:4px 0;">★★★★★</div>
+          <div style="font-size:12px;color:var(--muted);">47 Bewertungen</div>
+        </div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span style="font-size:12px;color:var(--muted);width:20px;">5★</span>
+            <div style="flex:1;height:7px;background:#eee;border-radius:4px;overflow:hidden;"><div style="width:92%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+            <span style="font-size:12px;color:var(--muted);">43</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span style="font-size:12px;color:var(--muted);width:20px;">4★</span>
+            <div style="flex:1;height:7px;background:#eee;border-radius:4px;overflow:hidden;"><div style="width:6%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+            <span style="font-size:12px;color:var(--muted);">3</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:12px;color:var(--muted);width:20px;">3★</span>
+            <div style="flex:1;height:7px;background:#eee;border-radius:4px;overflow:hidden;"><div style="width:2%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+            <span style="font-size:12px;color:var(--muted);">1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-ava">😊</div>
+          <div class="review-meta">
+            <div class="review-name">Sarah K.</div>
+            <div class="review-event">Geburtstagsfeier · München · Feb. 2026</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-text">"Marco hat unsere Geburtstagsfeier zu etwas ganz Besonderem gemacht. Das Essen war spektakulär, die Gäste begeistert. Er war pünktlich, professionell und hat alles blitzsauber hinterlassen. Absolute Empfehlung!"</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-ava">👔</div>
+          <div class="review-meta">
+            <div class="review-name">Thomas R.</div>
+            <div class="review-event">Firmenevent · Hamburg · Jan. 2026</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-text">"Für unser Sommerfest mit 60 Mitarbeitern hat Marco ein fantastisches Buffet gezaubert. Sehr professionelle Abwicklung — Einkaufsliste, Aufbau, alles war perfekt koordiniert."</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-ava">💍</div>
+          <div class="review-meta">
+            <div class="review-name">Lisa & Jan M.</div>
+            <div class="review-event">Hochzeit · Berlin · Dez. 2025</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-text">"Hochzeit für 120 Personen — Koch-Team perfekt koordiniert. Eine Rechnung, ein Ansprechpartner. Genau das braucht man bei einem so wichtigen Tag."</div>
+      </div>
+
+      <div style="text-align:center;margin-top:16px;">
+        <a href="#" style="font-size:14px;color:var(--gold);font-weight:600;text-decoration:none;">Alle 47 Bewertungen anzeigen →</a>
+      </div>
+    </div>
+
+    <div class="report-link">
+      <a href="#">Profil melden</a> · <a href="#">Hilfe</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: STICKY BOOKING CARD -->
+  <div>
+    <div class="booking-card">
+      <div class="booking-price">
+        <span class="booking-price-num">ab 65 €</span>
+        <span class="booking-price-unit">/ Stunde</span>
+        <div class="booking-rating">
+          <span class="stars">★★★★★</span>
+          <span class="count">4,9 · 47 Bewertungen</span>
+        </div>
+      </div>
+
+      <div class="booking-form">
+        <div class="bf-row">
+          <div class="bf-group">
+            <label class="bf-label">DATUM</label>
+            <input type="date" class="bf-input" />
+          </div>
+          <div class="bf-group">
+            <label class="bf-label">UHRZEIT</label>
+            <select class="bf-select">
+              <option>17:00</option><option>18:00</option><option selected>19:00</option>
+              <option>20:00</option><option>21:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="bf-group">
+          <label class="bf-label">GÄSTEANZAHL</label>
+          <select class="bf-select" onchange="calcPrice(this.value)">
+            <option>2 Personen</option><option>5 Personen</option>
+            <option selected>10 Personen</option><option>20 Personen</option>
+            <option>30 Personen</option><option>40+ Personen</option>
+          </select>
+        </div>
+        <div class="bf-group">
+          <label class="bf-label">ART DES EVENTS</label>
+          <select class="bf-select">
+            <option>Geburtstagsfeier</option><option>Dinner Party</option>
+            <option>Firmen-Event</option><option>Hochzeit</option>
+            <option>Sonstiges</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-anfragen">📩 Anfrage senden — kostenlos</button>
+      <button class="btn-msg">💬 Zuerst Nachricht schreiben</button>
+
+      <div class="booking-guarantee">
+        <span class="icon">🔒</span>
+        <span>Sichere Zahlung via Stripe · Nur bei Buchung fällt eine Provision an</span>
+      </div>
+
+      <div class="price-breakdown">
+        <div class="pb-row"><span>Stundensatz (ca. 4 Std.)</span><span id="pb-base">260 €</span></div>
+        <div class="pb-row"><span>Einkauf & Zutaten</span><span>~120 €</span></div>
+        <div class="pb-row"><span>Plattform (0% bei 1. Buchung)</span><span>0 €</span></div>
+        <div class="pb-row total"><span>Geschätzt gesamt</span><span id="pb-total">~380 €</span></div>
+      </div>
+    </div>
+
+    <!-- LOCATION INFO -->
+    <div class="white-card" style="margin-top:16px;">
+      <div class="section-title"><span>📍</span> Standort</div>
+      <div style="font-size:14px;color:var(--muted);">München · Umkreis 100 km</div>
+      <div class="location-map">🗺️ München & Umgebung</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function calcPrice(guests) {
+  const g = parseInt(guests);
+  let base = 260, est = 380;
+  if (g <= 2) { base = 130; est = 180; }
+  else if (g <= 5) { base = 195; est = 280; }
+  else if (g <= 10) { base = 260; est = 380; }
+  else if (g <= 20) { base = 390; est = 600; }
+  else if (g <= 30) { base = 520; est = 800; }
+  else { base = 680; est = 1100; }
+  document.getElementById('pb-base').textContent = base + ' €';
+  document.getElementById('pb-total').textContent = '~' + est + ' €';
+}
+
+const ingredients = [
+  { name: 'Tomaten', qty: 200, unit: 'g' },
+  { name: 'Mozzarella', qty: 80, unit: 'g' },
+  { name: 'Kalbsrücken', qty: 200, unit: 'g' },
+  { name: 'Panna Cotta Sahne', qty: 100, unit: 'ml' },
+  { name: 'Basilikum', qty: 0.3, unit: 'Bund' },
+  { name: 'Olivenöl', qty: 15, unit: 'ml' },
+  { name: 'Parmesan', qty: 20, unit: 'g' },
+  { name: 'Tagliatelle', qty: 100, unit: 'g' },
+];
+
+function genList() {
+  const n = parseInt(document.getElementById('sf-guests').value) || 10;
+  document.getElementById('sf-n').textContent = n;
+  let html = '';
+  ingredients.forEach(i => {
+    const total = i.unit === 'Bund' ? Math.ceil(i.qty * n) : Math.round(i.qty * n);
+    html += `<div>☐ &nbsp;<strong>${i.name}</strong> — ${total} ${i.unit}</div>`;
+  });
+  document.getElementById('sf-list').innerHTML = html;
+  document.getElementById('sf-result').style.display = 'block';
+}
+</script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+<script src="cookie-banner.js"></script>

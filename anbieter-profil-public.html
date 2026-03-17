@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Dynamic SEO – updated by JS -->
+  <title id="page-title">Anbieter-Profil | Partyretter</title>
+  <meta name="description" id="page-desc" content="Koch, Caterer & Foodtruck buchen auf Partyretter – Deutschlands führende Party-Plattform." />
+  <!-- Open Graph for sharing -->
+  <meta property="og:title"       id="og-title"   content="Anbieter-Profil | Partyretter" />
+  <meta property="og:description" id="og-desc"    content="Jetzt Anfrage stellen auf Partyretter" />
+  <meta property="og:image"       id="og-image"   content="" />
+  <meta property="og:type"   content="profile" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --dark:  #1A1208;
+  --gold:  #C8922A;
+  --gold2: #e0a830;
+  --cream: #F5F0E8;
+  --muted: rgba(26,18,8,.52);
+  --border: rgba(26,18,8,.1);
+}
+body { font-family: 'DM Sans', sans-serif; background: #F2EDE4; color: var(--dark); padding-bottom: 96px; }
+
+/* ── NAV ── */
+nav {
+  background: var(--dark); height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.nav-logo { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 900; color: var(--cream); text-decoration: none; }
+.nav-logo span { color: var(--gold); }
+.nav-right { display: flex; gap: 10px; align-items: center; }
+.nav-btn { font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 7px; text-decoration: none; border: none; cursor: pointer; font-family: inherit; }
+.nav-btn-outline { color: rgba(245,240,232,.75); background: transparent; border: 1px solid rgba(245,240,232,.2); }
+.nav-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.nav-btn-gold { background: var(--gold); color: var(--dark); font-weight: 700; }
+.nav-btn-gold:hover { background: var(--gold2); }
+
+/* ── HERO BANNER ── */
+.hero-banner {
+  height: 260px; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #2d1f0e 0%, #4a3015 100%);
+}
+.hero-banner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(0.6);
+}
+.hero-banner-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,18,8,.9) 0%, transparent 60%);
+}
+.hero-category-badge {
+  position: absolute; top: 16px; left: 16px;
+  background: var(--gold); color: var(--dark);
+  font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px;
+  display: flex; align-items: center; gap: 5px;
+}
+.hero-actions {
+  position: absolute; top: 14px; right: 14px;
+  display: flex; gap: 8px;
+}
+.hero-action-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.18); backdrop-filter: blur(8px);
+  border: none; cursor: pointer; font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.hero-action-btn:hover { background: rgba(255,255,255,.3); }
+
+/* ── PROFILE HEADER ── */
+.profile-header {
+  background: #fff; padding: 0 20px 20px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.avatar-wrap {
+  position: absolute; top: -44px; left: 20px;
+}
+.avatar {
+  width: 88px; height: 88px; border-radius: 50%;
+  border: 3px solid #fff;
+  object-fit: cover; display: block;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+.verify-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #4CAF50; border: 2px solid #fff;
+  position: absolute; bottom: 2px; right: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+}
+.profile-name-row {
+  padding-top: 52px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.profile-name {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 900; line-height: 1.15;
+}
+.profile-tagline { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.badge-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.badge {
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+  display: flex; align-items: center; gap: 4px;
+}
+.badge-verified { background: #E8F5E9; color: #2E7D32; }
+.badge-topanbieter { background: rgba(200,146,42,.12); color: var(--gold); border: 1px solid rgba(200,146,42,.3); }
+.badge-response { background: #E3F2FD; color: #1565C0; }
+
+/* ── QUICK STATS ── */
+.quick-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: #fff; border-bottom: 1px solid var(--border);
+  margin-top: 1px;
+}
+.stat-item { text-align: center; padding: 14px 6px; border-right: 1px solid var(--border); }
+.stat-item:last-child { border-right: none; }
+.stat-val { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--gold); }
+.stat-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+/* ── CONTENT LAYOUT ── */
+.page-body { max-width: 760px; margin: 0 auto; padding: 16px 16px 0; }
+
+.card {
+  background: #fff; border-radius: 14px;
+  padding: 20px; margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+.card-title {
+  font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+
+/* ── CHIPS ── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: var(--cream); color: var(--dark); border: 1.5px solid var(--border); }
+.chip.highlight { background: rgba(200,146,42,.1); border-color: rgba(200,146,42,.3); color: var(--gold); }
+
+/* ── ABOUT ── */
+.about-text { font-size: 14px; line-height: 1.75; color: rgba(26,18,8,.8); }
+.about-text.clamped { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.read-more-btn { background: none; border: none; color: var(--gold); font-weight: 700; font-size: 13px; cursor: pointer; padding: 6px 0 0; display: block; font-family: inherit; }
+
+/* ── OFFERS ── */
+.offer-list { display: flex; flex-direction: column; gap: 12px; }
+.offer-item { border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; }
+.offer-item.featured { border-color: var(--gold); position: relative; }
+.offer-recommended {
+  position: absolute; top: -1px; right: 14px;
+  background: var(--gold); color: var(--dark);
+  font-size: 10px; font-weight: 700; padding: 3px 10px;
+  border-radius: 0 0 8px 8px;
+}
+.offer-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.offer-desc { font-size: 13px; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
+.offer-items { list-style: none; margin-bottom: 12px; }
+.offer-items li { font-size: 13px; padding: 3px 0; display: flex; align-items: center; gap: 7px; }
+.offer-items li::before { content: '✓'; color: var(--gold); font-weight: 700; }
+.offer-footer { display: flex; align-items: center; justify-content: space-between; }
+.offer-price { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; }
+.offer-unit { font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--muted); }
+.offer-btn {
+  background: var(--dark); color: var(--cream); border: none;
+  border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none;
+  transition: background .15s;
+}
+.offer-btn:hover { background: var(--gold); color: var(--dark); }
+.offer-item.featured .offer-btn { background: var(--gold); color: var(--dark); }
+.offer-item.featured .offer-btn:hover { background: var(--gold2); }
+
+/* ── GALLERY ── */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; cursor: pointer; transition: opacity .15s; }
+.gallery-grid img:hover { opacity: .88; }
+
+/* ── AVAILABILITY ── */
+.avail-dates { display: flex; gap: 8px; flex-wrap: wrap; }
+.avail-date { padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; background: rgba(200,146,42,.1); color: var(--gold); border: 1px solid rgba(200,146,42,.25); }
+.avail-note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* ── REVIEWS ── */
+.rating-summary { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+.rating-big { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 900; color: var(--dark); line-height: 1; }
+.rating-stars { color: var(--gold); font-size: 18px; }
+.rating-count { font-size: 13px; color: var(--muted); }
+.review-list { display: flex; flex-direction: column; gap: 12px; }
+.review { background: var(--cream); border-radius: 10px; padding: 14px; }
+.review-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.reviewer { display: flex; align-items: center; gap: 9px; }
+.reviewer-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.reviewer-name { font-weight: 600; font-size: 13px; }
+.reviewer-date { font-size: 11px; color: var(--muted); }
+.review-stars { color: var(--gold); font-size: 13px; }
+.review-text { font-size: 13px; line-height: 1.65; color: rgba(26,18,8,.8); }
+
+/* ── CONTACT CARD ── */
+.contact-card { background: linear-gradient(135deg, #1A1208 0%, #3D2B0E 100%); border-radius: 14px; padding: 22px 20px; margin-bottom: 14px; color: var(--cream); }
+.contact-card h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+.contact-card p { font-size: 13px; color: rgba(245,240,232,.72); margin-bottom: 18px; line-height: 1.5; }
+.contact-form { display: flex; flex-direction: column; gap: 10px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-field { display: flex; flex-direction: column; gap: 4px; }
+.form-field label { font-size: 11px; color: rgba(245,240,232,.6); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+.form-field input, .form-field select, .form-field textarea {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px; padding: 10px 12px;
+  font-size: 14px; color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  outline: none; transition: border-color .15s;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,.12);
+}
+.form-field input::placeholder, .form-field textarea::placeholder { color: rgba(245,240,232,.35); }
+.form-field select option { background: #1A1208; }
+.submit-btn {
+  background: var(--gold); color: var(--dark);
+  border: none; border-radius: 10px;
+  padding: 14px 24px; font-size: 15px; font-weight: 700;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background .15s, transform .1s;
+  width: 100%; text-align: center;
+}
+.submit-btn:hover { background: var(--gold2); transform: translateY(-1px); }
+.form-note { font-size: 11px; color: rgba(245,240,232,.45); margin-top: 4px; text-align: center; }
+
+/* ── SHARE / MAP ── */
+.share-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.share-label { font-size: 13px; color: var(--muted); font-weight: 600; }
+.share-btn {
+  padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+  background: var(--cream); border: 1.5px solid var(--border); color: var(--dark);
+  cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 5px;
+  transition: border-color .15s;
+}
+.share-btn:hover { border-color: var(--gold); color: var(--gold); }
+#copy-toast {
+  display: none; position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%);
+  background: #1A1208; color: var(--cream); padding: 10px 20px; border-radius: 99px;
+  font-size: 13px; font-weight: 600; z-index: 9999;
+  animation: fadeup .3s ease;
+}
+@keyframes fadeup { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* ── STICKY CTA ── */
+.sticky-cta {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff; border-top: 1px solid var(--border);
+  padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 -4px 20px rgba(26,18,8,.1); z-index: 150;
+}
+.cta-price-block { flex: 1; }
+.cta-price { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; line-height: 1.1; }
+.cta-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.cta-msg { background: var(--cream); color: var(--dark); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 14px; cursor: pointer; border: 1.5px solid var(--border); text-decoration: none; font-family: inherit; font-weight: 600; transition: border-color .15s; }
+.cta-msg:hover { border-color: var(--gold); }
+.cta-book { background: var(--gold); color: var(--dark); border: none; border-radius: 10px; padding: 13px 22px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; text-decoration: none; transition: background .15s; }
+.cta-book:hover { background: var(--gold2); }
+
+/* ── SUCCESS STATE ── */
+#success-msg {
+  display: none; background: #E8F5E9; border: 1.5px solid #A5D6A7;
+  border-radius: 12px; padding: 18px 20px; text-align: center;
+  color: #2E7D32; font-weight: 600; font-size: 14px; line-height: 1.6;
+}
+
+@media (max-width: 500px) {
+  .quick-stats { grid-template-columns: repeat(2, 1fr); }
+  .quick-stats .stat-item:nth-child(2) { border-right: none; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="marktplatz.html" class="nav-logo">Party<span>Retter</span></a>
+  <div class="nav-right">
+    <a href="marktplatz.html" class="nav-btn nav-btn-outline">← Marktplatz</a>
+    <a href="anmelden.html"   class="nav-btn nav-btn-gold">Anfrage stellen</a>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <img id="hero-img" src="" alt="Profilbild" />
+  <div class="hero-banner-overlay"></div>
+  <span class="hero-category-badge" id="hero-cat">🍳 Koch</span>
+  <div class="hero-actions">
+    <button class="hero-action-btn" id="fav-btn" title="Zu Favoriten" onclick="toggleFav(this)">🤍</button>
+    <button class="hero-action-btn" title="Teilen" onclick="shareProfile()">📤</button>
+  </div>
+</div>
+
+<!-- PROFILE HEADER -->
+<div class="profile-header">
+  <div class="avatar-wrap">
+    <img class="avatar" id="avatar-img" src="" alt="Avatar" />
+    <div class="verify-dot" title="Verifizierter Anbieter">✓</div>
+  </div>
+  <div class="profile-name-row">
+    <div>
+      <div class="profile-name" id="profile-name">Wird geladen…</div>
+      <div class="profile-tagline" id="profile-tagline"></div>
+      <div class="badge-row">
+        <span class="badge badge-verified">✓ Verifiziert</span>
+        <span class="badge badge-topanbieter" id="badge-top">⭐ Top-Anbieter</span>
+        <span class="badge badge-response" id="badge-resp">⚡ Schnelle Antwort</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK STATS -->
+<div class="quick-stats" id="quick-stats">
+  <!-- filled by JS -->
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- SHARE BAR -->
+  <div class="share-bar">
+    <span class="share-label">Profil teilen:</span>
+    <button class="share-btn" onclick="copyLink()">🔗 Link kopieren</button>
+    <button class="share-btn" onclick="shareWhatsApp()">💬 WhatsApp</button>
+  </div>
+  <div id="copy-toast">✓ Link kopiert!</div>
+
+  <!-- ÜBER MICH -->
+  <div class="card">
+    <div class="card-title">👤 Über mich</div>
+    <div class="about-text clamped" id="about-text"></div>
+    <button class="read-more-btn" id="read-more-btn" onclick="expandAbout()">Mehr lesen ▾</button>
+  </div>
+
+  <!-- LEISTUNGEN -->
+  <div class="card">
+    <div class="card-title">🏷️ Leistungen & Spezialitäten</div>
+    <div class="chip-row" id="chips"></div>
+  </div>
+
+  <!-- ANGEBOTE -->
+  <div class="card">
+    <div class="card-title">📋 Pakete & Preise</div>
+    <div class="offer-list" id="offers"></div>
+  </div>
+
+  <!-- GALERIE -->
+  <div class="card">
+    <div class="card-title">📸 Galerie</div>
+    <div class="gallery-grid" id="gallery"></div>
+  </div>
+
+  <!-- VERFÜGBARKEIT -->
+  <div class="card">
+    <div class="card-title">📅 Verfügbarkeit</div>
+    <div class="avail-dates" id="avail-dates"></div>
+    <p class="avail-note" id="avail-note"></p>
+  </div>
+
+  <!-- BEWERTUNGEN -->
+  <div class="card">
+    <div class="card-title">⭐ Bewertungen</div>
+    <div class="rating-summary" id="rating-summary"></div>
+    <div class="review-list" id="reviews"></div>
+  </div>
+
+  <!-- ANFRAGE-FORMULAR -->
+  <div class="contact-card">
+    <h3>Jetzt Anfrage stellen</h3>
+    <p id="contact-intro">Beschreibe deinen Bedarf – <span id="contact-name-inline">der Anbieter</span> antwortet in der Regel innerhalb weniger Stunden.</p>
+    <div id="success-msg">
+      🎉 Deine Anfrage wurde gesendet!<br>
+      <span id="contact-name-inline2">Der Anbieter</span> meldet sich in Kürze bei dir.<br>
+      <small style="color:#388E3C;font-weight:400">Du bekommst eine Bestätigung an deine E-Mail-Adresse.</small>
+    </div>
+    <form class="contact-form" id="contact-form" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>Dein Name</label>
+          <input type="text" placeholder="Max Mustermann" required />
+        </div>
+        <div class="form-field">
+          <label>E-Mail</label>
+          <input type="email" placeholder="max@email.de" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Datum des Events</label>
+          <input type="date" required />
+        </div>
+        <div class="form-field">
+          <label>Anzahl Gäste</label>
+          <select>
+            <option>bis 20</option>
+            <option>20–50</option>
+            <option>50–100</option>
+            <option>100–200</option>
+            <option>200+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Veranstaltungsort (PLZ/Ort)</label>
+        <input type="text" placeholder="z.B. 80331 München" />
+      </div>
+      <div class="form-field">
+        <label>Deine Nachricht</label>
+        <textarea rows="4" placeholder="Was planst du? Besondere Wünsche, Allergien, Infos zur Feier…" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Anfrage kostenlos senden ✉️</button>
+      <p class="form-note">Keine Vorauszahlung · Kostenlos & unverbindlich · DSGVO-konform</p>
+    </form>
+  </div>
+
+</div><!-- /page-body -->
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <div class="cta-price-block">
+    <div class="cta-price" id="cta-price">ab 45 €</div>
+    <div class="cta-sub"   id="cta-sub">Preis auf Anfrage</div>
+  </div>
+  <a href="#contact-form" class="cta-msg" onclick="scrollToForm()">💬 Schreiben</a>
+  <a href="#contact-form" class="cta-book" onclick="scrollToForm()">Jetzt anfragen</a>
+</div>
+
+<!-- ──────────────────────────────────────────────────────────────
+     PROVIDER DATA
+     In Bubble.io wird dieser Block durch echte DB-Daten ersetzt.
+     Für den Prototyp: URL-Parameter ?id= wählt das Profil aus.
+─────────────────────────────────────────────────────────────── -->
+<script>
+const PROVIDERS = {
+
+  'alessia-cucina': {
+    name: 'Alessia Cucina',
+    tagline: 'Authentische italienische Hausmannskost · Koch für Events',
+    category: '🍝 Privatkoch',
+    coverImg: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&h=380&fit=crop&auto=format',
+    avatarImg: 'https://images.unsplash.com/photo-1607631568010-a87245c0daf5?w=140&h=140&fit=crop&auto=format&q=80',
+    location: '📍 München · Umkreis bis 80 km',
+    stats: [
+      { val: '4,9★', lbl: 'Bewertung' },
+      { val: '12 J.',lbl: 'Erfahrung' },
+      { val: '320+', lbl: 'Events' },
+      { val: '<2 h', lbl: 'Antwortzeit' }
+    ],
+    chips: ['Italienisch','Pasta frisch','Vegetarisch','Vegan möglich','Hochzeit','Dinner-Party','Firmenevents','Menüplanung'],
+    about: 'Ciao! Ich bin Alessia, gebürtige Mailänderin und leidenschaftliche Köchin. Seit über 12 Jahren begeistere ich Gastgeber in München und Umgebung mit authentischer norditalienischer Küche – handgemachte Pasta, knusprige Bruschette und Tiramisù nach Nonnas Rezept.\n\nMein Service reicht vom intimen Candle-Light-Dinner für zwei bis zur eleganten Hochzeitsfeier für 150 Gäste. Ich komme zu dir nach Hause oder an den Veranstaltungsort, kümmere mich um Einkauf, Zubereitung und Küche, und du genießt einfach den Abend.\n\nAlle Zutaten beziehe ich von lokalen Bio-Märkten. Spezialmenüs für Allergiker, Veganer und Vegetarier sind jederzeit möglich.',
+    avail: ['Sa. 22. März', 'So. 23. März', 'Fr. 28. März', 'Sa. 5. April', 'Sa. 12. April'],
+    availNote: '⚡ Anfragen für Freitags & Samstags bitte mindestens 3 Wochen im Voraus.',
+    responseNote: 'Antwortet in der Regel <strong>innerhalb von 2 Stunden</strong>',
+    rating: '4,9',
+    reviewCount: '47',
+    offers: [
+      {
+        name: 'Dinner-Abend',
+        desc: 'Exklusives 3-Gänge-Menü für private Anlässe bis 12 Personen',
+        items: ['Einkauf & Vorbereitung inkl.', '3-Gänge-Menü am Tisch serviert', 'Küche hinterlasse ich sauber', 'Menüabsprache vorab'],
+        price: 'ab 55 €', unit: '/Person', featured: false
+      },
+      {
+        name: 'Party-Buffet',
+        desc: 'Warmes & kaltes Buffet für Geburtstage, Taufen & Feste bis 50 Pers.',
+        items: ['6 Gerichte + Antipasti', 'frische Pasta live gekocht', 'Dessert-Station', 'Aufbau, Service & Abbau'],
+        price: 'ab 42 €', unit: '/Person', featured: true
+      },
+      {
+        name: 'Hochzeitsmenü',
+        desc: 'Unvergessliches 5-Gänge-Menü für euren schönsten Tag',
+        items: ['individuelle Menüplanung', 'Probetermin inklusive', 'bis 150 Personen', 'Servicepersonal optional', 'vegetarische Variante inklusive'],
+        price: 'Auf Anfrage', unit: '', featured: false
+      }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1481931098730-318b6f776db0?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&h=300&fit=crop'
+    ],
+    reviews: [
+      { name: 'Julia B.', date: 'März 2025', stars: '★★★★★', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=72&h=72&fit=crop', text: 'Alessia hat unser Geburtstagsdinner absolut unvergesslich gemacht! Die Pasta war handgemacht und besser als in jedem Restaurant. Sie war super professionell, pünktlich und hat die Küche makellos hinterlassen. 100% Empfehlung!' },
+      { name: 'Markus H.', date: 'Februar 2025', stars: '★★★★★', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=72&h=72&fit=crop', text: 'Wir haben Alessia für unser Firmenevent (35 Personen) gebucht. Das Buffet war fantastisch – frisch, kreativ, authentisch. Mehrere Kollegen haben nach der Rezeptkarte gefragt. Klare 5 Sterne!' },
+      { name: 'Sophie K.', date: 'Januar 2025', stars: '★★★★★', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=72&h=72&fit=crop', text: 'Unser Hochzeitsmenü war ein Traum. Alessia hat alles bis ins Detail geplant, der Probetermin vorab war sehr hilfreich. Unsere Gäste reden heute noch davon!' }
+    ],
+    ctaPrice: 'ab 42 €',
+    ctaSub: 'pro Person, inkl. Zutaten'
+  },
+
+  'asia-streetfood': {
+    name: 'Asia Street Food',
+    tagline: 'Frisch aus dem Wok – Foodtruck für Events & Festivals',
+    category: '🚚 Foodtruck',
+    coverImg: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=900&h=380&fit=crop&auto=format',
+    avatarImg: 'https://images.unsplash.com/photo-1567168563310-3f1cd7e21c02?w=140&h=140&fit=crop&auto=format&q=80',
+    location: '📍 Augsburg · Umkreis bis 120 km',
+    stats: [
+      { val: '4,8★', lbl: 'Bewertung' },
+      { val: '5 J.',  lbl: 'Erfahrung' },
+      { val: '150+', lbl: 'Events' },
+      { val: '<3 h', lbl: 'Antwortzeit' }
+    ],
+    chips: ['Asiatisch','Thai','Wok','Vegan möglich','Halal','Festivals','Firmenfeiern','bis 300 Pers.'],
+    about: 'Unser Asia Street Food Truck bringt authentische asiatische Küche direkt auf deine Veranstaltung! Alles wird frisch vor Ort zubereitet – von Thai-Currys über Wok-Gerichte bis hin zu frischen Frühlingsrollen.\n\nWir sind seit 2019 auf Festivals, Firmenevents, Geburtstagen und Hochzeiten unterwegs und haben uns in Bayern und Baden-Württemberg einen festen Namen gemacht. Unser Truck ist komplett autark (eigener Generator), benötigt keinen externen Strom.\n\nVegane, vegetarische und Halal-Gerichte sind bei uns Standard, nicht Ausnahme.',
+    avail: ['Sa. 15. März', 'Fr. 21. März', 'So. 23. März', 'Sa. 29. März', 'Sa. 5. April'],
+    availNote: '🚚 Fahrtkosten ab 80 km: 0,45 €/km. Anfragen bitte 4 Wochen im Voraus.',
+    responseNote: 'Antwortet in der Regel <strong>innerhalb von 3 Stunden</strong>',
+    rating: '4,8',
+    reviewCount: '33',
+    offers: [
+      { name: 'Halbtagspaket', desc: 'Bis 4 Stunden – perfekt für Geburtstage & kleinere Events', items: ['4h Standzeit','bis 100 Portionen','2 Hauptgerichte','Auf- & Abbau inkl.'], price: '650 €', unit: '/Halbtag', featured: false },
+      { name: 'Ganztagspaket', desc: 'Voller Tag – für Festivals & große Feiern bis 300 Pers.', items: ['bis 8h Standzeit','bis 300 Portionen','4 Gerichte + Getränke','vegane Option inkl.','Auf- & Abbau inkl.'], price: '1.100 €', unit: '/Tag', featured: true },
+      { name: 'Firmenevent', desc: 'Maßgeschneidertes Paket mit optionalem Branding', items: ['individuelles Menü','Branding am Truck möglich','Getränkeservice optional','Preis nach Absprache'], price: 'Auf Anfrage', unit: '', featured: false }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=300&fit=crop'
+    ],
+    reviews: [
+      { name: 'Jonas F.', date: 'Feb. 2025', stars: '★★★★★', avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=72&h=72&fit=crop', text: 'Der Asia Truck war der absolute Hit auf unserer Firmenfeier! Frisches, leckeres Essen und super freundliches Team.' },
+      { name: 'Sandra M.', date: 'Dez. 2024', stars: '★★★★★', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=72&h=72&fit=crop', text: 'Für unser Straßenfest der perfekte Service. Pünktlich, professionell, köstliches Essen. Alle waren begeistert!' },
+      { name: 'Tim K.', date: 'Okt. 2024', stars: '★★★★☆', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=72&h=72&fit=crop', text: 'Toller Foodtruck mit großer Auswahl. Die veganen Optionen waren besonders gut. Gerne wieder!' }
+    ],
+    ctaPrice: 'ab 650 €',
+    ctaSub: 'pro Halbtag, inkl. Auf- & Abbau'
+  }
+};
+
+/* ── Resolve provider ── */
+const params = new URLSearchParams(window.location.search);
+const id = params.get('id') || 'alessia-cucina';
+const p = PROVIDERS[id] || PROVIDERS['alessia-cucina'];
+
+/* ── Update SEO meta ── */
+document.getElementById('page-title').textContent = p.name + ' | Partyretter';
+document.getElementById('page-desc').setAttribute('content', p.tagline + ' – jetzt auf Partyretter anfragen.');
+document.getElementById('og-title').setAttribute('content', p.name + ' | Partyretter');
+document.getElementById('og-desc').setAttribute('content',  p.tagline);
+document.getElementById('og-image').setAttribute('content', p.coverImg);
+
+/* ── Hero & avatar ── */
+document.getElementById('hero-img').src      = p.coverImg;
+document.getElementById('hero-img').alt      = p.name;
+document.getElementById('avatar-img').src    = p.avatarImg;
+document.getElementById('avatar-img').alt    = p.name;
+document.getElementById('hero-cat').textContent = p.category;
+document.getElementById('profile-name').textContent  = p.name;
+document.getElementById('profile-tagline').textContent = p.location;
+
+/* ── Stats ── */
+document.getElementById('quick-stats').innerHTML = p.stats.map(s =>
+  `<div class="stat-item"><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`
+).join('');
+
+/* ── Chips ── */
+document.getElementById('chips').innerHTML = p.chips.map((c, i) =>
+  `<span class="chip${i >= p.chips.length - 2 ? ' highlight' : ''}">${c}</span>`
+).join('');
+
+/* ── About ── */
+document.getElementById('about-text').textContent = p.about;
+
+/* ── Offers ── */
+document.getElementById('offers').innerHTML = p.offers.map(o => `
+  <div class="offer-item${o.featured ? ' featured' : ''}">
+    ${o.featured ? '<span class="offer-recommended">Empfohlen</span>' : ''}
+    <div class="offer-name">${o.name}</div>
+    <div class="offer-desc">${o.desc}</div>
+    <ul class="offer-items">${o.items.map(i => `<li>${i}</li>`).join('')}</ul>
+    <div class="offer-footer">
+      <div class="offer-price">${o.price} <span class="offer-unit">${o.unit}</span></div>
+      <button class="offer-btn" onclick="scrollToForm()">Anfragen</button>
+    </div>
+  </div>`).join('');
+
+/* ── Gallery ── */
+document.getElementById('gallery').innerHTML = p.gallery.map(src =>
+  `<img src="${src}" alt="Galerie" loading="lazy" />`
+).join('');
+
+/* ── Availability ── */
+document.getElementById('avail-dates').innerHTML = p.avail.map(d =>
+  `<span class="avail-date">📅 ${d}</span>`
+).join('');
+document.getElementById('avail-note').textContent = p.availNote;
+
+/* ── Reviews ── */
+document.getElementById('rating-summary').innerHTML = `
+  <div class="rating-big">${p.rating}</div>
+  <div>
+    <div class="rating-stars">★★★★★</div>
+    <div class="rating-count">${p.reviewCount} Bewertungen</div>
+  </div>`;
+
+document.getElementById('reviews').innerHTML = p.reviews.map(r => `
+  <div class="review">
+    <div class="review-header">
+      <div class="reviewer">
+        <img class="reviewer-avatar" src="${r.avatar}" alt="${r.name}" />
+        <div><div class="reviewer-name">${r.name}</div><div class="reviewer-date">${r.date}</div></div>
+      </div>
+      <div class="review-stars">${r.stars}</div>
+    </div>
+    <p class="review-text">${r.text}</p>
+  </div>`).join('');
+
+/* ── Contact section ── */
+document.getElementById('contact-name-inline').textContent  = p.name;
+document.getElementById('contact-name-inline2').textContent = p.name;
+
+/* ── Sticky CTA ── */
+document.getElementById('cta-price').textContent = p.ctaPrice;
+document.getElementById('cta-sub').textContent   = p.ctaSub;
+
+/* ── About expand ── */
+function expandAbout() {
+  const el  = document.getElementById('about-text');
+  const btn = document.getElementById('read-more-btn');
+  el.classList.toggle('clamped');
+  btn.textContent = el.classList.contains('clamped') ? 'Mehr lesen ▾' : 'Weniger ▴';
+}
+
+/* ── Favourites ── */
+function toggleFav(btn) {
+  btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+}
+
+/* ── Scroll to form ── */
+function scrollToForm() {
+  document.querySelector('.contact-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Form submit ── */
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('contact-form').style.display  = 'none';
+  document.getElementById('success-msg').style.display   = 'block';
+}
+
+/* ── Share ── */
+function copyLink() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    const toast = document.getElementById('copy-toast');
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 2500);
+  }).catch(() => {
+    prompt('Link kopieren:', url);
+  });
+}
+
+function shareWhatsApp() {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent('Schau mal – ' + p.name + ' auf Partyretter: ');
+  window.open('https://wa.me/?text=' + text + url, '_blank');
+}
+
+function shareProfile() {
+  if (navigator.share) {
+    navigator.share({ title: p.name + ' | Partyretter', text: p.tagline, url: window.location.href });
+  } else {
+    copyLink();
+  }
+}
+</script>
+
+<script src="cookie-banner.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog & Inspiration – Partyretter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--green:#2D7D46}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+
+nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{height:36px}
+.nav-logo span{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:#ccc;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.btn-nav{background:var(--gold);color:var(--dark);border:none;padding:8px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:none}
+
+/* HERO */
+.blog-hero{background:linear-gradient(135deg,var(--dark) 0%,#2d1a08 100%);padding:70px 60px 60px;position:relative;overflow:hidden}
+.blog-hero::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:rgba(200,146,42,.05)}
+.blog-hero-inner{max-width:1200px;margin:0 auto}
+.blog-tag{display:inline-block;background:rgba(200,146,42,.15);border:1px solid rgba(200,146,42,.3);color:var(--gold);font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:.06em;margin-bottom:16px}
+.blog-hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.2rem,4vw,3.2rem);color:white;margin-bottom:12px;line-height:1.2}
+.blog-hero h1 span{color:var(--gold)}
+.blog-hero p{color:rgba(255,255,255,.7);font-size:1rem;max-width:500px;margin-bottom:32px;line-height:1.7}
+
+/* SEARCH */
+.search-row{display:flex;gap:12px;max-width:600px}
+.search-input{flex:1;padding:13px 20px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none}
+.search-btn{background:var(--gold);color:var(--dark);border:none;padding:13px 24px;border-radius:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.search-btn:hover{background:var(--gold2)}
+
+/* LAYOUT */
+.blog-wrap{max-width:1200px;margin:0 auto;padding:50px 60px}
+.blog-main{display:grid;grid-template-columns:1fr 320px;gap:50px}
+@media(max-width:1000px){.blog-main{grid-template-columns:1fr}}
+
+/* CATEGORY FILTER */
+.cat-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.cat-btn{padding:8px 20px;border-radius:50px;border:2px solid var(--cream2);font-size:.85rem;font-weight:600;cursor:pointer;background:white;transition:all .2s}
+.cat-btn:hover{border-color:var(--gold)}
+.cat-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+
+/* FEATURED ARTICLE */
+.featured-article{border-radius:24px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);margin-bottom:40px;cursor:pointer;transition:transform .3s}
+.featured-article:hover{transform:translateY(-4px)}
+.feat-img{height:340px;background-size:cover;background-position:center;position:relative}
+.feat-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.feat-badge{position:absolute;top:20px;left:20px;background:var(--gold);color:var(--dark);font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:20px;z-index:1}
+.feat-content{position:absolute;bottom:0;left:0;right:0;padding:28px;z-index:1}
+.feat-meta{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:8px}
+.feat-content h2{font-family:'Fraunces',serif;font-weight:900;font-size:1.7rem;color:white;margin-bottom:8px;line-height:1.3}
+.feat-content p{color:rgba(255,255,255,.75);font-size:.88rem;line-height:1.6}
+
+/* ARTICLE GRID */
+.articles-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+@media(max-width:700px){.articles-grid{grid-template-columns:1fr}}
+
+.article-card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);cursor:pointer;transition:all .3s}
+.article-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.art-img{height:180px;background-size:cover;background-position:center}
+.art-body{padding:22px}
+.art-cat{display:inline-block;background:var(--cream2);color:var(--gold);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase}
+.art-title{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px;line-height:1.3}
+.art-excerpt{font-size:.84rem;color:#777;line-height:1.6;margin-bottom:14px}
+.art-footer{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:#bbb}
+.read-more{color:var(--gold);font-weight:600;font-size:.82rem;text-decoration:none}
+.read-more:hover{text-decoration:underline}
+
+/* LOAD MORE */
+.btn-loadmore{display:block;width:100%;padding:14px;background:white;border:2px solid var(--cream2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:40px}
+.btn-loadmore:hover{border-color:var(--gold);color:var(--gold)}
+
+/* LIST ARTICLES (for list view) */
+.article-list{display:none;margin-bottom:40px}
+.art-list-item{background:white;border-radius:16px;padding:24px;display:flex;gap:20px;margin-bottom:16px;cursor:pointer;transition:all .2s;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.art-list-item:hover{box-shadow:0 8px 30px rgba(0,0,0,.1);transform:translateY(-2px)}
+.art-list-img{width:100px;height:80px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0}
+.art-list-body .art-title{font-size:1rem}
+.art-list-body .art-excerpt{font-size:.82rem;margin-bottom:8px}
+
+/* SIDEBAR */
+.blog-sidebar{}
+.sidebar-widget{background:white;border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.sidebar-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--cream2)}
+
+/* POPULAR */
+.popular-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--cream2);cursor:pointer}
+.popular-item:last-child{border:none;padding-bottom:0}
+.pop-num{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;color:var(--cream2);width:24px;flex-shrink:0;line-height:1.2}
+.pop-title{font-size:.85rem;font-weight:600;margin-bottom:3px;line-height:1.4}
+.pop-meta{font-size:.75rem;color:#bbb}
+
+/* TAG CLOUD */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 14px;background:var(--cream2);border-radius:50px;font-size:.8rem;cursor:pointer;transition:all .2s}
+.tag:hover{background:var(--gold);color:white}
+
+/* NEWSLETTER */
+.newsletter-widget{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);color:white;border-radius:18px;padding:28px;margin-bottom:24px}
+.newsletter-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px}
+.newsletter-widget p{font-size:.83rem;color:#aaa;margin-bottom:18px;line-height:1.6}
+.newsletter-input{width:100%;padding:11px 16px;border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;margin-bottom:10px}
+.newsletter-btn{width:100%;background:var(--gold);color:var(--dark);border:none;padding:11px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.newsletter-btn:hover{background:var(--gold2)}
+
+/* RECENT EVENTS */
+.event-mini{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--cream2);cursor:pointer}
+.event-mini:last-child{border:none}
+.event-mini-img{width:55px;height:55px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0}
+.event-mini-title{font-size:.85rem;font-weight:600;margin-bottom:3px;line-height:1.3}
+.event-mini-meta{font-size:.75rem;color:#bbb}
+
+/* PAGINATION */
+.pagination{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.page-btn{width:38px;height:38px;border-radius:8px;border:2px solid var(--cream2);background:white;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.page-btn:hover,.page-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+
+/* FOOTER */
+footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:40px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-col h4{color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;color:#aaa;text-decoration:none;font-size:.85rem;margin-bottom:8px}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;font-size:.8rem;color:#666}
+
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+    .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span style="color:var(--gold)">Mein</span><span style="color:var(--gold2,#e0a430)">Party</span>Retter
+  </div>
+  <ul class="nav-links">
+    <li><a href="homepage.html">Start</a></li>
+    <li><a href="marktplatz.html">Marktplatz</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="preise.html">Preise</a></li>
+  </ul>
+  <a href="registrierung.html" class="btn-nav">Anbieter werden</a>
+</nav>
+
+<!-- HERO -->
+<div class="blog-hero">
+  <div class="blog-hero-inner">
+    <div class="blog-tag">📖 BLOG & INSPIRATION</div>
+    <h1>Ideen für <span>unvergessliche</span><br>Events & Genuss</h1>
+    <p>Trends, Rezepte, Planungstipps und Inspiration für dein nächstes Event – von echten Profis.</p>
+    <div class="search-row">
+      <input type="text" class="search-input" placeholder="Suche nach Themen, Rezepten, Tipps...">
+      <button class="search-btn">🔍 Suchen</button>
+    </div>
+  </div>
+</div>
+
+<div class="blog-wrap">
+
+  <!-- CATEGORY FILTER -->
+  <div class="cat-filter">
+    <div class="cat-btn active" onclick="filterCat(this,'all')">Alle Artikel</div>
+    <div class="cat-btn" onclick="filterCat(this,'inspiration')">✨ Inspiration</div>
+    <div class="cat-btn" onclick="filterCat(this,'rezepte')">🍳 Rezepte</div>
+    <div class="cat-btn" onclick="filterCat(this,'planung')">📋 Eventplanung</div>
+    <div class="cat-btn" onclick="filterCat(this,'trends')">📈 Food Trends</div>
+    <div class="cat-btn" onclick="filterCat(this,'anbieter')">👨‍🍳 Für Anbieter</div>
+    <div class="cat-btn" onclick="filterCat(this,'hochzeit')">💍 Hochzeit</div>
+  </div>
+
+  <div class="blog-main">
+    <!-- ARTICLES COLUMN -->
+    <div>
+
+      <!-- FEATURED -->
+      <div class="featured-article" onclick="location.href='#'">
+        <div class="feat-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80')">
+          <div class="feat-badge">⭐ FEATURED</div>
+          <div class="feat-content">
+            <div class="feat-meta">📈 Food Trends · 5 Min Lesezeit · 12. März 2026</div>
+            <h2>Die 7 größten Food-Trends für Events 2026</h2>
+            <p>Von interaktiven Kochstationen bis zu nachhaltigen Buffets – was deine Gäste 2026 begeistert.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTICLES GRID -->
+      <div class="articles-grid" id="articlesGrid">
+
+        <div class="article-card" data-cat="hochzeit">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">💍 Hochzeit</div>
+            <h3 class="art-title">Hochzeitsmenü: 5 Ideen die alle Gäste begeistern</h3>
+            <p class="art-excerpt">Vom eleganten 4-Gang-Menü bis zum rustikalen BBQ – wir zeigen die beliebtesten Hochzeits-Konzepte...</p>
+            <div class="art-footer">
+              <span>8 Min · 28. Feb 2026</span>
+              <a href="#" class="read-more">Weiterlesen →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="rezepte">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">🍳 Rezept</div>
+            <h3 class="art-title">Pasta e Fagioli: Das ultimative Comfort Food für große Gruppen</h3>
+            <p class="art-excerpt">Dieses norditalienische Nudelgericht lässt sich hervorragend für 20–100 Personen skalieren und...</p>
+            <div class="art-footer">
+              <span>6 Min · 25. Feb 2026</span>
+              <a href="#" class="read-more">Zum Rezept →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="planung">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">📋 Eventplanung</div>
+            <h3 class="art-title">Catering-Budget berechnen: Der komplette Leitfaden 2026</h3>
+            <p class="art-excerpt">Was kostet Catering wirklich? Wir erklären alle Kostenfaktoren und zeigen, wie du clever budgetierst...</p>
+            <div class="art-footer">
+              <span>12 Min · 20. Feb 2026</span>
+              <a href="#" class="read-more">Weiterlesen →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="trends">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">📈 Trend</div>
+            <h3 class="art-title">Vegan & trotzdem festlich: 8 Ideen für pflanzliche Event-Menüs</h3>
+            <p class="art-excerpt">Veganes Catering boomt. So überzeugst du auch Fleischliebhaber mit kreativen, sättigenden Menüs...</p>
+            <div class="art-footer">
+              <span>7 Min · 15. Feb 2026</span>
+              <a href="#" class="read-more">Weiterlesen →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="anbieter">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">👨‍🍳 Für Anbieter</div>
+            <h3 class="art-title">Mehr Buchungen: 10 Profi-Tipps für dein MPR-Profil</h3>
+            <p class="art-excerpt">Diese einfachen Optimierungen verdreifachen deine Anfragen. Mit echten Zahlen aus der Plattform...</p>
+            <div class="art-footer">
+              <span>9 Min · 10. Feb 2026</span>
+              <a href="#" class="read-more">Weiterlesen →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="inspiration">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">✨ Inspiration</div>
+            <h3 class="art-title">Streetfood-Fiesta: So funktioniert ein Foodtruck-Event</h3>
+            <p class="art-excerpt">Foodtrucks sind der heißeste Event-Trend. Wir zeigen wie du mehrere Trucks koordinierst und das Beste rausholst...</p>
+            <div class="art-footer">
+              <span>5 Min · 5. Feb 2026</span>
+              <a href="#" class="read-more">Weiterlesen →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="rezepte">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">🍳 Rezept</div>
+            <h3 class="art-title">Tarte Tatin für 50 Personen: Schritt-für-Schritt mit Video</h3>
+            <p class="art-excerpt">Dieses klassische französische Dessert ist perfekt für große Gruppen – einfach vorzubereiten und immer...</p>
+            <div class="art-footer">
+              <span>10 Min · 1. Feb 2026</span>
+              <a href="#" class="read-more">Zum Rezept →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-card" data-cat="planung">
+          <div class="art-img" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80')"></div>
+          <div class="art-body">
+            <div class="art-cat">📋 Eventplanung</div>
+            <h3 class="art-title">Allergene managen: Der Leitfaden für Veranstalter</h3>
+            <p class="art-excerpt">Nüsse, Gluten, Laktose – so kommunizierst du Allergene professionell und hältst alle Gäste sicher...</p>
+            <div class="art-footer">
+              <span>6 Min · 28. Jan 2026</span>
+              <a href="#" class="read-more">Weiterlesen →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="btn-loadmore" onclick="loadMore()">Weitere Artikel laden ↓</button>
+
+      <div class="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">···</button>
+        <button class="page-btn">12</button>
+        <button class="page-btn">→</button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="blog-sidebar">
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter-widget">
+        <h3>📬 Newsletter</h3>
+        <p>Wöchentlich die besten Rezepte, Eventideen und Insider-Tipps – kostenlos in dein Postfach.</p>
+        <input type="email" class="newsletter-input" placeholder="deine@email.de">
+        <button class="newsletter-btn" onclick="subscribeNewsletter()">Abonnieren 🚀</button>
+
+        <!-- KOMMENDE VERANSTALTUNGEN IM NEWSLETTER-WIDGET -->
+        <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.12);">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,0.45);margin-bottom:12px;">🗓️ Nächste Veranstaltungen</div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+
+            <a href="kochevents.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;background:rgba(255,255,255,0.07);border-radius:10px;padding:9px 11px;transition:background .2s;" onmouseover="this.style.background='rgba(200,146,42,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+              <div style="flex-shrink:0;width:42px;height:42px;border-radius:8px;overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=100&q=80" alt="" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:.82rem;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Pasta-Masterclass Stuttgart</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,0.55);margin-top:2px;">22. März · 79 € · <span style="color:#6ee06e;">4 Plätze frei</span></div>
+              </div>
+            </a>
+
+            <a href="kochevents.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;background:rgba(255,255,255,0.07);border-radius:10px;padding:9px 11px;transition:background .2s;" onmouseover="this.style.background='rgba(200,146,42,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+              <div style="flex-shrink:0;width:42px;height:42px;border-radius:8px;overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=100&q=80" alt="" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:.82rem;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Sushi-Abend München</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,0.55);margin-top:2px;">28. März · 95 € · <span style="color:#6ee06e;">6 Plätze frei</span></div>
+              </div>
+            </a>
+
+            <a href="kochevents.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;background:rgba(255,255,255,0.07);border-radius:10px;padding:9px 11px;transition:background .2s;" onmouseover="this.style.background='rgba(200,146,42,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+              <div style="flex-shrink:0;width:42px;height:42px;border-radius:8px;overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=100&q=80" alt="" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:.82rem;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Vegane Tapas-Night Frankfurt</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,0.55);margin-top:2px;">5. Apr · 65 € · <span style="color:rgba(255,200,60,.9);">2 Plätze frei</span></div>
+              </div>
+            </a>
+
+            <a href="kochevents.html" style="display:flex;gap:10px;align-items:center;text-decoration:none;background:rgba(255,255,255,0.07);border-radius:10px;padding:9px 11px;transition:background .2s;" onmouseover="this.style.background='rgba(200,146,42,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+              <div style="flex-shrink:0;width:42px;height:42px;border-radius:8px;overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=100&q=80" alt="" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:.82rem;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Fine Dining Dinner Hamburg</div>
+                <div style="font-size:.72rem;color:rgba(255,255,255,0.55);margin-top:2px;">12. Apr · 125 € · <span style="color:#6ee06e;">10 Plätze frei</span></div>
+              </div>
+            </a>
+
+          </div>
+
+          <a href="kochevents.html" style="display:block;text-align:center;margin-top:12px;padding:9px;background:rgba(255,255,255,0.1);color:var(--gold);text-decoration:none;border-radius:8px;font-size:.8rem;font-weight:700;letter-spacing:.02em;">Alle Events ansehen →</a>
+        </div>
+      </div>
+
+      <!-- POPULAR -->
+      <div class="sidebar-widget">
+        <h3>🔥 Beliebteste Artikel</h3>
+        <div class="popular-item">
+          <div class="pop-num">01</div>
+          <div>
+            <div class="pop-title">Die 7 größten Food-Trends 2026</div>
+            <div class="pop-meta">12.847 Leser · Food Trends</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">02</div>
+          <div>
+            <div class="pop-title">Catering-Budget richtig berechnen</div>
+            <div class="pop-meta">8.312 Leser · Eventplanung</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">03</div>
+          <div>
+            <div class="pop-title">10 Profi-Tipps für dein MPR-Profil</div>
+            <div class="pop-meta">6.120 Leser · Für Anbieter</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">04</div>
+          <div>
+            <div class="pop-title">Hochzeitsmenü: 5 Ideen</div>
+            <div class="pop-meta">5.890 Leser · Hochzeit</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">05</div>
+          <div>
+            <div class="pop-title">Vegan & trotzdem festlich</div>
+            <div class="pop-meta">4.703 Leser · Trends</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPCOMING EVENTS -->
+      <div class="sidebar-widget">
+        <h3>🎉 Aktuelle Koch-Events</h3>
+        <div class="event-mini" onclick="location.href='kochevents.html'">
+          <div class="event-mini-img" style="background-image:url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=200&q=80')"></div>
+          <div>
+            <div class="event-mini-title">Pasta-Masterclass Stuttgart</div>
+            <div class="event-mini-meta">22. März · 79 € p.P. · 4 Plätze frei</div>
+          </div>
+        </div>
+        <div class="event-mini" onclick="location.href='kochevents.html'">
+          <div class="event-mini-img" style="background-image:url('https://images.unsplash.com/photo-1553621042-f6e147245754?w=200&q=80')"></div>
+          <div>
+            <div class="event-mini-title">Sushi-Abend München</div>
+            <div class="event-mini-meta">28. März · 95 € p.P. · 6 Plätze frei</div>
+          </div>
+        </div>
+        <div class="event-mini" onclick="location.href='kochevents.html'">
+          <div class="event-mini-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=80')"></div>
+          <div>
+            <div class="event-mini-title">Vegane Tapas-Night</div>
+            <div class="event-mini-meta">5. Apr · 65 € p.P. · 8 Plätze frei</div>
+          </div>
+        </div>
+        <a href="kochevents.html" style="display:block;text-align:center;background:var(--cream);color:var(--gold);text-decoration:none;padding:10px;border-radius:10px;font-size:.85rem;font-weight:700;margin-top:12px">Alle Events ansehen →</a>
+      </div>
+
+      <!-- TAGS -->
+      <div class="sidebar-widget">
+        <h3>🏷️ Themen</h3>
+        <div class="tag-cloud">
+          <span class="tag">Rezepte</span>
+          <span class="tag">Hochzeit</span>
+          <span class="tag">Vegan</span>
+          <span class="tag">Buffet</span>
+          <span class="tag">Foodtruck</span>
+          <span class="tag">Trends 2026</span>
+          <span class="tag">Planung</span>
+          <span class="tag">Budget</span>
+          <span class="tag">Allergene</span>
+          <span class="tag">Firmenevent</span>
+          <span class="tag">BBQ</span>
+          <span class="tag">Pasta</span>
+          <span class="tag">Sushi</span>
+          <span class="tag">Geburtstag</span>
+          <span class="tag">Tipps</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);border-radius:18px;padding:28px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:10px">👨‍🍳</div>
+        <h3 style="font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px">Bist du Koch oder Anbieter?</h3>
+        <p style="font-size:.83rem;color:rgba(0,0,0,.7);margin-bottom:16px;line-height:1.5">Schreibe für unseren Blog und teile dein Fachwissen mit tausenden Lesern!</p>
+        <a href="anbieter-onboarding.html" style="display:block;background:var(--dark);color:white;text-decoration:none;padding:11px;border-radius:10px;font-weight:700;font-size:.88rem">Artikel einreichen</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Partyretter</h4>
+      <a href="homepage.html">Start</a>
+      <a href="marktplatz.html">Marktplatz</a>
+      <a href="kochevents.html">Koch-Events</a>
+      <a href="preise.html">Preise</a>
+    </div>
+    <div class="footer-col">
+      <h4>Blog-Kategorien</h4>
+      <a href="blog.html?kat=inspiration">✨ Inspiration</a>
+      <a href="blog.html?kat=rezepte">🍳 Rezepte</a>
+      <a href="blog.html?kat=events">📋 Eventplanung</a>
+      <a href="blog.html?kat=trends">📈 Food Trends</a>
+    </div>
+    <div class="footer-col">
+      <h4>Anbieter</h4>
+      <a href="anbieter-onboarding.html">Anbieter werden</a>
+      <a href="preise.html">Preismodell</a>
+      <a href="onboarding-wizard.html">Quick-Setup</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="agb.html">AGB</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Partyretter GmbH</span>
+    <span>Made with ❤️ für Foodie-Events</span>
+  </div>
+</footer>
+
+<script>
+function filterCat(el, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+
+  const cards = document.querySelectorAll('.article-card');
+  cards.forEach(c => {
+    if (cat === 'all' || c.dataset.cat === cat) {
+      c.style.display = 'block';
+    } else {
+      c.style.display = 'none';
+    }
+  });
+}
+
+function loadMore() {
+  const btn = event.target;
+  btn.textContent = '⏳ Wird geladen...';
+  setTimeout(() => {
+    btn.textContent = 'Weitere Artikel laden ↓';
+    // In production this would fetch more articles
+  }, 800);
+}
+
+function subscribeNewsletter() {
+  const input = document.querySelector('.newsletter-input');
+  if (input.value && input.value.includes('@')) {
+    input.style.display = 'none';
+    const btn = document.querySelector('.newsletter-btn');
+    btn.textContent = '✅ Angemeldet!';
+    btn.style.background = '#2D7D46';
+    btn.disabled = true;
+  }
+}
+</script>
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+</body>
+</html>
