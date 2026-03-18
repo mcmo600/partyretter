@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# Admin- und Dashboard-Seiten nicht indexieren
+Disallow: /admin-dashboard.html
+Disallow: /anbieter-dashboard.html
+Disallow: /koch-dashboard.html
+Disallow: /kunden-dashboard.html
+Disallow: /werbekunden-dashboard.html
+Disallow: /Partyretter_Dashboard.html
+Disallow: /buchhaltung.html
+Disallow: /steuerdaten.html
+Disallow: /anbieter-checkliste-druck.html
+Disallow: /START.html
+Disallow: /_ZUM_LÖSCHEN/
+
+# Checkout und Buchungsflows nicht indexieren
+Disallow: /checkout.html
+Disallow: /buchung-bestaetigung.html
+Disallow: /anfrage-stellen.html
+Disallow: /angebot-erstellen.html
+
+# Interne Tools
+Disallow: /einkaufszettel.html
+Disallow: /menu-erstellen.html
+Disallow: /event-anlegen.html
+Disallow: /event-ausschreiben.html
+Disallow: /profil.html
+Disallow: /nachrichten.html
+
+# Sitemap
+Sitemap: https://www.partyretter.com/sitemap.xml

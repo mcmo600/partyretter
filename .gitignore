@@ -1,5 +1,6 @@
 _ZUM_LÖSCHEN/
 *.zip
 *.txt
+!robots.txt
 .DS_Store
 Thumbs.db
