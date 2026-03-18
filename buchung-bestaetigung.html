@@ -671,7 +671,7 @@
             <div class="iban-label" style="margin-top:10px;">IBAN</div>
             <div class="iban-val">DE89 3704 0044 0532 0130 00</div>
             <div class="iban-label" style="margin-top:10px;">Verwendungszweck (wird nach Buchung generiert)</div>
-            <div class="iban-val" style="color: var(--gold);">MPR-2026-XXXX</div>
+            <div class="iban-val" style="color: var(--gold);">PR-2026-XXXX</div>
             <div class="iban-note">⚠️ Bitte immer den Verwendungszweck angeben, sonst kann die Zahlung nicht zugeordnet werden.</div>
           </div>
         </div>
@@ -867,7 +867,7 @@
   <h1>Buchung erfolgreich! 🎉</h1>
   <p>Deine verbindliche Buchung wurde registriert.<br>Du erhältst in Kürze eine Bestätigungs-E-Mail an <strong>anna.becker@gmail.com</strong></p>
 
-  <div class="booking-ref" id="booking-ref">MPR-2026-4821</div>
+  <div class="booking-ref" id="booking-ref">PR-2026-4821</div>
 
   <div class="success-steps">
     <h3>Was passiert als nächstes?</h3>
@@ -882,7 +882,7 @@
       <div class="step-num">2</div>
       <div class="step-text" id="success-step2-text">
         <h4>Anzahlung überweisen (innerhalb 48h)</h4>
-        <p>Überweise die Anzahlung (30% = €344,93) auf das Partyretter Treuhandkonto. Verwendungszweck: <strong id="success-ref">MPR-2026-4821</strong></p>
+        <p>Überweise die Anzahlung (30% = €344,93) auf das Partyretter Treuhandkonto. Verwendungszweck: <strong id="success-ref">PR-2026-4821</strong></p>
       </div>
     </div>
     <div class="step-item">
@@ -907,7 +907,7 @@
   </div>
 
   <p style="margin-top: 24px; font-size: 0.8rem; color: #aaa;">
-    Buchungs-Referenz: <strong id="ref-footer">MPR-2026-4821</strong> ·
+    Buchungs-Referenz: <strong id="ref-footer">PR-2026-4821</strong> ·
     <a href="#" style="color: var(--gold); text-decoration: none;">Buchung herunterladen (PDF)</a>
   </p>
 </div>
@@ -949,8 +949,8 @@
 
     // Erfolgsscreen Schritt 2
     document.getElementById('success-step2-text').innerHTML = isFullPayment
-      ? '<h4>Gesamtbetrag überweisen (innerhalb 48h)</h4><p>Überweise den Gesamtbetrag (' + formatEuro(TOTAL_AMOUNT) + ') auf das Partyretter Treuhandkonto. Verwendungszweck: <strong id="success-ref">MPR-2026-4821</strong></p>'
-      : '<h4>Anzahlung überweisen (innerhalb 48h)</h4><p>Überweise die Anzahlung (30% = ' + formatEuro(depositAmount) + ') auf das Partyretter Treuhandkonto. Verwendungszweck: <strong id="success-ref">MPR-2026-4821</strong></p>';
+      ? '<h4>Gesamtbetrag überweisen (innerhalb 48h)</h4><p>Überweise den Gesamtbetrag (' + formatEuro(TOTAL_AMOUNT) + ') auf das Partyretter Treuhandkonto. Verwendungszweck: <strong id="success-ref">PR-2026-4821</strong></p>'
+      : '<h4>Anzahlung überweisen (innerhalb 48h)</h4><p>Überweise die Anzahlung (30% = ' + formatEuro(depositAmount) + ') auf das Partyretter Treuhandkonto. Verwendungszweck: <strong id="success-ref">PR-2026-4821</strong></p>';
 
     // Schritt 4 (Restzahlung) ausblenden wenn Vollbezahlung
     const step4 = document.getElementById('success-step4');
@@ -1000,7 +1000,7 @@
     // Simulate processing
     setTimeout(() => {
       // Generate reference
-      const ref = 'MPR-2026-' + Math.floor(1000 + Math.random() * 9000);
+      const ref = 'PR-2026-' + Math.floor(1000 + Math.random() * 9000);
       document.getElementById('booking-ref').textContent = ref;
       document.getElementById('success-ref').textContent = ref;
       document.getElementById('ref-footer').textContent = ref;
