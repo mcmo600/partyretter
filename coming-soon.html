@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bald verfuegbar – Partyretter</title>
+  <meta name="description" content="Diese Funktion ist bald verfuegbar. Wir arbeiten gerade an diesem Bereich." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dark:   #1A1208;
+      --dark2:  #2d1f0e;
+      --gold:   #C8922A;
+      --gold2:  #e0a430;
+      --cream:  #F5F0E8;
+      --cream2: #EDE8DF;
+      --text:   #1A1208;
+      --muted:  rgba(26,18,8,0.55);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: linear-gradient(140deg, #0e0a05 0%, #1A1208 55%, #2d1f0e 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 66px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.45);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif; font-size: 20px; font-weight: 900;
+      color: var(--cream); text-decoration: none; letter-spacing: -0.3px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo .logo-accent { color: var(--gold); }
+
+    /* ── MAIN ── */
+    .coming-soon {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .coming-soon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(200,146,42,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 30% 70%, rgba(201,168,76,0.08) 0%, transparent 50%);
+    }
+
+    .card {
+      position: relative;
+      background: rgba(245,240,232,0.04);
+      border: 1px solid rgba(200,146,42,0.18);
+      border-radius: 20px;
+      padding: 56px 48px;
+      max-width: 540px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 28px;
+      background: rgba(200,146,42,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(200,146,42,0.25);
+    }
+    .icon svg {
+      width: 30px;
+      height: 30px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.65);
+      margin-bottom: 36px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-back:hover {
+      background: var(--gold2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200,146,42,0.3);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: rgba(245,240,232,0.35);
+      font-size: 13px;
+    }
+    footer a {
+      color: rgba(245,240,232,0.5);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .card { padding: 40px 28px; }
+      .card h1 { font-size: 24px; }
+      .card p { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="homepage.html">
+      <span class="logo-accent">Party</span>retter
+    </a>
+  </nav>
+
+  <main class="coming-soon">
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+      </div>
+      <h1>Diese Funktion ist bald verfuegbar</h1>
+      <p>Wir arbeiten gerade an diesem Bereich. Bald kannst du hier buchen, anfragen und mehr.</p>
+      <a href="homepage.html" class="btn-back">Zurueck zur Startseite</a>
+    </div>
+  </main>
+
+  <footer>
+    <a href="impressum.html">Impressum</a> &middot;
+    <a href="datenschutz.html">Datenschutz</a> &middot;
+    <a href="agb.html">AGB</a>
+  </footer>
+
+  <script src="cookie-banner.js"></script>
+</body>
+</html>
