@@ -80,13 +80,17 @@
 
     /* ── MENUS SECTION ── */
     .menu-section{border-top:1.5px solid var(--cream2);overflow:hidden;}
-    .menu-section .menu-grid{display:none;padding:0 20px 16px;}
-    .menu-section.open .menu-grid{display:grid;}
+    .menu-section .menu-grid{padding:0 20px 16px;}
+    .menu-collapse{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+    .menu-section.open .menu-collapse{max-height:1200px;transition:max-height .45s ease;}
     .menu-toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;cursor:pointer;background:none;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background .15s;}
     .menu-toggle:hover{background:rgba(200,146,42,.04);}
     .menu-toggle h3{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px;margin:0;}
-    .menu-toggle .toggle-arrow{font-size:13px;color:var(--muted);transition:transform .2s;font-weight:600;}
+    .menu-toggle-label{font-size:12.5px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:6px;}
+    .menu-toggle .toggle-arrow{font-size:11px;color:var(--gold);transition:transform .3s ease;font-weight:600;}
     .menu-section.open .menu-toggle .toggle-arrow{transform:rotate(180deg);}
+    .menu-section.open .menu-toggle-text::after{content:'Menü ausblenden';}
+    .menu-toggle-text::after{content:'Menü anzeigen';}
     .menu-section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
     .menu-section-title h3{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px;}
     .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -139,8 +143,8 @@
     <li><a href="kochevents.html">Koch-Events</a></li>
   </ul>
   <div class="nav-actions">
-    <a class="btn-login" href="coming-soon.html">Anmelden</a>
-    <a class="btn-cta" href="coming-soon.html">Anbieter werden</a>
+    <a class="btn-login" href="https://meinpartyretter.de/login">Anmelden</a>
+    <a class="btn-cta" href="https://meinpartyretter.de/registrierung">Anbieter werden</a>
   </div>
 </nav>
 
@@ -225,9 +229,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Marco Bianchi · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <!-- Menü 1 -->
         <div class="menu-card">
@@ -282,6 +286,7 @@
         </div>
 
       </div>
+      </div>
     </div>
 
     <div class="cook-actions">
@@ -335,9 +340,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Sophie Kühn · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=480&h=210&fit=crop&auto=format" alt="Französisches Dinner" loading="lazy"/></div>
@@ -389,6 +394,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -444,9 +450,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von David Stern · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1617196034183-421b4040d2ab?w=480&h=210&fit=crop&auto=format" alt="Sushi Platter" loading="lazy"/></div>
@@ -497,6 +503,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -552,9 +559,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Lena Richter · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f1e70b?w=480&h=210&fit=crop&auto=format" alt="Veganes Gemüse-Dinner" loading="lazy"/></div>
@@ -605,6 +612,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -659,9 +667,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Rafael Morales · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1535920527002-b35e96722eb9?w=480&h=210&fit=crop&auto=format" alt="Tapas Selection" loading="lazy"/></div>
@@ -712,6 +720,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -766,9 +775,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Stefan Müller · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=480&h=210&fit=crop&auto=format" alt="American BBQ Ribs" loading="lazy"/></div>
@@ -819,6 +828,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -873,9 +883,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Yuki Tanaka · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=480&h=210&fit=crop&auto=format" alt="Japanisches Kaiseki" loading="lazy"/></div>
@@ -927,6 +937,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -981,9 +992,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Thomas Bergmann · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=480&h=210&fit=crop&auto=format" alt="Bayrisches Fest" loading="lazy"/></div>
@@ -1034,6 +1045,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -1088,9 +1100,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Claudia Sommer · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=480&h=210&fit=crop&auto=format" alt="Fusion Around World" loading="lazy"/></div>
@@ -1142,6 +1154,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
@@ -1196,9 +1209,9 @@
     <div class="menu-section">
       <button class="menu-toggle" onclick="this.closest('.menu-section').classList.toggle('open')">
         <h3>🍽 Menüs von Dr. Ernst Kellner · <span style="font-weight:500;font-size:12px;color:var(--muted);">3 Pakete</span></h3>
-        <span class="toggle-arrow">▼</span>
+        <span class="menu-toggle-label"><span class="menu-toggle-text"></span> <span class="toggle-arrow">▼</span></span>
       </button>
-      <div class="menu-grid">
+      <div class="menu-collapse"><div class="menu-grid">
 
         <div class="menu-card">
           <div class="menu-img"><img src="https://images.unsplash.com/photo-1560717887-3f9bbc3f9d97?w=480&h=210&fit=crop&auto=format" alt="Wine Dinner" loading="lazy"/></div>
@@ -1251,6 +1264,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
 
