@@ -8,14 +8,15 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:#fff;color:#1a1a1a}
-:root{--gold:#C9A84C;--dark:#1a1a1a;--light:#f7f4ef;--card:#fff;--text:#333}
+:root{--gold:#C8922A;--cream:#F5F0E8;--dark:#1a1a1a;--light:#f7f4ef;--card:#fff;--text:#333}
 
 /* SLOGAN */
 .hero-slogan{display:inline-block;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 24px;border-radius:50px;margin-bottom:24px;}
 
 /* NAV */
 nav{background:var(--dark);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Fraunces',serif;color:var(--gold);font-size:1.3rem;font-weight:700;text-decoration:none}
+.nav-logo{font-family:'Fraunces',serif;color:var(--gold);font-size:1.3rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo img{height:38px;width:auto}
 .nav-links{display:flex;gap:24px;align-items:center}
 .nav-links a{color:#ccc;text-decoration:none;font-size:.9rem;transition:color .2s}
 .nav-links a:hover{color:var(--gold)}
@@ -134,7 +135,7 @@ footer{background:#111;padding:48px 40px 28px;color:#888}
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo"><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></a>
+  <a href="homepage.html" class="nav-logo"><img src="logo.png" alt="Partyretter" style="height:38px;width:auto;"><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></a>
   <div class="nav-links">
     <a href="/anbieter-vorteile">Für Köche</a>
     <a href="/index">Marktplatz</a>

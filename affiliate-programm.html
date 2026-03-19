@@ -49,6 +49,20 @@
             letter-spacing: -0.5px;
         }
 
+        .nav-logo {
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo img {
+            height: 38px;
+            width: auto;
+        }
+
         nav a:hover {
             color: var(--gold);
         }
@@ -650,7 +664,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="index.html">Partyretter</a>
+        <a href="homepage.html" class="nav-logo"><img src="logo.png" alt="Partyretter" style="height:38px;width:auto;"><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></a>
       <div class="nav-actions">
       <a class="btn-nav-outline" href="START.html">🗺️ Alle Seiten</a>
       <a class="btn-nav-outline" href="coming-soon.html">Anmelden</a>

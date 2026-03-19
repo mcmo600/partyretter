@@ -11,7 +11,7 @@
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
 
 nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-logo img{height:36px}
 .nav-logo span{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem}
 .nav-links{display:flex;gap:24px;list-style:none}
@@ -138,9 +138,9 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
 <body>
 
 <nav>
-  <div class="nav-logo">
-    <span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span>
-  </div>
+  <a class="nav-logo" href="homepage.html">
+    <img src="logo.png" alt="Partyretter" style="height:38px;width:auto;"><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span>
+  </a>
   <ul class="nav-links">
     <li><a href="homepage.html">Start</a></li>
     <li><a href="coming-soon.html">Marktplatz</a></li>
@@ -510,6 +510,7 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
 
 <!-- FOOTER -->
 <footer>
+  <div style="margin-bottom:20px;"><img src="logo.png" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;"></div>
   <div class="footer-grid">
     <div class="footer-col">
       <h4>Partyretter</h4>

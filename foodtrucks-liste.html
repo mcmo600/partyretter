@@ -18,8 +18,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--cream);
 
 /* ── NAV ── */
 nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.4);}
-.nav-logo{font-family:'Fraunces',serif;font-size:19px;font-weight:900;color:var(--cream);text-decoration:none;}
-.nav-logo .g{color:var(--gold2);} .nav-logo .a{color:var(--gold);}
+.nav-logo{font-family:'Fraunces',serif;font-size:19px;font-weight:900;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:38px;width:auto;}
 .nav-links{display:flex;gap:22px;list-style:none;}
 .nav-links a{color:rgba(245,240,232,.75);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;}
 .nav-links a:hover{color:var(--gold);}
@@ -136,7 +136,7 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="homepage.html">
-    <span class="g">Party</span><span class="a">retter</span>
+    <img src="logo.png" alt="Partyretter" style="height:38px;width:auto;"><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span>
   </a>
   <ul class="nav-links">
     <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
