@@ -113,12 +113,13 @@
     .hero > * { position: relative; }
     .hero h1 {
       font-family: 'Fraunces', serif; font-size: clamp(28px, 3.8vw, 52px);
-      font-weight: 900; color: var(--cream); line-height: 1.05;
+      font-weight: 900; color: #FFFFFF; line-height: 1.05;
       margin: 0 0 10px; max-width: 600px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
-    .hero h1 .h-gold { color: var(--gold); }
+    .hero h1 .h-gold { color: #E8B04A; }
     .hero-sub {
-      font-size: 15px; color: rgba(245,240,232,0.60);
+      font-size: 15px; color: rgba(245,240,232,0.88);
       max-width: 480px; margin: 0 0 24px; line-height: 1.5;
     }
 
@@ -681,20 +682,7 @@
     <button class="search-btn" onclick="doSearch()">🔍</button>
   </div>
 
-  <!-- TRUST BAR -->
-  <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;padding:0 2px;">
-    <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(245,240,232,0.72);font-weight:500;">
-      <span style="color:var(--gold);font-size:13px;">✓</span><span data-i18n="trust_providers">1.200+ Anbieter</span>
-    </span>
-    <span style="color:rgba(245,240,232,0.25);font-size:12px;">|</span>
-    <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(245,240,232,0.72);font-weight:500;">
-      <span style="color:var(--gold);">★</span><span data-i18n="trust_rating">4,8 / 5 Bewertungen</span>
-    </span>
-    <span style="color:rgba(245,240,232,0.25);font-size:12px;">|</span>
-    <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(245,240,232,0.72);font-weight:500;">
-      <span style="color:var(--gold);">🎉</span><span data-i18n="trust_events">8.000+ Events organisiert</span>
-    </span>
-  </div>
+  <!-- TRUST BAR (ausgeblendet – wird später mit echten Zahlen eingebaut) -->
 
   <!-- SUCHE SPEICHERN BUTTON -->
   <div class="search-box" id="tabAnbieten" style="display:none;">
