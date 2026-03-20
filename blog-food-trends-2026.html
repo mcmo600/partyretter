@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Die 7 größten Food-Trends für Events 2026 – Partyretter Blog</title>
+<meta name="description" content="Von interaktiven Kochstationen bis zu nachhaltigen Buffets: Entdecke die 7 wichtigsten Food-Trends, die Events 2026 prägen werden.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--green:#2D7D46}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+
+nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:36px}
+.nav-logo span{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:#ccc;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.btn-nav{background:var(--gold);color:var(--dark);border:none;padding:8px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:none}
+
+/* ARTICLE HERO */
+.article-hero{position:relative;height:480px;background-size:cover;background-position:center;display:flex;align-items:flex-end}
+.article-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(26,18,8,.85) 100%)}
+.article-hero-inner{position:relative;z-index:1;max-width:820px;padding:50px 60px 50px;width:100%}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:.85rem;text-decoration:none;margin-bottom:18px;transition:color .2s}
+.back-link:hover{color:var(--gold)}
+.article-tag{display:inline-block;background:rgba(200,146,42,.2);border:1px solid rgba(200,146,42,.4);color:var(--gold);font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px}
+.article-hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.8rem,3.5vw,2.8rem);color:white;line-height:1.2;margin-bottom:16px}
+.article-meta{display:flex;gap:20px;color:rgba(255,255,255,.6);font-size:.85rem;flex-wrap:wrap}
+.article-meta span{display:flex;align-items:center;gap:5px}
+
+/* LAYOUT */
+.article-wrap{max-width:1200px;margin:0 auto;padding:50px 60px}
+.article-grid{display:grid;grid-template-columns:1fr 320px;gap:50px}
+@media(max-width:1000px){.article-grid{grid-template-columns:1fr}}
+
+/* ARTICLE CONTENT */
+.article-content{max-width:760px}
+.article-content p{font-size:1.02rem;line-height:1.8;color:#3a3020;margin-bottom:22px}
+.article-content h2{font-family:'Fraunces',serif;font-weight:900;font-size:1.6rem;margin-top:44px;margin-bottom:16px;color:var(--dark);line-height:1.3}
+.article-content h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;margin-top:28px;margin-bottom:10px;color:var(--dark)}
+.article-content strong{color:var(--dark);font-weight:600}
+.article-content ul,.article-content ol{margin:0 0 22px 24px;line-height:1.8;font-size:1rem;color:#3a3020}
+.article-content li{margin-bottom:6px}
+.article-content blockquote{border-left:4px solid var(--gold);margin:28px 0;padding:16px 24px;background:white;border-radius:0 12px 12px 0;font-style:italic;color:#555;font-size:.98rem;line-height:1.7}
+.trend-number{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--dark);font-family:'Fraunces',serif;font-weight:900;font-size:1rem;margin-right:10px;flex-shrink:0;vertical-align:middle}
+.article-intro{font-size:1.12rem;line-height:1.8;color:#3a3020;margin-bottom:28px;font-weight:500}
+.divider{width:60px;height:3px;background:var(--gold);border-radius:3px;margin:40px 0}
+
+/* CTA BOX */
+.cta-box{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);border-radius:20px;padding:40px;margin-top:50px;text-align:center}
+.cta-box h2{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;color:white;margin-bottom:12px}
+.cta-box p{color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.7;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--dark);text-decoration:none;padding:14px 36px;border-radius:12px;font-weight:700;font-size:1rem;transition:all .2s}
+.cta-btn:hover{background:var(--gold2);transform:translateY(-2px)}
+
+/* SIDEBAR */
+.blog-sidebar{}
+.sidebar-widget{background:white;border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.sidebar-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--cream2)}
+.sidebar-article{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--cream2);text-decoration:none;color:var(--dark);transition:all .2s}
+.sidebar-article:last-child{border:none;padding-bottom:0}
+.sidebar-article:hover .sa-title{color:var(--gold)}
+.sa-img{width:70px;height:56px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0}
+.sa-title{font-size:.85rem;font-weight:600;margin-bottom:4px;line-height:1.4;transition:color .2s}
+.sa-meta{font-size:.73rem;color:#aaa}
+
+/* TAG CLOUD */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 14px;background:var(--cream2);border-radius:50px;font-size:.8rem;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--dark)}
+.tag:hover{background:var(--gold);color:white}
+
+/* NEWSLETTER */
+.newsletter-widget{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);color:white;border-radius:18px;padding:28px;margin-bottom:24px}
+.newsletter-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px;border:none;padding:0;color:white}
+.newsletter-widget p{font-size:.83rem;color:#aaa;margin-bottom:18px;line-height:1.6}
+.newsletter-input{width:100%;padding:11px 16px;border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;margin-bottom:10px}
+.newsletter-btn{width:100%;background:var(--gold);color:var(--dark);border:none;padding:11px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.newsletter-btn:hover{background:var(--gold2)}
+
+/* FOOTER */
+footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:40px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-col h4{color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;color:#aaa;text-decoration:none;font-size:.85rem;margin-bottom:8px}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;font-size:.8rem;color:#666}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:12px 20px;flex-wrap:wrap;gap:10px}
+  .nav-links{gap:14px}
+  .article-hero{height:380px}
+  .article-hero-inner{padding:30px 24px 30px}
+  .article-wrap{padding:30px 24px}
+  .article-grid{grid-template-columns:1fr}
+  .article-content h2{font-size:1.35rem;margin-top:34px}
+  footer{padding:40px 24px 20px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+}
+@media(max-width:480px){
+  .nav-links{display:none}
+  .article-hero{height:320px}
+  .article-meta{flex-direction:column;gap:6px}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* FLOATING HOME BUTTON */
+.fab-home{position:fixed;bottom:28px;left:28px;z-index:9999;background:#D4A017;color:#1a1208;border:none;border-radius:50px;padding:12px 20px;font-size:.88rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(0,0,0,.35);text-decoration:none;transition:transform .18s,box-shadow .18s,background .18s}
+.fab-home:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.45);background:#e6b422}
+.fab-home svg{flex-shrink:0}
+@media(max-width:480px){.fab-home{bottom:16px;left:16px;padding:10px 15px;font-size:.8rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html">
+    <span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="homepage.html">Start</a></li>
+    <li><a href="coming-soon.html">Marktplatz</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="preise.html">Preise</a></li>
+  </ul>
+  <a href="https://app.partyretter.com/registrierung" class="btn-nav">Anbieter werden</a>
+</nav>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80')">
+  <div class="article-hero-inner">
+    <a href="blog.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+      Zurück zum Blog
+    </a>
+    <div class="article-tag">Food Trends</div>
+    <h1>Die 7 größten Food-Trends für Events 2026</h1>
+    <div class="article-meta">
+      <span>12. März 2026</span>
+      <span>5 Min Lesezeit</span>
+      <span>Food Trends</span>
+    </div>
+  </div>
+</div>
+
+<div class="article-wrap">
+  <div class="article-grid">
+
+    <!-- ARTICLE CONTENT -->
+    <div class="article-content">
+
+      <p class="article-intro">Die Event-Gastronomie erlebt 2026 einen fundamentalen Wandel. Gäste erwarten mehr als nur gutes Essen auf dem Teller – sie wollen Erlebnisse, Nachhaltigkeit und Authentizität. Wir haben die sieben wichtigsten Food-Trends zusammengestellt, die dein nächstes Event unvergesslich machen.</p>
+
+      <div class="divider"></div>
+
+      <!-- TREND 1 -->
+      <h2><span class="trend-number">1</span> Interaktive Kochstationen</h2>
+      <p>Der Trend geht klar weg vom passiven Buffet hin zu Live-Erlebnissen. Interaktive Kochstationen, an denen Gäste ihr Essen direkt vor ihren Augen zubereiten lassen können, sind 2026 das Highlight auf Firmenfeiern, Hochzeiten und Geburtstagen. Ob eine Pasta-Station, an der frische Nudeln von Hand gezogen werden, eine Teppanyaki-Platte mit spektakulärem Flammenspiel oder eine Poke-Bowl-Bar zum Selberzusammenstellen – der Live-Faktor sorgt für Staunen und Gesprächsstoff.</p>
+      <p>Der große Vorteil: Gäste fühlen sich nicht nur unterhalten, sondern auch stärker eingebunden. Es entsteht eine ganz natürliche Interaktion zwischen Koch und Gast, die das Event persönlicher und lebendiger macht. Für Anbieter auf Partyretter bedeutet das: Wer eine Kochstation anbietet, hebt sich sofort von der Masse ab.</p>
+
+      <!-- TREND 2 -->
+      <h2><span class="trend-number">2</span> Nachhaltige & Zero-Waste Buffets</h2>
+      <p>Nachhaltigkeit ist 2026 kein optionaler Bonus mehr, sondern eine klare Erwartung. Immer mehr Eventkunden fragen gezielt nach Zero-Waste-Konzepten: kompostierbare Verpackungen, Nose-to-Tail-Verarbeitung bei Fleisch, Resteverwertung als kreatives Element und regionale Zulieferketten. Das Ziel ist klar – so wenig Abfall wie möglich, ohne beim Geschmack Kompromisse zu machen.</p>
+      <p>Besonders beliebt sind sogenannte Kreislauf-Buffets, bei denen Gemüseschalen zu Brühen, Brotreste zu Croutons und überreifes Obst zu Desserts verarbeitet werden. Caterer, die dieses Konzept transparent kommunizieren – etwa mit kleinen Tafeln am Buffet, die die Herkunft der Zutaten erklären – ernten bei den Gästen durchweg begeisterte Reaktionen.</p>
+
+      <!-- TREND 3 -->
+      <h2><span class="trend-number">3</span> Asiatische Fusion-Küche</h2>
+      <p>Asiatische Aromen dominieren die Event-Gastronomie wie nie zuvor. Dabei geht es nicht um klassisches Sushi oder Frühlingsrollen, sondern um kreative Fusion-Konzepte, die asiatische Techniken und Gewürze mit europäischen Zutaten verbinden. Denk an Miso-glasiertes Schweinefilet mit Kartoffelpüree, koreanische Fried Chicken Sliders mit Kimchi-Slaw oder japanische Curry-Bowls mit regionalem Wurzelgemüse.</p>
+      <p>Besonders Foodtrucks profitieren von diesem Trend: Bao-Buns, Ramen-Stationen und Thai-Streetfood-Konzepte gehören 2026 zu den meistgebuchten Formaten auf Partyretter. Die Kombination aus ungewöhnlichen Aromen und unkompliziertem Handling macht asiatische Fusion zum perfekten Event-Essen – sowohl für lockere Sommerfeste als auch für elegante Abendveranstaltungen.</p>
+
+      <!-- TREND 4 -->
+      <h2><span class="trend-number">4</span> Micro-Catering für kleine, intime Gruppen</h2>
+      <p>Nicht jedes Event ist eine Großveranstaltung. 2026 steigt die Nachfrage nach exklusivem Micro-Catering für Gruppen von 6 bis 20 Personen enorm. Ob ein privates Dinner zu Hause, ein Teambuilding-Abend in der Firma oder ein intimer Geburtstag im kleinen Kreis – Gäste wollen personalisierte Menüs, hochwertige Zutaten und den Koch direkt am Tisch.</p>
+      <p>Für Privatköche ist das eine riesige Chance. Anders als beim Großcatering können sie hier individuell auf Wünsche eingehen, saisonale Spezialitäten anbieten und ein Menü kreieren, das perfekt auf den Anlass zugeschnitten ist. Die persönliche Beziehung zwischen Koch und Gastgeber macht den Unterschied. Auf Partyretter verzeichnen wir bei kleinen Buchungen ein Wachstum von über 40 Prozent gegenüber dem Vorjahr.</p>
+
+      <!-- TREND 5 -->
+      <h2><span class="trend-number">5</span> Fermentierte Lebensmittel & Gut Health</h2>
+      <p>Kombucha, Kimchi, Kefir, Miso und Sauerteig – fermentierte Lebensmittel erleben 2026 ihren großen Durchbruch im Event-Catering. Was früher als Nischenprodukt galt, steht jetzt selbstbewusst auf Buffets und in Menükarten. Der Grund ist einfach: Gäste achten zunehmend auf ihre Darmgesundheit und schätzen Lebensmittel, die nicht nur gut schmecken, sondern auch einen echten Mehrwert für die Gesundheit bieten.</p>
+      <p>Im Event-Kontext funktioniert das besonders gut als Ergänzung: ein Fermentations-Bar neben dem Hauptbuffet, hausgemachter Kombucha als alkoholfreie Alternative oder fermentierte Chutneys als Beilage zu Fleisch- und Käseplatten. Köche, die sich mit Fermentation auskennen, können hier ihr Fachwissen eindrucksvoll präsentieren und einen bleibenden Eindruck bei den Gästen hinterlassen.</p>
+
+      <!-- TREND 6 -->
+      <h2><span class="trend-number">6</span> Regionale & saisonale Zutaten</h2>
+      <p>Der Trend zur Regionalität hat sich 2026 vom Marketing-Buzzword zur handfesten Erwartung entwickelt. Gäste wollen wissen, woher ihr Essen kommt – und zwar konkret. Caterer, die mit lokalen Bauernhöfen zusammenarbeiten, saisonale Produkte verwenden und dies transparent kommunizieren, genießen einen klaren Wettbewerbsvorteil.</p>
+      <p>In der Praxis bedeutet das: Im Frühjahr Spargel und Bärlauch, im Sommer Tomaten und Beeren vom Feld nebenan, im Herbst Kürbis und Pilze aus der Region, im Winter Wurzelgemüse und Wildgerichte. Diese Philosophie lässt sich hervorragend in Menükarten integrieren. Statt einfach nur die Gerichte aufzulisten, erzählen erfolgreiche Anbieter die Geschichte hinter den Zutaten – der Hof, der Bauer, die Ernte. Das schafft Vertrauen und macht das Essen zum Gesprächsthema.</p>
+
+      <!-- TREND 7 -->
+      <h2><span class="trend-number">7</span> Dessert-Erlebnisse: Live Patisserie</h2>
+      <p>Der süße Abschluss wird 2026 zum eigenständigen Event-Highlight. Statt einer klassischen Dessertplatte setzen immer mehr Veranstalter auf Live-Patisserie-Stationen, an denen Konditoren vor den Augen der Gäste Crêpes flambieren, Schokolade temperieren oder frische Tartes zusammensetzen. Besonders gefragt sind auch Dessert-Bars mit individueller Auswahl: Gäste stellen sich ihr persönliches Dessert aus verschiedenen Komponenten zusammen.</p>
+      <p>Beliebt sind außerdem thematische Dessert-Konzepte, die zum Anlass passen – etwa eine Pralinenwerkstatt bei einer Hochzeit, ein Crêpe-Stand im Paris-Stil bei einem Firmenevent oder eine Eismanufaktur mit ungewöhnlichen Sorten wie Lavendel-Honig oder Basilikum-Erdbeere auf einer Gartenparty. Das Visuelle spielt dabei eine zentrale Rolle: Desserts, die Instagram-tauglich sind, werden automatisch zum Marketinginstrument für den Anbieter.</p>
+
+      <div class="divider"></div>
+
+      <h2>Fazit: Erlebnisse statt nur Essen</h2>
+      <p>Die Food-Trends 2026 haben eines gemeinsam: Es geht nicht mehr nur darum, Gäste satt zu machen. Events werden zu kulinarischen Erlebnissen, bei denen Nachhaltigkeit, Interaktion und Qualität im Mittelpunkt stehen. Für Köche, Caterer und Foodtruck-Betreiber bedeutet das: Wer sich jetzt mit diesen Trends positioniert, gewinnt die Kunden von morgen.</p>
+      <p>Du bist Anbieter und willst diese Trends umsetzen? Auf Partyretter erreichst du genau die Kunden, die nach modernem, erlebnisorientiertem Catering suchen. Erstelle jetzt dein Profil und zeige, was du drauf hast.</p>
+
+      <!-- CTA BOX -->
+      <div class="cta-box">
+        <div style="font-size:2.5rem;margin-bottom:12px">👨‍🍳</div>
+        <h2>Du bist Koch, Caterer oder Foodtruck-Betreiber?</h2>
+        <p>Werde Teil von Partyretter und zeige tausenden Eventkunden, was du drauf hast. Kostenlos registrieren und sofort loslegen.</p>
+        <a href="https://app.partyretter.com/registrierung" class="cta-btn">Jetzt Anbieter werden</a>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="blog-sidebar">
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter-widget">
+        <h3>Newsletter</h3>
+        <p>Wöchentlich die besten Rezepte, Eventideen und Insider-Tipps – kostenlos in dein Postfach.</p>
+        <input type="email" class="newsletter-input" placeholder="deine@email.de">
+        <button class="newsletter-btn" onclick="subscribeNewsletter()">Abonnieren</button>
+      </div>
+
+      <!-- WEITERE ARTIKEL -->
+      <div class="sidebar-widget">
+        <h3>Weitere Artikel</h3>
+        <a class="sidebar-article" href="coming-soon.html">
+          <div class="sa-img" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&q=80')"></div>
+          <div>
+            <div class="sa-title">Privatkoch buchen: Worauf du 2026 achten musst</div>
+            <div class="sa-meta">8 Min · Eventplanung</div>
+          </div>
+        </a>
+        <a class="sidebar-article" href="coming-soon.html">
+          <div class="sa-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=80')"></div>
+          <div>
+            <div class="sa-title">Foodtruck mieten: Preise, Planung & die besten Konzepte</div>
+            <div class="sa-meta">6 Min · Foodtruck</div>
+          </div>
+        </a>
+        <a class="sidebar-article" href="coming-soon.html">
+          <div class="sa-img" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=200&q=80')"></div>
+          <div>
+            <div class="sa-title">Hochzeitsmenü: 5 Ideen die alle Gäste begeistern</div>
+            <div class="sa-meta">8 Min · Hochzeit</div>
+          </div>
+        </a>
+        <a class="sidebar-article" href="coming-soon.html">
+          <div class="sa-img" style="background-image:url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80')"></div>
+          <div>
+            <div class="sa-title">Vegan & trotzdem festlich: 8 Ideen für pflanzliche Menüs</div>
+            <div class="sa-meta">7 Min · Trends</div>
+          </div>
+        </a>
+        <a class="sidebar-article" href="coming-soon.html">
+          <div class="sa-img" style="background-image:url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=200&q=80')"></div>
+          <div>
+            <div class="sa-title">Catering-Budget berechnen: Der komplette Leitfaden</div>
+            <div class="sa-meta">12 Min · Eventplanung</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- TAGS -->
+      <div class="sidebar-widget">
+        <h3>Themen</h3>
+        <div class="tag-cloud">
+          <a class="tag" href="blog.html">Rezepte</a>
+          <a class="tag" href="blog.html">Hochzeit</a>
+          <a class="tag" href="blog.html">Vegan</a>
+          <a class="tag" href="blog.html">Buffet</a>
+          <a class="tag" href="blog.html">Foodtruck</a>
+          <a class="tag" href="blog.html">Trends 2026</a>
+          <a class="tag" href="blog.html">Nachhaltigkeit</a>
+          <a class="tag" href="blog.html">Fusion</a>
+          <a class="tag" href="blog.html">Fermentation</a>
+          <a class="tag" href="blog.html">Regional</a>
+          <a class="tag" href="blog.html">Dessert</a>
+          <a class="tag" href="blog.html">Kochstation</a>
+        </div>
+      </div>
+
+      <!-- SIDEBAR CTA -->
+      <div style="background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);border-radius:18px;padding:28px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:10px">🍽️</div>
+        <h3 style="font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px">Koch oder Caterer?</h3>
+        <p style="font-size:.83rem;color:rgba(0,0,0,.7);margin-bottom:16px;line-height:1.5">Setze diese Trends um und gewinne neue Kunden auf Partyretter!</p>
+        <a href="https://app.partyretter.com/registrierung" style="display:block;background:var(--dark);color:white;text-decoration:none;padding:11px;border-radius:10px;font-weight:700;font-size:.88rem">Jetzt registrieren</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:20px;"><img src="logo.png" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;"></div>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Partyretter</h4>
+      <a href="homepage.html">Start</a>
+      <a href="coming-soon.html">Marktplatz</a>
+      <a href="kochevents.html">Koch-Events</a>
+      <a href="preise.html">Preise</a>
+    </div>
+    <div class="footer-col">
+      <h4>Blog-Kategorien</h4>
+      <a href="blog.html?kat=inspiration">Inspiration</a>
+      <a href="blog.html?kat=rezepte">Rezepte</a>
+      <a href="blog.html?kat=events">Eventplanung</a>
+      <a href="blog.html?kat=trends">Food Trends</a>
+    </div>
+    <div class="footer-col">
+      <h4>Anbieter</h4>
+      <a href="anbieter-onboarding.html">Anbieter werden</a>
+      <a href="preise.html">Preismodell</a>
+      <a href="coming-soon.html">Quick-Setup</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="agb.html">AGB</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 Partyretter GmbH</span>
+    <span>Made with &#10084;&#65039; für Foodie-Events</span>
+  </div>
+</footer>
+
+<script>
+function subscribeNewsletter() {
+  const input = document.querySelector('.newsletter-input');
+  if (input.value && input.value.includes('@')) {
+    input.style.display = 'none';
+    const btn = document.querySelector('.newsletter-btn');
+    btn.textContent = 'Angemeldet!';
+    btn.style.background = '#2D7D46';
+    btn.disabled = true;
+  }
+}
+</script>
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+
+</body>
+</html>

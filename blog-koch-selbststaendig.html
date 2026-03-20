@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Als Koch selbstständig: So startest du auf Partyretter – Blog</title>
+<meta name="description" content="Eigene Buchungen, eigene Preise, kein Chef – wie Köche, Caterer und Foodtruck-Betreiber ihr Business auf Partyretter aufbauen und die ersten Kunden gewinnen.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--green:#2D7D46}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+
+nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:36px}
+.nav-logo span{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:#ccc;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.btn-nav{background:var(--gold);color:var(--dark);border:none;padding:8px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:none}
+
+/* ARTICLE HERO */
+.article-hero{background:linear-gradient(135deg,var(--dark) 0%,#2d1a08 100%);padding:60px 60px 0;position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:rgba(200,146,42,.05)}
+.article-hero-inner{max-width:800px;margin:0 auto;text-align:center}
+.article-breadcrumb{font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:18px}
+.article-breadcrumb a{color:var(--gold);text-decoration:none}
+.article-breadcrumb a:hover{text-decoration:underline}
+.article-cat-tag{display:inline-block;background:rgba(200,146,42,.15);border:1px solid rgba(200,146,42,.3);color:var(--gold);font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:.06em;margin-bottom:16px;text-transform:uppercase}
+.article-hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.8rem,3.5vw,2.6rem);color:white;margin-bottom:16px;line-height:1.25}
+.article-hero h1 span{color:var(--gold)}
+.article-meta{display:flex;justify-content:center;gap:20px;font-size:.84rem;color:rgba(255,255,255,.55);margin-bottom:32px;flex-wrap:wrap}
+.article-hero-img{max-width:800px;margin:0 auto;border-radius:18px 18px 0 0;overflow:hidden;line-height:0}
+.article-hero-img img{width:100%;height:380px;object-fit:cover}
+
+/* ARTICLE LAYOUT */
+.article-wrap{max-width:1200px;margin:0 auto;padding:50px 60px}
+.article-main{display:grid;grid-template-columns:1fr 320px;gap:50px}
+@media(max-width:1000px){.article-main{grid-template-columns:1fr}}
+
+/* ARTICLE BODY */
+.article-content{background:white;border-radius:0 0 18px 18px;padding:40px 48px;margin-top:-2px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.article-content h2{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;margin-top:36px;margin-bottom:14px;color:var(--dark);line-height:1.3}
+.article-content h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;margin-top:28px;margin-bottom:10px;color:var(--dark)}
+.article-content p{font-size:.95rem;line-height:1.8;color:#444;margin-bottom:16px}
+.article-content ul,.article-content ol{margin:12px 0 18px 24px;font-size:.93rem;line-height:1.8;color:#444}
+.article-content li{margin-bottom:6px}
+.article-content blockquote{border-left:4px solid var(--gold);padding:16px 20px;margin:24px 0;background:var(--cream);border-radius:0 12px 12px 0;font-style:italic;color:#555}
+.article-content strong{color:var(--dark)}
+.article-content a{color:var(--gold);font-weight:600;text-decoration:none}
+.article-content a:hover{text-decoration:underline}
+
+/* HIGHLIGHT BOX */
+.highlight-box{background:linear-gradient(135deg,rgba(200,146,42,.08),rgba(200,146,42,.03));border:1px solid rgba(200,146,42,.2);border-radius:14px;padding:24px 28px;margin:28px 0}
+.highlight-box h4{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem;margin-bottom:10px;color:var(--dark)}
+
+/* STEP LIST */
+.step-list{counter-reset:steps;list-style:none;margin-left:0;padding-left:0}
+.step-list li{counter-increment:steps;position:relative;padding-left:44px;margin-bottom:16px}
+.step-list li::before{content:counter(steps);position:absolute;left:0;top:0;width:32px;height:32px;background:var(--gold);color:var(--dark);font-weight:900;font-size:.88rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif}
+
+/* SUCCESS STORY */
+.success-story{background:white;border:1px solid var(--cream2);border-radius:14px;padding:22px 26px;margin:20px 0}
+.success-story .story-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.success-story .story-avatar{width:44px;height:44px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.success-story .story-name{font-weight:700;font-size:.92rem}
+.success-story .story-role{font-size:.78rem;color:#999}
+.success-story p{font-size:.88rem;line-height:1.7;color:#555;margin-bottom:0}
+
+/* CTA BANNER */
+.article-cta{background:linear-gradient(135deg,var(--dark) 0%,#2d1a08 100%);border-radius:18px;padding:40px;text-align:center;margin-top:36px}
+.article-cta h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;color:white;margin-bottom:10px}
+.article-cta p{color:rgba(255,255,255,.65);font-size:.92rem;margin-bottom:22px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6}
+.article-cta a{display:inline-block;background:var(--gold);color:var(--dark);text-decoration:none;padding:14px 36px;border-radius:12px;font-weight:700;font-size:1rem;transition:all .2s}
+.article-cta a:hover{background:var(--gold2);transform:translateY(-2px)}
+
+/* SHARE + TAGS */
+.article-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding-top:20px;border-top:1px solid var(--cream2)}
+.article-tags .tag{padding:6px 14px;background:var(--cream);border-radius:50px;font-size:.8rem;color:#777;text-decoration:none}
+.article-tags .tag:hover{background:var(--gold);color:white}
+
+/* RELATED ARTICLES */
+.related-section{margin-top:40px}
+.related-section h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.2rem;margin-bottom:20px}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.related-grid{grid-template-columns:1fr}}
+.related-card{background:white;border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);cursor:pointer;transition:all .3s;text-decoration:none;color:inherit}
+.related-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.related-card-img{height:140px;background-size:cover;background-position:center}
+.related-card-body{padding:18px}
+.related-card-cat{display:inline-block;background:var(--cream2);color:var(--gold);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase}
+.related-card-title{font-family:'Fraunces',serif;font-weight:900;font-size:.95rem;line-height:1.3;margin-bottom:6px}
+.related-card-meta{font-size:.75rem;color:#bbb}
+
+/* SIDEBAR */
+.sidebar-widget{background:white;border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.sidebar-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--cream2)}
+
+/* POPULAR */
+.popular-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--cream2);cursor:pointer}
+.popular-item:last-child{border:none;padding-bottom:0}
+.pop-num{font-family:'Fraunces',serif;font-weight:900;font-size:1.3rem;color:var(--cream2);width:24px;flex-shrink:0;line-height:1.2}
+.pop-title{font-size:.85rem;font-weight:600;margin-bottom:3px;line-height:1.4}
+.pop-meta{font-size:.75rem;color:#bbb}
+
+/* TAG CLOUD */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.tag-cloud .tag{padding:6px 14px;background:var(--cream2);border-radius:50px;font-size:.8rem;cursor:pointer;transition:all .2s}
+.tag-cloud .tag:hover{background:var(--gold);color:white}
+
+/* NEWSLETTER */
+.newsletter-widget{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);color:white;border-radius:18px;padding:28px;margin-bottom:24px}
+.newsletter-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px}
+.newsletter-widget p{font-size:.83rem;color:#aaa;margin-bottom:18px;line-height:1.6}
+.newsletter-input{width:100%;padding:11px 16px;border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;margin-bottom:10px}
+.newsletter-btn{width:100%;background:var(--gold);color:var(--dark);border:none;padding:11px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.newsletter-btn:hover{background:var(--gold2)}
+
+/* FOOTER */
+footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:40px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-col h4{color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;color:#aaa;text-decoration:none;font-size:.85rem;margin-bottom:8px}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;font-size:.8rem;color:#666}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:12px 20px;flex-wrap:wrap;gap:10px}
+  .nav-links{display:none}
+  .article-hero{padding:40px 20px 0}
+  .article-hero-img img{height:220px}
+  .article-content{padding:28px 22px}
+  .article-wrap{padding:30px 20px}
+  .article-cta{padding:28px 22px}
+  footer{padding:40px 20px 20px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .related-grid{grid-template-columns:1fr}
+}
+
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.btn-nav-outline { color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s; }
+.btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html">
+    <span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="homepage.html">Start</a></li>
+    <li><a href="coming-soon.html">Marktplatz</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="preise.html">Preise</a></li>
+  </ul>
+  <a href="https://app.partyretter.com/registrierung" class="btn-nav">Anbieter werden</a>
+</nav>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-breadcrumb"><a href="blog.html">Blog</a> &nbsp;/&nbsp; Für Anbieter</div>
+    <div class="article-cat-tag">👨‍🍳 Für Anbieter</div>
+    <h1>Als Koch selbstständig: So startest du auf <span>Partyretter</span></h1>
+    <div class="article-meta">
+      <span>📅 12. März 2026</span>
+      <span>⏱️ 10 Min Lesezeit</span>
+      <span>👨‍🍳 Für Anbieter</span>
+    </div>
+    <div class="article-hero-img">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Koch richtet einen Teller kunstvoll an – Selbstständigkeit als Koch auf Partyretter">
+    </div>
+  </div>
+</div>
+
+<div class="article-wrap">
+  <div class="article-main">
+    <!-- ARTICLE CONTENT -->
+    <div>
+      <div class="article-content">
+
+        <p><strong>Du kochst leidenschaftlich, hast jahrelange Erfahrung in der Gastronomie und träumst davon, dein eigener Chef zu sein?</strong> Dann bist du nicht allein. Immer mehr Köche, Caterer und Foodtruck-Betreiber entscheiden sich für den Schritt in die Selbstständigkeit. Die gute Nachricht: Mit Partyretter gibt es jetzt eine Plattform, die dir den Einstieg deutlich leichter macht.</p>
+
+        <p>In diesem Artikel zeigen wir dir Schritt für Schritt, wie du dein Profil auf Partyretter erstellst, deine ersten Kunden gewinnst und dir ein planbares Einkommen als selbstständiger Koch aufbaust – ganz ohne Kaltakquise oder teure Werbung.</p>
+
+        <h2>Der Traum: Eigene Buchungen, eigene Preise, kein Chef</h2>
+
+        <p>Kennst du das? Du stehst seit Jahren in der Küche anderer Leute, kochst hervorragend – aber am Ende des Monats bestimmt jemand anders, was auf deinem Konto landet. Du hast großartige Ideen für Menüs und Eventkonzepte, aber dein Arbeitgeber will davon nichts wissen.</p>
+
+        <p>Die Selbstständigkeit als Koch bedeutet Freiheit: Du entscheidest, für wen du kochst, was du anbietest und was es kostet. Du baust dir eine eigene Marke auf und schaffst dir ein Einkommen, das deinen Fähigkeiten entspricht. Klingt gut? Ist es auch – wenn du es richtig angehst.</p>
+
+        <p>Das größte Problem für viele frisch selbstständige Köche ist nicht das Kochen selbst, sondern die Kundengewinnung. Genau hier kommt Partyretter ins Spiel: Die Plattform bringt dich mit Menschen zusammen, die genau das suchen, was du anbietest – private Dinner, Catering für Feiern, Firmenevents oder Kochkurse.</p>
+
+        <h2>Wer kann auf Partyretter starten?</h2>
+
+        <p>Partyretter ist nicht nur für klassische Köche. Die Plattform richtet sich an alle, die im Bereich Food und Events tätig sind oder es werden wollen:</p>
+
+        <ul>
+          <li><strong>Privatköche &amp; Personal Chefs</strong> – Du kochst bei Kunden zuhause, richtest exklusive Dinner aus oder übernimmst die Küche bei privaten Feiern.</li>
+          <li><strong>Caterer &amp; Partyservice</strong> – Vom Fingerfood-Buffet bis zum 5-Gänge-Menü für 200 Gäste: Wenn du Events belieferst, bist du hier richtig.</li>
+          <li><strong>Foodtruck-Betreiber</strong> – Dein Truck ist dein Restaurant auf Rädern. Auf Partyretter wirst du für Festivals, Firmenfeiern und Hochzeiten gebucht.</li>
+          <li><strong>Kochkurs-Anbieter</strong> – Du leitest Kochevents, Team-Cooking oder private Kochkurse? Auch dafür gibt es eine wachsende Nachfrage.</li>
+          <li><strong>Bäcker, Patissiers &amp; Spezialisten</strong> – Torten, Dessertbuffets, Pralinen – Spezialangebote haben auf Partyretter ihren festen Platz.</li>
+        </ul>
+
+        <div class="highlight-box">
+          <h4>Gut zu wissen</h4>
+          <p>Du brauchst keinen Michelin-Stern, um auf Partyretter erfolgreich zu sein. Viele unserer beliebtesten Anbieter haben als leidenschaftliche Hobbyköche oder mit einem kleinen Catering-Service angefangen. Entscheidend ist, dass du zuverlässig lieferst und deine Kunden begeisterst.</p>
+        </div>
+
+        <h2>Schritt für Schritt: So erstellst du dein Profil</h2>
+
+        <p>Der Start auf Partyretter ist unkompliziert und in wenigen Minuten erledigt. So gehst du vor:</p>
+
+        <ol class="step-list">
+          <li><strong>Registrierung abschließen</strong> – Erstelle dein kostenloses Anbieter-Konto auf Partyretter. Du brauchst nur eine E-Mail-Adresse und deinen Namen. Die Registrierung ist komplett kostenlos – du zahlst erst, wenn du tatsächlich Buchungen erhältst.</li>
+          <li><strong>Profil ausfüllen</strong> – Beschreibe dich und dein Angebot. Was macht dich besonders? Welche Küche beherrschst du? Für welche Anlässe bist du der richtige Ansprechpartner? Je konkreter, desto besser.</li>
+          <li><strong>Angebote definieren</strong> – Erstelle konkrete Angebotspakete. Zum Beispiel: „Italienisches 3-Gänge-Menü für 10 Personen" oder „BBQ-Catering für Sommerfeste bis 50 Gäste". Klare Pakete machen es Kunden leicht, sich zu entscheiden.</li>
+          <li><strong>Preise festlegen</strong> – Du bestimmst deine Preise selbst. Orientiere dich an deinen Kosten, deiner Erfahrung und dem lokalen Markt. Tipp: Starte mit einem attraktiven Einstiegspreis, um schnell erste Bewertungen zu sammeln.</li>
+          <li><strong>Fotos hochladen</strong> – Lade mindestens fünf hochwertige Fotos deiner Gerichte hoch. Gute Bilder sind der wichtigste Faktor für Buchungen – dazu gleich mehr.</li>
+          <li><strong>Verfügbarkeit einstellen</strong> – Gib an, wann und wo du verfügbar bist. Je flexibler du bist, desto mehr Anfragen wirst du erhalten.</li>
+        </ol>
+
+        <h2>Wie gewinnst du deine ersten Kunden?</h2>
+
+        <p>Die ersten Buchungen sind immer die schwierigsten – aber auch die wichtigsten. Denn jede erfolgreiche Buchung bringt dir eine Bewertung, und Bewertungen sind auf Partyretter Gold wert. Hier sind bewährte Strategien für deinen Start:</p>
+
+        <h3>Starte mit einem Einführungsangebot</h3>
+        <p>Biete deine ersten drei bis fünf Buchungen zu einem reduzierten Preis an. Das senkt die Hemmschwelle für Neukunden und hilft dir, schnell Bewertungen zu sammeln. Kommuniziere klar, dass es sich um ein zeitlich begrenztes Einführungsangebot handelt.</p>
+
+        <h3>Nutze dein bestehendes Netzwerk</h3>
+        <p>Erzähle Freunden, Familie und ehemaligen Kollegen von deinem Partyretter-Profil. Bitte zufriedene Gäste aktiv um eine Bewertung. Mundpropaganda ist gerade am Anfang enorm werksam.</p>
+
+        <h3>Reagiere schnell auf Anfragen</h3>
+        <p>Kunden auf Partyretter erwarten schnelle Antworten. Anbieter, die innerhalb einer Stunde auf Anfragen reagieren, erhalten nachweislich dreimal so viele Buchungen wie solche, die erst nach 24 Stunden antworten.</p>
+
+        <h3>Biete Flexibilität</h3>
+        <p>Gerade am Anfang lohnt es sich, auch kleinere Events oder ungewöhnliche Termine anzunehmen. Jede Buchung ist eine Chance, dich zu beweisen und dein Profil mit Bewertungen zu stärken.</p>
+
+        <h2>Tipps für ein überzeugendes Profil</h2>
+
+        <p>Dein Profil ist dein Schaufenster auf Partyretter. Diese Elemente machen den Unterschied zwischen einem Profil, das gebucht wird, und einem, das übersehen wird:</p>
+
+        <h3>Fotos, die Appetit machen</h3>
+        <p>Investiere Zeit in gute Fotos. Du brauchst keinen professionellen Fotografen – ein Smartphone mit guter Kamera und natürliches Tageslicht reichen oft aus. Zeige deine Gerichte von oben (Flatlay), im 45-Grad-Winkel und im Detail. Vergiss nicht, auch Fotos von dir bei der Arbeit und von deinem Setup vor Ort hochzuladen.</p>
+
+        <h3>Beschreibung mit Persönlichkeit</h3>
+        <p>Schreibe nicht nur, was du kochst – erzähle, warum du es kochst. Deine Geschichte macht dich einzigartig. Woher kommt deine Leidenschaft? Was inspiriert deine Küche? Kunden buchen Menschen, nicht nur Menüs.</p>
+
+        <h3>Bewertungen aktiv aufbauen</h3>
+        <p>Nach jedem Event: Bedanke dich beim Kunden und bitte höflich um eine Bewertung auf Partyretter. Die meisten Kunden machen das gerne, wenn man sie direkt fragt. Fünf gute Bewertungen können deine Buchungsrate verdoppeln.</p>
+
+        <div class="highlight-box">
+          <h4>Profi-Tipp: Das perfekte Profilbild</h4>
+          <p>Dein Profilbild sollte dich in Aktion zeigen – in Kochkleidung, beim Anrichten oder am Herd. Vermeide steife Passbilder. Ein authentisches Foto schafft Vertrauen und zeigt Kunden, dass hier ein echter Profi am Werk ist.</p>
+        </div>
+
+        <h2>Erfolgsgeschichten: So haben andere es geschafft</h2>
+
+        <p>Zum Schluss drei Beispiele von Anbietern, die auf Partyretter erfolgreich durchgestartet sind:</p>
+
+        <div class="success-story">
+          <div class="story-header">
+            <div class="story-avatar">👨‍🍳</div>
+            <div>
+              <div class="story-name">Marco, 34 – Privatkoch aus München</div>
+              <div class="story-role">Auf Partyretter seit Januar 2026</div>
+            </div>
+          </div>
+          <p>Marco hat 10 Jahre in der gehobenen Gastronomie gearbeitet, bevor er den Sprung gewagt hat. Sein Fokus: exklusive Dinner für kleine Gruppen von 4 bis 12 Personen. Nach nur drei Monaten auf Partyretter hat er monatlich 8 bis 10 feste Buchungen und verdient deutlich mehr als in seinem alten Job. Sein Geheimnis? Hervorragende Fotos und eine persönliche Begrüßungsnachricht an jeden Interessenten.</p>
+        </div>
+
+        <div class="success-story">
+          <div class="story-header">
+            <div class="story-avatar">👩‍🍳</div>
+            <div>
+              <div class="story-name">Leila, 28 – Catering-Unternehmerin aus Berlin</div>
+              <div class="story-role">Auf Partyretter seit Dezember 2025</div>
+            </div>
+          </div>
+          <p>Leila hat als Studentin nebenbei für Freunde gekocht und daraus ein Catering-Business gemacht. Über Partyretter hat sie sich auf orientalisches Fingerfood und Mezze-Buffets spezialisiert. Heute versorgt sie regelmäßig Geburtstage, Firmenfeiern und sogar kleine Hochzeiten. Ihr Tipp: Ein Nischenangebot, das sich von der Masse abhebt, zieht genau die richtigen Kunden an.</p>
+        </div>
+
+        <div class="success-story">
+          <div class="story-header">
+            <div class="story-avatar">🚚</div>
+            <div>
+              <div class="story-name">Thomas &amp; Sarah – Foodtruck „StreetBurger" aus Köln</div>
+              <div class="story-role">Auf Partyretter seit Februar 2026</div>
+            </div>
+          </div>
+          <p>Das Ehepaar betreibt seit zwei Jahren einen Burger-Foodtruck. Über Partyretter haben sie eine komplett neue Einnahmequelle erschlossen: private Eventbuchungen. Statt nur auf Streetfood-Märkten zu stehen, werden sie jetzt für Geburtstage, Firmen-Sommerfeste und Hochzeiten gebucht – oft Monate im Voraus. Die Planungssicherheit sei das Beste an der Plattform, sagen beide.</p>
+        </div>
+
+        <h2>Bereit für den Start?</h2>
+
+        <p>Die Selbstständigkeit als Koch war noch nie so erreichbar wie heute. Mit Partyretter hast du eine Plattform, die dir die Kundengewinnung abnimmt, sodass du dich auf das konzentrieren kannst, was du am besten kannst: Kochen und Menschen begeistern.</p>
+
+        <p>Die Registrierung ist kostenlos, und du zahlst erst, wenn du tatsächlich Buchungen erhältst. Es gibt also keinen Grund zu warten. Erstelle jetzt dein Profil und mach den ersten Schritt in deine kulinarische Selbstständigkeit.</p>
+
+        <!-- CTA -->
+        <div class="article-cta">
+          <h3>Starte jetzt als Anbieter auf Partyretter</h3>
+          <p>Kostenlos registrieren, Profil erstellen und deine ersten Kunden gewinnen. Du zahlst erst bei erfolgreichen Buchungen.</p>
+          <a href="https://app.partyretter.com/registrierung">Jetzt kostenlos starten →</a>
+        </div>
+
+        <!-- TAGS -->
+        <div class="article-tags">
+          <a class="tag" href="blog.html">Selbstständigkeit</a>
+          <a class="tag" href="blog.html">Koch</a>
+          <a class="tag" href="blog.html">Catering</a>
+          <a class="tag" href="blog.html">Foodtruck</a>
+          <a class="tag" href="blog.html">Anbieter-Tipps</a>
+          <a class="tag" href="blog.html">Profil</a>
+        </div>
+      </div>
+
+      <!-- RELATED ARTICLES -->
+      <div class="related-section">
+        <h3>Das könnte dich auch interessieren</h3>
+        <div class="related-grid">
+          <a class="related-card" href="coming-soon.html">
+            <div class="related-card-img" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80')"></div>
+            <div class="related-card-body">
+              <div class="related-card-cat">👨‍🍳 Für Anbieter</div>
+              <div class="related-card-title">Mehr Buchungen: 10 Profi-Tipps für dein Partyretter-Profil</div>
+              <div class="related-card-meta">9 Min · 10. Feb 2026</div>
+            </div>
+          </a>
+          <a class="related-card" href="coming-soon.html">
+            <div class="related-card-img" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80')"></div>
+            <div class="related-card-body">
+              <div class="related-card-cat">📋 Eventplanung</div>
+              <div class="related-card-title">Privatkoch buchen: Worauf du 2026 achten musst</div>
+              <div class="related-card-meta">8 Min · 18. März 2026</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="blog-sidebar">
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter-widget">
+        <h3>📬 Newsletter</h3>
+        <p>Wöchentlich die besten Rezepte, Eventideen und Insider-Tipps – kostenlos in dein Postfach.</p>
+        <input type="email" class="newsletter-input" placeholder="deine@email.de">
+        <button class="newsletter-btn" onclick="subscribeNewsletter()">Abonnieren 🚀</button>
+      </div>
+
+      <!-- POPULAR -->
+      <div class="sidebar-widget">
+        <h3>🔥 Beliebteste Artikel</h3>
+        <div class="popular-item">
+          <div class="pop-num">01</div>
+          <div>
+            <div class="pop-title">Die 7 größten Food-Trends 2026</div>
+            <div class="pop-meta">12.847 Leser · Food Trends</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">02</div>
+          <div>
+            <div class="pop-title">Catering-Budget richtig berechnen</div>
+            <div class="pop-meta">8.312 Leser · Eventplanung</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">03</div>
+          <div>
+            <div class="pop-title">10 Profi-Tipps für dein Partyretter-Profil</div>
+            <div class="pop-meta">6.120 Leser · Für Anbieter</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">04</div>
+          <div>
+            <div class="pop-title">Hochzeitsmenü: 5 Ideen</div>
+            <div class="pop-meta">5.890 Leser · Hochzeit</div>
+          </div>
+        </div>
+        <div class="popular-item">
+          <div class="pop-num">05</div>
+          <div>
+            <div class="pop-title">Vegan & trotzdem festlich</div>
+            <div class="pop-meta">4.703 Leser · Trends</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAGS -->
+      <div class="sidebar-widget">
+        <h3>🏷️ Themen</h3>
+        <div class="tag-cloud">
+          <span class="tag">Rezepte</span>
+          <span class="tag">Hochzeit</span>
+          <span class="tag">Vegan</span>
+          <span class="tag">Buffet</span>
+          <span class="tag">Foodtruck</span>
+          <span class="tag">Trends 2026</span>
+          <span class="tag">Planung</span>
+          <span class="tag">Budget</span>
+          <span class="tag">Allergene</span>
+          <span class="tag">Firmenevent</span>
+          <span class="tag">BBQ</span>
+          <span class="tag">Pasta</span>
+          <span class="tag">Sushi</span>
+          <span class="tag">Geburtstag</span>
+          <span class="tag">Tipps</span>
+        </div>
+      </div>
+
+      <!-- CTA SIDEBAR -->
+      <div style="background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);border-radius:18px;padding:28px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:10px">👨‍🍳</div>
+        <h3 style="font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px">Bist du Koch oder Anbieter?</h3>
+        <p style="font-size:.83rem;color:rgba(0,0,0,.7);margin-bottom:16px;line-height:1.5">Registriere dich kostenlos und erreiche tausende Kunden in deiner Region!</p>
+        <a href="https://app.partyretter.com/registrierung" style="display:block;background:var(--dark);color:white;text-decoration:none;padding:11px;border-radius:10px;font-weight:700;font-size:.88rem">Jetzt kostenlos starten</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:20px;"><img src="logo.png" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;"></div>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Partyretter</h4>
+      <a href="homepage.html">Start</a>
+      <a href="coming-soon.html">Marktplatz</a>
+      <a href="kochevents.html">Koch-Events</a>
+      <a href="preise.html">Preise</a>
+    </div>
+    <div class="footer-col">
+      <h4>Blog-Kategorien</h4>
+      <a href="blog.html?kat=inspiration">✨ Inspiration</a>
+      <a href="blog.html?kat=rezepte">🍳 Rezepte</a>
+      <a href="blog.html?kat=events">📋 Eventplanung</a>
+      <a href="blog.html?kat=trends">📈 Food Trends</a>
+    </div>
+    <div class="footer-col">
+      <h4>Anbieter</h4>
+      <a href="anbieter-onboarding.html">Anbieter werden</a>
+      <a href="preise.html">Preismodell</a>
+      <a href="coming-soon.html">Quick-Setup</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="agb.html">AGB</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Partyretter GmbH</span>
+    <span>Made with ❤️ für Foodie-Events</span>
+  </div>
+</footer>
+
+<script>
+function subscribeNewsletter() {
+  const input = document.querySelector('.newsletter-input');
+  if (input.value && input.value.includes('@')) {
+    input.style.display = 'none';
+    const btn = document.querySelector('.newsletter-btn');
+    btn.textContent = '✅ Angemeldet!';
+    btn.style.background = '#2D7D46';
+    btn.disabled = true;
+  }
+}
+</script>
+
+<script src="cookie-banner.js"></script>
+
+<!-- Floating Home Button -->
+<style>
+.fab-home {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #D4A017;
+  color: #1a1208;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  text-decoration: none;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.fab-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  background: #e6b422;
+}
+.fab-home svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+}
+</style>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Startseite
+</a>
+<!-- End Floating Home Button -->
+
+</body>
+</html>

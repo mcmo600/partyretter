@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Vegan &amp; trotzdem festlich: 8 Ideen für pflanzliche Event-Menüs – Partyretter Blog</title>
+<meta name="description" content="8 kreative vegane Menü-Ideen für Events, die selbst Fleischliebhaber begeistern. Vom Gourmet-Buffet bis zum Street-Food-Konzept.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#1A1208;--dark2:#2d1f0e;--gold:#C8922A;--gold2:#e0a430;--cream:#F5F0E8;--cream2:#EDE8DF;--green:#2D7D46}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo span{color:var(--gold);font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:#ccc;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.btn-nav{background:var(--gold);color:var(--dark);border:none;padding:8px 20px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:none}
+.article-hero{position:relative;height:420px;background-size:cover;background-position:center;display:flex;align-items:flex-end}
+.article-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(26,18,8,.85))}
+.article-hero-content{position:relative;z-index:1;max-width:800px;padding:40px 60px 50px}
+.article-hero-cat{display:inline-block;background:var(--gold);color:var(--dark);font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:14px;letter-spacing:.04em}
+.article-hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.8rem,3.5vw,2.6rem);color:white;line-height:1.25;margin-bottom:12px}
+.article-hero-meta{color:rgba(255,255,255,.65);font-size:.88rem;display:flex;gap:18px;flex-wrap:wrap}
+.article-wrap{max-width:1200px;margin:0 auto;padding:50px 60px;display:grid;grid-template-columns:1fr 340px;gap:50px}
+@media(max-width:1000px){.article-wrap{grid-template-columns:1fr;padding:30px 20px}}
+.article-body{max-width:760px}
+.article-body p{font-size:1rem;line-height:1.8;margin-bottom:20px;color:#3a2e1c}
+.article-body h2{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;margin:40px 0 16px;color:var(--dark);line-height:1.3}
+.article-body h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;margin:28px 0 12px;color:var(--dark)}
+.article-body ul,.article-body ol{margin:0 0 20px 24px;line-height:1.8;color:#3a2e1c}
+.article-body li{margin-bottom:6px}
+.article-body blockquote{border-left:4px solid var(--gold);padding:16px 24px;background:white;border-radius:0 12px 12px 0;margin:24px 0;font-style:italic;color:#555}
+.article-body strong{color:var(--dark)}
+.cta-box{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);border-radius:18px;padding:32px;margin:40px 0;text-align:center}
+.cta-box h3{font-family:'Fraunces',serif;color:white;font-size:1.3rem;margin-bottom:10px}
+.cta-box p{color:#aaa;font-size:.92rem;margin-bottom:20px;line-height:1.6}
+.cta-box a{display:inline-block;background:var(--gold);color:var(--dark);padding:12px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:.95rem;transition:background .2s}
+.cta-box a:hover{background:var(--gold2)}
+.blog-sidebar{}
+.sidebar-widget{background:white;border-radius:18px;padding:24px;margin-bottom:24px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.sidebar-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--cream2)}
+.related-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--cream2);text-decoration:none;color:var(--dark);transition:all .2s}
+.related-item:last-child{border:none}
+.related-item:hover{color:var(--gold)}
+.related-img{width:70px;height:55px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0}
+.related-title{font-size:.88rem;font-weight:600;line-height:1.4;margin-bottom:3px}
+.related-meta{font-size:.75rem;color:#bbb}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 14px;background:var(--cream2);border-radius:50px;font-size:.8rem;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--dark)}
+.tag:hover{background:var(--gold);color:white}
+.newsletter-widget{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);color:white;border-radius:18px;padding:28px;margin-bottom:24px}
+.newsletter-widget h3{font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px;border:none;padding:0;color:white}
+.newsletter-widget p{font-size:.83rem;color:#aaa;margin-bottom:18px;line-height:1.6}
+.newsletter-input{width:100%;padding:11px 16px;border-radius:10px;border:none;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;margin-bottom:10px}
+.newsletter-btn{width:100%;background:var(--gold);color:var(--dark);border:none;padding:11px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.newsletter-btn:hover{background:var(--gold2)}
+.share-row{display:flex;gap:10px;margin:30px 0}
+.share-btn{padding:8px 18px;border-radius:8px;border:2px solid var(--cream2);background:white;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--dark)}
+.share-btn:hover{border-color:var(--gold);color:var(--gold)}
+footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:40px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-col h4{color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;color:#aaa;text-decoration:none;font-size:.85rem;margin-bottom:8px}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;font-size:.8rem;color:#666}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--gold);text-decoration:none;font-weight:600;font-size:.9rem;margin-bottom:30px}
+.back-link:hover{text-decoration:underline}
+@media(max-width:768px){nav{padding:14px 20px}.nav-links{display:none}.article-hero{height:300px}.article-hero-content{padding:24px 20px 30px}.article-hero h1{font-size:1.5rem}footer{padding:30px 20px 20px}.footer-grid{grid-template-columns:1fr 1fr;gap:24px}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}.share-row{flex-wrap:wrap}}
+.fab-home{position:fixed;bottom:28px;left:28px;z-index:9999;background:#D4A017;color:#1a1208;border:none;border-radius:50px;padding:12px 20px;font-size:.88rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(0,0,0,.35);text-decoration:none;transition:transform .18s,box-shadow .18s,background .18s}
+.fab-home:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.45);background:#e6b422}
+@media(max-width:480px){.fab-home{bottom:16px;left:16px;padding:10px 15px;font-size:.8rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html">
+    <span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="homepage.html">Start</a></li>
+    <li><a href="coming-soon.html">Marktplatz</a></li>
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="preise.html">Preise</a></li>
+  </ul>
+  <a href="https://app.partyretter.com/registrierung" class="btn-nav">Anbieter werden</a>
+</nav>
+
+<div class="article-hero" style="background-image:url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&q=80')">
+  <div class="article-hero-content">
+    <div class="article-hero-cat">Trends</div>
+    <h1>Vegan &amp; trotzdem festlich: 8 Ideen für pflanzliche Event-Menüs</h1>
+    <div class="article-hero-meta">
+      <span>7 Min Lesezeit</span>
+      <span>15. Februar 2026</span>
+      <span>Kategorie: Food Trends</span>
+    </div>
+  </div>
+</div>
+
+<div class="article-wrap">
+  <div class="article-body">
+    <a href="blog.html" class="back-link">← Zurück zum Blog</a>
+
+    <p>Vegane Küche hat längst den Sprung vom Nischenprodukt zur kulinarischen Normalität geschafft. Auf Events erwarten immer mehr Gäste pflanzliche Optionen – und die dürfen gerne beeindrucken. Hier sind acht Menü-Ideen, die zeigen, dass vegan alles andere als langweilig ist.</p>
+
+    <h2>Warum veganes Catering boomen wird</h2>
+    <p>Laut aktuellen Umfragen ernähren sich in Deutschland rund 3 % der Bevölkerung vegan und weitere 10 % vegetarisch. Dazu kommt eine wachsende Gruppe von Flexitariern, die bewusst weniger Fleisch essen. Bei einem Event mit 80 Gästen sind statistisch also mindestens 10 Personen dabei, die pflanzliche Alternativen erwarten. Ein komplett veganes Menü löst nicht nur dieses Problem, sondern ist oft günstiger im Wareneinsatz und beeindruckt durch Kreativität.</p>
+
+    <h2>Die 8 besten veganen Menü-Konzepte</h2>
+
+    <h3>1. Das mediterrane Mezze-Buffet</h3>
+    <p>Hummus in drei Varianten, Baba Ganoush, Falafel, Tabbouleh, eingelegtes Gemüse, warmes Fladenbrot und marinierte Oliven. Dieses Konzept funktioniert hervorragend als Buffet und lässt sich komplett am Vortag vorbereiten. Rechne mit 12-15 verschiedenen Mezze-Schalen für ein beeindruckendes Bild. Vorteil: Jeder nimmt sich, was er mag, und die Vielfalt sorgt dafür, dass niemand etwas vermisst.</p>
+
+    <h3>2. Asiatische Bowl-Station</h3>
+    <p>Eine Live-Cooking-Station mit Reis- oder Nudelbowls nach Wahl: knuspriger Tofu, Edamame, eingelegter Ingwer, Sesamgurken, Avocado, Kimchi und verschiedene Saucen wie Erdnuss, Teriyaki und Miso. Gäste stellen sich ihre Bowl selbst zusammen – interaktiv, sättigend und optisch ein Highlight. Passt perfekt zu lockeren Firmenfeiern oder Geburtstagen.</p>
+
+    <h3>3. Das italienische Trüffel-Menü</h3>
+    <p>Vorspeise: Bruschetta mit weißen Bohnen und Trüffelöl. Hauptgang: Handgemachte Pasta (ohne Ei) mit Steinpilz-Trüffel-Sauce. Dessert: Panna Cotta aus Kokosmilch mit Beeren. Dieses Menü beweist, dass vegane Küche auch Fine Dining kann. Die Trüffel-Aromen sind so intensiv, dass niemand Käse oder Sahne vermisst.</p>
+
+    <h3>4. Das BBQ-Konzept</h3>
+    <p>Gegrillte Maiskolben mit Chipotle-Butter (pflanzlich), Jackfruit-Pulled-Pork-Burger, geräucherte Aubergine, Süßkartoffel-Wedges und klassischer Krautsalat mit veganem Dressing. Perfekt für Sommerevents und Gartenpartys. Der rauchige Geschmack von der Grillkohle gibt jedem Gericht Tiefe, und Jackfruit hat eine erstaunlich fleischähnliche Textur.</p>
+
+    <h3>5. Indisches Festmahl</h3>
+    <p>Die indische Küche ist von Natur aus reich an veganen Gerichten. Ein Thali mit Dal, Chana Masala, Aloo Gobi, Basmati-Reis, Naan-Brot und verschiedenen Chutneys ist ein Fest für alle Sinne. Die Gewürzvielfalt sorgt dafür, dass jeder Bissen anders schmeckt. Für 50+ Personen lassen sich die Gerichte hervorragend in großen Mengen vorbereiten.</p>
+
+    <h3>6. Raw &amp; Fresh – Das Rohkost-Buffet</h3>
+    <p>Für gesundheitsbewusste Events: Zucchini-Nudeln mit Avocado-Pesto, rohes Pad Thai, Blumenkohl-Reis-Bowls, Cashew-Käse-Platten und Energy Balls als Dessert. Besonders geeignet für Yoga-Retreats, Wellness-Events oder Morning-Meetings. Alle Gerichte sind ohne Kochen vorzubereiten, was die Logistik vereinfacht.</p>
+
+    <h3>7. Street Food Festival</h3>
+    <p>Verschiedene Stationen mit veganem Street Food aus aller Welt: mexikanische Tacos mit Bohnen und Guacamole, äthiopisches Injera mit Linsen-Curry, vietnamesische Sommerrollen, und türkische Lahmacun mit Walnuss-Füllung. Dieses Konzept eignet sich besonders für Stehempfänge und größere Events ab 80 Personen.</p>
+
+    <h3>8. Das Dessert-First-Konzept</h3>
+    <p>Für Nachmittagsevents oder als besonderer Abschluss: ein komplett veganes Dessert-Buffet mit Schokoladentorte, Zitronen-Tarte, Tiramisu auf Cashew-Basis, Fruchtsorbet, Pralinen und Petit Fours. Vegane Patisserie hat sich in den letzten Jahren extrem weiterentwickelt – die Ergebnisse stehen konventionellen Desserts in nichts nach.</p>
+
+    <h2>Praktische Tipps für veganes Event-Catering</h2>
+    <ul>
+      <li><strong>Kommuniziere offen:</strong> Nenne das Menü nicht explizit "vegan" auf der Einladung, wenn du skeptische Gäste erwartest. Lass das Essen für sich sprechen.</li>
+      <li><strong>Protein nicht vergessen:</strong> Sorge für ausreichend Hülsenfrüchte, Tofu, Tempeh oder Seitan in jedem Gang, damit die Mahlzeit sättigend ist.</li>
+      <li><strong>Fett = Geschmack:</strong> Hochwertige Öle, Nussmus, Avocado und Kokosmilch sorgen für die cremige Komponente, die bei veganer Küche manchmal fehlt.</li>
+      <li><strong>Allergene beachten:</strong> Vegan bedeutet nicht automatisch allergenfrei. Soja, Nüsse und Gluten sind häufige Allergene in pflanzlicher Küche.</li>
+      <li><strong>Probemenü bestellen:</strong> Bei einem wichtigen Event solltest du das vegane Menü vorher testen. Viele Caterer bieten das gegen eine kleine Gebühr an.</li>
+    </ul>
+
+    <blockquote>Der beste Beweis für gelungenes veganes Catering: Wenn am Ende niemand fragt, wo das Fleisch war.</blockquote>
+
+    <p>Auf Partyretter findest du Caterer und Privatköche, die sich auf pflanzliche Küche spezialisiert haben. Filtere einfach nach "vegan" und entdecke Profis in deiner Nähe, die dein Event unvergesslich machen.</p>
+
+    <div class="cta-box">
+      <h3>Vegane Caterer finden</h3>
+      <p>Entdecke Köche und Caterer, die pflanzliche Küche auf Event-Niveau bringen.</p>
+      <a href="privatkoech-liste.html">Anbieter entdecken →</a>
+    </div>
+
+    <div class="share-row">
+      <span style="font-weight:600;font-size:.9rem;align-self:center">Teilen:</span>
+      <a class="share-btn" href="#" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Kopiert!';return false;">Link kopieren</a>
+    </div>
+  </div>
+
+  <div class="blog-sidebar">
+    <div class="newsletter-widget">
+      <h3>Newsletter</h3>
+      <p>Wöchentlich die besten Rezepte und Eventideen – kostenlos in dein Postfach.</p>
+      <input type="email" class="newsletter-input" placeholder="deine@email.de">
+      <button class="newsletter-btn">Abonnieren</button>
+    </div>
+    <div class="sidebar-widget">
+      <h3>Weitere Artikel</h3>
+      <a class="related-item" href="blog-pasta-e-fagioli.html">
+        <div class="related-img" style="background-image:url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=200&q=80')"></div>
+        <div><div class="related-title">Pasta e Fagioli für große Gruppen</div><div class="related-meta">Rezept · 6 Min</div></div>
+      </a>
+      <a class="related-item" href="blog-allergene-managen.html">
+        <div class="related-img" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=200&q=80')"></div>
+        <div><div class="related-title">Allergene managen</div><div class="related-meta">Eventplanung · 6 Min</div></div>
+      </a>
+      <a class="related-item" href="blog-catering-budget.html">
+        <div class="related-img" style="background-image:url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=200&q=80')"></div>
+        <div><div class="related-title">Catering-Budget berechnen</div><div class="related-meta">Eventplanung · 12 Min</div></div>
+      </a>
+      <a class="related-item" href="blog-foodtruck-event.html">
+        <div class="related-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=80')"></div>
+        <div><div class="related-title">Streetfood-Fiesta</div><div class="related-meta">Inspiration · 5 Min</div></div>
+      </a>
+    </div>
+    <div class="sidebar-widget">
+      <h3>Themen</h3>
+      <div class="tag-cloud">
+        <a class="tag" href="blog.html">Vegan</a>
+        <a class="tag" href="blog.html">Trends</a>
+        <a class="tag" href="blog.html">Buffet</a>
+        <a class="tag" href="blog.html">Catering</a>
+        <a class="tag" href="blog.html">Hochzeit</a>
+        <a class="tag" href="blog.html">Rezepte</a>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);border-radius:18px;padding:28px;text-align:center">
+      <div style="font-size:2.5rem;margin-bottom:10px">👨‍🍳</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;margin-bottom:8px">Bist du Koch oder Anbieter?</h3>
+      <p style="font-size:.83rem;color:rgba(0,0,0,.7);margin-bottom:16px;line-height:1.5">Registriere dich auf Partyretter und erreiche tausende Kunden!</p>
+      <a href="https://app.partyretter.com/registrierung" style="display:block;background:var(--dark);color:white;text-decoration:none;padding:11px;border-radius:10px;font-weight:700;font-size:.88rem">Jetzt registrieren</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:20px;"><img src="logo.png" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;"></div>
+  <div class="footer-grid">
+    <div class="footer-col"><h4>Partyretter</h4><a href="homepage.html">Start</a><a href="coming-soon.html">Marktplatz</a><a href="kochevents.html">Koch-Events</a><a href="preise.html">Preise</a></div>
+    <div class="footer-col"><h4>Blog-Kategorien</h4><a href="blog.html">Inspiration</a><a href="blog.html">Rezepte</a><a href="blog.html">Eventplanung</a><a href="blog.html">Food Trends</a></div>
+    <div class="footer-col"><h4>Anbieter</h4><a href="anbieter-onboarding.html">Anbieter werden</a><a href="preise.html">Preismodell</a><a href="coming-soon.html">Quick-Setup</a></div>
+    <div class="footer-col"><h4>Rechtliches</h4><a href="agb.html">AGB</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2025 Partyretter GmbH</span><span>Made with ❤️ für Foodie-Events</span></div>
+</footer>
+
+<script src="cookie-banner.js"></script>
+<a class="fab-home" href="index.html" title="Zur Startseite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  Startseite
+</a>
+
+</body>
+</html>
