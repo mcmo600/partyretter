@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Restaurants für Events – Partyretter</title>
+  <title>Locations für Events – Partyretter</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root{--gold:#C8922A;--gold2:#e0a430;--dark:#1a1209;--cream:#faf7f2;--cream2:#e8e2d8;--muted:#7a6f60;--green:#2d7a4f;--text:#2c2416;}
@@ -119,11 +119,11 @@
 <div class="page-hero">
   <div class="breadcrumb">
     <a href="homepage.html">Startseite</a><span>›</span>
-    <a href="homepage.html">Locations</a><span>›</span>
-    Restaurants
+    <a href="homepage.html">Startseite</a><span>›</span>
+    Locations
   </div>
-  <h1>🍽️ <span class="h-gold">Restaurants</span> für Events</h1>
-  <p>Privaträume, Gourmet-Abende & exklusive Dinners – finde das perfekte Restaurant für dein Event.</p>
+  <h1>🍽️ <span class="h-gold">Locations</span> für Events</h1>
+  <p>Privaträume, Gourmet-Abende & exklusive Dinners – finde die perfekte Location für dein Event.</p>
 </div>
 
 <div class="filter-wrap">
@@ -141,7 +141,7 @@
       <option value="price-asc">💰 Preis aufsteigend</option>
       <option value="price-desc">💰 Preis absteigend</option>
     </select>
-    <span class="filter-count" id="result-count">8 Restaurants gefunden</span>
+    <span class="filter-count" id="result-count">8 Locations gefunden</span>
   </div>
 </div>
 
@@ -476,7 +476,7 @@ function filterKat(kat, btn) {
     card.style.display = show ? '' : 'none';
     if (show) count++;
   });
-  document.getElementById('result-count').textContent = count + ' Restaurants gefunden';
+  document.getElementById('result-count').textContent = count + ' Locations gefunden';
 }
 function sortItems() {
   const val = document.getElementById('sort-select').value;
