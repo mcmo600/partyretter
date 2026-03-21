@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Partyretter – Koch buchen, Foodtruck & Catering für Events</title>
-  <meta name="description" content="Koch, Foodtruck oder Catering buchen – Partyretter verbindet dich mit 1.200+ geprüften Anbietern in ganz Deutschland. Privatkoch, Konditor, Location & mehr. Jetzt kostenlos suchen." />
+  <meta name="description" content="Koch, Foodtruck oder Catering buchen – Partyretter verbindet dich mit geprüften Anbietern in ganz Deutschland. Privatkoch, Konditor, Location & mehr. Jetzt kostenlos suchen." />
   <link rel="canonical" href="https://www.partyretter.com/homepage.html" />
   <meta property="og:title" content="Partyretter – Koch buchen, Foodtruck & Catering für Events" />
-  <meta property="og:description" content="Profiköche, Foodtrucks & mehr – einfach suchen, buchen, feiern. 1.200+ geprüfte Anbieter in ganz Deutschland." />
+  <meta property="og:description" content="Profiköche, Foodtrucks & mehr – einfach suchen, buchen, feiern. Geprüfte Anbieter in ganz Deutschland." />
   <meta property="og:url" content="https://www.partyretter.com/homepage.html" />
   <meta property="og:type" content="website" />
   <meta name="robots" content="index, follow" />
@@ -645,7 +645,6 @@
   <!-- TABS -->
   <div class="search-tabs">
     <button class="search-tab active" onclick="setTab(this,'suchen')" data-i18n="tab_search">🔍 Suchen</button>
-    <button class="search-tab" onclick="setTab(this,'anbieten')" data-i18n="tab_offer">📣 Anbieten</button>
     <button class="search-tab" onclick="setTab(this,'partyretter')" data-i18n="tab_partyretter">🎉 Partyretter werden</button>
   </div>
 
@@ -684,20 +683,6 @@
 
   <!-- TRUST BAR (ausgeblendet – wird später mit echten Zahlen eingebaut) -->
 
-  <!-- SUCHE SPEICHERN BUTTON -->
-  <div class="search-box" id="tabAnbieten" style="display:none;">
-    <div class="search-field-wrap">
-      <div class="search-seg">
-        <label>Ich bin</label>
-        <select><option>👨‍🍳 Privatkoch</option><option>🚚 Foodtruck-Betreiber</option><option>🍷 Getränkeservice</option><option>🏠 Location-Anbieter</option></select>
-      </div>
-      <div class="search-seg">
-        <label>Mein Standort</label>
-        <input type="text" placeholder="Stadt oder PLZ"/>
-      </div>
-    </div>
-    <button class="search-btn" onclick="window.location='anbieter-onboarding.html'">→</button>
-  </div>
 
   <div class="search-box" id="tabPartyretter" style="display:none; align-items:flex-start; padding: 14px 20px; flex-direction:column; gap:10px;">
     <div style="display:flex;gap:18px;flex-wrap:wrap;">
@@ -871,8 +856,8 @@ function switchAnzeigen(panel, btn) {
 function setTab(btn, tab) {
   document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  ['tabSuchen','tabAnbieten','tabPartyretter'].forEach(id => document.getElementById(id).style.display='none');
-  const map = {suchen:'tabSuchen', anbieten:'tabAnbieten', partyretter:'tabPartyretter'};
+  ['tabSuchen','tabPartyretter'].forEach(id => document.getElementById(id).style.display='none');
+  const map = {suchen:'tabSuchen', partyretter:'tabPartyretter'};
   document.getElementById(map[tab]).style.display='flex';
 }
 // ── RECENT CITIES ──
@@ -1082,7 +1067,7 @@ document.addEventListener('DOMContentLoaded', renderSaved);
         <div style="font-size:32px;margin-bottom:12px;">🧑‍🎉</div>
         <h3 data-i18n="for_customers" style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:12px;">Für Kunden</h3>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
-          <li style="font-size:13.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="customer_p1">1.200+ geprüfte Anbieter</span></li>
+          <li style="font-size:13.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="customer_p1">Geprüfte Anbieter in deiner Region</span></li>
           <li style="font-size:13.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="customer_p2">Einfache Anfrage in 2 Minuten</span></li>
           <li style="font-size:13.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="customer_p3">Event ausschreiben & Angebote sammeln</span></li>
           <li style="font-size:13.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="customer_p4">Bewertungen & Fotos für Vertrauen</span></li>
