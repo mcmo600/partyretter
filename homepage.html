@@ -6,10 +6,10 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Partyretter – Koch buchen, Foodtruck & Catering für Events</title>
   <meta name="description" content="Koch, Foodtruck oder Catering buchen – Partyretter verbindet dich mit geprüften Anbietern in ganz Deutschland. Privatkoch, Konditor, Location & mehr. Jetzt kostenlos suchen." />
-  <link rel="canonical" href="https://www.partyretter.com/homepage.html" />
+  <link rel="canonical" href="https://www.partyretter.com/" />
   <meta property="og:title" content="Partyretter – Koch buchen, Foodtruck & Catering für Events" />
   <meta property="og:description" content="Profiköche, Foodtrucks & mehr – einfach suchen, buchen, feiern. Geprüfte Anbieter in ganz Deutschland." />
-  <meta property="og:url" content="https://www.partyretter.com/homepage.html" />
+  <meta property="og:url" content="https://www.partyretter.com/" />
   <meta property="og:type" content="website" />
   <meta name="robots" content="index, follow" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -133,22 +133,6 @@
       .search-box { margin: 0 auto 20px; }
       .hero-stats { justify-content: center; margin: 0 auto; }
     }
-
-    /* SEARCH TABS */
-    .search-tabs {
-      display: inline-flex; background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.14); border-radius: 50px;
-      padding: 4px; gap: 2px; margin-bottom: 20px; align-self: flex-start;
-    }
-    .search-tab {
-      padding: 9px 22px; border-radius: 50px; font-size: 13.5px; font-weight: 600;
-      color: rgba(245,240,232,0.65); cursor: pointer; transition: all .2s; white-space: nowrap;
-      border: none; background: none; font-family: 'DM Sans', sans-serif;
-    }
-    .search-tab.active {
-      background: var(--gold); color: var(--dark); box-shadow: 0 2px 12px rgba(200,146,42,.4);
-    }
-    .search-tab:not(.active):hover { color: var(--cream); background: rgba(255,255,255,0.08); }
 
     /* SEARCH BOX */
     .search-box {
@@ -618,6 +602,7 @@
     <li><a href="kochevents.html" data-i18n="nav_events">🍽️ Koch-Events</a></li>
     <li><a href="coming-soon.html" data-i18n="nav_trucks">🚚 Foodtruck-Standorte</a></li>
     <li><a href="blog.html" data-i18n="nav_blog">📝 Blog</a></li>
+    <li><a href="anbieter-onboarding.html">🎉 Partyretter werden</a></li>
   </ul>
   <div class="nav-actions">
     <div id="lang-switcher" style="position:relative;"></div>
@@ -641,12 +626,6 @@
     </div>
     <h1><span data-i18n="hero_h1_1">Dein Koch.</span><br/><span class="h-gold" data-i18n="hero_h1_2">Deine Party. Dein Moment.</span></h1>
     <p class="hero-sub" data-i18n="hero_sub">Profiköche, Foodtrucks & mehr – einfach suchen, buchen, feiern.</p>
-
-  <!-- TABS -->
-  <div class="search-tabs">
-    <button class="search-tab active" onclick="setTab(this,'suchen')" data-i18n="tab_search">🔍 Suchen</button>
-    <button class="search-tab" onclick="setTab(this,'partyretter')" data-i18n="tab_partyretter">🎉 Partyretter werden</button>
-  </div>
 
   <!-- SEARCH BOX -->
   <div class="search-box" id="tabSuchen">
@@ -684,14 +663,6 @@
   <!-- TRUST BAR (ausgeblendet – wird später mit echten Zahlen eingebaut) -->
 
 
-  <div class="search-box" id="tabPartyretter" style="display:none; align-items:flex-start; padding: 14px 20px; flex-direction:column; gap:10px;">
-    <div style="display:flex;gap:18px;flex-wrap:wrap;">
-      <span style="font-size:13px;color:var(--dark);display:flex;align-items:center;gap:7px;"><span style="color:var(--gold);">📣</span>Werde sichtbar – Kunden finden dich direkt</span>
-      <span style="font-size:13px;color:var(--dark);display:flex;align-items:center;gap:7px;"><span style="color:var(--gold);">📋</span>Wir erledigen die Verwaltung – du kochst</span>
-      <span style="font-size:13px;color:var(--dark);display:flex;align-items:center;gap:7px;"><span style="color:var(--gold);">🎯</span>Konzentrier dich voll auf dein Event</span>
-    </div>
-    <button style="background:var(--gold);color:var(--dark);border:none;padding:10px 22px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;" onclick="window.location='anbieter-onboarding.html'">Jetzt Partyretter werden →</button>
-  </div>
 
   </div><!-- /hero-content -->
 </section>
@@ -853,13 +824,6 @@ function switchAnzeigen(panel, btn) {
   btn.style.color = 'var(--cream)';
 }
 
-function setTab(btn, tab) {
-  document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  ['tabSuchen','tabPartyretter'].forEach(id => document.getElementById(id).style.display='none');
-  const map = {suchen:'tabSuchen', partyretter:'tabPartyretter'};
-  document.getElementById(map[tab]).style.display='flex';
-}
 // ── RECENT CITIES ──
 const RECENT_CITIES_KEY = 'mpr_recent_cities';
 const DEFAULT_CITIES = ['München', 'Berlin', 'Hamburg', 'Köln', 'Frankfurt', 'Stuttgart', 'Düsseldorf'];
