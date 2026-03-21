@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Foodtruck-Standorte auf der Karte – Partyretter</title>
+<meta name="description" content="Finde Foodtrucks in deiner Naehe auf der interaktiven Karte. Burger, Pizza, Asia und mehr – jetzt Standorte entdecken und direkt anfragen auf Partyretter.">
+<meta property="og:title" content="Foodtruck-Standorte auf der Karte – Partyretter">
+<meta property="og:description" content="Finde die besten Foodtrucks fuer dein Event – direkt auf der Karte. Standorte in ganz Deutschland.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://partyretter.com/foodtruck-standorte.html">
+<meta property="og:image" content="https://partyretter.com/images/og-foodtruck-standorte.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://partyretter.com/foodtruck-standorte.html">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+:root {
+  --dark:  #1A1208; --dark2: #2d1f0e;
+  --gold:  #C8922A; --gold2: #e0a430;
+  --cream: #F5F0E8; --cream2:#EDE8DF;
+  --text:  #1A1208; --muted: rgba(26,18,8,0.52);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--cream);}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.4);}
+.nav-logo{font-family:'Fraunces',serif;font-size:19px;font-weight:900;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.nav-logo img{height:38px;width:auto;}
+.nav-links{display:flex;gap:22px;list-style:none;}
+.nav-links a{color:rgba(245,240,232,.75);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-actions{display:flex;gap:10px;align-items:center;}
+.btn-login{color:rgba(245,240,232,.78);font-size:13px;font-weight:600;text-decoration:none;padding:6px 14px;border-radius:8px;border:1px solid rgba(200,146,42,.35);transition:.2s;}
+.btn-login:hover{border-color:var(--gold);color:var(--gold);}
+.btn-cta-nav{background:var(--gold);color:var(--dark);padding:7px 18px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:.2s;}
+.btn-cta-nav:hover{background:var(--gold2);}
+
+/* ── HERO ── */
+.hero{background:var(--dark);padding:48px 40px 40px;text-align:center;}
+.hero h1{font-family:'Fraunces',serif;font-size:38px;font-weight:900;color:var(--cream);margin-bottom:10px;}
+.hero h1 span{color:var(--gold);}
+.hero p{font-size:16px;color:rgba(245,240,232,.6);max-width:520px;margin:0 auto 28px;}
+
+/* ── SEARCH BAR ── */
+.search-bar{display:flex;gap:10px;max-width:600px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
+.search-bar input{flex:1;min-width:180px;padding:12px 18px;border:2px solid rgba(200,146,42,.3);border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;background:rgba(245,240,232,.08);color:var(--cream);outline:none;transition:border-color .2s;}
+.search-bar input::placeholder{color:rgba(245,240,232,.4);}
+.search-bar input:focus{border-color:var(--gold);}
+.search-bar select{padding:12px 16px;border:2px solid rgba(200,146,42,.3);border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;background:rgba(245,240,232,.08);color:var(--cream);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.search-bar select option{background:var(--dark);color:var(--cream);}
+.btn-search{padding:12px 28px;background:var(--gold);color:var(--dark);border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.btn-search:hover{background:var(--gold2);}
+
+/* ── MAP ── */
+.map-section{padding:0;}
+#map{width:100%;height:520px;z-index:1;}
+
+/* Leaflet marker */
+.gold-marker{background:var(--gold);width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;}
+.gold-marker span{transform:rotate(45deg);font-size:14px;line-height:1;}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper{border-radius:14px !important;box-shadow:0 4px 20px rgba(0,0,0,.15) !important;}
+.leaflet-popup-content{margin:14px 16px !important;font-family:'DM Sans',sans-serif !important;}
+.popup-name{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.popup-cat{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.popup-rating{font-size:13px;color:var(--gold);font-weight:600;margin-bottom:6px;}
+.popup-desc{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:10px;}
+.popup-btn{display:inline-block;padding:8px 18px;background:var(--gold);color:var(--dark);border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:.2s;}
+.popup-btn:hover{background:var(--gold2);}
+
+/* ── TRUCK GRID ── */
+.grid-section{max-width:1200px;margin:0 auto;padding:48px 40px 60px;}
+.grid-section h2{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);text-align:center;margin-bottom:8px;}
+.grid-section h2 span{color:var(--gold);}
+.grid-subtitle{text-align:center;font-size:15px;color:var(--muted);margin-bottom:32px;}
+.truck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px;}
+
+/* ── TRUCK CARD ── */
+.truck-card{background:#fff;border-radius:18px;border:1.5px solid var(--cream2);overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.truck-card:hover{box-shadow:0 8px 32px rgba(200,146,42,.15);transform:translateY(-3px);}
+.truck-card-header{padding:20px 20px 0;}
+.truck-card-name{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.truck-card-location{font-size:13px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:4px;}
+.truck-card-tag{display:inline-block;background:rgba(200,146,42,.12);color:var(--gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;margin-bottom:10px;}
+.truck-card-desc{font-size:13px;color:var(--text);line-height:1.6;padding:0 20px;margin-bottom:16px;}
+.truck-card-footer{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--cream2);background:rgba(245,240,232,.4);}
+.truck-card-rating{font-size:13px;color:var(--gold);font-weight:600;}
+.btn-details{padding:8px 18px;background:var(--gold);color:var(--dark);border:none;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.btn-details:hover{background:var(--gold2);}
+
+/* ── CTA SECTION ── */
+.cta-section{background:var(--dark);padding:56px 40px;text-align:center;}
+.cta-section h2{font-family:'Fraunces',serif;font-size:30px;font-weight:900;color:var(--cream);margin-bottom:10px;}
+.cta-section h2 span{color:var(--gold);}
+.cta-section p{font-size:15px;color:rgba(245,240,232,.6);max-width:480px;margin:0 auto 24px;}
+.btn-cta{display:inline-block;padding:14px 32px;background:var(--gold);color:var(--dark);border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:.2s;}
+.btn-cta:hover{background:var(--gold2);}
+
+/* ── FOOTER ── */
+footer{background:#0a0704;padding:52px 48px 32px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;max-width:1200px;margin-left:auto;margin-right:auto;}
+.footer-brand .logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);margin-bottom:10px;}
+.footer-brand .logo span{color:var(--gold);}
+.footer-brand p{font-size:13px;color:rgba(245,240,232,.45);line-height:1.6;margin-bottom:14px;}
+.footer-tagline{font-size:15px;color:rgba(245,240,232,.70);font-family:'Fraunces',serif;font-style:italic;}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(245,240,232,.40);margin-bottom:14px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:9px;}
+.footer-col ul li a{color:rgba(245,240,232,.58);text-decoration:none;font-size:13px;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--gold);}
+.footer-bottom{border-top:1px solid rgba(245,240,232,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto;}
+.footer-bottom p{font-size:12px;color:rgba(245,240,232,.35);}
+.footer-bottom a{color:rgba(245,240,232,.40);text-decoration:none;}
+.footer-bottom a:hover{color:var(--gold);}
+.made-in{font-size:12px;color:rgba(245,240,232,.35);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+  .hero{padding:32px 20px 28px;}
+  .hero h1{font-size:28px;}
+  .search-bar{flex-direction:column;padding:0 10px;}
+  .search-bar input,.search-bar select{min-width:auto;width:100%;}
+  #map{height:380px;}
+  .grid-section{padding:32px 20px 48px;}
+  .truck-grid{grid-template-columns:1fr;}
+  .cta-section{padding:40px 20px;}
+  footer{padding:36px 20px 24px;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:500px){
+  .footer-top{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="homepage.html">
+    <span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="foodtruck-standorte.html" class="active">Foodtruck-Standorte</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="anbieter-onboarding.html">Partyretter werden</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-login" href="https://app.partyretter.com/login">Anmelden</a>
+    <a class="btn-cta-nav" href="https://app.partyretter.com/registrierung">Inserat erstellen &rarr;</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Foodtruck-Standorte <span>in deiner N&auml;he</span></h1>
+  <p>Finde die besten Foodtrucks f&uuml;r dein Event &ndash; direkt auf der Karte.</p>
+  <div class="search-bar">
+    <input type="text" id="city-input" placeholder="Stadt eingeben, z.B. M&uuml;nchen&hellip;">
+    <select id="radius-select">
+      <option value="5">5 km</option>
+      <option value="10">10 km</option>
+      <option value="25" selected>25 km</option>
+      <option value="50">50 km</option>
+    </select>
+    <button class="btn-search" onclick="searchCity()">Suchen</button>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div id="map"></div>
+</section>
+
+<!-- TRUCK GRID -->
+<section class="grid-section">
+  <h2>Unsere <span>Foodtrucks</span> in ganz Deutschland</h2>
+  <p class="grid-subtitle">Entdecke ausgew&auml;hlte Foodtrucks &ndash; von Burger bis vegan, f&uuml;r jedes Event das Richtige.</p>
+  <div class="truck-grid" id="truck-grid"></div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Du hast einen <span>Foodtruck</span>?</h2>
+  <p>Werde Teil von Partyretter und erreiche tausende Kunden in deiner Region. Kostenlos registrieren und sofort loslegen.</p>
+  <a class="btn-cta" href="https://app.partyretter.com/registrierung">Jetzt kostenlos registrieren &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><span style="color:var(--gold);">Party</span><span style="color:var(--cream);">retter</span></div>
+      <p>Deutschlands f&uuml;hrende Plattform f&uuml;r Profis rund ums Event. Von Dinner f&uuml;r 2 bis Festival f&uuml;r 500 &ndash; alles auf einer Plattform.</p>
+      <div class="footer-tagline">Von Dinner f&uuml;r 2 bis Festival f&uuml;r 500 &ndash; wir finden deinen Retter.</div>
+    </div>
+    <div class="footer-col">
+      <h4>F&uuml;r Kunden</h4>
+      <ul>
+        <li><a href="coming-soon.html">Koch buchen</a></li>
+        <li><a href="foodtruck-standorte.html">Foodtruck finden</a></li>
+        <li><a href="coming-soon.html">Location finden</a></li>
+        <li><a href="coming-soon.html">Event ausschreiben</a></li>
+        <li><a href="kochevents.html">Koch-Events</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>F&uuml;r Anbieter</h4>
+      <ul>
+        <li><a href="anbieter-onboarding.html">Als Anbieter starten</a></li>
+        <li><a href="https://app.partyretter.com/registrierung">Profil erstellen</a></li>
+        <li><a href="anbieter-vorteile.html">Vorteile Partyretter</a></li>
+        <li><a href="https://app.partyretter.com/registrierung">Jetzt registrieren</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="agb.html">AGB</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Cookies</a></li>
+        <li><a href="mailto:info@partyretter.com">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Partyretter &middot; Alle Rechte vorbehalten &middot; <a href="mailto:info@partyretter.com">info@partyretter.com</a></p>
+    <p class="made-in">Made with &hearts; in Ulm</p>
+  </div>
+</footer>
+
+<!-- LEAFLET JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Foodtruck data
+var trucks = [
+  { name:"Burger Brothers", city:"Hamburg", lat:53.5511, lng:9.9937, cat:"Burger & BBQ", desc:"Saftige Smashed Burger und hausgemachte BBQ-Saucen \u2013 der Klassiker aus Hamburg.", rating:"4.9" },
+  { name:"Asia Street Kitchen", city:"Berlin", lat:52.5200, lng:13.4050, cat:"Asiatisch", desc:"Authentische asiatische Streetfood-K\u00fcche: Pad Thai, Bao Buns und frische Sommerrollen.", rating:"4.8" },
+  { name:"BBQ Smokehouse", city:"M\u00fcnchen", lat:48.1351, lng:11.5820, cat:"Burger & BBQ", desc:"Slow-Smoked Ribs, Pulled Pork und Brisket \u2013 texanisches BBQ mitten in Bayern.", rating:"4.9" },
+  { name:"Pizza Napoletana Mobil", city:"K\u00f6ln", lat:50.9375, lng:6.9603, cat:"Pizza & Italiano", desc:"Echte neapolitanische Pizza aus dem mobilen Holzofen \u2013 knusprig und aromatisch.", rating:"4.7" },
+  { name:"Taco Loco Foodtruck", city:"Frankfurt", lat:50.1109, lng:8.6821, cat:"Mexikanisch", desc:"Handgemachte Tacos, Burritos und Quesadillas mit frischen Zutaten und scharfer Salsa.", rating:"4.8" },
+  { name:"Cr\u00eape & Co.", city:"Stuttgart", lat:48.7758, lng:9.1829, cat:"Desserts & S\u00fc\u00dfes", desc:"S\u00fc\u00dfe und herzhafte Cr\u00eapes, frisch zubereitet \u2013 perfekt f\u00fcr jedes Event.", rating:"4.6" },
+  { name:"Currywurst Express", city:"D\u00fcsseldorf", lat:51.2277, lng:6.7735, cat:"Deutsch & Klassiker", desc:"Die beste Currywurst am Rhein \u2013 knackige Wurst, w\u00fcrzige Sauce und knusprige Pommes.", rating:"4.7" },
+  { name:"Vegane K\u00fcche on Wheels", city:"Leipzig", lat:51.3397, lng:12.3731, cat:"Vegan", desc:"100% pflanzlich: Buddha Bowls, vegane Burger und frische Smoothies f\u00fcr bewussten Genuss.", rating:"4.8" }
+];
+
+// Init map
+var map = L.map('map',{ scrollWheelZoom:false }).setView([51.1657, 10.4515], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom:18
+}).addTo(map);
+
+// Custom gold marker icon
+function goldIcon(){
+  return L.divIcon({
+    className:'',
+    html:'<div class="gold-marker"><span>\ud83d\ude9a</span></div>',
+    iconSize:[32,32],
+    iconAnchor:[16,32],
+    popupAnchor:[0,-28]
+  });
+}
+
+// Add markers
+trucks.forEach(function(t){
+  var popup = '<div>' +
+    '<div class="popup-name">' + t.name + '</div>' +
+    '<div class="popup-cat">' + t.cat + ' \u00b7 ' + t.city + '</div>' +
+    '<div class="popup-rating">\u2605 ' + t.rating + ' \u00b7 Top-Bewertung</div>' +
+    '<div class="popup-desc">' + t.desc + '</div>' +
+    '<a class="popup-btn" href="https://app.partyretter.com/registrierung">Anfrage senden \u2192</a>' +
+    '</div>';
+  L.marker([t.lat, t.lng], {icon:goldIcon()}).addTo(map).bindPopup(popup, {maxWidth:280});
+});
+
+// Search function using Nominatim
+function searchCity(){
+  var city = document.getElementById('city-input').value.trim();
+  if(!city) return;
+  var radius = parseInt(document.getElementById('radius-select').value);
+  fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=de&q=' + encodeURIComponent(city))
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data.length > 0){
+        var lat = parseFloat(data[0].lat);
+        var lon = parseFloat(data[0].lon);
+        var zoom = radius <= 5 ? 13 : radius <= 10 ? 12 : radius <= 25 ? 10 : 9;
+        map.setView([lat, lon], zoom);
+      } else {
+        alert('Stadt nicht gefunden. Bitte versuche es mit einem anderen Suchbegriff.');
+      }
+    })
+    .catch(function(){
+      alert('Suche fehlgeschlagen. Bitte versuche es erneut.');
+    });
+}
+
+// Enter key triggers search
+document.getElementById('city-input').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') searchCity();
+});
+
+// Render truck cards
+var grid = document.getElementById('truck-grid');
+trucks.forEach(function(t){
+  var card = document.createElement('div');
+  card.className = 'truck-card';
+  card.innerHTML =
+    '<div class="truck-card-header">' +
+      '<div class="truck-card-name">' + t.name + '</div>' +
+      '<div class="truck-card-location">\ud83d\udccd ' + t.city + '</div>' +
+      '<span class="truck-card-tag">' + t.cat + '</span>' +
+    '</div>' +
+    '<div class="truck-card-desc">' + t.desc + '</div>' +
+    '<div class="truck-card-footer">' +
+      '<span class="truck-card-rating">\u2605 ' + t.rating + '</span>' +
+      '<a class="btn-details" href="coming-soon.html">Details ansehen</a>' +
+    '</div>';
+  grid.appendChild(card);
+});
+</script>
+
+<script src="cookie-banner.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>
