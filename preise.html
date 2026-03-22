@@ -121,6 +121,14 @@ nav{background:var(--dark);padding:14px 40px;display:flex;align-items:center;jus
 .faq-a.open{max-height:200px;padding:0 24px 20px}
 .faq-a p{color:#666;font-size:.9rem;line-height:1.7}
 
+/* FEATURE DETAIL */
+.feat-detail{cursor:pointer;position:relative;color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.feat-detail-info{display:none;background:var(--dark);color:var(--cream);font-size:.8rem;font-weight:400;line-height:1.6;padding:14px 18px;border-radius:10px;margin-top:8px;text-align:left}
+.feat-detail-info.open{display:block}
+.feat-detail-info ul{list-style:none;padding:0;margin:0}
+.feat-detail-info ul li{padding:4px 0;display:flex;align-items:flex-start;gap:6px}
+.feat-detail-info ul li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0}
+
 /* TRUST */
 .trust-strip{background:var(--dark);padding:50px 40px;text-align:center}
 .trust-strip h2{font-family:'Fraunces',serif;font-weight:900;color:white;font-size:1.8rem;margin-bottom:12px}
@@ -214,7 +222,17 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
           <li>Foodtruck-Karte: Top-Eintrag mit Siegel</li>
           <li>Echtzeit-Analytics & Statistiken</li>
           <li>Kalender-Sync (Google, iCal)</li>
-          <li>Buchhaltungs-Tools</li>
+          <li><span class="feat-detail" onclick="this.nextElementSibling.classList.toggle('open')">Buchhaltungs-Tools ℹ️</span>
+            <div class="feat-detail-info">
+              <ul>
+                <li>Rechnungen automatisch erstellen (PDF)</li>
+                <li>Einnahmen-Übersicht pro Monat/Jahr</li>
+                <li>Export für den Steuerberater (CSV)</li>
+                <li>Provisionsübersicht pro Buchung</li>
+                <li>Stornierungen & Gutschriften tracken</li>
+              </ul>
+            </div>
+          </li>
         </ul>
         <button class="btn-plan primary" onclick="location.href='https://app.partyretter.com/registrierung'">Pro starten</button>
       </div>
@@ -280,7 +298,14 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
           <tr><td>Top-Foodtruck Siegel</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
           <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUSINESS TOOLS</td></tr>
           <tr><td>Analytics & Statistiken</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td>Buchhaltungs-Tools</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td><span class="feat-detail" onclick="var r=document.getElementById('bh-detail-table');r.style.display=r.style.display==='none'?'table-row':'none'">Buchhaltungs-Tools ℹ️</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr id="bh-detail-table" style="display:none"><td colspan="3" style="padding:0 20px 16px;text-align:left;background:#fafaf8;font-size:.85rem;color:#555;line-height:1.7;">
+            ✓ Rechnungen automatisch erstellen (PDF)<br>
+            ✓ Einnahmen-Übersicht pro Monat/Jahr<br>
+            ✓ Export für den Steuerberater (CSV)<br>
+            ✓ Provisionsübersicht pro Buchung<br>
+            ✓ Stornierungen & Gutschriften tracken
+          </td></tr>
           <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">PROVISION</td></tr>
           <tr><td>Provision pro Buchung</td><td><strong>6 %</strong></td><td><strong style="color:var(--gold)">3 %</strong></td></tr>
           <tr><td>Monatliche Gebühr</td><td><strong>0 €</strong></td><td><strong>10 €</strong></td></tr>
