@@ -639,8 +639,10 @@ function showPlans(type) {
   });
 }
 // Auto-Tab via URL-Hash: preise.html#anbieter oder preise.html#kunde
-if (window.location.hash === '#anbieter') showPlans('provider');
-else if (window.location.hash === '#kunde') showPlans('customer');
+// Anderen Tab-Button ausblenden wenn über Direktlink
+var btns = document.querySelectorAll('.toggle-btn');
+if (window.location.hash === '#anbieter') { showPlans('provider'); btns[0].style.display='none'; }
+else if (window.location.hash === '#kunde') { showPlans('customer'); btns[1].style.display='none'; }
 
 function toggleFaq(el) {
   const ans = el.nextElementSibling;
