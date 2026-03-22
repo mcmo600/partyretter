@@ -477,7 +477,7 @@ function showPlans(type) {
   document.getElementById('provider-plans').style.display = type === 'provider' ? 'block' : 'none';
   document.getElementById('customer-plans').style.display = type === 'customer' ? 'block' : 'none';
   document.querySelectorAll('.toggle-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', (type === 'provider' && i === 0) || (type === 'customer' && i === 1));
+    btn.classList.toggle('active', (type === 'customer' && i === 0) || (type === 'provider' && i === 1));
   });
 }
 function toggleFaq(el) {
