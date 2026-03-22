@@ -638,6 +638,10 @@ function showPlans(type) {
     btn.classList.toggle('active', (type === 'customer' && i === 0) || (type === 'provider' && i === 1));
   });
 }
+// Auto-Tab via URL-Hash: preise.html#anbieter oder preise.html#kunde
+if (window.location.hash === '#anbieter') showPlans('provider');
+else if (window.location.hash === '#kunde') showPlans('customer');
+
 function toggleFaq(el) {
   const ans = el.nextElementSibling;
   const arrow = el.querySelector('.faq-arrow');
