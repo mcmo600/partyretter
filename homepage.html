@@ -1056,7 +1056,7 @@ document.addEventListener('DOMContentLoaded', renderSaved);
           <li style="font-size:13.5px;color:rgba(245,240,232,0.75);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="provider_p1">Kostenloses Profil erstellen</span></li>
           <li style="font-size:13.5px;color:rgba(245,240,232,0.75);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="provider_p2">Neue Kunden ohne Eigenmarketing</span></li>
           <li style="font-size:13.5px;color:rgba(245,240,232,0.75);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="provider_p3">Auf Suchanfragen bewerben</span></li>
-          <li style="font-size:13.5px;color:rgba(245,240,232,0.75);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="provider_p4">15 % Provision nur bei Buchung</span></li>
+          <li style="font-size:13.5px;color:rgba(245,240,232,0.75);display:flex;gap:8px;"><span style="color:var(--gold);">✓</span><span data-i18n="provider_p4">Starter kostenlos · nur 6 % bei Buchung</span></li>
         </ul>
         <a href="anbieter-onboarding.html" data-i18n="cta_provider_btn" style="display:inline-block;margin-top:20px;background:var(--gold);color:var(--dark);padding:10px 22px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;">Anbieter werden →</a>
       </div>
@@ -1069,19 +1069,26 @@ document.addEventListener('DOMContentLoaded', renderSaved);
   <div style="max-width:700px;margin:0 auto;text-align:center;">
     <h2 data-i18n="prices_title" style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);margin-bottom:8px;">Preise & Provision</h2>
     <p data-i18n="prices_sub" style="color:var(--muted);font-size:15px;margin-bottom:36px;">Transparent, fair, ohne versteckte Kosten.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;">
-      <div style="background:#fff;border-radius:14px;padding:28px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
-        <div data-i18n="price_customer_label" style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Für Kunden</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px;">
+      <div style="background:#fff;border-radius:14px;padding:28px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Für Kunden</div>
         <div style="font-size:38px;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;line-height:1;">0 €</div>
-        <div data-i18n="price_customer_desc" style="font-size:13px;color:var(--muted);margin-top:8px;">Suchen, Anfragen und Vergleichen ist völlig kostenlos.</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:8px;">Suchen, Anfragen und Vergleichen ist völlig kostenlos.</div>
       </div>
-      <div style="background:var(--dark);border-radius:14px;padding:28px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">
-        <div data-i18n="price_provider_label" style="font-size:13px;font-weight:700;color:rgba(245,240,232,0.6);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Für Anbieter</div>
-        <div style="font-size:38px;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;line-height:1;">15 %</div>
-        <div data-i18n="price_provider_desc" style="font-size:13px;color:rgba(245,240,232,0.7);margin-top:8px;">Provision nur bei erfolgreicher Buchung. Kein Abo, kein Risiko.</div>
+      <div style="background:#fff;border-radius:14px;padding:28px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">🚀 Starter</div>
+        <div style="font-size:38px;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;line-height:1;">0 €</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:8px;">Kostenloses Profil · nur 6 % Provision bei erfolgreicher Buchung.</div>
+      </div>
+      <div style="background:var(--dark);border-radius:14px;padding:28px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">
+        <div style="font-size:13px;font-weight:700;color:rgba(245,240,232,0.6);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">⭐ Pro</div>
+        <div style="font-size:38px;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;line-height:1;">10 €</div>
+        <div style="font-size:11px;color:rgba(245,240,232,0.5);margin-top:2px;">/Monat</div>
+        <div style="font-size:13px;color:rgba(245,240,232,0.7);margin-top:6px;">Nur 3 % Provision · Top-Platzierung · Werbefrei.</div>
       </div>
     </div>
-    <p data-i18n="prices_footer" style="font-size:13px;color:var(--muted);">Kein Monatsabo · Keine versteckten Gebühren · Kündigung jederzeit möglich</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Keine versteckten Gebühren · Kündigung jederzeit möglich</p>
+    <a href="preise.html" style="font-size:13px;color:var(--gold);font-weight:600;">Alle Pläne vergleichen →</a>
   </div>
 </section>
 
