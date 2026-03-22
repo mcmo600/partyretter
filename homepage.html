@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
   <title>Partyretter – Koch buchen, Foodtruck & Catering für Events</title>
   <meta name="description" content="Koch, Foodtruck oder Catering buchen – Partyretter verbindet dich mit geprüften Anbietern in ganz Deutschland. Privatkoch, Konditor, Location & mehr. Jetzt kostenlos suchen." />
   <link rel="canonical" href="https://www.partyretter.com/" />
@@ -1154,5 +1158,6 @@ document.addEventListener('DOMContentLoaded', renderSaved);
 
 <script src="cookie-banner.js"></script>
 <script src="i18n.js"></script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
 </body>
 </html>

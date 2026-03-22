@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
 <title>Tarte Tatin für 50 Personen: Schritt-für-Schritt – Partyretter Blog</title>
 <meta name="description" content="Tarte Tatin für 50 Gäste: Das komplette Rezept mit Schritt-für-Schritt-Anleitung, Zeitplanung und Skalierungstipps für dein Event.">
 <meta property="og:title" content="Tarte Tatin für 50 Personen: Schritt-für-Schritt – Partyretter Blog">
@@ -144,6 +148,7 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
       </div>
       <div style="margin-left:auto;display:flex;gap:10px;">
         <button onclick="printRecipe()" style="background:var(--gold);color:var(--dark);border:none;padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='var(--gold)'">🖨️ PDF drucken</button>
+        <button id="cartBtn" onclick="addToCart()" style="background:transparent;color:var(--cream);border:2px solid var(--gold);padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--dark)'" onmouseout="this.style.background='transparent';this.style.color='var(--cream)'">🛒 Einkaufszettel</button>
       </div>
     </div>
 
@@ -231,9 +236,42 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
       w.document.write('<h2 style="font-size:16px;margin:24px 0 10px;">Zubereitung</h2>');
       w.document.write(steps.join(''));
       w.document.write('<div style="margin-top:30px;padding-top:14px;border-top:2px solid #C8922A;font-size:12px;color:#999;text-align:center;">Rezept von partyretter.com · Finde Profiköche für dein Event</div>');
-      w.document.write('</body></html>');
+      w.document.write('<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
+</body></html>');
       w.document.close();
       setTimeout(() => w.print(), 500);
+    }
+
+    function addToCart() {
+      const rows = document.querySelectorAll('#ingredients-table tbody tr');
+      const servings = parseInt(document.getElementById('servings-input').value) || 50;
+      const ingredients = [];
+      rows.forEach(row => {
+        const qtd = row.querySelector('.qty');
+        if (qtd) {
+          ingredients.push({
+            name: row.cells[0].textContent.trim(),
+            base: parseFloat(qtd.dataset.base),
+            unit: qtd.dataset.unit,
+            baseServings: parseInt(qtd.dataset.baseServings)
+          });
+        }
+      });
+      const recipe = {
+        id: 'tarte-tatin',
+        title: 'Tarte Tatin',
+        baseServings: 50,
+        servings: servings,
+        ingredients: ingredients
+      };
+      let cart = [];
+      try { cart = JSON.parse(localStorage.getItem('pr_cart') || '[]'); } catch {}
+      const idx = cart.findIndex(r => r.id === recipe.id);
+      if (idx >= 0) cart[idx] = recipe; else cart.push(recipe);
+      localStorage.setItem('pr_cart', JSON.stringify(cart));
+      const btn = document.getElementById('cartBtn');
+      btn.textContent = '✅ Hinzugefügt!';
+      setTimeout(() => { btn.textContent = '🛒 Einkaufszettel'; }, 2000);
     }
     </script>
 
@@ -351,5 +389,6 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
   Startseite
 </a>
 
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
 </body>
 </html>

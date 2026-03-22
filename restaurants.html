@@ -4,6 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
   <title>Locations für Events – Partyretter</title>
   <meta name="description" content="Locations für Events finden – Restaurants, Eventräume und besondere Orte für deine Feier. Jetzt auf Partyretter entdecken.">
   <meta property="og:title" content="Locations für Events – Partyretter">
@@ -555,5 +559,6 @@ document.querySelectorAll('.card-fav').forEach(btn => {
 
 <script src="cookie-banner.js"></script>
 <script src="i18n.js"></script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
 </body>
 </html>

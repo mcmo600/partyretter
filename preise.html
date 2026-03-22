@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
 <title>Preise – Partyretter</title>
 <meta name="description" content="Partyretter Preise – transparent und fair. Starter kostenlos mit 6% Provision, Pro ab 10€/Monat mit nur 3%. Keine versteckten Kosten.">
 <meta property="og:title" content="Preise – Partyretter">
@@ -504,5 +508,6 @@ function toggleFaq(el) {
 </a>
 <!-- End Floating Home Button -->
 
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
 </body>
 </html>

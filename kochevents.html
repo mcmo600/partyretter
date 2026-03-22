@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
   <title>Koch-Events – Partyretter</title>
   <meta name="description" content="Koch-Events und Kochkurse in deiner Nähe – gemeinsam kochen, lernen und genießen. Jetzt Koch-Event auf Partyretter buchen.">
   <meta property="og:title" content="Koch-Events – Partyretter">
@@ -439,5 +443,6 @@
 </a>
 <!-- End Floating Home Button -->
 
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
 </body>
 </html>

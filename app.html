@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Partyretter">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <title>Partyretter App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dark: #1A1208; --dark2: #2d1f0e;
+      --gold: #C8922A; --gold2: #e0a430;
+      --cream: #F5F0E8; --cream2: #EDE8DF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--cream); min-height: 100vh; min-height: 100dvh; }
+
+    /* ── HEADER ── */
+    .app-header {
+      background: var(--dark);
+      padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    }
+    .app-logo {
+      font-family: 'Fraunces', serif; font-size: 22px; font-weight: 900;
+      text-decoration: none;
+    }
+    .app-logo .gold { color: var(--gold); }
+    .app-logo .cream { color: var(--cream); }
+    .app-header-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-role-switch {
+      background: none; border: 1px solid rgba(245,240,232,0.25);
+      color: rgba(245,240,232,0.7); font-size: 12px; padding: 6px 12px;
+      border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-role-switch:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── ROLLENAUSWAHL ── */
+    .role-select {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: calc(100vh - 60px); min-height: calc(100dvh - 60px);
+      padding: 40px 20px; text-align: center;
+    }
+    .role-select h1 {
+      font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900;
+      margin-bottom: 8px; color: var(--dark);
+    }
+    .role-select p {
+      color: rgba(26,18,8,0.6); font-size: 15px; margin-bottom: 40px; max-width: 340px;
+    }
+    .role-cards { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .role-card {
+      background: #fff; border-radius: 20px; padding: 36px 28px;
+      width: 280px; cursor: pointer; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .role-card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(200,146,42,0.15); }
+    .role-card .icon { font-size: 48px; margin-bottom: 16px; }
+    .role-card h2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .role-card p { color: rgba(26,18,8,0.55); font-size: 14px; line-height: 1.5; margin-bottom: 0; }
+
+    /* ── DASHBOARD ── */
+    .dashboard { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
+    .dashboard.active { display: block; }
+    .greeting {
+      font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700;
+      margin: 20px 0 6px;
+    }
+    .greeting-sub { color: rgba(26,18,8,0.55); font-size: 14px; margin-bottom: 28px; }
+    .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+    .action-card {
+      background: #fff; border-radius: 16px; padding: 22px 18px;
+      text-decoration: none; color: var(--dark);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: all 0.2s; display: flex; flex-direction: column; gap: 8px;
+    }
+    .action-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,146,42,0.12); }
+    .action-card .card-icon { font-size: 32px; }
+    .action-card .card-title { font-weight: 700; font-size: 15px; }
+    .action-card .card-desc { font-size: 12px; color: rgba(26,18,8,0.5); line-height: 1.4; }
+    .action-card.highlight {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      color: var(--cream); grid-column: 1 / -1;
+    }
+    .action-card.highlight .card-desc { color: rgba(245,240,232,0.6); }
+
+    .section-title {
+      font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .link-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .link-item {
+      background: #fff; border-radius: 12px; padding: 16px 18px;
+      text-decoration: none; color: var(--dark);
+      display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: all 0.2s;
+    }
+    .link-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(200,146,42,0.1); }
+    .link-item .li-icon { font-size: 24px; flex-shrink: 0; }
+    .link-item .li-text { font-weight: 600; font-size: 14px; }
+    .link-item .li-arrow { margin-left: auto; color: rgba(26,18,8,0.25); font-size: 18px; }
+
+    /* ── INSTALL BANNER ── */
+    .install-banner {
+      display: none; background: var(--dark); color: var(--cream);
+      padding: 14px 20px; text-align: center;
+      font-size: 13px; cursor: pointer;
+    }
+    .install-banner:hover { background: var(--dark2); }
+    .install-banner .install-btn {
+      background: var(--gold); color: var(--dark); border: none;
+      padding: 8px 20px; border-radius: 8px; font-weight: 700;
+      font-size: 13px; cursor: pointer; margin-left: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid rgba(26,18,8,0.08);
+      display: none; justify-content: space-around; align-items: center;
+      padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+    .dashboard.active ~ .bottom-nav { display: flex; }
+    .bottom-nav a {
+      text-decoration: none; color: rgba(26,18,8,0.4);
+      font-size: 10px; font-weight: 600; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 4px 12px; transition: color 0.2s;
+    }
+    .bottom-nav a.active { color: var(--gold); }
+    .bottom-nav a .bnav-icon { font-size: 22px; }
+
+    @media (max-width: 600px) {
+      .role-cards { flex-direction: column; align-items: center; }
+      .quick-actions { grid-template-columns: 1fr; }
+      .action-card.highlight { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Install Banner -->
+<div class="install-banner" id="installBanner">
+  Partyretter als App installieren
+  <button class="install-btn" id="installBtn">Installieren</button>
+</div>
+
+<!-- Header -->
+<div class="app-header">
+  <span class="app-logo"><span class="gold">Party</span><span class="cream">retter</span></span>
+  <div class="app-header-actions">
+    <button class="btn-role-switch" id="switchRole" style="display:none" onclick="resetRole()">Wechseln</button>
+  </div>
+</div>
+
+<!-- Rollenauswahl -->
+<div class="role-select" id="roleSelect">
+  <h1>Willkommen bei Partyretter</h1>
+  <p>Was beschreibt dich am besten? Du kannst jederzeit wechseln.</p>
+  <div class="role-cards">
+    <div class="role-card" onclick="setRole('kunde')">
+      <div class="icon">🎉</div>
+      <h2>Ich plane ein Event</h2>
+      <p>Koch suchen, Foodtruck buchen, Catering finden – alles f\u00fcr dein perfektes Event.</p>
+    </div>
+    <div class="role-card" onclick="setRole('anbieter')">
+      <div class="icon">👨‍🍳</div>
+      <h2>Ich bin Anbieter</h2>
+      <p>Dashboard, Anfragen verwalten, Nachrichten lesen und Profil bearbeiten.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Kunden-Dashboard -->
+<div class="dashboard" id="dashKunde">
+  <div class="greeting">Hallo! 👋</div>
+  <div class="greeting-sub">Was m\u00f6chtest du heute planen?</div>
+
+  <div class="quick-actions">
+    <a href="privatkoech-liste.html" class="action-card">
+      <span class="card-icon">👨‍🍳</span>
+      <span class="card-title">Koch suchen</span>
+      <span class="card-desc">Privatk\u00f6che in deiner N\u00e4he finden</span>
+    </a>
+    <a href="foodtrucks-liste.html" class="action-card">
+      <span class="card-icon">🚚</span>
+      <span class="card-title">Foodtrucks</span>
+      <span class="card-desc">Foodtrucks f\u00fcr dein Event</span>
+    </a>
+    <a href="kochevents.html" class="action-card">
+      <span class="card-icon">🍳</span>
+      <span class="card-title">Koch-Events</span>
+      <span class="card-desc">Koch-Kurse & Team-Events</span>
+    </a>
+    <a href="event-zubehoer.html" class="action-card">
+      <span class="card-icon">🎪</span>
+      <span class="card-title">Zubeh\u00f6r</span>
+      <span class="card-desc">Equipment & Extras mieten</span>
+    </a>
+    <a href="einkaufszettel.html" class="action-card highlight">
+      <span class="card-icon">🛒</span>
+      <span class="card-title">Mein Einkaufszettel</span>
+      <span class="card-desc">Rezepte sammeln und Einkaufsliste erstellen</span>
+    </a>
+  </div>
+
+  <div class="section-title">Entdecken</div>
+  <div class="link-list">
+    <a href="blog.html" class="link-item">
+      <span class="li-icon">📖</span>
+      <span class="li-text">Blog & Rezepte</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="landingpage-hochzeit.html" class="link-item">
+      <span class="li-icon">💍</span>
+      <span class="li-text">Hochzeits-Catering</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="https://app.partyretter.com/registrierung" class="link-item">
+      <span class="li-icon">📝</span>
+      <span class="li-text">Inserat aufgeben</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="homepage.html" class="link-item">
+      <span class="li-icon">🏠</span>
+      <span class="li-text">Zur Startseite</span>
+      <span class="li-arrow">›</span>
+    </a>
+  </div>
+</div>
+
+<!-- Anbieter-Dashboard -->
+<div class="dashboard" id="dashAnbieter">
+  <div class="greeting">Hallo, Anbieter! 👨‍🍳</div>
+  <div class="greeting-sub">Dein Partyretter-\u00dcberblick</div>
+
+  <div class="quick-actions">
+    <a href="https://app.partyretter.com/kunden-dashboard" class="action-card highlight">
+      <span class="card-icon">📊</span>
+      <span class="card-title">Mein Dashboard</span>
+      <span class="card-desc">\u00d6ffne dein Anbieter-Dashboard mit allen Anfragen</span>
+    </a>
+    <a href="https://app.partyretter.com/nachrichten" class="action-card">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Nachrichten</span>
+      <span class="card-desc">Kundenanfragen beantworten</span>
+    </a>
+    <a href="https://app.partyretter.com/anbieterprofil" class="action-card">
+      <span class="card-icon">👤</span>
+      <span class="card-title">Mein Profil</span>
+      <span class="card-desc">Profil & Angebote bearbeiten</span>
+    </a>
+    <a href="preise.html" class="action-card">
+      <span class="card-icon">💰</span>
+      <span class="card-title">Preise & Pl\u00e4ne</span>
+      <span class="card-desc">Starter vs. Pro vergleichen</span>
+    </a>
+  </div>
+
+  <div class="section-title">Mehr f\u00fcr Anbieter</div>
+  <div class="link-list">
+    <a href="anbieter-funktionen.html" class="link-item">
+      <span class="li-icon">⚙️</span>
+      <span class="li-text">Alle Funktionen</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="anbieter-vorteile.html" class="link-item">
+      <span class="li-icon">✅</span>
+      <span class="li-text">Deine Vorteile</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="blog.html" class="link-item">
+      <span class="li-icon">📖</span>
+      <span class="li-text">Blog & Tipps</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="affiliate-programm.html" class="link-item">
+      <span class="li-icon">🤝</span>
+      <span class="li-text">Affiliate-Programm</span>
+      <span class="li-arrow">›</span>
+    </a>
+    <a href="homepage.html" class="link-item">
+      <span class="li-icon">🏠</span>
+      <span class="li-text">Zur Startseite</span>
+      <span class="li-arrow">›</span>
+    </a>
+  </div>
+</div>
+
+<!-- Bottom Nav (zeigt sich nur wenn Dashboard aktiv) -->
+<div class="bottom-nav" id="bottomNav">
+  <a href="app.html" class="active">
+    <span class="bnav-icon">🏠</span>
+    Home
+  </a>
+  <a href="blog.html">
+    <span class="bnav-icon">📖</span>
+    Blog
+  </a>
+  <a href="einkaufszettel.html" id="bnav-cart">
+    <span class="bnav-icon">🛒</span>
+    Einkauf
+  </a>
+  <a href="https://app.partyretter.com/login">
+    <span class="bnav-icon">👤</span>
+    Konto
+  </a>
+</div>
+
+<script>
+  // Rolle laden
+  function init() {
+    const role = localStorage.getItem('pr_role');
+    if (role) {
+      showDashboard(role);
+    }
+  }
+
+  function setRole(role) {
+    localStorage.setItem('pr_role', role);
+    showDashboard(role);
+  }
+
+  function resetRole() {
+    localStorage.removeItem('pr_role');
+    document.getElementById('roleSelect').style.display = 'flex';
+    document.getElementById('dashKunde').classList.remove('active');
+    document.getElementById('dashAnbieter').classList.remove('active');
+    document.getElementById('switchRole').style.display = 'none';
+    document.getElementById('bottomNav').style.display = 'none';
+  }
+
+  function showDashboard(role) {
+    document.getElementById('roleSelect').style.display = 'none';
+    document.getElementById('switchRole').style.display = 'block';
+
+    if (role === 'kunde') {
+      document.getElementById('dashKunde').classList.add('active');
+      document.getElementById('dashAnbieter').classList.remove('active');
+      document.getElementById('switchRole').textContent = 'Ich bin Anbieter';
+      document.getElementById('switchRole').onclick = () => setRole('anbieter');
+    } else {
+      document.getElementById('dashAnbieter').classList.add('active');
+      document.getElementById('dashKunde').classList.remove('active');
+      document.getElementById('switchRole').textContent = 'Ich bin Kunde';
+      document.getElementById('switchRole').onclick = () => setRole('kunde');
+    }
+
+    document.getElementById('bottomNav').style.display = 'flex';
+
+    // Bottom nav anpassen
+    const cart = document.getElementById('bnav-cart');
+    if (role === 'anbieter') {
+      cart.href = 'https://app.partyretter.com/kunden-dashboard';
+      cart.querySelector('.bnav-icon').textContent = '📊';
+      cart.childNodes[2].textContent = 'Dashboard';
+    } else {
+      cart.href = 'einkaufszettel.html';
+      cart.querySelector('.bnav-icon').textContent = '🛒';
+      cart.childNodes[2].textContent = 'Einkauf';
+    }
+
+    // Tageszeit-Gruß
+    const h = new Date().getHours();
+    let greet = 'Hallo';
+    if (h < 12) greet = 'Guten Morgen';
+    else if (h < 18) greet = 'Guten Tag';
+    else greet = 'Guten Abend';
+
+    const dash = role === 'kunde' ? 'dashKunde' : 'dashAnbieter';
+    const el = document.querySelector('#' + dash + ' .greeting');
+    if (role === 'kunde') el.textContent = greet + '! 👋';
+    else el.textContent = greet + ', Anbieter! 👨‍🍳';
+  }
+
+  // PWA Install
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBanner').style.display = 'block';
+  });
+  document.getElementById('installBtn').addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        document.getElementById('installBanner').style.display = 'none';
+      });
+    }
+  });
+
+  // Service Worker registrieren
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js');
+  }
+
+  init();
+</script>
+</body>
+</html>

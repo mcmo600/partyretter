@@ -1,0 +1,38 @@
+{
+  "name": "Partyretter",
+  "short_name": "Partyretter",
+  "description": "Koch buchen, Foodtruck & Catering für dein Event",
+  "start_url": "/app.html",
+  "display": "standalone",
+  "background_color": "#1A1208",
+  "theme_color": "#C8922A",
+  "orientation": "portrait-primary",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["food", "lifestyle", "business"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Koch suchen",
+      "url": "/privatkoech-liste.html",
+      "icon": "/favicon.svg"
+    },
+    {
+      "name": "Blog",
+      "url": "/blog.html",
+      "icon": "/favicon.svg"
+    }
+  ]
+}

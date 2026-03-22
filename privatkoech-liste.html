@@ -4,6 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
   <title>Privatköche für Events – Partyretter</title>
   <meta name="description" content="Privatkoch buchen in deiner Nähe – vergleiche Profile, Menüs und Bewertungen. Finde den perfekten Koch für dein Event auf Partyretter.">
   <meta property="og:title" content="Privatköche für Events – Partyretter">
@@ -1515,5 +1519,6 @@ function sortItems(val) {
 
 <script src="cookie-banner.js"></script>
 <script src="i18n.js"></script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
 </body>
 </html>

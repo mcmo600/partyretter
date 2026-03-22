@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <title>Einkaufszettel – Partyretter</title>
+  <meta name="description" content="Sammle Rezepte und erstelle automatisch einen Einkaufszettel mit allen Zutaten. Personenzahl anpassen und als PDF drucken." />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dark: #1A1208; --dark2: #2d1f0e;
+      --gold: #C8922A; --gold2: #e0a430;
+      --cream: #F5F0E8; --cream2: #EDE8DF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--cream); min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 66px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.45);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif; font-size: 20px; font-weight: 900;
+      color: var(--cream); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo .logo-gold { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
+    .nav-links a {
+      color: rgba(245,240,232,0.78); text-decoration: none;
+      font-size: 13.5px; font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-login {
+      color: rgba(245,240,232,0.78); font-size: 13px; font-weight: 600;
+      text-decoration: none; padding: 8px 14px; border-radius: 6px;
+      border: 1px solid rgba(245,240,232,0.22); transition: all 0.2s;
+    }
+    .btn-login:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-cta-nav {
+      background: var(--dark2); color: var(--cream); padding: 9px 18px;
+      border-radius: 8px; font-size: 13px; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+      border: 1.5px solid rgba(200,146,42,0.40);
+    }
+    .btn-cta-nav:hover { background: var(--gold); color: var(--dark); }
+
+    /* ── HEADER ── */
+    .page-header {
+      background: linear-gradient(140deg, #0e0a05 0%, var(--dark) 55%, var(--dark2) 100%);
+      padding: 60px 20px 50px; text-align: center; color: var(--cream);
+    }
+    .page-header h1 {
+      font-family: 'Fraunces', serif; font-size: 36px; font-weight: 900; margin-bottom: 10px;
+    }
+    .page-header h1 span { color: var(--gold); }
+    .page-header p { color: rgba(245,240,232,0.6); font-size: 16px; max-width: 500px; margin: 0 auto; }
+
+    /* ── MAIN ── */
+    .container { max-width: 800px; margin: 0 auto; padding: 30px 20px 100px; }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center; padding: 60px 20px;
+      background: #fff; border-radius: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .empty-state .icon { font-size: 64px; margin-bottom: 16px; }
+    .empty-state h2 { font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 8px; }
+    .empty-state p { color: rgba(26,18,8,0.5); font-size: 14px; margin-bottom: 24px; max-width: 360px; margin-left: auto; margin-right: auto; }
+    .empty-state a {
+      display: inline-block; background: var(--gold); color: #fff; font-weight: 700;
+      padding: 12px 28px; border-radius: 10px; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .empty-state a:hover { background: var(--gold2); transform: translateY(-2px); }
+
+    /* Recipe Cards */
+    .recipe-card {
+      background: #fff; border-radius: 16px; margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05); overflow: hidden;
+    }
+    .recipe-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; cursor: pointer; user-select: none;
+    }
+    .recipe-header:hover { background: rgba(200,146,42,0.04); }
+    .recipe-title-row { display: flex; align-items: center; gap: 12px; }
+    .recipe-title { font-weight: 700; font-size: 16px; }
+    .recipe-servings {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--cream); border-radius: 8px; padding: 4px 8px;
+    }
+    .recipe-servings button {
+      width: 28px; height: 28px; border-radius: 6px; border: none;
+      background: var(--dark); color: var(--cream); font-size: 16px;
+      cursor: pointer; font-weight: 700; transition: background 0.2s;
+    }
+    .recipe-servings button:hover { background: var(--gold); }
+    .recipe-servings input {
+      width: 44px; text-align: center; border: none; background: transparent;
+      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+    }
+    .recipe-servings span { font-size: 12px; color: rgba(26,18,8,0.5); }
+    .recipe-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-remove {
+      background: none; border: 1px solid rgba(200,50,50,0.2); color: #c33;
+      padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+    }
+    .btn-remove:hover { background: #c33; color: #fff; }
+    .recipe-ingredients {
+      padding: 0 20px 18px;
+      border-top: 1px solid rgba(26,18,8,0.06);
+    }
+    .ingredient-row {
+      display: flex; justify-content: space-between; padding: 8px 0;
+      border-bottom: 1px solid rgba(26,18,8,0.04); font-size: 14px;
+    }
+    .ingredient-row:last-child { border-bottom: none; }
+    .ingredient-name { color: rgba(26,18,8,0.7); }
+    .ingredient-qty { font-weight: 700; white-space: nowrap; }
+
+    /* Combined List */
+    .combined-section {
+      background: #fff; border-radius: 16px; margin-top: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05); padding: 24px 20px;
+    }
+    .combined-section h2 {
+      font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 4px;
+    }
+    .combined-sub { color: rgba(26,18,8,0.5); font-size: 13px; margin-bottom: 18px; }
+    .combined-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid rgba(26,18,8,0.06);
+      font-size: 15px;
+    }
+    .combined-row:last-child { border-bottom: none; }
+    .combined-row label { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .combined-row input[type="checkbox"] {
+      width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer;
+    }
+    .combined-row .checked { text-decoration: line-through; color: rgba(26,18,8,0.3); }
+    .combined-qty { font-weight: 700; color: var(--gold); white-space: nowrap; }
+
+    /* Action Bar */
+    .action-bar {
+      display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .btn-action {
+      flex: 1; min-width: 140px; padding: 14px 20px; border-radius: 12px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+      border: none; text-align: center;
+    }
+    .btn-print { background: var(--dark); color: var(--cream); }
+    .btn-print:hover { background: var(--gold); }
+    .btn-clear { background: #fff; color: #c33; border: 1px solid rgba(200,50,50,0.2); }
+    .btn-clear:hover { background: #c33; color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); color: rgba(245,240,232,0.5); text-align: center;
+      padding: 30px 20px; font-size: 13px;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .page-header { padding: 40px 16px 35px; }
+      .page-header h1 { font-size: 26px; }
+      .recipe-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .recipe-actions { align-self: flex-end; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="homepage.html" class="nav-logo"><span class="logo-gold">Party</span><span>retter</span></a>
+  <ul class="nav-links">
+    <li><a href="kochevents.html">Koch-Events</a></li>
+    <li><a href="foodtruck-standorte.html">Foodtruck-Standorte</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="anbieter-onboarding.html">Partyretter werden</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="https://app.partyretter.com/login" class="btn-login">Anmelden</a>
+    <a href="https://app.partyretter.com/registrierung" class="btn-cta-nav">Inserat erstellen</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Mein <span>Einkaufszettel</span></h1>
+  <p>Sammle Rezepte, passe die Personenzahl an und drucke deinen Einkaufszettel aus.</p>
+</div>
+
+<div class="container">
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState">
+    <div class="icon">🛒</div>
+    <h2>Dein Einkaufszettel ist leer</h2>
+    <p>Stöbere durch unsere Rezepte und füge Zutaten zu deinem Einkaufszettel hinzu.</p>
+    <a href="blog.html">Rezepte entdecken</a>
+  </div>
+
+  <!-- Recipe List -->
+  <div id="recipeList"></div>
+
+  <!-- Combined Shopping List -->
+  <div class="combined-section" id="combinedSection" style="display:none">
+    <h2>Gesamter Einkaufszettel</h2>
+    <div class="combined-sub" id="combinedSub"></div>
+    <div id="combinedList"></div>
+    <div class="action-bar">
+      <button class="btn-action btn-print" onclick="printList()">PDF drucken</button>
+      <button class="btn-action btn-clear" onclick="clearAll()">Alles entfernen</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 Partyretter &middot; <a href="impressum.html">Impressum</a> &middot; <a href="datenschutz.html">Datenschutz</a> &middot; <a href="agb.html">AGB</a>
+</footer>
+
+<script>
+  // ── Daten aus localStorage laden ──
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem('pr_cart') || '[]'); }
+    catch { return []; }
+  }
+  function saveCart(cart) { localStorage.setItem('pr_cart', JSON.stringify(cart)); }
+
+  // ── Menge formatieren ──
+  function formatQty(amount, unit) {
+    if (unit === 'g' && amount >= 1000) { amount = amount / 1000; unit = 'kg'; }
+    if (unit === 'ml' && amount >= 1000) { amount = amount / 1000; unit = 'L'; }
+    let s = amount % 1 === 0 ? amount.toString() : amount.toFixed(1).replace('.0', '');
+    return s + ' ' + unit;
+  }
+
+  // ── Render ──
+  function render() {
+    const cart = getCart();
+    const list = document.getElementById('recipeList');
+    const empty = document.getElementById('emptyState');
+    const combined = document.getElementById('combinedSection');
+
+    if (cart.length === 0) {
+      empty.style.display = 'block';
+      list.innerHTML = '';
+      combined.style.display = 'none';
+      return;
+    }
+
+    empty.style.display = 'none';
+    combined.style.display = 'block';
+
+    // Einzelne Rezepte rendern
+    list.innerHTML = cart.map((recipe, ri) => {
+      const servings = recipe.servings || recipe.baseServings;
+      const ingredientRows = recipe.ingredients.map(ing => {
+        const qty = (ing.base / recipe.baseServings) * servings;
+        return '<div class="ingredient-row"><span class="ingredient-name">' + ing.name + '</span><span class="ingredient-qty">' + formatQty(qty, ing.unit) + '</span></div>';
+      }).join('');
+
+      return '<div class="recipe-card"><div class="recipe-header">' +
+        '<div class="recipe-title-row"><span class="recipe-title">' + recipe.title + '</span></div>' +
+        '<div style="display:flex;align-items:center;gap:12px">' +
+        '<div class="recipe-servings">' +
+        '<button onclick="changeQty(' + ri + ',-5)">-</button>' +
+        '<input type="number" min="1" max="500" value="' + servings + '" onchange="setQty(' + ri + ',this.value)">' +
+        '<span>Pers.</span>' +
+        '<button onclick="changeQty(' + ri + ',5)">+</button>' +
+        '</div>' +
+        '<button class="btn-remove" onclick="removeRecipe(' + ri + ')">Entfernen</button>' +
+        '</div></div>' +
+        '<div class="recipe-ingredients">' + ingredientRows + '</div></div>';
+    }).join('');
+
+    // Kombinierte Liste
+    renderCombined(cart);
+  }
+
+  function renderCombined(cart) {
+    const merged = {};
+    let totalPersons = 0;
+
+    cart.forEach(recipe => {
+      const servings = recipe.servings || recipe.baseServings;
+      totalPersons += servings;
+      recipe.ingredients.forEach(ing => {
+        const qty = (ing.base / recipe.baseServings) * servings;
+        // Normalisiere auf Basiseinheit zum Zusammenführen
+        let normUnit = ing.unit;
+        let normQty = qty;
+        if (normUnit === 'kg') { normQty = qty * 1000; normUnit = 'g'; }
+        if (normUnit === 'L') { normQty = qty * 1000; normUnit = 'ml'; }
+
+        const key = ing.name.toLowerCase().trim() + '|' + normUnit;
+        if (merged[key]) {
+          merged[key].qty += normQty;
+        } else {
+          merged[key] = { name: ing.name, qty: normQty, unit: normUnit };
+        }
+      });
+    });
+
+    document.getElementById('combinedSub').textContent =
+      cart.length + ' Rezept' + (cart.length > 1 ? 'e' : '') + ' · ' + totalPersons + ' Personen gesamt';
+
+    const items = Object.values(merged).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    document.getElementById('combinedList').innerHTML = items.map((item, i) =>
+      '<div class="combined-row">' +
+      '<label><input type="checkbox" onchange="this.nextElementSibling.classList.toggle(\'checked\')">' +
+      '<span>' + item.name + '</span></label>' +
+      '<span class="combined-qty">' + formatQty(item.qty, item.unit) + '</span></div>'
+    ).join('');
+  }
+
+  // ── Aktionen ──
+  function changeQty(index, delta) {
+    const cart = getCart();
+    const s = (cart[index].servings || cart[index].baseServings) + delta;
+    cart[index].servings = Math.max(1, Math.min(500, s));
+    saveCart(cart);
+    render();
+  }
+
+  function setQty(index, val) {
+    const cart = getCart();
+    const n = parseInt(val) || 1;
+    cart[index].servings = Math.max(1, Math.min(500, n));
+    saveCart(cart);
+    render();
+  }
+
+  function removeRecipe(index) {
+    const cart = getCart();
+    cart.splice(index, 1);
+    saveCart(cart);
+    render();
+  }
+
+  function clearAll() {
+    if (confirm('Alle Rezepte vom Einkaufszettel entfernen?')) {
+      saveCart([]);
+      render();
+    }
+  }
+
+  function printList() {
+    const cart = getCart();
+    if (cart.length === 0) return;
+
+    const merged = {};
+    let totalPersons = 0;
+    const recipeNames = [];
+
+    cart.forEach(recipe => {
+      const servings = recipe.servings || recipe.baseServings;
+      totalPersons += servings;
+      recipeNames.push(recipe.title + ' (' + servings + ' Pers.)');
+      recipe.ingredients.forEach(ing => {
+        const qty = (ing.base / recipe.baseServings) * servings;
+        let normUnit = ing.unit;
+        let normQty = qty;
+        if (normUnit === 'kg') { normQty = qty * 1000; normUnit = 'g'; }
+        if (normUnit === 'L') { normQty = qty * 1000; normUnit = 'ml'; }
+        const key = ing.name.toLowerCase().trim() + '|' + normUnit;
+        if (merged[key]) merged[key].qty += normQty;
+        else merged[key] = { name: ing.name, qty: normQty, unit: normUnit };
+      });
+    });
+
+    const items = Object.values(merged).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    const rows = items.map(item =>
+      '<tr><td style="padding:8px 12px;border-bottom:1px solid #eee">' +
+      '<input type="checkbox" style="margin-right:8px">' + item.name +
+      '</td><td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:right;font-weight:700;white-space:nowrap">' +
+      formatQty(item.qty, item.unit) + '</td></tr>'
+    ).join('');
+
+    const w = window.open('', '_blank');
+    w.document.write('<!DOCTYPE html><html><head><title>Einkaufszettel – Partyretter</title>' +
+      '<style>body{font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1A1208}' +
+      'h1{font-size:22px;margin-bottom:4px}h2{font-size:14px;color:#888;font-weight:400;margin-bottom:20px}' +
+      '.recipes{font-size:12px;color:#999;margin-bottom:16px}' +
+      'table{width:100%;border-collapse:collapse}' +
+      '.footer{margin-top:30px;text-align:center;font-size:11px;color:#aaa}' +
+      '@media print{body{padding:10px}}</style></head><body>' +
+      '<h1>Einkaufszettel</h1>' +
+      '<h2>' + totalPersons + ' Personen gesamt</h2>' +
+      '<div class="recipes">Rezepte: ' + recipeNames.join(' · ') + '</div>' +
+      '<table>' + rows + '</table>' +
+      '<div class="footer">Erstellt mit Partyretter.com</div>' +
+      '</body></html>');
+    w.document.close();
+    setTimeout(() => w.print(), 300);
+  }
+
+  // Service Worker
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');
+
+  render();
+</script>
+</body>
+</html>
