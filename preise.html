@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>Preise – Partyretter</title>
-<meta name="description" content="Partyretter Preise – transparent und fair. Für Kunden kostenlos, für Anbieter 15% Provision nur bei erfolgreicher Buchung.">
+<meta name="description" content="Partyretter Preise – transparent und fair. Starter kostenlos mit 6% Provision, Pro ab 10€/Monat mit nur 3%. Keine versteckten Kosten.">
 <meta property="og:title" content="Preise – Partyretter">
-<meta property="og:description" content="Partyretter Preise – transparent und fair. Für Kunden kostenlos, für Anbieter 15% Provision nur bei erfolgreicher Buchung.">
+<meta property="og:description" content="Partyretter Preise – transparent und fair. Starter kostenlos mit 6% Provision, Pro ab 10€/Monat mit nur 3%. Keine versteckten Kosten.">
 <meta property="og:url" content="https://partyretter.com/preise.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Partyretter">
@@ -15,7 +15,7 @@
 <meta property="og:locale" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Preise – Partyretter">
-<meta name="twitter:description" content="Partyretter Preise – transparent und fair. Für Kunden kostenlos, für Anbieter 15% Provision nur bei erfolgreicher Buchung.">
+<meta name="twitter:description" content="Partyretter Preise – transparent und fair. Starter kostenlos mit 6% Provision, Pro ab 10€/Monat mit nur 3%. Keine versteckten Kosten.">
 <meta name="twitter:image" content="https://partyretter.com/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -176,61 +176,43 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
     <p class="section-title">Anbieter-Modelle</p>
     <p class="section-sub">Starte kostenlos – zahle nur wenn du verdienst.</p>
 
-    <div class="plans-grid">
+    <div class="plans-grid" style="grid-template-columns:repeat(2,1fr);max-width:900px;margin:0 auto 50px">
 
-      <!-- FREE -->
+      <!-- STARTER -->
       <div class="plan-card">
-        <div class="plan-name">🆓 Free</div>
-        <p class="plan-desc">Perfekt zum Reinschnuppern – kein Risiko, kein Abo.</p>
+        <div class="plan-name">🚀 Starter</div>
+        <p class="plan-desc">Kostenlos starten – zahle nur bei Erfolg. Kein Risiko, kein Abo.</p>
         <div class="plan-price"><span class="amount">0 €</span><span class="per">/Monat</span></div>
-        <p class="plan-price-note">+ 10 % Provision pro Buchung</p>
+        <p class="plan-price-note">+ 6 % Provision pro erfolgreicher Buchung</p>
         <ul class="plan-features">
-          <li>Profil mit 3 Fotos</li>
-          <li>Bis zu 3 Menüs</li>
+          <li>Profil mit Fotos & Beschreibung</li>
           <li>Buchungsanfragen erhalten</li>
           <li>Bewertungen sammeln</li>
+          <li>Chat mit Kunden</li>
+          <li>Foodtruck-Karte: Basis-Eintrag</li>
           <li class="cross">Keine Prioritätslistung</li>
-          <li class="cross">Kein Stellplatz-Eintrag</li>
           <li class="cross">Keine Analytics</li>
         </ul>
-        <button class="btn-plan outline" onclick="location.href='coming-soon.html'">Kostenlos starten</button>
+        <button class="btn-plan outline" onclick="location.href='https://app.partyretter.com/registrierung'">Kostenlos starten</button>
       </div>
 
       <!-- PRO -->
       <div class="plan-card popular">
-        <div class="badge-popular">⭐ BELIEBTESTE WAHL</div>
-        <div class="plan-name" style="color:var(--gold)">🚀 Pro</div>
-        <p class="plan-desc">Für aktive Anbieter, die regelmäßig Buchungen wollen.</p>
-        <div class="plan-price"><span class="amount">39 €</span><span class="per">/Monat</span></div>
-        <p class="plan-price-note">oder 390 € / Jahr (2 Monate gratis) · + 6 % Provision</p>
+        <div class="badge-popular">⭐ EMPFOHLEN</div>
+        <div class="plan-name" style="color:var(--gold)">💎 Pro</div>
+        <p class="plan-desc">Mehr Sichtbarkeit, weniger Provision – für Anbieter die es ernst meinen.</p>
+        <div class="plan-price"><span class="amount">10 €</span><span class="per">/Monat</span></div>
+        <p class="plan-price-note">oder 100 € / Jahr (2 Monate gratis) · nur 3 % Provision</p>
         <ul class="plan-features">
-          <li>Profil mit unbegrenzt Fotos</li>
-          <li>Unbegrenzt Menüs & Events</li>
+          <li>Alles aus Starter</li>
           <li>Prioritätslistung im Marktplatz</li>
-          <li>Stellplatz-Eintrag (Foodtruck)</li>
-          <li>Echtzeit-Analytics</li>
-          <li>Chat mit Kunden</li>
+          <li>Geprüft-Siegel auf dem Profil</li>
+          <li>Foodtruck-Karte: Top-Eintrag mit Siegel</li>
+          <li>Echtzeit-Analytics & Statistiken</li>
+          <li>Kalender-Sync (Google, iCal)</li>
           <li>Buchhaltungs-Tools</li>
         </ul>
-        <button class="btn-plan primary" onclick="location.href='coming-soon.html'">Pro starten</button>
-      </div>
-
-      <!-- PREMIUM -->
-      <div class="plan-card">
-        <div class="plan-name">💎 Premium</div>
-        <p class="plan-desc">Maximale Sichtbarkeit für etablierte Profis und Teams.</p>
-        <div class="plan-price"><span class="amount">79 €</span><span class="per">/Monat</span></div>
-        <p class="plan-price-note">oder 790 € / Jahr (2 Monate gratis) · + 4 % Provision</p>
-        <ul class="plan-features">
-          <li>Alles aus Pro</li>
-          <li>Top-Platzierung (Tagesbasis)</li>
-          <li>Eigene Landingpage-URL</li>
-          <li>Featured in Newsletter</li>
-          <li>Dedicated Account-Manager</li>
-          <li>Kalender-Sync (Google, iCal, Outlook)</li>
-          <li>Mehrere Mitarbeiter-Accounts</li>
-        </ul>
-        <button class="btn-plan outline" onclick="location.href='coming-soon.html'">Premium anfragen</button>
+        <button class="btn-plan primary" onclick="location.href='https://app.partyretter.com/registrierung'">Pro starten</button>
       </div>
 
     </div>
@@ -251,25 +233,18 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
         </thead>
         <tbody>
           <tr>
-            <td>Free</td>
-            <td class="prov-highlight">10 %</td>
+            <td>Starter</td>
+            <td class="prov-highlight">6 %</td>
             <td>0 €</td>
             <td>500 €</td>
-            <td><strong>450 €</strong></td>
+            <td><strong>470 €</strong></td>
           </tr>
           <tr>
             <td style="color:var(--gold);font-weight:700">Pro</td>
-            <td class="prov-highlight">6 %</td>
-            <td>39 €</td>
+            <td class="prov-highlight">3 %</td>
+            <td>10 €</td>
             <td>500 €</td>
-            <td><strong>470 €</strong> netto*</td>
-          </tr>
-          <tr>
-            <td>Premium</td>
-            <td class="prov-highlight">4 %</td>
-            <td>79 €</td>
-            <td>500 €</td>
-            <td><strong>480 €</strong> netto*</td>
+            <td><strong>485 €</strong> netto*</td>
           </tr>
         </tbody>
       </table>
@@ -282,28 +257,29 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
         <thead>
           <tr>
             <th></th>
-            <th class="col-free">Free</th>
+            <th class="col-free">Starter</th>
             <th class="col-pro">Pro</th>
-            <th class="col-premium">Premium</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="4" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">PROFIL & SICHTBARKEIT</td></tr>
-          <tr><td>Profilfotos</td><td>3</td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
-          <tr><td>Prioritäts-Listing</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓ Top</span></td></tr>
-          <tr><td>Eigene URL</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td>Newsletter-Featured</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td colspan="4" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUCHUNG & KOMMUNIKATION</td></tr>
-          <tr><td>Menüs & Angebote</td><td>3</td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
-          <tr><td>Koch-Events veröffentlichen</td><td><span class="partial">1/Monat</span></td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
-          <tr><td>Direktnachrichten</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td>Kalender-Sync</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td colspan="4" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUSINESS TOOLS</td></tr>
-          <tr><td>Buchhaltung & km-Rechner</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td>Analytics & Statistiken</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓ Erweitert</span></td></tr>
-          <tr><td>Stellplatz-Eintrag (Foodtruck)</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-          <tr><td>Mehrere Mitarbeiter-Accounts</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓ bis 5</span></td></tr>
-          <tr><td>Account-Manager</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">PROFIL & SICHTBARKEIT</td></tr>
+          <tr><td>Profilfotos</td><td>Unbegrenzt</td><td>Unbegrenzt</td></tr>
+          <tr><td>Verifiziert-Badge</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Prioritäts-Listing</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUCHUNG & KOMMUNIKATION</td></tr>
+          <tr><td>Buchungsanfragen erhalten</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Chat mit Kunden</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Bewertungen sammeln</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Kalender-Sync</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">FOODTRUCK-KARTE</td></tr>
+          <tr><td>Standort auf der Karte</td><td><span class="check">✓ Basis</span></td><td><span class="check">✓ Hervorgehoben</span></td></tr>
+          <tr><td>Top-Foodtruck Siegel</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">BUSINESS TOOLS</td></tr>
+          <tr><td>Analytics & Statistiken</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Buchhaltungs-Tools</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td colspan="3" style="background:var(--cream);font-weight:700;font-size:.8rem;color:#888;padding:10px 20px;letter-spacing:.05em">PROVISION</td></tr>
+          <tr><td>Provision pro Buchung</td><td><strong>6 %</strong></td><td><strong style="color:var(--gold)">3 %</strong></td></tr>
+          <tr><td>Monatliche Gebühr</td><td><strong>0 €</strong></td><td><strong>10 €</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -314,40 +290,25 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
 <div id="customer-plans">
   <div class="section">
     <p class="section-title">Für Veranstalter & Privatkunden</p>
-    <p class="section-sub">Buchungen sind für Kunden kostenlos – du zahlst nur eine Servicegebühr.</p>
+    <p class="section-sub">Für Kunden ist Partyretter komplett kostenlos. Keine Gebühren, keine Aufschläge.</p>
 
-    <div class="plans-grid" style="grid-template-columns:repeat(2,1fr);max-width:800px;margin:0 auto 50px">
+    <div class="plans-grid" style="grid-template-columns:1fr;max-width:560px;margin:0 auto 50px">
 
-      <div class="plan-card">
-        <div class="plan-name">🎉 Buchung</div>
-        <p class="plan-desc">Einfach anfragen, vergleichen und buchen – kein Abo nötig.</p>
-        <div class="plan-price"><span class="amount">0 €</span><span class="per">/Monat</span></div>
-        <p class="plan-price-note">+ 3 % Servicegebühr auf den Buchungsbetrag</p>
+      <div class="plan-card popular">
+        <div class="badge-popular">💯 KOMPLETT KOSTENLOS</div>
+        <div class="plan-name" style="color:var(--gold)">🎉 Für Kunden</div>
+        <p class="plan-desc">Suchen, vergleichen, buchen – alles ohne versteckte Kosten.</p>
+        <div class="plan-price"><span class="amount">0 €</span></div>
+        <p class="plan-price-note">Keine Servicegebühr · Keine Aufschläge · Nie.</p>
         <ul class="plan-features">
           <li>Unbegrenzt Anfragen stellen</li>
           <li>Angebote vergleichen</li>
-          <li>Sicher zahlen (Escrow)</li>
+          <li>Koch-Events buchen & Tickets kaufen</li>
+          <li>Sicher zahlen über die Plattform</li>
           <li>Bewertungen abgeben</li>
           <li>Chat mit Anbietern</li>
         </ul>
-        <button class="btn-plan primary" onclick="location.href='coming-soon.html'">Jetzt suchen</button>
-      </div>
-
-      <div class="plan-card popular">
-        <div class="badge-popular">🏢 FÜR FIRMEN</div>
-        <div class="plan-name" style="color:var(--gold)">🏢 Business</div>
-        <p class="plan-desc">Für Unternehmen die regelmäßig Events & Catering buchen.</p>
-        <div class="plan-price"><span class="amount">29 €</span><span class="per">/Monat</span></div>
-        <p class="plan-price-note">Servicegebühr entfällt · Team-Accounts · Rechnungsstellung</p>
-        <ul class="plan-features">
-          <li>Alle Buchungs-Features</li>
-          <li>Keine Servicegebühr</li>
-          <li>Team-Zugang (5 Nutzer)</li>
-          <li>Sammelrechnung monatlich</li>
-          <li>Dedizierter Support</li>
-          <li>Rabattverhandlungen</li>
-        </ul>
-        <button class="btn-plan primary" onclick="location.href='coming-soon.html'">Business anfragen</button>
+        <button class="btn-plan primary" onclick="location.href='https://app.partyretter.com/registrierung'">Kostenlos registrieren</button>
       </div>
 
     </div>
@@ -405,7 +366,7 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
         Kann ich jederzeit meinen Plan wechseln?
         <span class="faq-arrow">▾</span>
       </div>
-      <div class="faq-a"><p>Ja! Du kannst jederzeit upgraden oder downgraden. Bei einem Upgrade wird der neue Plan sofort aktiv. Bei einem Downgrade greift dieser zum Ende des Abrechnungszeitraums.</p></div>
+      <div class="faq-a"><p>Ja! Du kannst jederzeit von Starter auf Pro upgraden – der neue Plan wird sofort aktiv. Wenn du Pro kündigen willst, wechselst du einfach zurück zu Starter (zum Ende des Abrechnungszeitraums).</p></div>
     </div>
 
     <div class="faq-item">
@@ -421,7 +382,7 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
         Gibt es eine Mindestvertragslaufzeit?
         <span class="faq-arrow">▾</span>
       </div>
-      <div class="faq-a"><p>Nein. Du kannst monatlich buchen und monatlich kündigen. Beim Jahresabo sparst du 2 Monate, kannst aber ebenfalls jederzeit kündigen – du erhältst dann eine anteilige Rückerstattung.</p></div>
+      <div class="faq-a"><p>Nein. Der Starter-Plan ist komplett kostenlos, ohne Laufzeit. Beim Pro-Plan kannst du monatlich kündigen. Beim Jahresabo (100 €) sparst du 2 Monate.</p></div>
     </div>
 
     <div class="faq-item">
@@ -437,7 +398,7 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
         Ist eine Kreditkarte für den Start nötig?
         <span class="faq-arrow">▾</span>
       </div>
-      <div class="faq-a"><p>Für den Free-Plan benötigst du keine Kreditkarte. Für Pro und Premium kannst du per SEPA-Lastschrift oder Kreditkarte zahlen.</p></div>
+      <div class="faq-a"><p>Für den Starter-Plan benötigst du keine Kreditkarte. Für den Pro-Plan kannst du per SEPA-Lastschrift oder Kreditkarte zahlen.</p></div>
     </div>
 
   </div>

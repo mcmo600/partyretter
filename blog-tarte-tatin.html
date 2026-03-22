@@ -130,28 +130,112 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
     <h2>Warum Tarte Tatin perfekt für Events ist</h2>
     <p>Im Gegensatz zu vielen Desserts kann die Tarte Tatin komplett am Vortag zubereitet werden und schmeckt bei Raumtemperatur sogar besser als warm aus dem Ofen. Die karamellisierten Äpfel entwickeln über Nacht noch mehr Tiefe. Außerdem ist die Optik spektakulär: Wenn du die Tarte stürzt und die glänzende Karamellschicht zum Vorschein kommt, erntest du garantiert Applaus.</p>
 
-    <h2>Die Zutatenliste für 50 Personen</h2>
-    <p>Für 50 Portionen brauchst du etwa 7 Tartes in einer Standardgröße von 26-28 cm Durchmesser. Jede Tarte ergibt 7-8 großzügige Stücke.</p>
+    <h2>Die Zutatenliste: Berechne für deine Gästezahl</h2>
+    <p>Pro Tarte (26-28 cm) erhältst du 7-8 großzügige Stücke. Die Mengen werden automatisch berechnet.</p>
 
-    <table class="ingredient-table">
+    <!-- PERSONEN-UMRECHNER -->
+    <div id="recipe-scaler" style="background:linear-gradient(135deg,var(--dark),var(--dark2));border-radius:16px;padding:24px 28px;margin:20px 0 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="color:var(--cream);font-weight:700;font-size:.95rem;">Berechne für:</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button onclick="changeServings(-5)" style="width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--dark)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">-</button>
+        <input id="servings-input" type="number" value="50" min="1" max="500" onchange="updateServings()" style="width:70px;text-align:center;font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--gold);background:rgba(200,146,42,0.15);border:2px solid var(--gold);border-radius:10px;padding:6px;">
+        <button onclick="changeServings(5)" style="width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--dark)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">+</button>
+        <span style="color:var(--cream);font-size:.95rem;font-weight:600;">Personen</span>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:10px;">
+        <button onclick="printRecipe()" style="background:var(--gold);color:var(--dark);border:none;padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='var(--gold)'">🖨️ PDF drucken</button>
+      </div>
+    </div>
+
+    <div id="tartes-info" style="background:rgba(200,146,42,0.1);border:1.5px solid var(--gold);border-radius:10px;padding:12px 18px;margin-bottom:16px;font-size:.9rem;">
+      Du brauchst <strong id="tartes-count">7 Tartes</strong> (je 26-28 cm) für <strong id="tartes-servings">50</strong> Personen.
+    </div>
+
+    <table class="ingredient-table" id="ingredients-table">
       <thead>
-        <tr><th>Zutat</th><th>Pro Tarte (8 Stücke)</th><th>Gesamt (7 Tartes / 50 Pers.)</th></tr>
+        <tr><th>Zutat</th><th id="servings-header">50 Personen</th></tr>
       </thead>
       <tbody>
-        <tr><td>Äpfel (Boskoop oder Braeburn)</td><td>6-7 Stück (ca. 800 g)</td><td>ca. 5,5 kg</td></tr>
-        <tr><td>Butter</td><td>80 g</td><td>560 g</td></tr>
-        <tr><td>Zucker</td><td>120 g</td><td>840 g</td></tr>
-        <tr><td>Vanilleschote</td><td>1/2 Schote</td><td>3-4 Schoten</td></tr>
-        <tr><td>Zitronensaft</td><td>1 EL</td><td>7 EL</td></tr>
-        <tr><td colspan="3" style="background:var(--cream);font-weight:700">Mürbeteig</td></tr>
-        <tr><td>Mehl (Type 405)</td><td>200 g</td><td>1,4 kg</td></tr>
-        <tr><td>Butter (kalt)</td><td>100 g</td><td>700 g</td></tr>
-        <tr><td>Zucker</td><td>30 g</td><td>210 g</td></tr>
-        <tr><td>Eigelb</td><td>1 Stück</td><td>7 Stück</td></tr>
-        <tr><td>Kaltes Wasser</td><td>2-3 EL</td><td>14-21 EL</td></tr>
-        <tr><td>Salz</td><td>1 Prise</td><td>nach Gefühl</td></tr>
+        <tr><td colspan="2" style="background:var(--cream);font-weight:700">Karamell-Füllung</td></tr>
+        <tr><td>Äpfel (Boskoop oder Braeburn)</td><td class="qty" data-base="5500" data-unit="g" data-base-servings="50">5,5 kg</td></tr>
+        <tr><td>Butter</td><td class="qty" data-base="560" data-unit="g" data-base-servings="50">560 g</td></tr>
+        <tr><td>Zucker</td><td class="qty" data-base="840" data-unit="g" data-base-servings="50">840 g</td></tr>
+        <tr><td>Vanilleschote</td><td class="qty" data-base="3.5" data-unit="Schoten" data-base-servings="50">3-4 Schoten</td></tr>
+        <tr><td>Zitronensaft</td><td class="qty" data-base="7" data-unit="EL" data-base-servings="50">7 EL</td></tr>
+        <tr><td colspan="2" style="background:var(--cream);font-weight:700">Mürbeteig</td></tr>
+        <tr><td>Mehl (Type 405)</td><td class="qty" data-base="1400" data-unit="g" data-base-servings="50">1,4 kg</td></tr>
+        <tr><td>Butter (kalt)</td><td class="qty" data-base="700" data-unit="g" data-base-servings="50">700 g</td></tr>
+        <tr><td>Zucker</td><td class="qty" data-base="210" data-unit="g" data-base-servings="50">210 g</td></tr>
+        <tr><td>Eigelb</td><td class="qty" data-base="7" data-unit="Stück" data-base-servings="50">7 Stück</td></tr>
+        <tr><td>Kaltes Wasser</td><td class="qty" data-base="17.5" data-unit="EL" data-base-servings="50">14-21 EL</td></tr>
+        <tr><td>Salz</td><td>nach Gefühl</td></tr>
       </tbody>
     </table>
+
+    <script>
+    function changeServings(delta) {
+      const input = document.getElementById('servings-input');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      if (val > 500) val = 500;
+      input.value = val;
+      updateServings();
+    }
+    function formatQty(amount, unit) {
+      if (unit === 'g') {
+        if (amount >= 1000) return (amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1).replace('.0','') + ' kg';
+        return Math.round(amount) + ' g';
+      }
+      if (unit === 'ml') {
+        if (amount >= 1000) return (amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1).replace('.0','') + ' L';
+        return Math.round(amount) + ' ml';
+      }
+      let rounded = Math.round(amount * 2) / 2;
+      if (rounded === Math.round(rounded)) return Math.round(rounded) + ' ' + unit;
+      return rounded.toFixed(1) + ' ' + unit;
+    }
+    function updateServings() {
+      const servings = parseInt(document.getElementById('servings-input').value) || 50;
+      document.getElementById('servings-header').textContent = servings + ' Personen';
+      const tartes = Math.ceil(servings / 7.5);
+      document.getElementById('tartes-count').textContent = tartes + (tartes === 1 ? ' Tarte' : ' Tartes');
+      document.getElementById('tartes-servings').textContent = servings;
+      document.querySelectorAll('.qty').forEach(td => {
+        const base = parseFloat(td.dataset.base);
+        const unit = td.dataset.unit;
+        const baseServings = parseFloat(td.dataset.baseServings);
+        const newAmount = (base / baseServings) * servings;
+        td.textContent = formatQty(newAmount, unit);
+      });
+    }
+    function printRecipe() {
+      const servings = document.getElementById('servings-input').value;
+      const tartes = Math.ceil(servings / 7.5);
+      const title = document.querySelector('.article-hero h1').textContent;
+      const rows = [];
+      document.querySelectorAll('#ingredients-table tbody tr').forEach(tr => {
+        const cells = tr.querySelectorAll('td');
+        if (cells.length === 1) { rows.push('<tr><td colspan="2" style="padding:8px 14px;background:#f5f0e8;font-weight:700;">' + cells[0].textContent + '</td></tr>'); return; }
+        rows.push('<tr><td style="padding:8px 14px;border-bottom:1px solid #eee;">' + cells[0].textContent + '</td><td style="padding:8px 14px;border-bottom:1px solid #eee;font-weight:700;">' + cells[1].textContent + '</td></tr>');
+      });
+      const steps = [];
+      document.querySelectorAll('.article-body h3').forEach(h3 => {
+        const p = h3.nextElementSibling;
+        if (p && p.tagName === 'P') steps.push('<h3 style="margin:16px 0 6px;font-size:14px;">' + h3.textContent + '</h3><p style="font-size:13px;line-height:1.7;color:#333;">' + p.textContent + '</p>');
+      });
+      const w = window.open('', '_blank');
+      w.document.write('<!DOCTYPE html><html><head><title>' + title + ' - Rezept</title><style>body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;color:#1a1208;padding:0 20px}h1{font-size:22px;margin-bottom:4px}@media print{body{margin:20px}}</style></head><body>');
+      w.document.write('<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #C8922A;padding-bottom:12px;margin-bottom:20px;"><div><h1>' + title + '</h1><p style="color:#999;font-size:13px;">partyretter.com · <strong>' + servings + ' Personen</strong> · ' + tartes + ' Tartes</p></div><div style="font-family:serif;font-size:20px;font-weight:900;"><span style="color:#C8922A;">Party</span>retter</div></div>');
+      w.document.write('<h2 style="font-size:16px;margin-bottom:10px;">Zutaten</h2>');
+      w.document.write('<table style="width:100%;border-collapse:collapse;">' + rows.join('') + '</table>');
+      w.document.write('<h2 style="font-size:16px;margin:24px 0 10px;">Zubereitung</h2>');
+      w.document.write(steps.join(''));
+      w.document.write('<div style="margin-top:30px;padding-top:14px;border-top:2px solid #C8922A;font-size:12px;color:#999;text-align:center;">Rezept von partyretter.com · Finde Profiköche für dein Event</div>');
+      w.document.write('</body></html>');
+      w.document.close();
+      setTimeout(() => w.print(), 500);
+    }
+    </script>
 
     <h2>Schritt-für-Schritt-Anleitung</h2>
 

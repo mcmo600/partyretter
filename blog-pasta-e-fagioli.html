@@ -173,28 +173,101 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
 
     <blockquote>Ein Tipp von Profi-Köchen: Pasta e Fagioli schmeckt aufgewärmt sogar besser. Bereite das Gericht am Vortag zu und erwärme es am Event-Tag – die Aromen verbinden sich über Nacht noch intensiver.</blockquote>
 
-    <h2>Die Zutatenliste: Skaliert für 20, 50 und 100 Personen</h2>
+    <h2>Die Zutatenliste: Berechne für deine Gästezahl</h2>
     <p>Alle Mengenangaben beziehen sich auf großzügige Portionen als Hauptgang. Wird die Pasta als Beilage serviert, rechne etwa 60 % der Menge.</p>
 
-    <table class="ingredient-table">
+    <!-- PERSONEN-UMRECHNER -->
+    <div id="recipe-scaler" style="background:linear-gradient(135deg,var(--dark),var(--dark2));border-radius:16px;padding:24px 28px;margin:20px 0 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="color:var(--cream);font-weight:700;font-size:.95rem;">Berechne für:</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button onclick="changeServings(-5)" style="width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--dark)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">-</button>
+        <input id="servings-input" type="number" value="20" min="1" max="500" onchange="updateServings()" style="width:70px;text-align:center;font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--gold);background:rgba(200,146,42,0.15);border:2px solid var(--gold);border-radius:10px;padding:6px;">
+        <button onclick="changeServings(5)" style="width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);background:transparent;color:var(--gold);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--dark)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">+</button>
+        <span style="color:var(--cream);font-size:.95rem;font-weight:600;">Personen</span>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:10px;">
+        <button onclick="printRecipe()" style="background:var(--gold);color:var(--dark);border:none;padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='var(--gold)'">🖨️ PDF drucken</button>
+      </div>
+    </div>
+
+    <table class="ingredient-table" id="ingredients-table">
       <thead>
-        <tr><th>Zutat</th><th>20 Pers.</th><th>50 Pers.</th><th>100 Pers.</th></tr>
+        <tr><th>Zutat</th><th id="servings-header">20 Personen</th></tr>
       </thead>
       <tbody>
-        <tr><td>Kurze Pasta (Ditalini/Elbow)</td><td>2 kg</td><td>5 kg</td><td>10 kg</td></tr>
-        <tr><td>Cannellini-Bohnen (Dose, abgetropft)</td><td>2 kg</td><td>5 kg</td><td>10 kg</td></tr>
-        <tr><td>Stückige Tomaten (Dose)</td><td>3 kg</td><td>7,5 kg</td><td>15 kg</td></tr>
-        <tr><td>Gemüsebrühe</td><td>4 L</td><td>10 L</td><td>20 L</td></tr>
-        <tr><td>Zwiebeln, gewürfelt</td><td>1 kg</td><td>2,5 kg</td><td>5 kg</td></tr>
-        <tr><td>Karotten, gewürfelt</td><td>600 g</td><td>1,5 kg</td><td>3 kg</td></tr>
-        <tr><td>Stangensellerie, gewürfelt</td><td>400 g</td><td>1 kg</td><td>2 kg</td></tr>
-        <tr><td>Knoblauch, gehackt</td><td>60 g</td><td>150 g</td><td>300 g</td></tr>
-        <tr><td>Olivenöl</td><td>150 ml</td><td>375 ml</td><td>750 ml</td></tr>
-        <tr><td>Rosmarin &amp; Thymian (frisch)</td><td>4 Zweige</td><td>10 Zweige</td><td>20 Zweige</td></tr>
-        <tr><td>Parmesan, gerieben</td><td>300 g</td><td>750 g</td><td>1,5 kg</td></tr>
-        <tr><td>Salz &amp; Pfeffer</td><td>nach Geschmack</td><td>nach Geschmack</td><td>nach Geschmack</td></tr>
+        <tr><td>Kurze Pasta (Ditalini/Elbow)</td><td class="qty" data-base="2000" data-unit="g" data-base-servings="20">2 kg</td></tr>
+        <tr><td>Cannellini-Bohnen (Dose, abgetropft)</td><td class="qty" data-base="2000" data-unit="g" data-base-servings="20">2 kg</td></tr>
+        <tr><td>Stückige Tomaten (Dose)</td><td class="qty" data-base="3000" data-unit="g" data-base-servings="20">3 kg</td></tr>
+        <tr><td>Gemüsebrühe</td><td class="qty" data-base="4000" data-unit="ml" data-base-servings="20">4 L</td></tr>
+        <tr><td>Zwiebeln, gewürfelt</td><td class="qty" data-base="1000" data-unit="g" data-base-servings="20">1 kg</td></tr>
+        <tr><td>Karotten, gewürfelt</td><td class="qty" data-base="600" data-unit="g" data-base-servings="20">600 g</td></tr>
+        <tr><td>Stangensellerie, gewürfelt</td><td class="qty" data-base="400" data-unit="g" data-base-servings="20">400 g</td></tr>
+        <tr><td>Knoblauch, gehackt</td><td class="qty" data-base="60" data-unit="g" data-base-servings="20">60 g</td></tr>
+        <tr><td>Olivenöl</td><td class="qty" data-base="150" data-unit="ml" data-base-servings="20">150 ml</td></tr>
+        <tr><td>Rosmarin &amp; Thymian (frisch)</td><td class="qty" data-base="4" data-unit="Zweige" data-base-servings="20">4 Zweige</td></tr>
+        <tr><td>Parmesan, gerieben</td><td class="qty" data-base="300" data-unit="g" data-base-servings="20">300 g</td></tr>
+        <tr><td>Salz &amp; Pfeffer</td><td>nach Geschmack</td></tr>
       </tbody>
     </table>
+
+    <script>
+    function changeServings(delta) {
+      const input = document.getElementById('servings-input');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      if (val > 500) val = 500;
+      input.value = val;
+      updateServings();
+    }
+    function formatQty(amount, unit) {
+      if (unit === 'g') {
+        if (amount >= 1000) return (amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1).replace('.0','') + ' kg';
+        return Math.round(amount) + ' g';
+      }
+      if (unit === 'ml') {
+        if (amount >= 1000) return (amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1).replace('.0','') + ' L';
+        return Math.round(amount) + ' ml';
+      }
+      if (amount === Math.round(amount)) return Math.round(amount) + ' ' + unit;
+      return amount.toFixed(1).replace('.0','') + ' ' + unit;
+    }
+    function updateServings() {
+      const servings = parseInt(document.getElementById('servings-input').value) || 20;
+      document.getElementById('servings-header').textContent = servings + ' Personen';
+      document.querySelectorAll('.qty').forEach(td => {
+        const base = parseFloat(td.dataset.base);
+        const unit = td.dataset.unit;
+        const baseServings = parseFloat(td.dataset.baseServings);
+        const newAmount = (base / baseServings) * servings;
+        td.textContent = formatQty(newAmount, unit);
+      });
+    }
+    function printRecipe() {
+      const servings = document.getElementById('servings-input').value;
+      const title = document.querySelector('.article-hero h1').textContent;
+      const rows = [];
+      document.querySelectorAll('#ingredients-table tbody tr').forEach(tr => {
+        const cells = tr.querySelectorAll('td');
+        rows.push('<tr><td style="padding:8px 14px;border-bottom:1px solid #eee;">' + cells[0].textContent + '</td><td style="padding:8px 14px;border-bottom:1px solid #eee;font-weight:700;">' + cells[1].textContent + '</td></tr>');
+      });
+      const steps = [];
+      document.querySelectorAll('.article-body h3').forEach(h3 => {
+        const p = h3.nextElementSibling;
+        if (p && p.tagName === 'P') steps.push('<h3 style="margin:16px 0 6px;font-size:14px;">' + h3.textContent + '</h3><p style="font-size:13px;line-height:1.7;color:#333;">' + p.textContent + '</p>');
+      });
+      const w = window.open('', '_blank');
+      w.document.write('<!DOCTYPE html><html><head><title>' + title + ' - Rezept</title><style>body{font-family:Arial,sans-serif;max-width:700px;margin:40px auto;color:#1a1208;padding:0 20px}h1{font-size:22px;margin-bottom:4px}@media print{body{margin:20px}}</style></head><body>');
+      w.document.write('<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #C8922A;padding-bottom:12px;margin-bottom:20px;"><div><h1>' + title + '</h1><p style="color:#999;font-size:13px;">partyretter.com · Berechnet für <strong>' + servings + ' Personen</strong></p></div><div style="font-family:serif;font-size:20px;font-weight:900;"><span style="color:#C8922A;">Party</span>retter</div></div>');
+      w.document.write('<h2 style="font-size:16px;margin-bottom:10px;">Zutaten für ' + servings + ' Personen</h2>');
+      w.document.write('<table style="width:100%;border-collapse:collapse;">' + rows.join('') + '</table>');
+      w.document.write('<h2 style="font-size:16px;margin:24px 0 10px;">Zubereitung</h2>');
+      w.document.write(steps.join(''));
+      w.document.write('<div style="margin-top:30px;padding-top:14px;border-top:2px solid #C8922A;font-size:12px;color:#999;text-align:center;">Rezept von partyretter.com · Finde Profiköche für dein Event</div>');
+      w.document.write('</body></html>');
+      w.document.close();
+      setTimeout(() => w.print(), 500);
+    }
+    </script>
 
     <h2>Schritt-für-Schritt-Anleitung</h2>
 
