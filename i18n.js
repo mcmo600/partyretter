@@ -41,9 +41,9 @@ const T = {
     tr: 'Giriş Yap', ru: 'Войти', nl: 'Inloggen',
   },
   nav_cta: {
-    de: 'Inserat erstellen →', en: 'Create listing →', fr: 'Créer une annonce →',
-    es: 'Crear anuncio →', it: 'Crea annuncio →', pl: 'Utwórz ogłoszenie →',
-    tr: 'İlan Oluştur →', ru: 'Создать объявление →', nl: 'Advertentie maken →',
+    de: 'Event ausschreiben →', en: 'Post event →', fr: 'Publier un événement →',
+    es: 'Publicar evento →', it: 'Pubblica evento →', pl: 'Opublikuj wydarzenie →',
+    tr: 'Etkinlik yayınla →', ru: 'Опубликовать событие →', nl: 'Evenement plaatsen →',
   },
 
   /* ── HERO ── */
@@ -113,17 +113,17 @@ const T = {
 
   /* ── TRUST BAR ── */
   trust_providers: {
-    de: '1.200+ Anbieter', en: '1,200+ providers', fr: '1 200+ prestataires',
-    es: '1.200+ proveedores', it: '1.200+ fornitori', pl: '1200+ dostawców',
-    tr: '1.200+ sağlayıcı', ru: '1200+ поставщиков', nl: '1.200+ aanbieders',
+    de: 'Geprüfte Anbieter', en: 'Verified providers', fr: 'Prestataires vérifiés',
+    es: 'Proveedores verificados', it: 'Fornitori verificati', pl: 'Zweryfikowani dostawcy',
+    tr: 'Doğrulanmış sağlayıcılar', ru: 'Проверенные поставщики', nl: 'Geverifieerde aanbieders',
   },
   trust_rating: {
-    de: '4,8 / 5 Bewertungen', en: '4.8 / 5 Reviews', fr: '4,8 / 5 Avis',
-    es: '4,8 / 5 Valoraciones', it: '4,8 / 5 Recensioni', pl: '4,8 / 5 Opinii',
-    tr: '4,8 / 5 Değerlendirme', ru: '4,8 / 5 Отзывов', nl: '4,8 / 5 Beoordelingen',
+    de: 'Bewertungen & Fotos', en: 'Reviews & photos', fr: 'Avis & photos',
+    es: 'Valoraciones y fotos', it: 'Recensioni e foto', pl: 'Opinie i zdjęcia',
+    tr: 'Değerlendirmeler ve fotoğraflar', ru: 'Отзывы и фото', nl: 'Beoordelingen en foto\'s',
   },
   trust_events: {
-    de: '8.000+ Events organisiert', en: '8,000+ events organized', fr: '8 000+ événements organisés',
+    de: 'Events einfach planen', en: 'Plan events easily', fr: 'Planifier facilement des événements',
     es: '8.000+ eventos organizados', it: '8.000+ eventi organizzati', pl: '8000+ zorganizowanych imprez',
     tr: '8.000+ etkinlik organize edildi', ru: '8000+ организованных мероприятий', nl: '8.000+ georganiseerde evenementen',
   },
@@ -300,9 +300,9 @@ const T = {
     tr: 'Sağlayıcı Ol →', ru: 'Стать поставщиком →', nl: 'Word aanbieder →',
   },
   customer_p1: {
-    de: '1.200+ geprüfte Anbieter', en: '1,200+ verified providers', fr: '1 200+ prestataires vérifiés',
-    es: '1.200+ proveedores verificados', it: '1.200+ fornitori verificati', pl: '1200+ zweryfikowanych dostawców',
-    tr: '1.200+ doğrulanmış sağlayıcı', ru: '1200+ проверенных поставщиков', nl: '1.200+ geverifieerde aanbieders',
+    de: 'Geprüfte Anbieter in deiner Region', en: 'Verified providers in your area', fr: 'Prestataires vérifiés dans votre région',
+    es: 'Proveedores verificados en tu región', it: 'Fornitori verificati nella tua zona', pl: 'Zweryfikowani dostawcy w Twoim regionie',
+    tr: 'Bölgenizdeki doğrulanmış sağlayıcılar', ru: 'Проверенные поставщики в вашем регионе', nl: 'Geverifieerde aanbieders in jouw regio',
   },
   customer_p2: {
     de: 'Einfache Anfrage in 2 Minuten', en: 'Easy request in 2 minutes', fr: 'Demande facile en 2 minutes',
@@ -335,9 +335,9 @@ const T = {
     tr: 'Etkinlik taleplerine başvur', ru: 'Подавайте заявки на запросы', nl: 'Reageer op evenementverzoeken',
   },
   provider_p4: {
-    de: '15 % Provision nur bei Buchung', en: '15% commission only upon booking', fr: '15% de commission uniquement à la réservation',
-    es: '15% de comisión solo al reservar', it: '15% di commissione solo alla prenotazione', pl: '15% prowizji tylko przy rezerwacji',
-    tr: 'Yalnızca rezervasyonda %15 komisyon', ru: '15% комиссия только при бронировании', nl: '15% commissie alleen bij boeking',
+    de: 'Starter kostenlos · nur 6 % bei Buchung', en: 'Starter free · only 6% on booking', fr: 'Starter gratuit · seulement 6% à la réservation',
+    es: 'Starter gratis · solo 6% en la reserva', it: 'Starter gratuito · solo 6% alla prenotazione', pl: 'Starter gratis · tylko 6% przy rezerwacji',
+    tr: 'Starter ücretsiz · sadece %6 komisyon', ru: 'Starter бесплатно · только 6% при бронировании', nl: 'Starter gratis · slechts 6% bij boeking',
   },
 
   /* ── PREISE ── */
