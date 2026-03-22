@@ -451,13 +451,68 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
           </div>
           <div style="font-weight:700;font-size:.9rem;margin-bottom:12px;">Deine Events</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:10px;padding:14px 18px;border-left:3px solid #2D7D46;">
-              <div><div style="font-weight:600;font-size:.85rem;">🎂 Geburtstagsparty – Koch gebucht</div><div style="font-size:.75rem;color:#888;margin-top:2px;">15. Apr 2026 · Koch Marco bestätigt</div></div>
-              <span style="background:#2D7D46;color:white;padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:700;">Bestätigt</span>
+            <!-- Event 1 - klickbar -->
+            <div style="cursor:pointer;" onclick="var d=document.getElementById('event-detail-1');d.style.display=d.style.display==='none'?'block':'none'">
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:10px;padding:14px 18px;border-left:3px solid #2D7D46;">
+                <div><div style="font-weight:600;font-size:.85rem;">🎂 Geburtstagsparty – Koch gebucht</div><div style="font-size:.75rem;color:#888;margin-top:2px;">15. Apr 2026 · Koch Marco bestätigt</div></div>
+                <span style="background:#2D7D46;color:white;padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:700;">Bestätigt ▾</span>
+              </div>
             </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:10px;padding:14px 18px;border-left:3px solid var(--gold);">
-              <div><div style="font-weight:600;font-size:.85rem;">🎉 Sommerfest – 3 Angebote erhalten</div><div style="font-size:.75rem;color:#888;margin-top:2px;">22. Jun 2026 · Angebote vergleichen</div></div>
-              <span style="background:var(--gold);color:var(--dark);padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:700;">3 Angebote</span>
+            <!-- Event 1 Detail -->
+            <div id="event-detail-1" style="display:none;background:white;border:1px solid #eee;border-radius:12px;padding:20px;margin-top:-4px;">
+              <div style="font-weight:700;font-size:.95rem;margin-bottom:14px;">🎂 Geburtstagsparty</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.8rem;margin-bottom:16px;">
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">📅 Datum</span><br><strong>15. April 2026</strong></div>
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">👥 Gäste</span><br><strong>30 Personen</strong></div>
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">📍 Ort</span><br><strong>München</strong></div>
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">💰 Budget</span><br><strong>1.500 €</strong></div>
+              </div>
+              <div style="font-weight:600;font-size:.8rem;margin-bottom:8px;">Planung</div>
+              <div style="display:flex;flex-direction:column;gap:6px;font-size:.8rem;margin-bottom:16px;">
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#2D7D46;">✅</span> Koch Marco gebucht</div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#2D7D46;">✅</span> Menü abgestimmt (3-Gänge)</div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#ddd;">⬜</span> Getränkeservice anfragen</div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#ddd;">⬜</span> Fotobox buchen</div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#ddd;">⬜</span> Deko & Zubehör bestellen</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <div style="flex:1;background:var(--gold);color:var(--dark);padding:10px;border-radius:8px;text-align:center;font-weight:700;font-size:.8rem;cursor:pointer;">+ Anbieter hinzufügen</div>
+                <div style="flex:1;background:var(--cream);color:var(--dark);padding:10px;border-radius:8px;text-align:center;font-weight:600;font-size:.8rem;cursor:pointer;">💬 Koch kontaktieren</div>
+              </div>
+            </div>
+
+            <!-- Event 2 - klickbar -->
+            <div style="cursor:pointer;" onclick="var d=document.getElementById('event-detail-2');d.style.display=d.style.display==='none'?'block':'none'">
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:10px;padding:14px 18px;border-left:3px solid var(--gold);">
+                <div><div style="font-weight:600;font-size:.85rem;">🎉 Sommerfest – 3 Angebote erhalten</div><div style="font-size:.75rem;color:#888;margin-top:2px;">22. Jun 2026 · Angebote vergleichen</div></div>
+                <span style="background:var(--gold);color:var(--dark);padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:700;">3 Angebote ▾</span>
+              </div>
+            </div>
+            <!-- Event 2 Detail -->
+            <div id="event-detail-2" style="display:none;background:white;border:1px solid #eee;border-radius:12px;padding:20px;margin-top:-4px;">
+              <div style="font-weight:700;font-size:.95rem;margin-bottom:14px;">🎉 Sommerfest</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.8rem;margin-bottom:16px;">
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">📅 Datum</span><br><strong>22. Juni 2026</strong></div>
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">👥 Gäste</span><br><strong>80 Personen</strong></div>
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">📍 Ort</span><br><strong>Ulm, Biergarten</strong></div>
+                <div style="background:#fafaf8;padding:10px 12px;border-radius:8px;"><span style="color:#888;">💰 Budget</span><br><strong>4.000 €</strong></div>
+              </div>
+              <div style="font-weight:600;font-size:.8rem;margin-bottom:8px;">3 Angebote eingegangen</div>
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:.8rem;margin-bottom:16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:8px;padding:10px 14px;">
+                  <div><strong>Koch Thomas</strong><span style="color:#888;margin-left:8px;">⭐ 4,8</span><br><span style="color:#888;">BBQ-Buffet · 80 Pers.</span></div>
+                  <strong style="color:var(--gold);">2.800 €</strong>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:8px;padding:10px 14px;">
+                  <div><strong>Catering Müller</strong><span style="color:#888;margin-left:8px;">⭐ 4,6</span><br><span style="color:#888;">Fingerfood + Grill · 80 Pers.</span></div>
+                  <strong style="color:var(--gold);">3.200 €</strong>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#fafaf8;border-radius:8px;padding:10px 14px;">
+                  <div><strong>Foodtruck Ulm</strong><span style="color:#888;margin-left:8px;">⭐ 4,9</span><br><span style="color:#888;">Burger & Bowls · mobil</span></div>
+                  <strong style="color:var(--gold);">2.400 €</strong>
+                </div>
+              </div>
+              <div style="background:var(--gold);color:var(--dark);padding:10px;border-radius:8px;text-align:center;font-weight:700;font-size:.8rem;cursor:pointer;">Angebote vergleichen & buchen</div>
             </div>
           </div>
         </div>
