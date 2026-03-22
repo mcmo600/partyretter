@@ -124,8 +124,8 @@ const T = {
   },
   trust_events: {
     de: 'Events einfach planen', en: 'Plan events easily', fr: 'Planifier facilement des événements',
-    es: '8.000+ eventos organizados', it: '8.000+ eventi organizzati', pl: '8000+ zorganizowanych imprez',
-    tr: '8.000+ etkinlik organize edildi', ru: '8000+ организованных мероприятий', nl: '8.000+ georganiseerde evenementen',
+    es: 'Planifica eventos fácilmente', it: 'Pianifica eventi facilmente', pl: 'Planuj wydarzenia łatwo',
+    tr: 'Etkinlikleri kolayca planlayın', ru: 'Планируйте события легко', nl: 'Plan evenementen eenvoudig',
   },
 
   /* ── SECTIONS ── */
