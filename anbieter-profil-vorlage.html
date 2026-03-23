@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <title>Anbieterprofil Vorschau – Partyretter</title>
+  <meta name="description" content="So sieht ein Anbieterprofil auf Partyretter aus – Vorschau-Seite mit Beispiel-Koch, Menues, Bewertungen und Verfuegbarkeit.">
+  <meta property="og:title" content="Anbieterprofil Vorschau – Partyretter">
+  <meta property="og:description" content="So sieht ein Anbieterprofil auf Partyretter aus – Vorschau mit Beispiel-Koch.">
+  <meta property="og:url" content="https://partyretter.com/anbieter-profil-vorlage.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Partyretter">
+  <meta property="og:image" content="https://partyretter.com/logo.png">
+  <meta property="og:locale" content="de_DE">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8922A;--gold2:#e0a430;--dark:#1A1208;--dark2:#2d1f0e;--cream:#F5F0E8;--cream2:#EDE8DF;--muted:rgba(26,18,8,.55);--text:#1A1208;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.45);}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:8px;}
+    .nav-logo img{height:38px;width:auto;}
+    .nav-links{display:flex;align-items:center;gap:22px;list-style:none;}
+    .nav-links a{color:rgba(245,240,232,.75);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;white-space:nowrap;}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-actions{display:flex;gap:10px;align-items:center;}
+    .btn-login{color:rgba(245,240,232,.78);font-size:13px;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:6px;border:1px solid rgba(245,240,232,.22);transition:all .2s;}
+    .btn-login:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-cta{background:var(--gold);color:var(--dark);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;}
+    .btn-cta:hover{background:var(--gold2);transform:translateY(-1px);}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--cream);margin:5px 0;border-radius:2px;}
+    .mobile-menu{display:none;}
+
+    /* ── PREVIEW BANNER ── */
+    .preview-banner{background:#e8f4fd;border-bottom:2px solid #b8daef;padding:14px 40px;text-align:center;font-size:14px;font-weight:600;color:#1a5276;}
+
+    /* ── PROFILE HEADER ── */
+    .profile-header{background:linear-gradient(140deg,#0e0a05 0%,var(--dark) 55%,var(--dark2) 100%);padding:48px 40px 44px;position:relative;overflow:hidden;}
+    .profile-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(200,146,42,.12) 0%,transparent 65%);}
+    .profile-header>*{position:relative;}
+    .profile-header-inner{max-width:1100px;margin:0 auto;display:flex;gap:36px;align-items:center;}
+    .profile-avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--cream2) 0%,rgba(200,146,42,.3) 100%);display:flex;align-items:center;justify-content:center;font-size:64px;flex-shrink:0;border:4px solid rgba(200,146,42,.4);}
+    .profile-info{flex:1;}
+    .profile-name{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--cream);margin-bottom:4px;}
+    .profile-tagline{font-size:16px;color:rgba(245,240,232,.65);margin-bottom:8px;}
+    .profile-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:rgba(245,240,232,.6);margin-bottom:16px;}
+    .profile-meta span{display:flex;align-items:center;gap:4px;}
+    .profile-verified{background:rgba(40,167,69,.15);color:#5cb85c;font-size:13px;font-weight:600;padding:4px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;}
+    .profile-actions{display:flex;gap:12px;margin-top:8px;}
+    .btn-anfrage{background:var(--gold);color:var(--dark);padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .btn-anfrage:hover{background:var(--gold2);transform:translateY(-1px);}
+    .btn-nachricht{background:transparent;color:var(--cream);padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;border:1.5px solid rgba(245,240,232,.25);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .btn-nachricht:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* ── TAB NAV ── */
+    .tab-nav{background:#fff;border-bottom:1.5px solid var(--cream2);position:sticky;top:66px;z-index:190;}
+    .tab-nav-inner{max-width:1100px;margin:0 auto;padding:0 40px;display:flex;gap:0;}
+    .tab-btn{padding:16px 24px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+    .tab-btn:hover{color:var(--dark);}
+    .tab-btn.active{color:var(--dark);border-bottom-color:var(--gold);}
+
+    /* ── CONTENT LAYOUT ── */
+    .content-layout{max-width:1100px;margin:0 auto;padding:32px 40px 60px;display:grid;grid-template-columns:1fr 320px;gap:32px;}
+    .tab-content{display:none;}
+    .tab-content.active{display:block;}
+
+    /* ── SIDEBAR ── */
+    .sidebar{position:sticky;top:130px;align-self:start;}
+    .sidebar-card{background:#fff;border-radius:16px;border:1.5px solid var(--cream2);padding:24px;margin-bottom:16px;}
+    .sidebar-card h3{font-family:'Fraunces',serif;font-size:18px;font-weight:900;margin-bottom:16px;color:var(--dark);}
+    .sidebar-price{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--gold);margin-bottom:4px;}
+    .sidebar-price-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+    .sidebar-cta{display:block;width:100%;background:var(--gold);color:var(--dark);padding:14px;border-radius:8px;font-size:15px;font-weight:700;text-align:center;text-decoration:none;border:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-bottom:12px;}
+    .sidebar-cta:hover{background:var(--gold2);transform:translateY(-1px);}
+    .sidebar-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+    .sidebar-stat{text-align:center;padding:12px;background:var(--cream);border-radius:10px;}
+    .sidebar-stat-val{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--dark);}
+    .sidebar-stat-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+    /* ── UEBER MICH ── */
+    .bio-text{font-size:15px;line-height:1.7;color:var(--text);margin-bottom:24px;}
+    .info-group{margin-bottom:20px;}
+    .info-group h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:10px;}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;}
+    .tag{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.25);color:#9a6c1a;}
+    .tag.neutral{background:var(--cream2);border-color:var(--cream2);color:var(--dark);}
+    .info-line{font-size:14px;color:var(--text);margin-bottom:6px;}
+    .info-line strong{font-weight:700;}
+
+    /* ── MENUS ── */
+    .menu-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+    .menu-card{background:#fff;border-radius:14px;border:1.5px solid var(--cream2);padding:24px;transition:all .2s;}
+    .menu-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(200,146,42,.12);}
+    .menu-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+    .menu-card h3{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--dark);}
+    .menu-card-price{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--gold);white-space:nowrap;}
+    .menu-card-price span{font-size:12px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:500;}
+    .menu-card-type{font-size:13px;color:var(--gold);font-weight:600;margin-bottom:8px;}
+    .menu-card p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+    .menu-courses{list-style:none;margin-bottom:16px;}
+    .menu-courses li{font-size:13.5px;color:var(--text);padding:6px 0;border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:8px;}
+    .menu-courses li:last-child{border-bottom:none;}
+    .menu-btn{padding:10px 20px;border-radius:8px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:700;color:var(--dark);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .menu-btn:hover{border-color:var(--gold);color:var(--gold);}
+    .allergene-note{background:var(--cream);border-radius:10px;padding:16px;margin-top:20px;font-size:13px;color:var(--muted);line-height:1.6;}
+    .allergene-note strong{color:var(--dark);}
+
+    /* ── BEWERTUNGEN ── */
+    .rating-overview{display:flex;align-items:center;gap:24px;margin-bottom:28px;padding:20px;background:#fff;border-radius:14px;border:1.5px solid var(--cream2);}
+    .rating-big{font-family:'Fraunces',serif;font-size:48px;font-weight:900;color:var(--dark);}
+    .rating-stars-big{color:var(--gold);font-size:22px;margin-bottom:4px;}
+    .rating-count{font-size:14px;color:var(--muted);}
+    .review-card{background:#fff;border-radius:14px;border:1.5px solid var(--cream2);padding:20px;margin-bottom:14px;}
+    .review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+    .review-author{font-weight:700;font-size:15px;color:var(--dark);}
+    .review-date{font-size:13px;color:var(--muted);}
+    .review-stars{color:var(--gold);font-size:14px;margin-bottom:8px;}
+    .review-text{font-size:14px;color:var(--text);line-height:1.6;}
+
+    /* ── VERFUEGBARKEIT ── */
+    .calendar-mock{background:#fff;border-radius:14px;border:1.5px solid var(--cream2);padding:24px;margin-bottom:20px;}
+    .calendar-mock h3{font-family:'Fraunces',serif;font-size:18px;font-weight:900;margin-bottom:16px;text-align:center;}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:16px;}
+    .cal-header{font-size:12px;font-weight:700;color:var(--muted);text-align:center;padding:4px 0;}
+    .cal-day{text-align:center;padding:10px 4px;border-radius:8px;font-size:13px;font-weight:600;cursor:default;}
+    .cal-day.available{background:rgba(40,167,69,.1);color:#2d7a4f;}
+    .cal-day.booked{background:rgba(220,53,69,.1);color:#b02a37;}
+    .cal-day.empty{color:var(--muted);background:transparent;}
+    .cal-day.past{color:rgba(26,18,8,.2);}
+    .cal-legend{display:flex;gap:20px;justify-content:center;font-size:13px;color:var(--muted);}
+    .cal-legend span{display:flex;align-items:center;gap:6px;}
+    .cal-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+    .cal-dot.green{background:rgba(40,167,69,.4);}
+    .cal-dot.red{background:rgba(220,53,69,.4);}
+    .next-dates{background:var(--cream);border-radius:10px;padding:16px;font-size:14px;color:var(--text);}
+    .next-dates strong{color:var(--dark);}
+
+    /* ── FOOTER ── */
+    footer{background:#0a0704;padding:52px 48px 32px;}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;max-width:1100px;margin-left:auto;margin-right:auto;}
+    .footer-brand .logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);margin-bottom:10px;}
+    .footer-brand .logo span{color:var(--gold);}
+    .footer-brand p{font-size:13px;color:rgba(245,240,232,.45);line-height:1.6;margin-bottom:14px;}
+    .footer-tagline{font-size:15px;color:rgba(245,240,232,.70);font-family:'Fraunces',serif;font-style:italic;}
+    .footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(245,240,232,.40);margin-bottom:14px;}
+    .footer-col ul{list-style:none;}
+    .footer-col ul li{margin-bottom:9px;}
+    .footer-col ul li a{color:rgba(245,240,232,.58);text-decoration:none;font-size:13px;transition:color .2s;}
+    .footer-col ul li a:hover{color:var(--gold);}
+    .footer-bottom{border-top:1px solid rgba(245,240,232,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1100px;margin:0 auto;}
+    .footer-bottom p{font-size:12px;color:rgba(245,240,232,.35);}
+    .footer-bottom a{color:rgba(245,240,232,.40);text-decoration:none;}
+    .footer-bottom a:hover{color:var(--gold);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:960px){
+      .content-layout{grid-template-columns:1fr;}
+      .sidebar{position:static;}
+      .footer-top{grid-template-columns:1fr 1fr;}
+    }
+    @media(max-width:768px){
+      .hamburger{display:block;}
+      nav{padding:0 16px;}
+      .nav-links{display:none !important;}
+      .nav-actions .btn-login,.nav-actions .btn-cta{display:none;}
+      .mobile-menu{position:fixed;top:66px;left:0;right:0;background:var(--dark);padding:16px 24px;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,.4);border-top:1px solid rgba(245,240,232,.1);}
+      .mobile-menu.open{display:block;}
+      .mobile-menu a{display:block;color:rgba(245,240,232,.8);text-decoration:none;padding:12px 0;font-size:15px;font-weight:500;border-bottom:1px solid rgba(245,240,232,.08);}
+      .mobile-menu a:hover{color:var(--gold);}
+      .mobile-menu .mobile-cta{display:inline-block;margin-top:12px;background:var(--gold);color:var(--dark);padding:12px 24px;border-radius:8px;font-weight:700;font-size:14px;text-align:center;width:100%;}
+      .preview-banner{padding:12px 16px;font-size:13px;}
+      .profile-header{padding:32px 16px;}
+      .profile-header-inner{flex-direction:column;text-align:center;gap:20px;}
+      .profile-avatar{width:110px;height:110px;font-size:52px;}
+      .profile-name{font-size:28px;}
+      .profile-meta{justify-content:center;}
+      .profile-actions{justify-content:center;}
+      .tab-nav-inner{padding:0 16px;overflow-x:auto;}
+      .tab-btn{padding:14px 16px;font-size:13px;}
+      .content-layout{padding:20px 16px 40px;}
+      .rating-overview{flex-direction:column;text-align:center;}
+      footer{padding:36px 20px 24px;}
+      .footer-top{grid-template-columns:1fr 1fr;}
+    }
+    @media(max-width:640px){
+      .footer-top{grid-template-columns:1fr;}
+      .profile-meta{flex-direction:column;gap:8px;}
+      .profile-actions{flex-direction:column;width:100%;}
+      .btn-anfrage,.btn-nachricht{width:100%;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="homepage.html"><span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span></a>
+  <ul class="nav-links">
+    <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
+    <li><a href="foodtruck-standorte.html">🚚 Foodtruck-Standorte</a></li>
+    <li><a href="blog.html">📝 Blog</a></li>
+    <li><a href="anbieter-onboarding.html">🎉 Partyretter werden</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-login" href="https://app.partyretter.com/login">Anmelden</a>
+    <a class="btn-cta" href="https://app.partyretter.com/registrierung">Anbieter werden</a>
+    <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="kochevents.html">Koch-Events</a>
+  <a href="foodtruck-standorte.html">Foodtruck-Standorte</a>
+  <a href="blog.html">Blog</a>
+  <a href="anbieter-onboarding.html">Partyretter werden</a>
+  <a href="https://app.partyretter.com/login">Anmelden</a>
+  <a class="mobile-cta" href="https://app.partyretter.com/registrierung">Anbieter werden</a>
+</div>
+
+<!-- PREVIEW BANNER -->
+<div class="preview-banner">📋 Dies ist eine Vorschau – so wird dein Anbieterprofil aussehen</div>
+
+<!-- PROFILE HEADER -->
+<section class="profile-header">
+  <div class="profile-header-inner">
+    <div class="profile-avatar">👨‍🍳</div>
+    <div class="profile-info">
+      <h1 class="profile-name">Marco Rossi</h1>
+      <p class="profile-tagline">Privatkoch · Italienische Küche</p>
+      <div class="profile-meta">
+        <span>📍 München · Umkreis 50 km</span>
+        <span>⭐ 4.9 · 23 Bewertungen</span>
+        <span class="profile-verified">✅ Geprüfter Anbieter</span>
+      </div>
+      <div class="profile-actions">
+        <button class="btn-anfrage" onclick="alert('Demo-Seite: Anfragen sind in der echten App möglich.')">Anfrage senden →</button>
+        <button class="btn-nachricht" onclick="alert('Demo-Seite: Nachrichten sind in der echten App möglich.')">💬 Nachricht</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB NAVIGATION -->
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="ueber-mich">Über mich</button>
+    <button class="tab-btn" data-tab="menus">Menüs &amp; Angebote</button>
+    <button class="tab-btn" data-tab="bewertungen">Bewertungen</button>
+    <button class="tab-btn" data-tab="verfuegbarkeit">Verfügbarkeit</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-layout">
+  <div class="main-content">
+
+    <!-- TAB: ÜBER MICH -->
+    <div class="tab-content active" id="tab-ueber-mich">
+      <p class="bio-text">
+        Ciao! Ich bin Marco, geboren in Neapel und seit über 12 Jahren als Privatkoch in München tätig. Meine Leidenschaft ist die authentische italienische Küche – von handgemachter Pasta bis zum perfekten Tiramisu. Ich koche bei dir zu Hause, im Büro oder an deiner Event-Location. Jedes Menü wird individuell auf deine Wünsche und die Saison abgestimmt. Lass uns zusammen ein unvergessliches kulinarisches Erlebnis schaffen!
+      </p>
+
+      <div class="info-group">
+        <h4>Spezialitäten</h4>
+        <div class="tags">
+          <span class="tag">Italienisch</span>
+          <span class="tag">Mediterran</span>
+          <span class="tag">Pasta</span>
+          <span class="tag">Fisch &amp; Meeresfrüchte</span>
+          <span class="tag">Desserts</span>
+        </div>
+      </div>
+
+      <div class="info-group">
+        <h4>Sprachen</h4>
+        <div class="tags">
+          <span class="tag neutral">🇩🇪 Deutsch</span>
+          <span class="tag neutral">🇮🇹 Italienisch</span>
+          <span class="tag neutral">🇬🇧 Englisch</span>
+        </div>
+      </div>
+
+      <div class="info-group">
+        <h4>Events</h4>
+        <div class="tags">
+          <span class="tag neutral">💒 Hochzeit</span>
+          <span class="tag neutral">🎂 Geburtstag</span>
+          <span class="tag neutral">🏢 Firmenfeier</span>
+          <span class="tag neutral">🍷 Dinner</span>
+        </div>
+      </div>
+
+      <div class="info-group">
+        <h4>Erfahrung</h4>
+        <p class="info-line"><strong>12 Jahre</strong> als Privatkoch</p>
+      </div>
+    </div>
+
+    <!-- TAB: MENÜS & ANGEBOTE -->
+    <div class="tab-content" id="tab-menus">
+      <div class="menu-grid">
+
+        <!-- Menu 1 -->
+        <div class="menu-card">
+          <div class="menu-card-head">
+            <div>
+              <div class="menu-card-type">🍽️ 4-Gänge-Menü</div>
+              <h3>Italienischer Abend</h3>
+            </div>
+            <div class="menu-card-price">ab 45€ <span>/Person</span></div>
+          </div>
+          <p>Ein klassischer italienischer Abend mit vier Gängen – von der Vorspeise bis zum Dessert. Perfekt für Dinner-Partys und besondere Anlässe.</p>
+          <ul class="menu-courses">
+            <li>🥗 Bruschetta mit Tomaten &amp; Basilikum</li>
+            <li>🍝 Risotto ai Funghi Porcini</li>
+            <li>🥩 Saltimbocca alla Romana</li>
+            <li>🍰 Tiramisu classico</li>
+          </ul>
+          <button class="menu-btn" onclick="alert('Demo-Seite: Details sind in der echten App verfügbar.')">Details ansehen</button>
+        </div>
+
+        <!-- Menu 2 -->
+        <div class="menu-card">
+          <div class="menu-card-head">
+            <div>
+              <div class="menu-card-type">👨‍🍳 Live Cooking</div>
+              <h3>Pasta Werkstatt</h3>
+            </div>
+            <div class="menu-card-price">ab 35€ <span>/Person</span></div>
+          </div>
+          <p>Interaktives Koch-Erlebnis: Gemeinsam stellen wir frische Pasta her – von Tagliatelle bis Ravioli. Ideal für Teamevents und Geburtstage.</p>
+          <ul class="menu-courses">
+            <li>🫒 Antipasti-Auswahl zum Start</li>
+            <li>🍝 Frische Pasta selber machen (3 Sorten)</li>
+            <li>🫕 Verschiedene Saucen nach Wahl</li>
+            <li>🍰 Panna Cotta zum Abschluss</li>
+          </ul>
+          <button class="menu-btn" onclick="alert('Demo-Seite: Details sind in der echten App verfügbar.')">Details ansehen</button>
+        </div>
+
+        <!-- Menu 3 -->
+        <div class="menu-card">
+          <div class="menu-card-head">
+            <div>
+              <div class="menu-card-type">🥘 Buffet</div>
+              <h3>Mediterranes Buffet</h3>
+            </div>
+            <div class="menu-card-price">ab 28€ <span>/Person</span></div>
+          </div>
+          <p>Vielfältiges Buffet mit über 8 Gerichten aus der mediterranen Küche. Ideal für größere Gruppen und Feiern ab 20 Personen.</p>
+          <ul class="menu-courses">
+            <li>🥗 Gemischte Antipasti &amp; Bruschetta</li>
+            <li>🍝 Pasta-Station (2 Sorten)</li>
+            <li>🐟 Gegrillter Fisch &amp; Garnelen</li>
+            <li>🥩 Fleisch vom Grill</li>
+            <li>🥬 Saisonale Salate &amp; Gemüse</li>
+            <li>🧀 Käseplatte</li>
+            <li>🍰 Dessert-Auswahl</li>
+            <li>🫒 Olivenöl &amp; frisches Brot</li>
+          </ul>
+          <button class="menu-btn" onclick="alert('Demo-Seite: Details sind in der echten App verfügbar.')">Details ansehen</button>
+        </div>
+
+      </div>
+
+      <div class="allergene-note">
+        <strong>Allergene &amp; Hinweise:</strong> Alle Gerichte auch vegetarisch möglich. Allergene werden individuell abgestimmt. Bitte teile mir deine Wünsche und Unverträglichkeiten bei der Anfrage mit.
+      </div>
+    </div>
+
+    <!-- TAB: BEWERTUNGEN -->
+    <div class="tab-content" id="tab-bewertungen">
+      <div class="rating-overview">
+        <div class="rating-big">4.9</div>
+        <div>
+          <div class="rating-stars-big">★★★★★</div>
+          <div class="rating-count">23 Bewertungen</div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-head">
+          <span class="review-author">Sarah M.</span>
+          <span class="review-date">12. März 2026</span>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Marco hat unser Dinner perfekt gemacht! Die Pasta war unglaublich frisch und das Tiramisu ein Traum. Unsere Gäste waren begeistert. Würde ihn jederzeit wieder buchen.</p>
+      </div>
+
+      <div class="review-card">
+        <div class="review-head">
+          <span class="review-author">Thomas K.</span>
+          <span class="review-date">28. Februar 2026</span>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Wir hatten Marco für unsere Firmenfeier gebucht. 40 Personen, mediterranes Buffet – alles war perfekt organisiert. Die Qualität der Gerichte war erstklassig. Absolut empfehlenswert!</p>
+      </div>
+
+      <div class="review-card">
+        <div class="review-head">
+          <span class="review-author">Julia &amp; Markus</span>
+          <span class="review-date">14. Februar 2026</span>
+        </div>
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">Tolles Valentinstags-Dinner für uns beide. Marco hat bei uns zu Hause gekocht und alles war wunderbar. Einziger kleiner Punkt: Die Dessert-Portion hätte etwas größer sein können. Trotzdem ein tolles Erlebnis!</p>
+      </div>
+    </div>
+
+    <!-- TAB: VERFÜGBARKEIT -->
+    <div class="tab-content" id="tab-verfuegbarkeit">
+      <div class="calendar-mock">
+        <h3>März 2026</h3>
+        <div class="calendar-grid">
+          <div class="cal-header">Mo</div>
+          <div class="cal-header">Di</div>
+          <div class="cal-header">Mi</div>
+          <div class="cal-header">Do</div>
+          <div class="cal-header">Fr</div>
+          <div class="cal-header">Sa</div>
+          <div class="cal-header">So</div>
+          <!-- Woche 1 (März beginnt Sonntag) -->
+          <div class="cal-day past"></div>
+          <div class="cal-day past"></div>
+          <div class="cal-day past"></div>
+          <div class="cal-day past"></div>
+          <div class="cal-day past"></div>
+          <div class="cal-day past"></div>
+          <div class="cal-day past">1</div>
+          <!-- Woche 2 -->
+          <div class="cal-day past">2</div>
+          <div class="cal-day past">3</div>
+          <div class="cal-day past">4</div>
+          <div class="cal-day past">5</div>
+          <div class="cal-day past">6</div>
+          <div class="cal-day past">7</div>
+          <div class="cal-day past">8</div>
+          <!-- Woche 3 -->
+          <div class="cal-day past">9</div>
+          <div class="cal-day past">10</div>
+          <div class="cal-day past">11</div>
+          <div class="cal-day past">12</div>
+          <div class="cal-day past">13</div>
+          <div class="cal-day past">14</div>
+          <div class="cal-day past">15</div>
+          <!-- Woche 4 -->
+          <div class="cal-day past">16</div>
+          <div class="cal-day past">17</div>
+          <div class="cal-day past">18</div>
+          <div class="cal-day past">19</div>
+          <div class="cal-day past">20</div>
+          <div class="cal-day past">21</div>
+          <div class="cal-day past">22</div>
+          <!-- Woche 5 -->
+          <div class="cal-day booked">23</div>
+          <div class="cal-day available">24</div>
+          <div class="cal-day booked">25</div>
+          <div class="cal-day available">26</div>
+          <div class="cal-day available">27</div>
+          <div class="cal-day available">28</div>
+          <div class="cal-day booked">29</div>
+          <!-- Woche 6 -->
+          <div class="cal-day available">30</div>
+          <div class="cal-day available">31</div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+          <div class="cal-day empty"></div>
+        </div>
+        <div class="cal-legend">
+          <span><span class="cal-dot green"></span> Verfügbar</span>
+          <span><span class="cal-dot red"></span> Gebucht</span>
+        </div>
+      </div>
+      <div class="next-dates">
+        <strong>Nächste freie Termine:</strong> 28. März, 2. April, 5. April
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h3>Preise ab</h3>
+      <div class="sidebar-price">28€</div>
+      <div class="sidebar-price-sub">pro Person · inkl. Zutaten</div>
+      <button class="sidebar-cta" onclick="alert('Demo-Seite: Anfragen sind in der echten App möglich.')">Kontakt aufnehmen</button>
+      <button class="btn-nachricht" style="width:100%;text-align:center;" onclick="alert('Demo-Seite: Nachrichten sind in der echten App möglich.')">💬 Nachricht schreiben</button>
+      <div class="sidebar-stats">
+        <div class="sidebar-stat">
+          <div class="sidebar-stat-val">89</div>
+          <div class="sidebar-stat-label">Events durchgeführt</div>
+        </div>
+        <div class="sidebar-stat">
+          <div class="sidebar-stat-val">94%</div>
+          <div class="sidebar-stat-label">Wiederbuchungsrate</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><span style="color:var(--gold);">Party</span><span style="color:var(--cream);">retter</span></div>
+      <p>Deutschlands führende Plattform für Profis rund ums Event. Von Dinner für 2 bis Festival für 500 – alles auf einer Plattform.</p>
+      <div class="footer-tagline">Von Dinner für 2 bis Festival für 500 – wir finden deinen Retter.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Für Kunden</h4>
+      <ul>
+        <li><a href="coming-soon.html">Koch buchen</a></li>
+        <li><a href="foodtruck-standorte.html">Foodtruck finden</a></li>
+        <li><a href="coming-soon.html">Location finden</a></li>
+        <li><a href="coming-soon.html">Event ausschreiben</a></li>
+        <li><a href="kochevents.html">Koch-Events</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Für Anbieter</h4>
+      <ul>
+        <li><a href="anbieter-onboarding.html">Als Anbieter starten</a></li>
+        <li><a href="https://app.partyretter.com/registrierung">Profil erstellen</a></li>
+        <li><a href="anbieter-vorteile.html">Vorteile Partyretter</a></li>
+        <li><a href="https://app.partyretter.com/registrierung">Jetzt registrieren</a></li>
+        <li><a href="coming-soon.html">Werbung schalten</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="agb.html">AGB</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Cookies</a></li>
+        <li><a href="mailto:info@partyretter.com">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Partyretter · Alle Rechte vorbehalten · <a href="mailto:info@partyretter.com">info@partyretter.com</a></p>
+    <p>Made with ❤️ in Ulm</p>
+  </div>
+</footer>
+
+<!-- TAB SWITCHING -->
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+<script src="cookie-banner.js"></script>
+<script src="i18n.js"></script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
+</body>
+</html>
