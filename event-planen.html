@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C8922A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <title>Event planen – Partyretter</title>
+  <meta name="description" content="Beschreibe dein Event und erhalte Angebote von Köchen, Foodtrucks, Caterern und Entertainern in deiner Nähe. Jetzt kostenlos auf Partyretter anfragen.">
+  <meta property="og:title" content="Event planen – Partyretter">
+  <meta property="og:description" content="Beschreibe dein Event und erhalte Angebote von Köchen, Foodtrucks, Caterern und Entertainern in deiner Nähe.">
+  <meta property="og:url" content="https://partyretter.com/event-planen.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Partyretter">
+  <meta property="og:image" content="https://partyretter.com/logo.png">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Event planen – Partyretter">
+  <meta name="twitter:description" content="Beschreibe dein Event und erhalte Angebote von Köchen, Foodtrucks, Caterern und Entertainern in deiner Nähe.">
+  <meta name="twitter:image" content="https://partyretter.com/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dark:#1A1208; --dark2:#2d1f0e;
+      --gold:#C8922A; --gold2:#e0a430;
+      --cream:#F5F0E8; --cream2:#EDE8DF;
+      --text:#1A1208; --muted:rgba(26,18,8,0.55);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.45);}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:8px;}
+    .nav-links{display:flex;align-items:center;gap:22px;list-style:none;}
+    .nav-links a{color:rgba(245,240,232,.78);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;white-space:nowrap;}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-actions{display:flex;gap:10px;align-items:center;}
+    .btn-outline{color:rgba(245,240,232,.78);font-size:13px;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:6px;border:1px solid rgba(245,240,232,.22);transition:all .2s;}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-cta{background:var(--dark2);color:var(--cream);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap;border:1.5px solid rgba(200,146,42,.40);}
+    .btn-cta:hover{background:var(--gold);color:var(--dark);border-color:var(--gold);transform:translateY(-1px);}
+
+    /* HAMBURGER */
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;z-index:210;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--cream);margin:5px 0;border-radius:2px;transition:.3s;}
+    .mobile-menu{display:none;}
+
+    /* HERO */
+    .hero{background:linear-gradient(140deg,#0e0a05 0%,var(--dark) 55%,var(--dark2) 100%);padding:60px 40px 48px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 65% 45%,rgba(200,146,42,.13) 0%,transparent 65%);}
+    .hero>*{position:relative;}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,52px);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:12px;}
+    .hero h1 span{color:var(--gold);}
+    .hero-sub{font-size:16px;color:rgba(245,240,232,.65);max-width:540px;margin:0 auto 0;line-height:1.6;}
+
+    /* PROGRESS BAR */
+    .progress-section{background:var(--cream2);border-bottom:1px solid #ddd8ce;padding:28px 40px;}
+    .progress-inner{max-width:700px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:0;}
+    .progress-step{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;}
+    .progress-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:900;font-size:15px;flex-shrink:0;}
+    .progress-step.active .progress-num{background:var(--gold);color:#fff;}
+    .progress-step:not(.active) .progress-num{background:#d4cfc5;color:rgba(26,18,8,.45);}
+    .progress-label{font-size:13px;font-weight:600;color:var(--text);}
+    .progress-step:not(.active) .progress-label{color:var(--muted);}
+    .progress-arrow{font-size:18px;color:#c4bfb5;margin:0 6px;flex-shrink:0;}
+
+    /* FORM CONTAINER */
+    .form-container{max-width:780px;margin:0 auto;padding:40px 24px 60px;}
+    .form-section{background:#fff;border:1.5px solid #e8e2d8;border-radius:16px;padding:32px 28px;margin-bottom:24px;box-shadow:0 2px 12px rgba(26,18,8,.04);}
+    .form-section h2{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--dark);margin-bottom:20px;}
+
+    /* EVENT TYPE CARDS */
+    .event-types{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    .event-type-card{border:2px solid #e8e2d8;border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;transition:all .2s;background:#fff;}
+    .event-type-card:hover{border-color:rgba(200,146,42,.5);background:rgba(200,146,42,.04);}
+    .event-type-card.selected{border-color:var(--gold);background:rgba(200,146,42,.08);box-shadow:0 0 0 3px rgba(200,146,42,.15);}
+    .event-type-card input{display:none;}
+    .event-type-emoji{font-size:28px;margin-bottom:6px;display:block;}
+    .event-type-label{font-size:13.5px;font-weight:600;color:var(--dark);}
+
+    /* FORM INPUTS */
+    .form-row{display:flex;gap:16px;margin-bottom:16px;}
+    .form-row:last-child{margin-bottom:0;}
+    .form-group{flex:1;display:flex;flex-direction:column;gap:6px;}
+    .form-label{font-size:13px;font-weight:600;color:var(--dark);}
+    .form-label .optional{font-weight:400;color:var(--muted);font-size:12px;}
+    .form-input,.form-select,.form-textarea{width:100%;padding:11px 14px;border:1.5px solid #ddd8ce;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,146,42,.1);}
+    .form-input::placeholder,.form-textarea::placeholder{color:rgba(26,18,8,.35);}
+    .form-textarea{resize:vertical;min-height:100px;}
+    .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+
+    /* RADIO PILLS */
+    .radio-pills{display:flex;gap:10px;flex-wrap:wrap;}
+    .radio-pill{padding:9px 18px;border:1.5px solid #ddd8ce;border-radius:20px;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff;color:var(--dark);}
+    .radio-pill:hover{border-color:rgba(200,146,42,.5);}
+    .radio-pill.selected{border-color:var(--gold);background:rgba(200,146,42,.1);color:var(--dark);}
+    .radio-pill input{display:none;}
+
+    /* GUEST SLIDER */
+    .guest-display{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--gold);margin-bottom:8px;}
+    .guest-slider{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:linear-gradient(to right,var(--gold) 0%,#e8e2d8 0%);outline:none;cursor:pointer;}
+    .guest-slider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--gold);box-shadow:0 2px 8px rgba(200,146,42,.35);cursor:pointer;border:3px solid #fff;}
+    .guest-slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--gold);box-shadow:0 2px 8px rgba(200,146,42,.35);cursor:pointer;border:3px solid #fff;}
+
+    /* SERVICE CHIPS */
+    .service-chips{display:flex;flex-wrap:wrap;gap:10px;}
+    .service-chip{padding:10px 18px;border:1.5px solid #ddd8ce;border-radius:24px;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff;color:var(--dark);display:flex;align-items:center;gap:7px;user-select:none;}
+    .service-chip:hover{border-color:rgba(200,146,42,.5);background:rgba(200,146,42,.04);}
+    .service-chip.selected{border-color:var(--gold);background:rgba(200,146,42,.1);color:var(--dark);box-shadow:0 0 0 2px rgba(200,146,42,.12);}
+    .service-chip input{display:none;}
+    .chip-emoji{font-size:17px;}
+
+    /* CHECKBOX */
+    .checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-top:8px;}
+    .checkbox-row input[type="checkbox"]{width:18px;height:18px;accent-color:var(--gold);margin-top:2px;flex-shrink:0;cursor:pointer;}
+    .checkbox-row label{font-size:13.5px;color:var(--text);line-height:1.5;cursor:pointer;}
+    .checkbox-row label a{color:var(--gold);text-decoration:underline;}
+
+    /* SUBMIT */
+    .submit-btn{display:block;width:100%;padding:18px 24px;background:var(--gold);color:var(--dark);border:none;border-radius:12px;font-size:17px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(200,146,42,.3);}
+    .submit-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,146,42,.4);}
+
+    /* INFO SECTION */
+    .info-section{background:var(--cream2);padding:64px 40px;text-align:center;}
+    .info-section h2{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,32px);font-weight:900;color:var(--dark);margin-bottom:40px;}
+    .info-steps{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;max-width:900px;margin:0 auto;}
+    .info-step{flex:1;min-width:220px;max-width:280px;text-align:center;}
+    .info-icon{font-size:36px;margin-bottom:12px;}
+    .info-step h3{font-family:'Fraunces',serif;font-size:17px;font-weight:900;color:var(--dark);margin-bottom:8px;}
+    .info-step p{font-size:14px;color:var(--muted);line-height:1.6;}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .hamburger{display:block;}
+      nav{padding:0 16px;}
+      .nav-links{display:none;}
+      .nav-actions .btn-outline,.nav-actions .btn-cta{display:none;}
+      .mobile-menu{position:fixed;top:66px;left:0;right:0;background:var(--dark);padding:16px 24px;z-index:199;box-shadow:0 8px 24px rgba(0,0,0,.4);border-top:1px solid rgba(245,240,232,.1);}
+      .mobile-menu.open{display:block;}
+      .mobile-menu a{display:block;color:rgba(245,240,232,.8);text-decoration:none;padding:12px 0;font-size:15px;font-weight:500;border-bottom:1px solid rgba(245,240,232,.08);}
+      .mobile-menu a:hover{color:var(--gold);}
+      .mobile-menu .mobile-cta{display:inline-block;margin-top:12px;background:var(--gold);color:var(--dark);padding:12px 24px;border-radius:8px;font-weight:700;font-size:14px;text-align:center;width:100%;}
+      .hero{padding:36px 20px 28px;}
+      .hero h1{font-size:clamp(24px,6vw,36px);}
+      .progress-section{padding:20px 16px;}
+      .progress-inner{flex-direction:column;gap:10px;}
+      .progress-arrow{transform:rotate(90deg);margin:0;}
+      .form-container{padding:24px 16px 40px;}
+      .form-section{padding:24px 18px;}
+      .event-types{grid-template-columns:repeat(2,1fr);}
+      .form-row{flex-direction:column;gap:12px;}
+      .info-section{padding:40px 20px;}
+      .info-steps{gap:24px;}
+    }
+    @media(max-width:480px){
+      .event-types{grid-template-columns:1fr 1fr;}
+      .form-section h2{font-size:18px;}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="homepage.html"><span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span></a>
+    <ul class="nav-links">
+      <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
+      <li><a href="foodtruck-standorte.html">🚚 Foodtruck-Standorte</a></li>
+      <li><a href="blog.html">📝 Blog</a></li>
+      <li><a href="anbieter-onboarding.html">🎉 Partyretter werden</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="btn-outline" href="https://app.partyretter.com/login">Anmelden</a>
+      <a class="btn-cta" href="event-planen.html">Event ausschreiben</a>
+      <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="kochevents.html">Koch-Events</a>
+    <a href="foodtruck-standorte.html">Foodtruck-Standorte</a>
+    <a href="blog.html">Blog</a>
+    <a href="anbieter-onboarding.html">Partyretter werden</a>
+    <a href="https://app.partyretter.com/login">Anmelden</a>
+    <a class="mobile-cta" href="event-planen.html">Event ausschreiben</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Dein <span>Event</span>, dein Wunsch</h1>
+    <p class="hero-sub">Beschreibe dein Event – wir finden die passenden Anbieter für dich.</p>
+  </section>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-section">
+    <div class="progress-inner">
+      <div class="progress-step active">
+        <div class="progress-num">1</div>
+        <div class="progress-label">Event beschreiben</div>
+      </div>
+      <div class="progress-arrow">→</div>
+      <div class="progress-step">
+        <div class="progress-num">2</div>
+        <div class="progress-label">Angebote erhalten</div>
+      </div>
+      <div class="progress-arrow">→</div>
+      <div class="progress-step">
+        <div class="progress-num">3</div>
+        <div class="progress-label">Buchen & feiern</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-container">
+
+    <!-- Section 1: Event Type -->
+    <div class="form-section">
+      <h2>Was für ein Event planst du?</h2>
+      <div class="event-types" id="event-types">
+        <div class="event-type-card" onclick="selectEventType(this)">
+          <input type="radio" name="event-type" value="geburtstag">
+          <span class="event-type-emoji">🎂</span>
+          <span class="event-type-label">Geburtstag</span>
+        </div>
+        <div class="event-type-card" onclick="selectEventType(this)">
+          <input type="radio" name="event-type" value="hochzeit">
+          <span class="event-type-emoji">💍</span>
+          <span class="event-type-label">Hochzeit</span>
+        </div>
+        <div class="event-type-card" onclick="selectEventType(this)">
+          <input type="radio" name="event-type" value="firmenfeier">
+          <span class="event-type-emoji">🏢</span>
+          <span class="event-type-label">Firmenfeier</span>
+        </div>
+        <div class="event-type-card" onclick="selectEventType(this)">
+          <input type="radio" name="event-type" value="gartenparty">
+          <span class="event-type-emoji">🌿</span>
+          <span class="event-type-label">Gartenparty</span>
+        </div>
+        <div class="event-type-card" onclick="selectEventType(this)">
+          <input type="radio" name="event-type" value="festival">
+          <span class="event-type-emoji">🎪</span>
+          <span class="event-type-label">Festival</span>
+        </div>
+        <div class="event-type-card" onclick="selectEventType(this)">
+          <input type="radio" name="event-type" value="sonstiges">
+          <span class="event-type-emoji">✨</span>
+          <span class="event-type-label">Sonstiges</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: When & Where -->
+    <div class="form-section">
+      <h2>Wann und wo?</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Datum</label>
+          <input type="date" class="form-input" id="event-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Uhrzeit von</label>
+          <input type="time" class="form-input" id="event-time-from">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Uhrzeit bis</label>
+          <input type="time" class="form-input" id="event-time-to">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Stadt oder PLZ</label>
+          <input type="text" class="form-input" placeholder="z.B. München oder 80331" id="event-location">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ort</label>
+          <div class="radio-pills" id="ort-pills">
+            <div class="radio-pill" onclick="selectPill(this,'ort-pills')">
+              <input type="radio" name="ort" value="indoor"> 🏠 Indoor
+            </div>
+            <div class="radio-pill" onclick="selectPill(this,'ort-pills')">
+              <input type="radio" name="ort" value="outdoor"> 🌳 Outdoor
+            </div>
+            <div class="radio-pill" onclick="selectPill(this,'ort-pills')">
+              <input type="radio" name="ort" value="beides"> 🔄 Beides
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Guests & Budget -->
+    <div class="form-section">
+      <h2>Wie viele Gäste?</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="guest-display" id="guest-display">30 Gäste</div>
+          <input type="range" class="guest-slider" id="guest-slider" min="1" max="500" value="30" oninput="updateGuests(this.value)">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px;">
+            <span>1</span><span>100</span><span>250</span><span>500+</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:20px;">
+        <div class="form-group">
+          <label class="form-label">Budget-Rahmen</label>
+          <select class="form-select" id="budget">
+            <option value="" disabled selected>Budget wählen...</option>
+            <option value="500">Bis 500 €</option>
+            <option value="1000">500 – 1.000 €</option>
+            <option value="2500">1.000 – 2.500 €</option>
+            <option value="5000">2.500 – 5.000 €</option>
+            <option value="5001">5.000 € +</option>
+            <option value="unklar">Noch unklar</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Services -->
+    <div class="form-section">
+      <h2>Was suchst du?</h2>
+      <div class="service-chips" id="service-chips">
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="privatkoch">
+          <span class="chip-emoji">👨‍🍳</span> Privatkoch
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="foodtruck">
+          <span class="chip-emoji">🚚</span> Foodtruck
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="catering">
+          <span class="chip-emoji">🍽️</span> Catering-Service
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="location">
+          <span class="chip-emoji">📍</span> Location
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="bar">
+          <span class="chip-emoji">🍹</span> Getränke & Bar
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="musik">
+          <span class="chip-emoji">🎵</span> DJ & Musik
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="fotograf">
+          <span class="chip-emoji">📸</span> Fotograf
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="dekoration">
+          <span class="chip-emoji">🎨</span> Dekoration
+        </div>
+        <div class="service-chip" onclick="toggleChip(this)">
+          <input type="checkbox" name="service" value="sonstiges">
+          <span class="chip-emoji">✨</span> Sonstiges
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Description -->
+    <div class="form-section">
+      <h2>Beschreibe dein Event</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Deine Vorstellung</label>
+          <textarea class="form-textarea" id="event-description" rows="4" placeholder="z.B. Italienisches Dinner für 30 Personen im Garten, mit Antipasti, Pasta und Dessert..."></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Besondere Wünsche <span class="optional">(optional)</span></label>
+          <textarea class="form-textarea" id="event-wishes" rows="3" placeholder="z.B. Allergien, vegetarisch, vegan, glutenfrei, halal..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: Contact -->
+    <div class="form-section">
+      <h2>Deine Kontaktdaten</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="contact-name" placeholder="Vor- und Nachname">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">E-Mail</label>
+          <input type="email" class="form-input" id="contact-email" placeholder="deine@email.de">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefon <span class="optional">(optional)</span></label>
+          <input type="tel" class="form-input" id="contact-phone" placeholder="+49 ...">
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="agb-check">
+        <label for="agb-check">Ich stimme den <a href="agb.html" target="_blank">AGB</a> und <a href="datenschutz.html" target="_blank">Datenschutzbestimmungen</a> zu.</label>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="submit-btn" onclick="submitEvent()">Event ausschreiben – Angebote erhalten →</button>
+
+  </div>
+
+  <!-- INFO SECTION -->
+  <section class="info-section">
+    <h2>So geht's weiter</h2>
+    <div class="info-steps">
+      <div class="info-step">
+        <div class="info-icon">📨</div>
+        <h3>Anbieter erhalten deine Anfrage</h3>
+        <p>Passende Köche, Foodtrucks und Caterer in deiner Region werden über dein Event informiert.</p>
+      </div>
+      <div class="info-step">
+        <div class="info-icon">💬</div>
+        <h3>Du bekommst Angebote</h3>
+        <p>Vergleiche Angebote, Preise und Bewertungen – ganz in Ruhe und unverbindlich.</p>
+      </div>
+      <div class="info-step">
+        <div class="info-icon">✅</div>
+        <h3>Wähle & buche sicher</h3>
+        <p>Entscheide dich für deinen Favoriten und buche sicher über Partyretter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--dark);color:rgba(245,240,232,0.55);padding:40px 40px 24px;margin-top:auto;">
+    <div style="max-width:1260px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;gap:40px;margin-bottom:32px;justify-content:space-between;">
+        <div style="min-width:200px;">
+          <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--cream);margin-bottom:10px;"><img src="logo.png" alt="Partyretter" style="height:40px;width:auto;opacity:0.92;filter:brightness(0) invert(1);"></div>
+          <p style="font-size:13px;line-height:1.6;max-width:240px;">Die Plattform für professionelles Event-Catering in Deutschland.</p>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Kunden</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <a href="coming-soon.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Marktplatz</a>
+            <a href="kochevents.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Koch-Events</a>
+            <a href="foodtruck-standorte.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Foodtruck-Karte</a>
+            <a href="event-planen.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Event ausschreiben</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Für Anbieter</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <a href="anbieter-onboarding.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter werden</a>
+            <a href="https://app.partyretter.com/registrierung" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Registrierung</a>
+            <a href="coming-soon.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Anbieter-Profil</a>
+            <a href="coming-soon.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Buchhaltung</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Rechtliches</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <a href="agb.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">AGB</a>
+            <a href="datenschutz.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Datenschutz</a>
+            <a href="impressum.html" style="color:rgba(245,240,232,0.55);text-decoration:none;font-size:13.5px;transition:color 0.2s;" onmouseover="this.style.color='#C8922A'" onmouseout="this.style.color='rgba(245,240,232,0.55)'">Impressum</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(245,240,232,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div style="font-size:12.5px;">© 2026 Partyretter. Alle Rechte vorbehalten.</div>
+        <div style="font-size:12px;">🍽️ Made with ❤️ für perfekte Events</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="cookie-banner.js"></script>
+  <script src="i18n.js"></script>
+
+  <!-- Floating Home Button -->
+  <style>
+  .fab-home {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 9999;
+    background: #D4A017;
+    color: #1a1208;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    text-decoration: none;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  }
+  .fab-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    background: #e6b422;
+  }
+  .fab-home svg { flex-shrink: 0; }
+  @media (max-width: 480px) {
+    .fab-home { bottom: 16px; left: 16px; padding: 10px 15px; font-size: 0.8rem; }
+  }
+  </style>
+  <a class="fab-home" href="homepage.html" title="Zur Startseite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    Startseite
+  </a>
+  <!-- End Floating Home Button -->
+
+  <script>
+  // Event Type Selection
+  function selectEventType(card) {
+    document.querySelectorAll('.event-type-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    card.querySelector('input').checked = true;
+  }
+
+  // Radio Pill Selection
+  function selectPill(pill, groupId) {
+    document.querySelectorAll('#' + groupId + ' .radio-pill').forEach(p => p.classList.remove('selected'));
+    pill.classList.add('selected');
+    pill.querySelector('input').checked = true;
+  }
+
+  // Service Chip Toggle
+  function toggleChip(chip) {
+    chip.classList.toggle('selected');
+    var cb = chip.querySelector('input');
+    cb.checked = !cb.checked;
+  }
+
+  // Guest Slider
+  function updateGuests(val) {
+    var label = val >= 500 ? '500+ Gäste' : val + ' Gäste';
+    document.getElementById('guest-display').textContent = label;
+    var slider = document.getElementById('guest-slider');
+    var pct = (val - slider.min) / (slider.max - slider.min) * 100;
+    slider.style.background = 'linear-gradient(to right, var(--gold) ' + pct + '%, #e8e2d8 ' + pct + '%)';
+  }
+  // Init slider background
+  updateGuests(30);
+
+  // Submit
+  function submitEvent() {
+    window.location.href = 'https://app.partyretter.com/registrierung';
+  }
+  </script>
+
+  <script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/service-worker.js")</script>
+</body>
+</html>
