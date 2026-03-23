@@ -134,15 +134,40 @@
       max-width: 480px; margin: 0 0 24px; line-height: 1.5;
     }
 
+    /* HAMBURGER MENU */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; z-index: 210; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); margin: 5px 0; border-radius: 2px; transition: .3s; }
+    .mobile-menu { display: none; }
+
     /* HERO RESPONSIVE */
     @media (max-width: 860px) {
       .hero { flex-direction: column; }
-      .hero-mascot { width: 100%; clip-path: none; padding: 32px 24px 20px; flex-direction: row; gap: 20px; }
+      .hero-mascot { width: 100%; clip-path: none; padding: 32px 24px 20px; flex-direction: row; gap: 20px; min-width: 0; }
       .hero-mascot img { width: 100px; height: 100px; }
       .hero-content { padding: 28px 24px 36px; text-align: center; align-items: center; }
       .search-tabs, .quick-cats { align-self: center; justify-content: center; }
-      .search-box { margin: 0 auto 20px; }
+      .search-box { margin: 0 auto 20px; max-width: 100%; }
+      .search-box .search-field-wrap { flex-direction: column; }
+      .search-seg { border-right: none; border-bottom: 1px solid #e8e2d8; }
+      .search-seg:last-of-type { border-bottom: none; }
       .hero-stats { justify-content: center; margin: 0 auto; }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { display: none; }
+      .nav-actions .btn-login, .nav-actions .btn-cta-nav { display: none; }
+      .mobile-menu { position: fixed; top: 66px; left: 0; right: 0; background: var(--dark); padding: 16px 24px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,.4); border-top: 1px solid rgba(245,240,232,.1); }
+      .mobile-menu.open { display: block; }
+      .mobile-menu a { display: block; color: rgba(245,240,232,.8); text-decoration: none; padding: 12px 0; font-size: 15px; font-weight: 500; border-bottom: 1px solid rgba(245,240,232,.08); }
+      .mobile-menu a:hover { color: var(--gold); }
+      .mobile-menu .mobile-cta { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--dark); padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; width: 100%; }
+      nav { padding: 0 16px; }
+      .hero-content { padding: 24px 16px 32px; }
+      .hero h1 { font-size: 28px; }
+      .hero-sub { font-size: 14px; }
+      .quick-cats { gap: 6px; }
+      .quick-cat { padding: 6px 12px; font-size: 12px; }
     }
 
     /* SEARCH BOX */
@@ -577,20 +602,32 @@
       .reviews-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
     }
+    @media (max-width: 768px) {
+      .kat-sidebar { position: static; max-height: none; overflow-y: visible; margin-bottom: 20px; }
+      .angebote-inner { grid-template-columns: 1fr; }
+      .angebote-section { padding: 32px 16px; }
+      .section { padding: 48px 16px; }
+      .section-title { font-size: clamp(22px, 5vw, 32px); }
+      .section-sub { font-size: 14px; margin-bottom: 32px; }
+      footer { padding: 36px 20px 24px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .cta-section { padding: 48px 16px; }
+      .angebote-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    }
     @media (max-width: 640px) {
-      nav { padding: 0 16px; }
-      .nav-links { display: none; }
-      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+      .modules-grid { grid-template-columns: 1fr 1fr; }
       .steps-row { grid-template-columns: repeat(2, 1fr); }
       .steps-row::before { display: none; }
       .chefs-grid, .events-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
-      footer { padding: 40px 24px 24px; }
     }
-  
-    @media (max-width: 768px) {
-      .kat-sidebar { position: static; max-height: none; overflow-y: visible; margin-bottom: 20px; }
-      .angebote-inner { grid-template-columns: 1fr; }
+    @media (max-width: 480px) {
+      .modules-grid { grid-template-columns: 1fr; }
+      .hero-mascot { padding: 20px 16px; }
+      .hero-mascot img { width: 80px; height: 80px; }
+      .hero-stats { gap: 16px; padding: 10px 14px; }
+      .stat-val { font-size: 20px; }
+      .angebote-grid { grid-template-columns: 1fr; }
     }
   
     .city-dd-item { padding: 10px 16px; cursor: pointer; font-size: 13.5px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0ece4; transition: background .12s; }
@@ -619,8 +656,19 @@
     <div id="lang-switcher" style="position:relative;"></div>
     <a class="btn-login" href="https://app.partyretter.com/login" data-i18n="nav_login">Anmelden</a>
     <a class="btn-cta-nav" href="https://app.partyretter.com/registrierung" data-i18n="nav_cta">Event ausschreiben</a>
+    <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="kochevents.html">Koch-Events</a>
+  <a href="foodtruck-standorte.html">Foodtruck-Standorte</a>
+  <a href="blog.html">Blog</a>
+  <a href="anbieter-onboarding.html">Partyretter werden</a>
+  <a href="https://app.partyretter.com/login">Anmelden</a>
+  <a class="mobile-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+</div>
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <section class="hero">

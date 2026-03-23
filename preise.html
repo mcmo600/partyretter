@@ -151,6 +151,46 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
     .btn-nav-outline:hover { border-color: var(--gold); color: var(--gold); }
     .btn-nav-cta { background: var(--gold); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
     .btn-nav-cta:hover { background: #e6b422; transform: translateY(-1px); }
+
+    /* HAMBURGER */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); margin: 5px 0; border-radius: 2px; }
+    .mobile-menu { display: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { display: none !important; }
+      .btn-nav-outline, .btn-nav-cta { display: none; }
+      .mobile-menu { position: fixed; top: 52px; left: 0; right: 0; background: var(--dark); padding: 16px 24px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,.4); border-top: 1px solid rgba(245,240,232,.1); }
+      .mobile-menu.open { display: block; }
+      .mobile-menu a { display: block; color: rgba(245,240,232,.8); text-decoration: none; padding: 12px 0; font-size: 15px; font-weight: 500; border-bottom: 1px solid rgba(245,240,232,.08); }
+      .mobile-menu a:hover { color: var(--gold); }
+      .mobile-menu .mobile-cta { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--dark); padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; width: 100%; }
+      nav { padding: 10px 16px; }
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+      .hero p { font-size: 1rem; }
+      .toggle-btn { padding: 8px 18px; font-size: .85rem; }
+      .section { padding: 40px 16px; }
+      .section-title { font-size: 1.5rem; }
+      .plans-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
+      .provision-card { padding: 24px 16px; }
+      .prov-table { font-size: .8rem; }
+      .prov-table th, .prov-table td { padding: 8px 10px; }
+      .compare-wrap { margin: 0 -16px; padding: 0 16px; }
+      .trust-strip { padding: 36px 20px; }
+      .trust-strip h2 { font-size: 1.4rem; }
+      .trust-grid { gap: 24px; }
+      footer { padding: 36px 20px 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .toggle-wrap { flex-direction: column; width: 100%; }
+      .toggle-btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -169,8 +209,19 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
   <div class="nav-actions">
     <a class="btn-nav-outline" href="https://app.partyretter.com/login">Anmelden</a>
     <a class="btn-nav-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+    <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="kochevents.html">Koch-Events</a>
+  <a href="foodtruck-standorte.html">Foodtruck-Standorte</a>
+  <a href="blog.html">Blog</a>
+  <a href="anbieter-onboarding.html">Partyretter werden</a>
+  <a href="https://app.partyretter.com/login">Anmelden</a>
+  <a class="mobile-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -329,7 +380,7 @@ footer{background:var(--dark2);color:#ccc;padding:50px 40px 24px}
             <div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--dark);">MK</div>
           </div>
         </div>
-        <div style="padding:28px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;">
+        <div class="dashboard-stats" style="padding:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;">
           <div style="background:var(--cream);border-radius:12px;padding:18px;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;">12</div><div style="font-size:.75rem;color:#888;margin-top:4px;">Anfragen</div></div>
           <div style="background:var(--cream);border-radius:12px;padding:18px;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;">5</div><div style="font-size:.75rem;color:#888;margin-top:4px;">Buchungen</div></div>
           <div style="background:var(--cream);border-radius:12px;padding:18px;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;">4,9 ★</div><div style="font-size:.75rem;color:#888;margin-top:4px;">Bewertung</div></div>

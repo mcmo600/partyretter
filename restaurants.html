@@ -107,12 +107,30 @@
     .pagination{display:flex;gap:8px;justify-content:center;margin-top:28px;}
     .page-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--cream2);background:#fff;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;}
     .page-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+    /* HAMBURGER */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); margin: 5px 0; border-radius: 2px; }
+    .mobile-menu { display: none; }
+
     @media(max-width:900px){
       .main-layout{grid-template-columns:1fr;}
       .sidebar{display:none;}
       .card.wide{grid-template-columns:1fr;}
-      nav{padding:0 20px;}
-      .page-hero,.filter-inner,.main-layout{padding-left:20px;padding-right:20px;}
+    }
+    @media(max-width:768px){
+      .hamburger { display: block; }
+      nav{padding:0 16px;}
+      .nav-links{display:none !important;}
+      .nav-actions .btn-login, .nav-actions .btn-cta-nav { display: none; }
+      .mobile-menu { position: fixed; top: 66px; left: 0; right: 0; background: var(--dark); padding: 16px 24px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,.4); border-top: 1px solid rgba(245,240,232,.1); }
+      .mobile-menu.open { display: block; }
+      .mobile-menu a { display: block; color: rgba(245,240,232,.8); text-decoration: none; padding: 12px 0; font-size: 15px; font-weight: 500; border-bottom: 1px solid rgba(245,240,232,.08); }
+      .mobile-menu a:hover { color: var(--gold); }
+      .mobile-menu .mobile-cta { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--dark); padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; width: 100%; }
+      .page-hero,.filter-inner,.main-layout{padding-left:16px;padding-right:16px;}
+      .page-hero h1{font-size:26px;}
+      .cta-box{flex-direction:column;text-align:center;padding:24px 20px;}
+      .cta-box h3{font-size:18px;}
     }
   </style>
 </head>
@@ -129,8 +147,12 @@
   <div class="nav-actions">
     <a class="btn-login" href="https://app.partyretter.com/login">Anmelden</a>
     <a class="btn-cta-nav" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+    <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="kochevents.html">Koch-Events</a><a href="foodtruck-standorte.html">Foodtruck-Standorte</a><a href="blog.html">Blog</a><a href="anbieter-onboarding.html">Partyretter werden</a><a href="https://app.partyretter.com/login">Anmelden</a><a class="mobile-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+</div>
 
 <div class="page-hero">
   <div class="breadcrumb">

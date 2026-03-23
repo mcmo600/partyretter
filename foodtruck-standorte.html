@@ -123,16 +123,29 @@ footer{background:#0a0704;padding:52px 48px 32px;}
 .footer-bottom a:hover{color:var(--gold);}
 .made-in{font-size:12px;color:rgba(245,240,232,.35);}
 
+/* HAMBURGER */
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); margin: 5px 0; border-radius: 2px; }
+.mobile-menu { display: none; }
+
 /* ── RESPONSIVE ── */
-@media(max-width:900px){
+@media(max-width:768px){
+  .hamburger { display: block; }
   nav{padding:0 16px;}
   .nav-links{display:none;}
+  .nav-actions .btn-login, .nav-actions .btn-cta-nav { display: none; }
+  .mobile-menu { position: fixed; top: 66px; left: 0; right: 0; background: var(--dark); padding: 16px 24px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,.4); border-top: 1px solid rgba(245,240,232,.1); }
+  .mobile-menu.open { display: block; }
+  .mobile-menu a { display: block; color: rgba(245,240,232,.8); text-decoration: none; padding: 12px 0; font-size: 15px; font-weight: 500; border-bottom: 1px solid rgba(245,240,232,.08); }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-menu .mobile-cta { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--dark); padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; width: 100%; }
   .hero{padding:32px 20px 28px;}
   .hero h1{font-size:28px;}
   .search-bar{flex-direction:column;padding:0 10px;}
   .search-bar input,.search-bar select{min-width:auto;width:100%;}
   #map{height:380px;}
-  .grid-section{padding:32px 20px 48px;}
+  .grid-section{padding:32px 16px 48px;}
+  .grid-section h2{font-size:22px;}
   .truck-grid{grid-template-columns:1fr;}
   .cta-section{padding:40px 20px;}
   footer{padding:36px 20px 24px;}
@@ -140,6 +153,7 @@ footer{background:#0a0704;padding:52px 48px 32px;}
 }
 @media(max-width:500px){
   .footer-top{grid-template-columns:1fr;}
+  #map{height:280px;}
 }
 </style>
 </head>
@@ -159,8 +173,19 @@ footer{background:#0a0704;padding:52px 48px 32px;}
   <div class="nav-actions">
     <a class="btn-login" href="https://app.partyretter.com/login">Anmelden</a>
     <a class="btn-cta-nav" href="https://app.partyretter.com/registrierung">Event ausschreiben &rarr;</a>
+    <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="kochevents.html">Koch-Events</a>
+  <a href="foodtruck-standorte.html">Foodtruck-Standorte</a>
+  <a href="blog.html">Blog</a>
+  <a href="anbieter-onboarding.html">Partyretter werden</a>
+  <a href="https://app.partyretter.com/login">Anmelden</a>
+  <a class="mobile-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">

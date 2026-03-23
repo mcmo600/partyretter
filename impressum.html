@@ -222,20 +222,25 @@
         padding: 20px;
       }
     }
+    /* HAMBURGER */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--cream); margin: 5px 0; border-radius: 2px; }
+    .mobile-menu { display: none; }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      nav {
-        padding: 0 20px;
-      }
-      .hero {
-        padding: 60px 20px 50px;
-      }
-      .container {
-        padding: 40px 20px;
-      }
-      .content-section h2 {
-        font-size: 18px;
-      }
+      .hamburger { display: block; }
+      .nav-links { display: none !important; }
+      .nav-actions .btn-nav-outline, .nav-actions .btn-nav-cta { display: none; }
+      .mobile-menu { position: fixed; top: 66px; left: 0; right: 0; background: var(--dark); padding: 16px 24px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,.4); border-top: 1px solid rgba(245,240,232,.1); }
+      .mobile-menu.open { display: block; }
+      .mobile-menu a { display: block; color: rgba(245,240,232,.8); text-decoration: none; padding: 12px 0; font-size: 15px; font-weight: 500; border-bottom: 1px solid rgba(245,240,232,.08); }
+      .mobile-menu a:hover { color: var(--gold); }
+      .mobile-menu .mobile-cta { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--dark); padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; width: 100%; }
+      nav { padding: 0 16px; }
+      .hero { padding: 60px 20px 50px; }
+      .container { padding: 40px 16px; }
+      .content-section h2 { font-size: 18px; }
     }
   </style>
 </head>
@@ -252,8 +257,12 @@
     <div class="nav-actions">
       <a class="btn-nav-outline" href="https://app.partyretter.com/login">Anmelden</a>
       <a class="btn-nav-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+      <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü"><span></span><span></span><span></span></button>
     </div>
   </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="kochevents.html">Koch-Events</a><a href="foodtruck-standorte.html">Foodtruck-Standorte</a><a href="blog.html">Blog</a><a href="anbieter-onboarding.html">Partyretter werden</a><a href="https://app.partyretter.com/login">Anmelden</a><a class="mobile-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+  </div>
 
   <!-- HERO HEADER -->
   <div class="hero">
