@@ -115,6 +115,8 @@
     .service-chip.selected{border-color:var(--gold);background:rgba(200,146,42,.1);color:var(--dark);box-shadow:0 0 0 2px rgba(200,146,42,.12);}
     .service-chip input{display:none;}
     .chip-emoji{font-size:17px;}
+    .reach-option:hover{border-color:rgba(200,146,42,.5)!important;background:rgba(200,146,42,.02);}
+    .reach-option:has(input:checked){border-color:var(--gold)!important;background:rgba(200,146,42,.06);box-shadow:0 0 0 2px rgba(200,146,42,.12);}
 
     /* CHECKBOX */
     .checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-top:8px;}
@@ -329,43 +331,70 @@
     <!-- Section 4: Services -->
     <div class="form-section">
       <h2>Was suchst du?</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Wähle alles aus, was du für dein Event brauchst. Du kannst mehrere auswählen.</p>
       <div class="service-chips" id="service-chips">
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="privatkoch">
-          <span class="chip-emoji">👨‍🍳</span> Privatkoch
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="foodtruck">
-          <span class="chip-emoji">🚚</span> Foodtruck
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="catering">
-          <span class="chip-emoji">🍽️</span> Catering-Service
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="location">
-          <span class="chip-emoji">📍</span> Location
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="bar">
-          <span class="chip-emoji">🍹</span> Getränke & Bar
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="musik">
-          <span class="chip-emoji">🎵</span> DJ & Musik
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="fotograf">
-          <span class="chip-emoji">📸</span> Fotograf
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="dekoration">
-          <span class="chip-emoji">🎨</span> Dekoration
-        </div>
-        <div class="service-chip" onclick="toggleChip(this)">
-          <input type="checkbox" name="service" value="sonstiges">
-          <span class="chip-emoji">✨</span> Sonstiges
-        </div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="privatkoch"><span class="chip-emoji">👨‍🍳</span> Privatkoch</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="caterer"><span class="chip-emoji">🍽️</span> Caterer</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="foodtruck"><span class="chip-emoji">🚚</span> Foodtruck</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="grillmeister"><span class="chip-emoji">🔥</span> Grillmeister / BBQ</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="sushi"><span class="chip-emoji">🍣</span> Sushi-Koch</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="patissier"><span class="chip-emoji">🎂</span> Patissier / Konditor</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="pizzaiolo"><span class="chip-emoji">🍕</span> Pizzabäcker</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="live-cooking"><span class="chip-emoji">🫕</span> Live Cooking</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="buffet"><span class="chip-emoji">🥗</span> Buffet-Service</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="location"><span class="chip-emoji">📍</span> Location / Eventfläche</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="bar"><span class="chip-emoji">🍹</span> Bar & Cocktails</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="getraenke"><span class="chip-emoji">🍺</span> Getränkelieferung</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="kaffee"><span class="chip-emoji">☕</span> Kaffee & Barista</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="musik"><span class="chip-emoji">🎵</span> DJ & Musik</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="liveband"><span class="chip-emoji">🎸</span> Live-Band</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="fotograf"><span class="chip-emoji">📸</span> Fotograf</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="videograf"><span class="chip-emoji">🎬</span> Videograf</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="fotobox"><span class="chip-emoji">🤳</span> Fotobox</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="dekoration"><span class="chip-emoji">🎨</span> Dekoration</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="floristik"><span class="chip-emoji">💐</span> Floristik / Blumen</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="moderation"><span class="chip-emoji">🎤</span> Moderator / Entertainer</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="kinderprogramm"><span class="chip-emoji">🎈</span> Kinderprogramm</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="zauberer"><span class="chip-emoji">🪄</span> Zauberer / Künstler</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="technik"><span class="chip-emoji">🔊</span> Ton- & Lichttechnik</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="moebel"><span class="chip-emoji">🪑</span> Möbel & Zeltverleih</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="geschirr"><span class="chip-emoji">🍸</span> Geschirr & Besteck</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="personal"><span class="chip-emoji">🤵</span> Servicepersonal</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="reinigung"><span class="chip-emoji">🧹</span> Reinigung danach</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="transport"><span class="chip-emoji">🚐</span> Transport / Shuttle</div>
+        <div class="service-chip" onclick="toggleChip(this)"><input type="checkbox" name="service" value="sonstiges"><span class="chip-emoji">✨</span> Sonstiges</div>
+      </div>
+    </div>
+
+    <!-- Section 4b: Anbieter-Reichweite -->
+    <div class="form-section">
+      <h2>An wen soll deine Anfrage gehen?</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Bestimme wie viele Anbieter deine Anfrage erhalten. Weniger = persönlicher. Mehr = mehr Auswahl.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <label class="reach-option" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1.5px solid #ddd8ce;border-radius:14px;cursor:pointer;transition:all .2s;">
+          <input type="radio" name="reach" value="best5" checked style="accent-color:var(--gold);width:18px;height:18px;">
+          <div>
+            <div style="font-weight:700;font-size:15px;color:var(--dark);">Top 5 Anbieter <span style="color:var(--gold);font-size:12px;font-weight:600;background:rgba(200,146,42,.1);padding:2px 8px;border-radius:8px;margin-left:6px;">Empfohlen</span></div>
+            <div style="font-size:13px;color:var(--muted);margin-top:2px;">Die 5 bestbewerteten Anbieter in deiner Region erhalten deine Anfrage</div>
+          </div>
+        </label>
+        <label class="reach-option" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1.5px solid #ddd8ce;border-radius:14px;cursor:pointer;transition:all .2s;">
+          <input type="radio" name="reach" value="best10" style="accent-color:var(--gold);width:18px;height:18px;">
+          <div>
+            <div style="font-weight:700;font-size:15px;color:var(--dark);">Top 10 Anbieter</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:2px;">Die 10 besten Anbieter – mehr Angebote zum Vergleichen</div>
+          </div>
+        </label>
+        <label class="reach-option" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1.5px solid #ddd8ce;border-radius:14px;cursor:pointer;transition:all .2s;">
+          <input type="radio" name="reach" value="all" style="accent-color:var(--gold);width:18px;height:18px;">
+          <div>
+            <div style="font-weight:700;font-size:15px;color:var(--dark);">Alle passenden Anbieter</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:2px;">Jeder verfügbare Anbieter in deiner Region wird benachrichtigt – maximale Auswahl</div>
+          </div>
+        </label>
+      </div>
+      <div style="margin-top:16px;padding:14px 18px;background:rgba(200,146,42,.06);border-radius:12px;border-left:3px solid var(--gold);">
+        <div style="font-size:13px;color:var(--muted);"><strong style="color:var(--dark);">So funktioniert's:</strong> Deine Anfrage geht automatisch an die passenden Anbieter. Diese können dir dann ein individuelles Angebot schicken. Du entscheidest in Ruhe, welches Angebot am besten passt – völlig unverbindlich.</div>
       </div>
     </div>
 
