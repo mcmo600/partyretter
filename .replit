@@ -1,0 +1,18 @@
+run = "python3 -m http.server 8080"
+entrypoint = "homepage.html"
+
+[languages]
+[languages.html]
+pattern = "**/*.html"
+
+[nix]
+channel = "stable-24_05"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[deployment]
+run = ["python3", "-m", "http.server", "8080"]
+deploymentTarget = "static"
+publicDir = "."
