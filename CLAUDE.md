@@ -156,20 +156,47 @@ Vercel deployed automatisch nach jedem Push.
 - [ ] Netlify kündigen (Alexander manuell)
 
 ## Accounts & Kosten
-| Posten | Anbieter | Kosten |
-|--------|----------|--------|
-| Domain | united-domains | ~15 €/Jahr |
-| E-Mail Mail M | united-domains | 1,25 €/Monat |
-| Website Hosting | Vercel | 0 € (Free) |
-| App Hosting | Bubble.io | 0 € (Starter) |
-| Zahlungen | Stripe | 1,5% + 0,25€ pro Zahlung |
-| E-Mail-Versand | SendGrid | 0 € (Free, 100/Tag) |
-| Marke DPMA | DPMA | 290 € einmalig |
+| Posten | Anbieter | Kosten | Status |
+|--------|----------|--------|--------|
+| Domain | united-domains | ~15 €/Jahr | ✅ Aktiv |
+| E-Mail Mail M | united-domains | 1,25 €/Monat | ✅ info@partyretter.com, Webmail: ud-mail.de |
+| Website Hosting | Vercel | 0 € (Free) | ✅ Auto-Deploy bei git push |
+| App Hosting | Bubble.io | 0 € (Starter) | ✅ app.partyretter.com |
+| Zahlungen | Stripe | 1,5% + 0,25€ pro Zahlung | ✅ Test-Keys in Bubble (acct_1TE979EPsvkBS2MP) |
+| E-Mail-Versand | SendGrid | 0 € (Free, 100/Tag) | ✅ DNS verifiziert, Testphase bis 22.05.2026 |
+| Marke DPMA | DPMA | 290 € einmalig | ✅ Angemeldet 17.03.2026 |
+
+## Account-Details (für Bubble-Integration)
+- **Stripe:** Test-Keys bereits in Bubble Plugin eingetragen (Entwicklung). Live-Keys nach Gewerbe-Verifizierung.
+- **SendGrid:** DNS-Records (5x CNAME + 1x TXT _dmarc) bei united-domains eingetragen. DMARC noch fixen: p=keine → p=none
+- **E-Mail:** info@partyretter.com → Postfach bei united-domains (Mail M, 10 Postfächer, 5 GB). Weiterleitung an mc600@outlook.de aktiv.
+- **Bubble:** Editor: bubble.io/page?id=mcmo600 – HTML-Elemente als iFrames, Textarea-Editing via JS
+
+## Seitenstruktur (Stand 25.03.2026)
+**Marketing/SEO:** homepage, privatkoech-liste, foodtrucks-liste, restaurants, kochevents, event-zubehoer, landingpage-hochzeit, blog (12 Artikel)
+**Neue Seiten:** event-planen (Buchungsformular), anbieter-profil-vorlage (Demo Koch-Profil), foodtruck-standorte (Karte mit Suche)
+**Anbieter-Info:** anbieter-vorteile, anbieter-funktionen, anbieter-onboarding, preise, affiliate-programm
+**Rechtliches:** impressum, datenschutz, agb
+**Sonstiges:** coming-soon, anbieter-checkliste-druck, index (Redirect), einkaufszettel, app
+**Tools:** cookie-banner.js, i18n.js (9 Sprachen), robots.txt, sitemap.xml, manifest.json, service-worker.js
+
+## Freemium Preismodell
+| Plan | Monatlich | Provision | Zielgruppe |
+|------|-----------|-----------|------------|
+| Kostenlos (Kunde) | 0 € | 0 % | Kunden – immer kostenlos |
+| Starter (Anbieter) | 0 € | 6 % | Neue Anbieter zum Ausprobieren |
+| Pro (Anbieter) | 10 € | 3 % | Professionelle Anbieter |
 
 ## Wichtige Designvorgaben
 - Farben: Gold `#C8922A`, Dark `#1A1208`, Cream `#F5F0E8`
 - Fonts: Fraunces (Serif, Headlines) + DM Sans (Body)
 - Sprache: Immer Deutsch
+- Hero-Bild: logo.png (Koch-Cartoon mit "mein-Partyretter") – Alexander's Hauptlogo, NICHT ändern!
+
+## Wichtige Entscheidungen
+- **Kein Google:** Kein Google OAuth, kein Google Maps. Login nur per E-Mail + Passwort. Karten mit Leaflet/OpenStreetMap/Nominatim.
+- **Sofort committen:** Nach JEDER Änderung sofort git add + commit + push. OneDrive kann Dateien zurücksetzen.
+- **i18n.js prüfen:** Die Übersetzungsdatei überschreibt HTML-Texte zur Laufzeit. Bei Text-Änderungen IMMER auch i18n.js updaten.
 
 ## Hinweise
 - Antworte Alexander immer auf Deutsch
