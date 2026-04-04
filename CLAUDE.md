@@ -4,7 +4,7 @@
 Partyretter ist eine deutsche Eventplattform: Kunden finden dort Köche, Foodtrucks, Caterer und Entertainment für ihre Events. Anbieter erstellen Profile und bieten ihre Leistungen an. Kunden buchen direkt über die Plattform.
 
 ## Ziel
-Die Plattform fehlerfrei fertigstellen, stabil zum Laufen bringen und sauber in Bubble einbinden. Die Architektur soll erweiterbar sein und später mehrere Sprachen unterstützen.
+Die Plattform fehlerfrei fertigstellen, stabil zum Laufen bringen. Die Architektur soll erweiterbar sein und später mehrere Sprachen unterstützen.
 
 ## Tech-Stack
 
@@ -16,10 +16,12 @@ Die Plattform fehlerfrei fertigstellen, stabil zum Laufen bringen und sauber in 
 - **Lokaler Ordner:** `01_Homepage_App/` (20 Marketing-Seiten + coming-soon.html)
 
 ### App-Plattform (in Entwicklung)
-- **Bubble.io** – echte Datenbank, Login, Buchungen, Bezahlung
-- Alexander hat bereits viel in Bubble gebaut
-- 31 HTML-Seiten als Design-Vorlagen gesichert in `_ZUM_LÖSCHEN/Bubble_Vorlagen/`
-- Dashboards, Checkout, Nachrichten, Profile etc. gehören in Bubble (nicht statisches HTML)
+- **Replit** – echte Datenbank (PostgreSQL), Login, Buchungen, Bezahlung
+- **Replit-Projekt:** replit.com/@mcmo600/German-Chat
+- **Replit-Dev-URL:** 8a49cfe0-0778-46b6-a6c5-2f8b1988447b-00-32ssl52897fio.worf.replit.dev
+- **Custom Domain (geplant):** app.partyretter.com → DNS noch einzutragen bei united-domains (A: 34.111.179.208, TXT: replit-verify=8a49cfe0-0778-46b6-a6c5-2f8b1988447b)
+- Dashboards, Checkout, Nachrichten, Profile etc. laufen in Replit
+- partyretter.com (index.html) leitet direkt auf app.partyretter.com weiter
 
 ### Seitenstruktur auf Vercel (Stand 19.03.2026)
 **Marketing/SEO:** homepage, privatkoech-liste, foodtrucks-liste, restaurants, kochevents, event-zubehoer, landingpage-hochzeit, blog
@@ -61,7 +63,7 @@ Vercel deployed automatisch nach jedem Push.
 - [x] Design: Hero-Bereich mit Logo, zentrierter Content
 
 ## Erledigte Aufgaben (20.03.2026)
-- [x] Bubble-App deployed unter app.partyretter.com (DNS A-Records, TLS/HTTPS)
+- [x] Replit-App deployed unter app.partyretter.com (DNS A-Records, TLS/HTTPS)
 - [x] Login-Seite: Fullwidth (1440px), Google-Anmeldung sichtbar
 - [x] Registrierung: Einsatzgebiet → Standort + Umkreis-Dropdown + Hinweistext
 - [x] Registrierung: Fullwidth (1440px, max-width:100%)
@@ -75,16 +77,16 @@ Vercel deployed automatisch nach jedem Push.
 - [x] _ZUM_LÖSCHEN Ordner: bereits in .gitignore, nicht im Repo
 
 ## Erledigte Aufgaben (21.03.2026)
-- [x] Bubble: Alle Seiten live getestet (14 Seiten geprüft)
-- [x] Bubble: Kunden-Dashboard Header "MeinPartyRetter" → "Partyretter"
-- [x] Bubble: Login Header "Mein Party Retter" → "Partyretter"
-- [x] Bubble: Registrierung "Alle Seiten" Debug-Button entfernt
-- [x] Bubble: Registrierung 24 kaputte .html Links → Bubble-Routen
-- [x] Bubble: Kunden-Dashboard 9 kaputte .html Links → Bubble-Routen
-- [x] Bubble: Datenschutz Adresse korrigiert (McMo/Musterstraße → Moser/Ulmer Str. 45)
-- [x] Bubble: AGB Platzhalter ausgefüllt ([Anschrift], [E-Mail], [Link])
-- [x] Bubble: Registrierung Details-Schritt entfernt (Wizard: 4→3 Schritte)
-- [x] Bubble: 3x erfolgreich deployed
+- [x] Replit: Alle Seiten live getestet (14 Seiten geprüft)
+- [x] Replit: Kunden-Dashboard Header "MeinPartyRetter" → "Partyretter"
+- [x] Replit: Login Header "Mein Party Retter" → "Partyretter"
+- [x] Replit: Registrierung Debug-Button entfernt
+- [x] Replit: Registrierung 24 kaputte .html Links → App-Routen
+- [x] Replit: Kunden-Dashboard 9 kaputte .html Links → App-Routen
+- [x] Replit: Datenschutz Adresse korrigiert (McMo/Musterstraße → Moser/Ulmer Str. 45)
+- [x] Replit: AGB Platzhalter ausgefüllt ([Anschrift], [E-Mail], [Link])
+- [x] Replit: Registrierung Details-Schritt entfernt (Wizard: 4→3 Schritte)
+- [x] Replit: 3x erfolgreich deployed
 - [x] Vercel: "Restaurants" → "Locations" auf allen Seiten umbenannt
 - [x] Vercel: Homepage Fake-Statistiken entfernt, Hero-Kontrast verbessert
 - [x] Vercel: "Partyretter werden" Tab-Text Farbe gefixt (war unsichtbar)
@@ -106,9 +108,9 @@ Vercel deployed automatisch nach jedem Push.
 - [x] Preise-Seite komplett überarbeitet (Tabs, Dashboard-Previews, FAQ, Buchhaltungs-Tools)
 - [x] Homepage Preise an Freemium-Modell angeglichen (Starter 0€/6%, Pro 10€/3%)
 - [x] Nav-Button "Inserat erstellen" → "Event ausschreiben" auf 30 Seiten
-- [x] Bubble: Registrierung 4→2 Rollen (Kunde + Anbieter), Passwort-Toggle
-- [x] Bubble: Login + Registrierung Logo gefixt (kaputte Bilder → Text-Logos)
-- [x] Bubble: Logo-Spacing gefixt (CSS flex/gap entfernt), 3x deployed
+- [x] Replit: Registrierung 4→2 Rollen (Kunde + Anbieter), Passwort-Toggle
+- [x] Replit: Login + Registrierung Logo gefixt (kaputte Bilder → Text-Logos)
+- [x] Replit: Logo-Spacing gefixt (CSS flex/gap entfernt), 3x deployed
 - [x] i18n.js komplett bereinigt (Fake-Zahlen, alte Texte überschrieben HTML)
 - [x] 28 uncommittete Dateien committed (Home-Links, Datenschutz, Platzhalter)
 
@@ -119,7 +121,7 @@ Vercel deployed automatisch nach jedem Push.
 - [x] Datenschutz: 3 Platzhalter ausgefüllt (Datenschutzbeauftragter, Stripe, Vercel/Bubble)
 - [x] Foodtruck-Standorte: Komplett überarbeitet (Autocomplete, GPS, Kategorie-Filter, 16 Trucks)
 - [x] Mobile Responsive: 30 Seiten mit Hamburger-Menü, responsive Grids, mobile CSS
-- [x] Stripe Account eingerichtet + Test-API-Keys in Bubble eingetragen
+- [x] Stripe Account eingerichtet + Test-API-Keys in Replit eingetragen
 - [x] SendGrid Account eingerichtet + DNS-Einträge bei united-domains
 - [x] E-Mail info@partyretter.com eingerichtet (united-domains Mail M, 1,25€/Monat)
 
@@ -137,23 +139,45 @@ Vercel deployed automatisch nach jedem Push.
 - [x] coming-soon.html verbessert (Feature-Previews statt leerer Platzhalter)
 - [x] Entscheidung: Kein Google OAuth, kein Google Maps (alles ohne Google)
 
+## Erledigte Aufgaben (04.04.2026)
+- [x] DNS: app.partyretter.com bereits korrekt eingetragen (A: 34.111.179.208, TXT: replit-verify) – war schon aktiv ✅
+- [x] Zoho: Account vollständig gekündigt (spart 12,85 €/Monat) ✅
+- [x] Zoho DNS-Records entfernt (zoho-verification TXT, zmail._domainkey TXT, include:zoho.eu aus SPF) ✅
+- [x] DMARC: p=none bereits korrekt gesetzt ✅
+- [x] Google OAuth: Projekt "Partyretter" in Google Cloud angelegt, OAuth-Client erstellt (Client-ID + Secret in REPLIT_GOOGLE_OAUTH.md) ✅
+- [x] Netlify: Account gelöscht ✅
+
 ## Offene Aufgaben
-- [ ] Bubble: NAVIGATION-Sektion im Kunden-Dashboard Sidebar entfernen
-- [ ] Bubble: Hero-Bild auf Index zeigt noch "mein-Partyretter" (Bilddatei austauschen)
-- [ ] Bubble: Anbieterprofil-Seite 404 prüfen
-- [ ] Bubble: Anbieter-Profil bauen (Fotos, Menüs, Zutaten, Preise)
-- [ ] Bubble: Buchungs-Workflow (Anfrage → Angebot → Buchung → Zahlung)
-- [ ] Bubble: Nachrichtensystem (Kunde ↔ Anbieter)
-- [ ] Bubble: Bewertungssystem nach Event
-- [ ] Stripe: Unternehmen verifizieren (Alexander – braucht Gewerbe)
-- [ ] Stripe: Live-Keys eintragen (nach Verifizierung)
-- [ ] Stripe Connect für Anbieter-Auszahlungen
-- [ ] SendGrid: DMARC-Eintrag fixen (p=keine → p=none bei united-domains)
-- [ ] SendGrid: API-Key in Bubble eintragen
+
+### Replit (Agent baut gerade)
+- [ ] Replit: Foto-Upload UI ins Bewertungsformular (T003) – läuft gerade 🔄
+- [ ] Replit: Mobile Layouts fixen (Hero, "Zwei Wege", Footer, Anbieter-Karten) (T004) – läuft gerade 🔄
+- [ ] Replit: "Wie funktioniert's"-Sektion + Vertrauens-Indikatoren auf Homepage – läuft gerade 🔄
+- [ ] Replit: Deutsch als Standard-Sprache setzen – läuft gerade 🔄
+- [ ] Replit: Doppelter /api/-Bug im Foodtruck-Formular fixen (PATCH /api/api/ → PATCH /api/)
+- [ ] Replit: NAVIGATION-Sektion im Kunden-Dashboard Sidebar entfernen
+- [ ] Replit: Anbieter-Profil bauen (Fotos, Menüs, Zutaten, Preise)
+- [ ] Replit: Buchungs-Workflow (Anfrage → Angebot → Buchung → Zahlung)
+- [ ] Replit: Nachrichtensystem (Kunde ↔ Anbieter)
+- [ ] Replit: Bewertungssystem nach Event
+- [ ] SendGrid: API-Key in Replit Secrets eintragen
 - [ ] SendGrid: E-Mail-Templates bauen
+
+### Google
+- [x] Google OAuth Credentials erstellt (Client-ID + Secret gesichert in REPLIT_GOOGLE_OAUTH.md)
+- [ ] Replit: Google OAuth implementieren – vollständige Anleitung in REPLIT_GOOGLE_OAUTH.md
+- [ ] Google Cloud: App auf "Produktion" verifizieren (nach Go-Live, wenn echte Nutzer sich anmelden sollen)
 - [ ] Google Search Console verifizieren (Alexander manuell)
-- [ ] Alten GitHub-Token auf github.com löschen (Alexander manuell)
-- [ ] Netlify kündigen (Alexander manuell)
+
+### Stripe (wartet auf Gewerbe)
+- [ ] Stripe: Unternehmen verifizieren (Alexander – braucht Gewerbe)
+- [ ] Stripe: Live-Keys in Replit Secrets eintragen (nach Verifizierung)
+- [ ] Stripe Connect für Anbieter-Auszahlungen
+
+### Alexander manuell
+- [ ] Alten GitHub-Token auf github.com löschen
+- [x] Netlify kündigen ✅
+- [ ] index.html Redirect zu app.partyretter.com → git push ausführen
 
 ## Accounts & Kosten
 | Posten | Anbieter | Kosten | Status |
@@ -161,16 +185,16 @@ Vercel deployed automatisch nach jedem Push.
 | Domain | united-domains | ~15 €/Jahr | ✅ Aktiv |
 | E-Mail Mail M | united-domains | 1,25 €/Monat | ✅ info@partyretter.com, Webmail: ud-mail.de |
 | Website Hosting | Vercel | 0 € (Free) | ✅ Auto-Deploy bei git push |
-| App Hosting | Bubble.io | 0 € (Starter) | ✅ app.partyretter.com |
-| Zahlungen | Stripe | 1,5% + 0,25€ pro Zahlung | ✅ Test-Keys in Bubble (acct_1TE979EPsvkBS2MP) |
+| App Hosting | Replit | 0 € (Free) | ✅ app.partyretter.com (DNS-Einträge noch ausstehend) |
+| Zahlungen | Stripe | 1,5% + 0,25€ pro Zahlung | ✅ Test-Keys in Replit (acct_1TE979EPsvkBS2MP) |
 | E-Mail-Versand | SendGrid | 0 € (Free, 100/Tag) | ✅ DNS verifiziert, Testphase bis 22.05.2026 |
 | Marke DPMA | DPMA | 290 € einmalig | ✅ Angemeldet 17.03.2026 |
 
-## Account-Details (für Bubble-Integration)
-- **Stripe:** Test-Keys bereits in Bubble Plugin eingetragen (Entwicklung). Live-Keys nach Gewerbe-Verifizierung.
+## Account-Details (für Replit-Integration)
+- **Stripe:** Test-Keys bereits in Replit Secrets eingetragen (Entwicklung). Live-Keys nach Gewerbe-Verifizierung.
 - **SendGrid:** DNS-Records (5x CNAME + 1x TXT _dmarc) bei united-domains eingetragen. DMARC noch fixen: p=keine → p=none
 - **E-Mail:** info@partyretter.com → Postfach bei united-domains (Mail M, 10 Postfächer, 5 GB). Weiterleitung an mc600@outlook.de aktiv.
-- **Bubble:** Editor: bubble.io/page?id=mcmo600 – HTML-Elemente als iFrames, Textarea-Editing via JS
+- **Replit:** replit.com/@mcmo600/German-Chat – React + PostgreSQL App. Dev-URL: 8a49cfe0-0778-46b6-a6c5-2f8b1988447b-00-32ssl52897fio.worf.replit.dev
 
 ## Seitenstruktur (Stand 25.03.2026)
 **Marketing/SEO:** homepage, privatkoech-liste, foodtrucks-liste, restaurants, kochevents, event-zubehoer, landingpage-hochzeit, blog (12 Artikel)
@@ -194,7 +218,8 @@ Vercel deployed automatisch nach jedem Push.
 - Hero-Bild: logo.png (Koch-Cartoon mit "mein-Partyretter") – Alexander's Hauptlogo, NICHT ändern!
 
 ## Wichtige Entscheidungen
-- **Kein Google:** Kein Google OAuth, kein Google Maps. Login nur per E-Mail + Passwort. Karten mit Leaflet/OpenStreetMap/Nominatim.
+- **Kein Google Maps:** Karten mit Leaflet/OpenStreetMap/Nominatim (Google Maps zu teuer).
+- **Google OAuth:** Kostenlos – noch nicht eingerichtet, für später geplant. Login aktuell nur per E-Mail + Passwort.
 - **Sofort committen:** Nach JEDER Änderung sofort git add + commit + push. OneDrive kann Dateien zurücksetzen.
 - **i18n.js prüfen:** Die Übersetzungsdatei überschreibt HTML-Texte zur Laufzeit. Bei Text-Änderungen IMMER auch i18n.js updaten.
 
