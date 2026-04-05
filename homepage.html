@@ -656,7 +656,7 @@
   <div class="nav-actions">
     <div id="lang-switcher" style="position:relative;"></div>
     <a class="btn-login" href="https://app.partyretter.com/login" data-i18n="nav_login">Anmelden</a>
-    <a class="btn-cta-nav" href="https://app.partyretter.com/registrierung" data-i18n="nav_cta">Event ausschreiben</a>
+    <a class="btn-cta-nav" href="https://app.partyretter.com/registrieren" data-i18n="nav_cta">Event ausschreiben</a>
     <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menü">
       <span></span><span></span><span></span>
     </button>
@@ -668,7 +668,7 @@
   <a href="blog.html">Blog</a>
   <a href="anbieter-onboarding.html">Partyretter werden</a>
   <a href="https://app.partyretter.com/login">Anmelden</a>
-  <a class="mobile-cta" href="https://app.partyretter.com/registrierung">Event ausschreiben</a>
+  <a class="mobile-cta" href="https://app.partyretter.com/registrieren">Event ausschreiben</a>
 </div>
 
 <!-- ═══════════════ HERO ═══════════════ -->
@@ -733,7 +733,7 @@
 
     <!-- KATEGORIE SIDEBAR -->
     <div class="kat-sidebar">
-      <div class="kat-sidebar-title">Kategorien <a href="coming-soon.html">Alle anzeigen</a></div>
+      <div class="kat-sidebar-title">Kategorien <a href="https://app.partyretter.com/search">Alle anzeigen</a></div>
 
       <div class="kat-group">
         <a href="privatkoech-liste.html" class="kat-main active">👨‍🍳 Köche & Catering</a>
@@ -973,7 +973,7 @@ function doSearch() {
   if (radius && radius !== '0') params.set('radius', radius);
   if (when)              params.set('wann', when);
   const qs = params.toString();
-  window.location = 'coming-soon.html' + (qs ? '?' + qs : '');
+  window.location = 'https://app.partyretter.com/search' + (qs ? '?' + qs : '');
 }
 
 /* ── GESPEICHERTE SUCHEN ── */
@@ -1163,9 +1163,9 @@ document.addEventListener('DOMContentLoaded', renderSaved);
       <h4 data-i18n="footer_h_providers">Für Anbieter</h4>
       <ul>
         <li><a href="anbieter-onboarding.html">Als Anbieter starten</a></li>
-        <li><a href="https://app.partyretter.com/registrierung">Profil erstellen</a></li>
+        <li><a href="https://app.partyretter.com/registrieren">Profil erstellen</a></li>
         <li><a href="anbieter-vorteile.html">Vorteile Partyretter</a></li>
-        <li><a href="https://app.partyretter.com/registrierung">Jetzt registrieren</a></li>
+        <li><a href="https://app.partyretter.com/registrieren">Jetzt registrieren</a></li>
         <li><a href="coming-soon.html">📢 Werbung schalten</a></li>
       </ul>
     </div>
