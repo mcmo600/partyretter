@@ -143,22 +143,23 @@
     flex-wrap: wrap;
   }
   .type-btn {
-    padding: 14px 24px;
+    padding: 12px 16px;
     border: 2px solid rgba(200,146,42,0.35);
     border-radius: 12px;
     background: rgba(245,240,232,0.05);
     color: var(--cream);
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     font-weight: 600;
     transition: all 0.2s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    min-width: 130px;
+    gap: 5px;
+    min-width: 110px;
     text-align: center;
+    flex: 0 0 auto;
   }
   .type-btn:hover {
     border-color: var(--gold);
@@ -791,8 +792,8 @@
     .steps-grid { grid-template-columns: 1fr; }
     .step-card::after { display: none; }
     .earnings-grid { grid-template-columns: 1fr; }
-    .type-selector { flex-direction: column; align-items: center; }
-    .type-btn { width: 100%; max-width: 200px; }
+    .type-selector { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 0 16px 8px; -webkit-overflow-scrolling: touch; }
+    .type-btn { min-width: 100px; max-width: 120px; }
   }
 </style>
 </head>
@@ -850,6 +851,21 @@
       <span class="type-icon">🍹</span>
       <strong>Getränke &<br>Bar-Service</strong>
       <span class="type-sub">Drinks & Cocktails</span>
+    </button>
+    <button class="type-btn" onclick="showType('kuchen')">
+      <span class="type-icon">🎂</span>
+      <strong>Kuchen &<br>Torten</strong>
+      <span class="type-sub">Süßes & Gebäck</span>
+    </button>
+    <button class="type-btn" onclick="showType('zubehoer')">
+      <span class="type-icon">🎪</span>
+      <strong>Event<br>Zubehör</strong>
+      <span class="type-sub">Deko & Equipment</span>
+    </button>
+    <button class="type-btn" onclick="showType('service')">
+      <span class="type-icon">🤵</span>
+      <strong>Service &<br>Personal</strong>
+      <span class="type-sub">Helfer & Profis</span>
     </button>
   </div>
 </div>
@@ -1723,6 +1739,278 @@
     </div>
   </div>
 
+  <!-- ===================== KUCHEN & TORTEN ===================== -->
+  <div id="type-kuchen" class="content-section">
+
+    <div class="intro-bar">
+      <div class="intro-icon">🎂</div>
+      <div class="intro-text">
+        <h2>Kuchen & Torten</h2>
+        <p>Du zauberst Hochzeitstorten, Geburtstagskuchen oder süße Buffets? Zeig dein Können auf Partyretter und werde für Events in deiner Region gebucht.</p>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Konto erstellen und Anbietertyp „Kuchen & Torten" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Portfolio aufbauen</h4>
+        <p>Fotos deiner Torten, Preise und Spezialitäten hinzufügen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Dokumente hochladen</h4>
+        <p>Gewerbeschein und Hygienebelege verifizieren lassen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Bestellungen annehmen</h4>
+        <p>Profil veröffentlichen und Anfragen erhalten</p>
+      </div>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+
+    <div style="background:rgba(200,146,42,0.1);border:1.5px solid rgba(200,146,42,0.35);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">ℹ️</span>
+      <div>
+        <strong style="font-size:13.5px;color:var(--dark);">Hinweis: Informationen ohne Gewähr</strong>
+        <p style="font-size:12.5px;color:#999;margin-top:4px;line-height:1.6;">Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß unseren <a href="agb.html" style="color:var(--gold);font-weight:600;">AGB</a> selbst dafür verantwortlich, alle geltenden gesetzlichen Vorschriften einzuhalten. Partyretter übernimmt keine Haftung.</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="leg-dot" style="background:#fdecea; border: 1.5px solid #c0392b;"></div> Pflicht (ohne geht es nicht)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#e8f5ee; border: 1.5px solid #2d7a3e;"></div> Empfohlen (stärkt dein Profil)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:var(--cream2); border: 1.5px solid #bbb;"></div> Optional</div>
+    </div>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📜</div>
+        <div class="req-header-text">
+          <h3>Behördliche Anforderungen</h3>
+          <p>Gesetzlich vorgeschriebene Nachweise</p>
+        </div>
+        <span class="req-badge pflicht">Pflicht</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item"><span class="req-status pflicht"></span><strong>Gewerbeanmeldung</strong> – Als Konditor/Bäcker brauchst du einen Gewerbeschein</div>
+        <div class="req-item"><span class="req-status pflicht"></span><strong>Gesundheitszeugnis (§43 IfSG)</strong> – Belehrung vom Gesundheitsamt, gültig und aktuell</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Lebensmittelhygiene-Schulung</strong> – HACCP-Grundlagen, besonders bei Sahne- und Cremetorten</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Allergenkennzeichnung</strong> – Pflicht bei Verkauf: 14 Hauptallergene korrekt angeben</div>
+        <div class="req-item"><span class="req-status optional"></span><strong>Meisterbrief / Konditorausbildung</strong> – Nicht Pflicht, aber starkes Vertrauenssignal</div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">💼</div>
+        <div class="req-header-text">
+          <h3>Versicherungen</h3>
+          <p>Empfohlene Absicherungen</p>
+        </div>
+        <span class="req-badge empfohlen">Empfohlen</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Betriebshaftpflicht</strong> – Schützt bei Sachschäden oder Gesundheitsproblemen durch deine Produkte</div>
+        <div class="req-item"><span class="req-status optional"></span><strong>Produkthaftpflicht</strong> – Speziell für Lebensmittelprodukte empfehlenswert</div>
+      </div>
+    </div>
+
+    <a href="event-planen.html" style="display:block;text-align:center;padding:11px;background:var(--gold);color:var(--dark);border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='#C8922A'">🎂 Jetzt als Konditor starten →</a>
+
+  </div>
+
+  <!-- ===================== EVENT ZUBEHÖR ===================== -->
+  <div id="type-zubehoer" class="content-section">
+
+    <div class="intro-bar">
+      <div class="intro-icon">🎪</div>
+      <div class="intro-text">
+        <h2>Event Zubehör</h2>
+        <p>Du vermietest Fotoboxen, Hüpfburgen, Licht- & Tontechnik oder Deko? Biete dein Equipment auf Partyretter an und werde für Events gebucht.</p>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Konto erstellen und Anbietertyp „Event Zubehör" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Equipment listen</h4>
+        <p>Fotos, Beschreibungen und Mietpreise deiner Produkte eintragen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Liefergebiet festlegen</h4>
+        <p>Einsatzradius und Lieferbedingungen angeben</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Buchungen erhalten</h4>
+        <p>Profil veröffentlichen und Anfragen annehmen</p>
+      </div>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+
+    <div style="background:rgba(200,146,42,0.1);border:1.5px solid rgba(200,146,42,0.35);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">ℹ️</span>
+      <div>
+        <strong style="font-size:13.5px;color:var(--dark);">Hinweis: Informationen ohne Gewähr</strong>
+        <p style="font-size:12.5px;color:#999;margin-top:4px;line-height:1.6;">Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß unseren <a href="agb.html" style="color:var(--gold);font-weight:600;">AGB</a> selbst dafür verantwortlich, alle geltenden gesetzlichen Vorschriften einzuhalten. Partyretter übernimmt keine Haftung.</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="leg-dot" style="background:#fdecea; border: 1.5px solid #c0392b;"></div> Pflicht (ohne geht es nicht)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#e8f5ee; border: 1.5px solid #2d7a3e;"></div> Empfohlen (stärkt dein Profil)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:var(--cream2); border: 1.5px solid #bbb;"></div> Optional</div>
+    </div>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📜</div>
+        <div class="req-header-text">
+          <h3>Behördliche Anforderungen</h3>
+          <p>Gesetzlich vorgeschriebene Nachweise</p>
+        </div>
+        <span class="req-badge pflicht">Pflicht</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item"><span class="req-status pflicht"></span><strong>Gewerbeanmeldung</strong> – Für gewerbliche Vermietung benötigst du einen Gewerbeschein</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>TÜV / Sicherheitsprüfung</strong> – Für Hüpfburgen, Bühnen und elektrische Geräte empfohlen</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>CE-Kennzeichnung</strong> – Bei elektrischen Geräten (Licht, Ton) nachweisen</div>
+        <div class="req-item"><span class="req-status optional"></span><strong>Aufbau-/Sicherheitsanleitung</strong> – Für Kunden zum sicheren Umgang mit deinem Equipment</div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">💼</div>
+        <div class="req-header-text">
+          <h3>Versicherungen</h3>
+          <p>Empfohlene Absicherungen</p>
+        </div>
+        <span class="req-badge empfohlen">Empfohlen</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Betriebshaftpflicht</strong> – Unverzichtbar bei Vermietung an Dritte</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Sachversicherung</strong> – Schützt dein Equipment bei Transport und Einsatz</div>
+      </div>
+    </div>
+
+    <a href="event-planen.html" style="display:block;text-align:center;padding:11px;background:var(--gold);color:var(--dark);border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='#C8922A'">🎪 Jetzt als Zubehör-Anbieter starten →</a>
+
+  </div>
+
+  <!-- ===================== SERVICE & PERSONAL ===================== -->
+  <div id="type-service" class="content-section">
+
+    <div class="intro-bar">
+      <div class="intro-icon">🤵</div>
+      <div class="intro-text">
+        <h2>Service & Personal</h2>
+        <p>Du bist Servicekraft, Barkeeper oder Eventmanager? Biete deine Dienste auf Partyretter an und werde direkt für Events gebucht.</p>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Registrieren</h4>
+        <p>Konto erstellen und Anbietertyp „Service & Personal" wählen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Profil erstellen</h4>
+        <p>Erfahrung, Qualifikationen und Verfügbarkeit angeben</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Referenzen hinzufügen</h4>
+        <p>Bisherige Events und Empfehlungen zeigen</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Aufträge erhalten</h4>
+        <p>Profil veröffentlichen und für Events gebucht werden</p>
+      </div>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <h2 style="font-family:'Fraunces',serif; font-weight:700; margin-bottom:14px; font-size:1.2rem;">📋 Was du benötigst</h2>
+
+    <div style="background:rgba(200,146,42,0.1);border:1.5px solid rgba(200,146,42,0.35);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">ℹ️</span>
+      <div>
+        <strong style="font-size:13.5px;color:var(--dark);">Hinweis: Informationen ohne Gewähr</strong>
+        <p style="font-size:12.5px;color:#999;margin-top:4px;line-height:1.6;">Diese Übersicht dient nur zur Orientierung und erhebt keinen Anspruch auf Vollständigkeit oder Rechtssicherheit. Jeder Anbieter ist gemäß unseren <a href="agb.html" style="color:var(--gold);font-weight:600;">AGB</a> selbst dafür verantwortlich, alle geltenden gesetzlichen Vorschriften einzuhalten. Partyretter übernimmt keine Haftung.</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="leg-dot" style="background:#fdecea; border: 1.5px solid #c0392b;"></div> Pflicht (ohne geht es nicht)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#e8f5ee; border: 1.5px solid #2d7a3e;"></div> Empfohlen (stärkt dein Profil)</div>
+      <div class="legend-item"><div class="leg-dot" style="background:var(--cream2); border: 1.5px solid #bbb;"></div> Optional</div>
+    </div>
+
+    <div class="req-card open">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">📜</div>
+        <div class="req-header-text">
+          <h3>Anforderungen</h3>
+          <p>Je nach Einsatzbereich unterschiedlich</p>
+        </div>
+        <span class="req-badge pflicht">Pflicht</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item"><span class="req-status pflicht"></span><strong>Gewerbeanmeldung oder Minijob-Nachweis</strong> – Je nach Beschäftigungsform</div>
+        <div class="req-item"><span class="req-status pflicht"></span><strong>Gesundheitszeugnis (§43 IfSG)</strong> – Pflicht wenn du mit Lebensmitteln in Kontakt kommst (Servicekraft, Barkeeper)</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Erste-Hilfe-Kurs</strong> – Bei größeren Events ein Plus</div>
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Barkeeper-Zertifikat / IHK-Nachweis</strong> – Für Barkeeper und Eventmanager ein starkes Signal</div>
+        <div class="req-item"><span class="req-status optional"></span><strong>Führungszeugnis</strong> – Bei Events mit Kindern oder in sensiblen Bereichen</div>
+      </div>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header" onclick="toggleReq(this)">
+        <div class="req-header-icon">💼</div>
+        <div class="req-header-text">
+          <h3>Versicherungen</h3>
+          <p>Empfohlene Absicherungen</p>
+        </div>
+        <span class="req-badge empfohlen">Empfohlen</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="req-body">
+        <div class="req-item"><span class="req-status empfohlen"></span><strong>Berufshaftpflicht</strong> – Schützt bei Schäden während des Einsatzes</div>
+        <div class="req-item"><span class="req-status optional"></span><strong>Unfallversicherung</strong> – Gerade für Freelancer empfehlenswert</div>
+      </div>
+    </div>
+
+    <a href="event-planen.html" style="display:block;text-align:center;padding:11px;background:var(--gold);color:var(--dark);border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#e0a430'" onmouseout="this.style.background='#C8922A'">🤵 Jetzt als Servicekraft starten →</a>
+
+  </div>
+
   <!-- COMMUNITY SECTION -->
   <section class="community-section">
     <div style="position:relative; text-align:center; max-width:800px; margin:0 auto;">
@@ -1841,7 +2129,7 @@
   function showType(type) {
     // Update buttons
     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-    const types = ['koch', 'foodtruck', 'lokal', 'getraenke'];
+    const types = ['koch', 'foodtruck', 'lokal', 'getraenke', 'kuchen', 'zubehoer', 'service'];
     const idx = types.indexOf(type);
     document.querySelectorAll('.type-btn')[idx]?.classList.add('active');
 
