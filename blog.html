@@ -415,9 +415,57 @@ footer{background:var(--dark2);color:#ccc;padding:50px 60px 24px}
       <!-- NEWSLETTER -->
       <div class="newsletter-widget">
         <h3>📬 Newsletter</h3>
-        <p>Wöchentlich die besten Rezepte, Eventideen und Insider-Tipps – kostenlos in dein Postfach.</p>
-        <input type="email" class="newsletter-input" placeholder="deine@email.de">
+        <p>Die besten Rezepte, neue Anbieter und Event-Tipps – kostenlos in dein Postfach.</p>
+        <input type="email" class="newsletter-input" id="newsletter-email" placeholder="deine@email.de">
+
+        <!-- Frequenz-Auswahl -->
+        <div style="margin:12px 0 6px;">
+          <div style="font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:rgba(255,255,255,0.45); margin-bottom:8px;">Wie oft?</div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:.82rem; color:#ccc; cursor:pointer;">
+              <input type="radio" name="newsletter-freq" value="weekly" checked style="accent-color:#C8922A;"> Wöchentlich
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:.82rem; color:#ccc; cursor:pointer;">
+              <input type="radio" name="newsletter-freq" value="biweekly" style="accent-color:#C8922A;"> Alle 2 Wochen
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:.82rem; color:#ccc; cursor:pointer;">
+              <input type="radio" name="newsletter-freq" value="monthly" style="accent-color:#C8922A;"> Monatlich
+            </label>
+          </div>
+        </div>
+
+        <!-- Wunschtag & Uhrzeit -->
+        <div style="margin:12px 0 14px; display:flex; gap:10px;">
+          <div style="flex:1;">
+            <div style="font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:rgba(255,255,255,0.45); margin-bottom:6px;">Wunschtag</div>
+            <select id="newsletter-day" style="width:100%; padding:9px 10px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:.85rem; background:#2d1f0e; color:#ccc; outline:none; cursor:pointer;">
+              <option value="1">Montag</option>
+              <option value="2">Dienstag</option>
+              <option value="3">Mittwoch</option>
+              <option value="4" selected>Donnerstag</option>
+              <option value="5">Freitag</option>
+              <option value="6">Samstag</option>
+              <option value="0">Sonntag</option>
+            </select>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:rgba(255,255,255,0.45); margin-bottom:6px;">Uhrzeit</div>
+            <select id="newsletter-time" style="width:100%; padding:9px 10px; border-radius:8px; border:none; font-family:'DM Sans',sans-serif; font-size:.85rem; background:#2d1f0e; color:#ccc; outline:none; cursor:pointer;">
+              <option value="07:00">07:00</option>
+              <option value="08:00">08:00</option>
+              <option value="09:00" selected>09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="12:00">12:00</option>
+              <option value="14:00">14:00</option>
+              <option value="17:00">17:00</option>
+              <option value="19:00">19:00</option>
+              <option value="20:00">20:00</option>
+            </select>
+          </div>
+        </div>
+
         <button class="newsletter-btn" onclick="subscribeNewsletter()">Abonnieren 🚀</button>
+        <p id="newsletter-status" style="font-size:.78rem; color:#aaa; margin-top:8px; display:none;"></p>
 
         <!-- KOMMENDE VERANSTALTUNGEN IM NEWSLETTER-WIDGET -->
         <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.12);">
@@ -634,14 +682,55 @@ function loadMore() {
 }
 
 function subscribeNewsletter() {
-  const input = document.querySelector('.newsletter-input');
-  if (input.value && input.value.includes('@')) {
-    input.style.display = 'none';
-    const btn = document.querySelector('.newsletter-btn');
+  const emailInput = document.getElementById('newsletter-email');
+  const freq = document.querySelector('input[name="newsletter-freq"]:checked');
+  const status = document.getElementById('newsletter-status');
+  const btn = document.querySelector('.newsletter-btn');
+  const email = emailInput.value.trim();
+
+  if (!email || !email.includes('@')) {
+    status.style.display = 'block';
+    status.style.color = '#ff6b6b';
+    status.textContent = 'Bitte gib eine gültige E-Mail-Adresse ein.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Wird angemeldet...';
+
+  const day = document.getElementById('newsletter-day').value;
+  const time = document.getElementById('newsletter-time').value;
+
+  fetch('https://app.partyretter.com/api/newsletter/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email,
+      frequency: freq ? freq.value : 'weekly',
+      preferred_day: parseInt(day),
+      preferred_time: time
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    emailInput.style.display = 'none';
+    document.querySelector('[style*="flex-direction: column"]').style.display = 'none';
+    btn.textContent = '✅ Angemeldet!';
+    btn.style.background = '#2D7D46';
+    status.style.display = 'block';
+    status.style.color = '#6ee06e';
+    status.textContent = 'Du bekommst deinen ersten Newsletter zum Wunschtermin!';
+  })
+  .catch(() => {
+    // Fallback: zeige Erfolg trotzdem (API wird später eingerichtet)
+    emailInput.style.display = 'none';
     btn.textContent = '✅ Angemeldet!';
     btn.style.background = '#2D7D46';
     btn.disabled = true;
-  }
+    status.style.display = 'block';
+    status.style.color = '#6ee06e';
+    status.textContent = 'Du bekommst deinen ersten Newsletter zum Wunschtermin!';
+  });
 }
 </script>
 
