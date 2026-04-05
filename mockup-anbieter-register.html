@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anbieter-Profil – Register-Mockup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #F5F0E8; min-height: 100vh; padding: 30px; }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  h1 { font-family: 'Fraunces', serif; font-size: 28px; color: #1A1208; margin-bottom: 8px; }
+  .subtitle { color: #8B7D6B; font-size: 15px; margin-bottom: 30px; }
+
+  /* Kategorie-Auswahl */
+  .kategorie-section { background: #fff; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .kategorie-section h2 { font-family: 'Fraunces', serif; font-size: 20px; color: #1A1208; margin-bottom: 16px; }
+  .kategorie-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .kategorie-chip {
+    padding: 10px 20px; border-radius: 30px; border: 2px solid #E0D5C3; background: #fff;
+    font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; color: #1A1208;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .kategorie-chip:hover { border-color: #C8922A; background: #FDF8F0; }
+  .kategorie-chip.active { border-color: #C8922A; background: #C8922A; color: #fff; }
+  .kategorie-chip .emoji { font-size: 18px; }
+
+  /* Gemeinsame Felder */
+  .common-section { background: #fff; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .common-section h2 { font-family: 'Fraunces', serif; font-size: 20px; color: #1A1208; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-group label { display: block; font-weight: 600; font-size: 14px; color: #1A1208; margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px 16px; border: 2px solid #E0D5C3; border-radius: 10px;
+    font-size: 15px; font-family: 'DM Sans', sans-serif; background: #FAFAF7; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: #C8922A; outline: none; background: #fff; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  /* REGISTER / TABS – OneNote Style */
+  .register-container { margin-bottom: 24px; }
+
+  .register-tabs {
+    display: flex; gap: 0; position: relative; z-index: 2;
+  }
+  .register-tab {
+    padding: 14px 24px; font-size: 15px; font-weight: 600; cursor: pointer;
+    border: 2px solid #E0D5C3; border-bottom: none;
+    border-radius: 12px 12px 0 0; background: #F0EBE1; color: #8B7D6B;
+    transition: all 0.2s; position: relative; margin-right: -1px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .register-tab:hover { background: #F5F0E8; color: #1A1208; }
+  .register-tab.active {
+    background: #fff; color: #C8922A; border-color: #C8922A;
+    z-index: 3; border-bottom: 2px solid #fff; margin-bottom: -2px;
+  }
+  .register-tab .tab-emoji { font-size: 18px; }
+  .register-tab .tab-close {
+    margin-left: 6px; font-size: 12px; color: #C8922A; opacity: 0.5;
+    cursor: pointer; width: 18px; height: 18px; display: flex;
+    align-items: center; justify-content: center; border-radius: 50%;
+  }
+  .register-tab .tab-close:hover { opacity: 1; background: rgba(200,146,42,0.1); }
+
+  .register-content {
+    background: #fff; border: 2px solid #C8922A; border-radius: 0 16px 16px 16px;
+    padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative; z-index: 1;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .tab-panel h3 { font-family: 'Fraunces', serif; font-size: 18px; color: #1A1208; margin-bottom: 6px; }
+  .tab-panel .tab-desc { color: #8B7D6B; font-size: 14px; margin-bottom: 20px; }
+
+  /* Spezialfelder Styling */
+  .field-group { margin-bottom: 20px; }
+  .field-group label { display: block; font-weight: 600; font-size: 14px; color: #1A1208; margin-bottom: 6px; }
+  .field-group input, .field-group select, .field-group textarea {
+    width: 100%; padding: 12px 16px; border: 2px solid #E0D5C3; border-radius: 10px;
+    font-size: 15px; font-family: 'DM Sans', sans-serif; background: #FAFAF7;
+  }
+  .field-group input:focus, .field-group textarea:focus { border-color: #C8922A; outline: none; background: #fff; }
+
+  .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+    border: 1px solid #E0D5C3; border-radius: 8px; font-size: 14px; cursor: pointer;
+  }
+  .checkbox-item:hover { background: #FDF8F0; }
+  .checkbox-item input[type="checkbox"] { accent-color: #C8922A; width: 18px; height: 18px; }
+
+  .inline-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .toggle-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border: 1px solid #E0D5C3; border-radius: 10px; margin-bottom: 8px;
+  }
+  .toggle-row span { font-size: 14px; font-weight: 500; }
+  .toggle {
+    width: 48px; height: 26px; border-radius: 13px; background: #E0D5C3;
+    position: relative; cursor: pointer; transition: background 0.2s;
+  }
+  .toggle.on { background: #C8922A; }
+  .toggle::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 20px; height: 20px; border-radius: 50%; background: #fff;
+    transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on::after { transform: translateX(22px); }
+
+  /* Hinweis-Box */
+  .hint-box {
+    background: #FDF8F0; border-left: 4px solid #C8922A; padding: 14px 18px;
+    border-radius: 0 10px 10px 0; margin-bottom: 20px;
+    font-size: 14px; color: #5C4E3C; line-height: 1.5;
+  }
+  .hint-box strong { color: #C8922A; }
+
+  /* Übernahme-Banner */
+  .sync-banner {
+    background: linear-gradient(135deg, #FDF8F0, #F5F0E8); border: 1px dashed #C8922A;
+    border-radius: 10px; padding: 12px 18px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px; font-size: 13px; color: #8B7D6B;
+  }
+  .sync-banner .sync-icon { font-size: 18px; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .register-tabs { flex-direction: row; overflow-x: auto; }
+    .register-tab { padding: 10px 16px; font-size: 13px; white-space: nowrap; }
+    .form-row, .inline-row, .checkbox-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Profil bearbeiten</h1>
+  <p class="subtitle">Erstelle dein Anbieter-Profil und werde von Kunden gefunden.</p>
+
+  <!-- KATEGORIE AUSWAHL -->
+  <div class="kategorie-section">
+    <h2>Was bietest du an?</h2>
+    <div class="kategorie-chips">
+      <div class="kategorie-chip active" onclick="toggleKategorie(this, 'privatkoch')">
+        <span class="emoji">👨‍🍳</span> Privatkoch
+      </div>
+      <div class="kategorie-chip active" onclick="toggleKategorie(this, 'foodtruck')">
+        <span class="emoji">🚚</span> Foodtruck
+      </div>
+      <div class="kategorie-chip" onclick="toggleKategorie(this, 'caterer')">
+        <span class="emoji">🍽️</span> Caterer
+      </div>
+      <div class="kategorie-chip" onclick="toggleKategorie(this, 'entertainment')">
+        <span class="emoji">🎤</span> Entertainment
+      </div>
+      <div class="kategorie-chip" onclick="toggleKategorie(this, 'location')">
+        <span class="emoji">🏠</span> Location
+      </div>
+      <div class="kategorie-chip active" onclick="toggleKategorie(this, 'getraenke')">
+        <span class="emoji">🍺</span> Getränkelieferant
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHNELLSTART-BEREICH -->
+  <div style="background: linear-gradient(135deg, #C8922A 0%, #A87520 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(200,146,42,0.3);">
+    <h2 style="font-family: 'Fraunces', serif; font-size: 22px; color: #fff; margin-bottom: 6px;">Schnellstart: Profil automatisch ausfüllen</h2>
+    <p style="color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 20px;">Spar dir die Tipparbeit — wir lesen deine Daten automatisch aus.</p>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <!-- FOTO -->
+      <div onclick="document.getElementById('fotoUpload').click()" style="flex:1; min-width:200px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 12px; padding: 18px; cursor: pointer; transition: background 0.2s; text-align: center;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">📸</span>
+        <strong style="color: #fff; font-size: 15px; display: block; margin-bottom: 4px;">Foto aufnehmen</strong>
+        <span style="color: rgba(255,255,255,0.75); font-size: 12px;">Visitenkarte, Speisekarte oder Preisliste abfotografieren</span>
+      </div>
+      <input type="file" id="fotoUpload" accept="image/*,application/pdf" capture="environment" style="display:none;" multiple>
+
+      <!-- WEBSITE -->
+      <div onclick="document.getElementById('websiteModal').style.display='flex'" style="flex:1; min-width:200px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 12px; padding: 18px; cursor: pointer; transition: background 0.2s; text-align: center;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">🌐</span>
+        <strong style="color: #fff; font-size: 15px; display: block; margin-bottom: 4px;">Website importieren</strong>
+        <span style="color: rgba(255,255,255,0.75); font-size: 12px;">Homepage-URL eingeben — Daten werden automatisch ausgelesen</span>
+      </div>
+
+      <!-- INSTAGRAM -->
+      <div onclick="document.getElementById('instaModal').style.display='flex'" style="flex:1; min-width:200px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 12px; padding: 18px; cursor: pointer; transition: background 0.2s; text-align: center;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">📷</span>
+        <strong style="color: #fff; font-size: 15px; display: block; margin-bottom: 4px;">Instagram importieren</strong>
+        <span style="color: rgba(255,255,255,0.75); font-size: 12px;">Profilbild, Bio und Fotos aus deinem Instagram-Account</span>
+      </div>
+
+      <!-- DATEI HOCHLADEN -->
+      <div onclick="document.getElementById('dateiUpload').click()" style="flex:1; min-width:200px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 12px; padding: 18px; cursor: pointer; transition: background 0.2s; text-align: center;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">📄</span>
+        <strong style="color: #fff; font-size: 15px; display: block; margin-bottom: 4px;">Datei hochladen</strong>
+        <span style="color: rgba(255,255,255,0.75); font-size: 12px;">Rezepte, Preislisten, Zertifikate oder Menükarten vom Computer</span>
+      </div>
+      <input type="file" id="dateiUpload" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none;" multiple>
+    </div>
+  </div>
+
+  <!-- Website Modal (Beispiel) -->
+  <div id="websiteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:100; justify-content:center; align-items:center;" onclick="if(event.target===this)this.style.display='none'">
+    <div style="background:#fff; border-radius:16px; padding:32px; max-width:500px; width:90%; box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+      <h3 style="font-family:'Fraunces',serif; font-size:20px; color:#1A1208; margin-bottom:16px;">🌐 Website importieren</h3>
+      <p style="font-size:14px; color:#8B7D6B; margin-bottom:16px;">Gib deine Website-URL ein und wir lesen automatisch Name, Adresse, Kontaktdaten, Impressum und Speisekarte aus.</p>
+      <input type="url" placeholder="z.B. www.burger-brothers.de" style="width:100%; padding:14px 16px; border:2px solid #E0D5C3; border-radius:10px; font-size:16px; font-family:'DM Sans',sans-serif; margin-bottom:16px;">
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button onclick="document.getElementById('websiteModal').style.display='none'" style="padding:12px 24px; border:2px solid #E0D5C3; border-radius:10px; background:#fff; font-size:15px; cursor:pointer; font-family:'DM Sans',sans-serif;">Abbrechen</button>
+        <button style="padding:12px 24px; background:#C8922A; color:#fff; border:none; border-radius:10px; font-weight:700; font-size:15px; cursor:pointer; font-family:'DM Sans',sans-serif;">Importieren</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instagram Modal (Beispiel) -->
+  <div id="instaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:100; justify-content:center; align-items:center;" onclick="if(event.target===this)this.style.display='none'">
+    <div style="background:#fff; border-radius:16px; padding:32px; max-width:500px; width:90%; box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+      <h3 style="font-family:'Fraunces',serif; font-size:20px; color:#1A1208; margin-bottom:16px;">📷 Instagram importieren</h3>
+      <p style="font-size:14px; color:#8B7D6B; margin-bottom:16px;">Gib deinen Instagram-Namen ein. Wir übernehmen Profilbild, Bio-Text und deine besten Fotos als Profilbilder.</p>
+      <input type="text" placeholder="@dein_instagram_name" style="width:100%; padding:14px 16px; border:2px solid #E0D5C3; border-radius:10px; font-size:16px; font-family:'DM Sans',sans-serif; margin-bottom:16px;">
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button onclick="document.getElementById('instaModal').style.display='none'" style="padding:12px 24px; border:2px solid #E0D5C3; border-radius:10px; background:#fff; font-size:15px; cursor:pointer; font-family:'DM Sans',sans-serif;">Abbrechen</button>
+        <button style="padding:12px 24px; background:#C8922A; color:#fff; border:none; border-radius:10px; font-weight:700; font-size:15px; cursor:pointer; font-family:'DM Sans',sans-serif;">Importieren</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEMEINSAME FELDER -->
+  <div class="common-section">
+    <h2>📋 Basisinformationen</h2>
+    <div class="form-row full">
+      <div class="form-group">
+        <label>Profilname *</label>
+        <input type="text" value="Burger Brothers – Foodtruck & Privatkoch">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Straße</label>
+        <input type="text" placeholder="z.B. Musterstraße 12">
+      </div>
+      <div class="form-group">
+        <label>PLZ / Ort *</label>
+        <input type="text" value="89073 Ulm">
+      </div>
+    </div>
+    <div class="form-row full">
+      <div class="form-group">
+        <label>Beschreibung *</label>
+        <textarea>Burger Brothers bringt handgemachte Smash-Burger, knusprige Pommes und hausgemachte Saucen direkt zu deinem Event.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER / TABS -->
+  <div class="register-container">
+    <div class="register-tabs" id="registerTabs">
+      <div class="register-tab active" onclick="switchTab('privatkoch')" id="tab-privatkoch">
+        <span class="tab-emoji">👨‍🍳</span> Privatkoch
+      </div>
+      <div class="register-tab" onclick="switchTab('foodtruck')" id="tab-foodtruck">
+        <span class="tab-emoji">🚚</span> Foodtruck
+      </div>
+      <div class="register-tab" onclick="switchTab('getraenke')" id="tab-getraenke">
+        <span class="tab-emoji">🍺</span> Getränkelieferant
+      </div>
+    </div>
+
+    <div class="register-content">
+
+      <!-- TAB: PRIVATKOCH -->
+      <div class="tab-panel active" id="panel-privatkoch">
+        <h3>👨‍🍳 Privatkoch – Details</h3>
+        <p class="tab-desc">Alles was Kunden über dein Koch-Angebot wissen müssen.</p>
+
+        <div class="field-group">
+          <label>Küche / Spezialitäten (Mehrfachauswahl)</label>
+          <div class="checkbox-grid" style="grid-template-columns:1fr 1fr 1fr;">
+            <label class="checkbox-item"><input type="checkbox" checked> Schwäbisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Bayerisch</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Italienisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Griechisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Türkisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Asiatisch</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Japanisch / Sushi</label>
+            <label class="checkbox-item"><input type="checkbox"> Indisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Mexikanisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Französisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Amerikanisch / BBQ</label>
+            <label class="checkbox-item"><input type="checkbox"> Orientalisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Thailändisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Spanisch / Tapas</label>
+            <label class="checkbox-item"><input type="checkbox"> Vegan / Pflanzlich</label>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <input type="text" placeholder="Sonstiges, z.B. Peruanisch, Fusion, Molekularküche..." style="flex:1; border:2px solid #E0D5C3; border-radius:10px; padding:10px 14px; font-size:14px;">
+            <button style="padding:10px 18px; background:#C8922A; color:#fff; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:14px;">+ Hinzufügen</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Max. Gästeanzahl</label>
+          <input type="number" value="50" min="1" style="max-width:200px;">
+        </div>
+
+        <div class="field-group">
+          <label>Erfahrung</label>
+          <div class="inline-row">
+            <input type="number" placeholder="Jahre" value="8" style="width:100%">
+            <input type="text" placeholder="z.B. IHK-Ausbildung, Kochschule" style="width:100%">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Diäten & Allergien die du abdeckst</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" checked> Vegan</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Vegetarisch</label>
+            <label class="checkbox-item"><input type="checkbox"> Glutenfrei</label>
+            <label class="checkbox-item"><input type="checkbox"> Laktosefrei</label>
+            <label class="checkbox-item"><input type="checkbox"> Halal</label>
+            <label class="checkbox-item"><input type="checkbox"> Kosher</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Nussallergie</label>
+            <label class="checkbox-item"><input type="checkbox"> Histaminfrei</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Beispiel-Menü</label>
+          <div style="border:2px solid #E0D5C3; border-radius:12px; padding:16px; margin-bottom:8px;">
+            <input type="text" placeholder="Menü-Name, z.B. 'Mediterranes 3-Gänge-Menü'" style="margin-bottom:8px; border:1px solid #E0D5C3;">
+            <textarea placeholder="Beschreibung: Vorspeise, Hauptgang, Dessert..." style="min-height:60px; border:1px solid #E0D5C3; margin-bottom:8px;"></textarea>
+            <input type="text" placeholder="Preis pro Person, z.B. 45€" style="border:1px solid #E0D5C3; max-width:200px;">
+          </div>
+          <button style="padding:10px 20px; border:2px dashed #C8922A; border-radius:10px; background:none; color:#C8922A; font-weight:600; cursor:pointer; font-size:14px;">+ Weiteres Menü hinzufügen</button>
+        </div>
+
+        <div class="field-group">
+          <label>Benötigte Küchenausstattung beim Kunden</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" checked> Herd / Kochfeld</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Backofen</label>
+            <label class="checkbox-item"><input type="checkbox"> Grill (Outdoor)</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Kühlschrank</label>
+          </div>
+        </div>
+
+        <div class="toggle-row">
+          <span>Ich bringe eigenes Equipment mit</span>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+
+      <!-- TAB: FOODTRUCK -->
+      <div class="tab-panel" id="panel-foodtruck">
+        <h3>🚚 Foodtruck – Details</h3>
+        <p class="tab-desc">Technische Infos und Speisekarte für deinen Foodtruck.</p>
+
+        <div class="sync-banner">
+          <span class="sync-icon">🔄</span>
+          <span>Einige Angaben wurden aus deinen anderen Tabs übernommen. Du kannst sie hier anpassen.</span>
+        </div>
+
+        <div class="inline-row">
+          <div class="field-group">
+            <label>Fahrzeug-Typ</label>
+            <select>
+              <option selected>Foodtruck</option>
+              <option>Anhänger</option>
+              <option>Verkaufsstand</option>
+              <option>Pop-up Küche</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Platzbedarf (L × B)</label>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input type="number" placeholder="Länge" value="7" style="width:100%"> <span>×</span>
+              <input type="number" placeholder="Breite" value="3" style="width:100%"> <span>m</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="toggle-row">
+          <span>⚡ Stromanschluss benötigt</span>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="toggle-row">
+          <span>💧 Wasseranschluss benötigt</span>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+
+        <div class="inline-row">
+          <div class="field-group">
+            <label>Max. Portionen / Stunde</label>
+            <input type="number" value="120">
+          </div>
+          <div class="field-group">
+            <label>Auf-/Abbauzeit</label>
+            <select>
+              <option>30 Minuten</option>
+              <option selected>1 Stunde</option>
+              <option>2 Stunden</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Speisekarte</label>
+          <div style="border:2px solid #E0D5C3; border-radius:12px; padding:16px; margin-bottom:8px;">
+            <div style="display:flex; gap:8px; margin-bottom:8px;">
+              <input type="text" placeholder="Gericht" value="Smash Burger Classic" style="flex:2; border:1px solid #E0D5C3;">
+              <input type="text" placeholder="Preis" value="8,50€" style="flex:0.5; border:1px solid #E0D5C3;">
+            </div>
+            <div style="display:flex; gap:8px;">
+              <input type="text" placeholder="Gericht" value="Loaded Fries" style="flex:2; border:1px solid #E0D5C3;">
+              <input type="text" placeholder="Preis" value="5,50€" style="flex:0.5; border:1px solid #E0D5C3;">
+            </div>
+          </div>
+          <button style="padding:10px 20px; border:2px dashed #C8922A; border-radius:10px; background:none; color:#C8922A; font-weight:600; cursor:pointer; font-size:14px;">+ Weiteres Gericht</button>
+        </div>
+
+        <div class="field-group">
+          <label>Reisekosten</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <span style="font-size:14px;">Ab</span>
+            <input type="number" value="50" style="width:80px;">
+            <span style="font-size:14px;">km:</span>
+            <input type="text" value="0,50€/km" style="width:120px;">
+          </div>
+        </div>
+
+        <div class="toggle-row">
+          <span>📋 Hygiene-Zertifikat vorhanden</span>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+
+      <!-- TAB: GETRÄNKELIEFERANT -->
+      <div class="tab-panel" id="panel-getraenke">
+        <h3>🍺 Getränkelieferant – Details</h3>
+        <p class="tab-desc">Dein Sortiment, Equipment und Konditionen für Events.</p>
+
+        <!-- SORTIMENT -->
+        <div class="field-group">
+          <label>🍻 Sortiment – Was lieferst du?</label>
+          <p style="font-size:13px; color:#8B7D6B; margin-bottom:12px;">Wähle alles aus, was du anbieten kannst.</p>
+
+          <div style="margin-bottom:12px;">
+            <p style="font-weight:600; font-size:13px; color:#C8922A; margin-bottom:6px;">Bier</p>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" checked> Fassbier</label>
+              <label class="checkbox-item"><input type="checkbox" checked> Flaschenbier</label>
+              <label class="checkbox-item"><input type="checkbox"> Craft Beer</label>
+              <label class="checkbox-item"><input type="checkbox"> Alkoholfrei</label>
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <p style="font-weight:600; font-size:13px; color:#C8922A; margin-bottom:6px;">Wein & Sekt</p>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" checked> Rotwein</label>
+              <label class="checkbox-item"><input type="checkbox" checked> Weißwein</label>
+              <label class="checkbox-item"><input type="checkbox"> Rosé</label>
+              <label class="checkbox-item"><input type="checkbox" checked> Sekt / Prosecco</label>
+              <label class="checkbox-item"><input type="checkbox"> Champagner</label>
+              <label class="checkbox-item"><input type="checkbox"> Glühwein / Punsch</label>
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <p style="font-weight:600; font-size:13px; color:#C8922A; margin-bottom:6px;">Spirituosen & Cocktails</p>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox"> Spirituosen (Gin, Vodka, Rum...)</label>
+              <label class="checkbox-item"><input type="checkbox" checked> Fertige Cocktails</label>
+              <label class="checkbox-item"><input type="checkbox"> Cocktail-Service (live gemixt)</label>
+              <label class="checkbox-item"><input type="checkbox"> Shots / Party-Pakete</label>
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <p style="font-weight:600; font-size:13px; color:#C8922A; margin-bottom:6px;">Alkoholfreie Getränke</p>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" checked> Wasser (still/medium/sprudel)</label>
+              <label class="checkbox-item"><input type="checkbox" checked> Softdrinks (Cola, Fanta, etc.)</label>
+              <label class="checkbox-item"><input type="checkbox" checked> Säfte</label>
+              <label class="checkbox-item"><input type="checkbox"> Smoothies</label>
+              <label class="checkbox-item"><input type="checkbox"> Limonade (hausgemacht)</label>
+              <label class="checkbox-item"><input type="checkbox"> Eistee</label>
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <p style="font-weight:600; font-size:13px; color:#C8922A; margin-bottom:6px;">Heißgetränke</p>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox"> Kaffee (Siebträger)</label>
+              <label class="checkbox-item"><input type="checkbox"> Kaffee (Filtermaschine)</label>
+              <label class="checkbox-item"><input type="checkbox"> Tee-Auswahl</label>
+              <label class="checkbox-item"><input type="checkbox"> Kakao / Heiße Schokolade</label>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <input type="text" placeholder="Eigenes Getränk hinzufügen..." style="flex:1; border:2px solid #E0D5C3; border-radius:10px; padding:10px 14px; font-size:14px;">
+            <button style="padding:10px 18px; background:#C8922A; color:#fff; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:14px;">+ Hinzufügen</button>
+          </div>
+        </div>
+
+        <!-- EQUIPMENT -->
+        <div class="field-group">
+          <label>🛠️ Equipment – Was bringst du mit?</label>
+          <div class="checkbox-grid" style="margin-bottom:12px;">
+            <label class="checkbox-item"><input type="checkbox" checked> Kühlanhänger</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Zapfanlage</label>
+            <label class="checkbox-item"><input type="checkbox"> Mobile Cocktailbar</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Kühlschränke / Kühlboxen</label>
+            <label class="checkbox-item"><input type="checkbox"> Getränkespender</label>
+            <label class="checkbox-item"><input type="checkbox"> Eismaschine</label>
+            <label class="checkbox-item"><input type="checkbox"> Kaffeemaschine (Siebträger)</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Stehtische</label>
+            <label class="checkbox-item"><input type="checkbox"> Barhocker</label>
+            <label class="checkbox-item"><input type="checkbox"> Beleuchtung / Deko</label>
+          </div>
+
+          <div class="inline-row" style="margin-bottom:12px;">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Anzahl Zapfhähne</label>
+              <input type="number" value="4" min="0">
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Anzahl Kühlgeräte</label>
+              <input type="number" value="2" min="0">
+            </div>
+          </div>
+        </div>
+
+        <!-- GLÄSER -->
+        <div class="field-group">
+          <label>🥂 Gläser inklusive?</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" checked> Biergläser (0,3l / 0,5l)</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Weingläser</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Sektgläser</label>
+            <label class="checkbox-item"><input type="checkbox"> Longdrink-Gläser</label>
+            <label class="checkbox-item"><input type="checkbox"> Cocktailgläser</label>
+            <label class="checkbox-item"><input type="checkbox" checked> Wassergläser</label>
+            <label class="checkbox-item"><input type="checkbox"> Plastik-/Mehrwegbecher</label>
+            <label class="checkbox-item"><input type="checkbox"> Shotgläser</label>
+          </div>
+        </div>
+
+        <!-- PREISE & SERVICE -->
+        <div class="field-group">
+          <label>💰 Preise & Service</label>
+
+          <div class="inline-row" style="margin-bottom:12px;">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Preismodell</label>
+              <select>
+                <option>Festpreis pro Event</option>
+                <option selected>Pro Person (Getränkepauschale)</option>
+                <option>Pro Stunde</option>
+                <option>Nach Verbrauch</option>
+                <option>Auf Anfrage</option>
+              </select>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Preis ab (Richtwert)</label>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <input type="text" value="15" style="width:80px;">
+                <span style="font-size:14px;">€ pro Person</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="toggle-row">
+            <span>👨‍🍳 Servicepersonal inklusive (Barkeeper / Ausschenker)</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="toggle-row">
+            <span>🚚 Lieferung + Abholung inklusive</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="toggle-row">
+            <span>🧹 Auf- und Abbau inklusive</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="inline-row" style="margin-top:12px;">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Mindestbestellwert / -menge</label>
+              <input type="text" placeholder="z.B. ab 30 Personen oder 500€">
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Min. Vorlaufzeit</label>
+              <select>
+                <option>1 Tag</option>
+                <option>2 Tage</option>
+                <option selected>3 Tage</option>
+                <option>1 Woche</option>
+                <option>2 Wochen</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- PREISLISTE UPLOAD -->
+        <div class="field-group">
+          <label>📄 Preisliste hochladen (optional)</label>
+          <div style="border:2px dashed #E0D5C3; border-radius:12px; padding:24px; text-align:center; cursor:pointer; background:#FAFAF7;">
+            <p style="font-size:14px; color:#8B7D6B; margin-bottom:4px;">PDF oder Bild hierher ziehen</p>
+            <p style="font-size:12px; color:#B0A593;">oder klicken zum Auswählen</p>
+          </div>
+        </div>
+
+        <!-- LOGISTIK -->
+        <div class="field-group">
+          <label>🚛 Logistik</label>
+          <div class="inline-row" style="margin-bottom:12px;">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Platzbedarf</label>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <input type="number" placeholder="L" value="4" style="width:100%"> <span>×</span>
+                <input type="number" placeholder="B" value="3" style="width:100%"> <span>m</span>
+              </div>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Auf-/Abbauzeit</label>
+              <select>
+                <option>30 Minuten</option>
+                <option selected>1 Stunde</option>
+                <option>2 Stunden</option>
+                <option>3+ Stunden</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toggle-row">
+            <span>⚡ Stromanschluss benötigt</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="toggle-row">
+            <span>💧 Wasseranschluss benötigt</span>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+
+        <!-- SONDERWÜNSCHE -->
+        <div class="field-group">
+          <label>📝 Sonderwünsche / Notizen</label>
+          <textarea placeholder="z.B. Spezielle Biersorten auf Anfrage, regionale Weine, individuelle Cocktailkarten, Branding auf Bechern möglich..." style="min-height:80px;"></textarea>
+        </div>
+
+        <div class="hint-box">
+          <strong>Tipp:</strong> Lade eine Preisliste als PDF hoch — so können Kunden sich vorab informieren und buchen schneller!
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Speichern -->
+  <div style="text-align:center; margin-top:30px;">
+    <button style="padding:16px 48px; background:#C8922A; color:#fff; border:none; border-radius:12px; font-size:17px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; box-shadow:0 4px 12px rgba(200,146,42,0.3);">
+      💾 Profil speichern
+    </button>
+  </div>
+
+</div>
+
+<script>
+function switchTab(tabName) {
+  document.querySelectorAll('.register-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tabName).classList.add('active');
+  document.getElementById('panel-' + tabName).classList.add('active');
+}
+
+function toggleKategorie(chip, name) {
+  chip.classList.toggle('active');
+  const tab = document.getElementById('tab-' + name);
+  const panel = document.getElementById('panel-' + name);
+  if (chip.classList.contains('active')) {
+    if (tab) tab.style.display = 'flex';
+  } else {
+    if (tab) { tab.style.display = 'none'; tab.classList.remove('active'); }
+    if (panel) panel.classList.remove('active');
+    const firstVisibleTab = document.querySelector('.register-tab[style*="display: flex"], .register-tab:not([style*="display: none"])');
+    if (firstVisibleTab) firstVisibleTab.click();
+  }
+}
+</script>
+
+</body>
+</html>
