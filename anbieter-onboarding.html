@@ -832,15 +832,15 @@
   <p>Registriere dich als Anbieter auf Partyretter und erreiche tausende Kunden in deiner Region. Wähle deinen Anbietertyp und erfahre, was du brauchst.</p>
 
   <div class="type-selector">
-    <button class="type-btn active" onclick="showType('koch')">
-      <span class="type-icon">👨‍🍳</span>
-      <strong>Privatkoch &<br>Caterer</strong>
-      <span class="type-sub">Kochen & Service</span>
-    </button>
-    <button class="type-btn" onclick="showType('foodtruck')">
+    <button class="type-btn active" onclick="showType('foodtruck')">
       <span class="type-icon">🚚</span>
       <strong>Foodtruck &<br>Streetfood</strong>
       <span class="type-sub">Mobile Küche</span>
+    </button>
+    <button class="type-btn" onclick="showType('koch')">
+      <span class="type-icon">👨‍🍳</span>
+      <strong>Privatkoch &<br>Caterer</strong>
+      <span class="type-sub">Kochen & Service</span>
     </button>
     <button class="type-btn" onclick="showType('lokal')">
       <span class="type-icon">🏛️</span>
@@ -874,7 +874,7 @@
 <div class="main">
 
   <!-- ===================== KOCH ===================== -->
-  <div id="type-koch" class="content-section active">
+  <div id="type-koch" class="content-section">
 
     <div class="intro-bar">
       <div class="intro-icon">👨‍🍳</div>
@@ -1096,7 +1096,7 @@
   </div>
 
   <!-- ===================== FOODTRUCK ===================== -->
-  <div id="type-foodtruck" class="content-section">
+  <div id="type-foodtruck" class="content-section active">
 
     <div class="intro-bar">
       <div class="intro-icon">🚚</div>
@@ -2129,7 +2129,7 @@
   function showType(type) {
     // Update buttons
     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-    const types = ['koch', 'foodtruck', 'lokal', 'getraenke', 'kuchen', 'zubehoer', 'service'];
+    const types = ['foodtruck', 'koch', 'lokal', 'getraenke', 'kuchen', 'zubehoer', 'service'];
     const idx = types.indexOf(type);
     document.querySelectorAll('.type-btn')[idx]?.classList.add('active');
 
