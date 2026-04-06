@@ -65,7 +65,7 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
 .filter-sort{padding:7px 14px;border:1.5px solid var(--cream2);border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;cursor:pointer;}
 
 /* ── LAYOUT ── */
-.page-body{max-width:1300px;margin:0 auto;padding:36px 40px 80px;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start;}
+.page-body{max-width:1400px;margin:0 auto;padding:36px 40px 80px;display:grid;grid-template-columns:260px 1fr 280px;gap:28px;align-items:start;}
 
 /* ── LEFT SIDEBAR ── */
 .sidebar{background:#fff;border-radius:16px;border:1.5px solid var(--cream2);padding:22px;position:sticky;top:130px;max-height:calc(100vh - 150px);overflow-y:auto;}
@@ -80,6 +80,29 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
 .sb-range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px;}
 .btn-reset{width:100%;padding:9px;background:var(--cream2);border:none;border-radius:10px;font-size:13px;font-weight:600;color:var(--dark);cursor:pointer;margin-top:14px;font-family:'DM Sans',sans-serif;}
 .btn-reset:hover{background:var(--cream);}
+
+/* ── RIGHT SIDEBAR (Standorte) ── */
+.sidebar-right{background:#fff;border-radius:16px;border:1.5px solid var(--cream2);padding:0;position:sticky;top:130px;max-height:calc(100vh - 150px);overflow-y:auto;}
+.sr-header{padding:16px 18px 12px;border-bottom:1px solid var(--cream2);}
+.sr-title{font-size:14px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:6px;}
+.sr-map{width:100%;height:200px;border-bottom:1px solid var(--cream2);z-index:1;position:relative;}
+.sr-search{padding:12px 16px;border-bottom:1px solid var(--cream2);display:flex;gap:6px;}
+.sr-search input{flex:1;padding:8px 12px;border:1.5px solid var(--cream2);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;}
+.sr-search input:focus{border-color:var(--gold);}
+.sr-search button{padding:8px 14px;background:var(--gold);color:var(--dark);border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.sr-list{padding:0;}
+.sr-item{padding:14px 18px;border-bottom:1px solid var(--cream2);transition:background .15s;cursor:pointer;}
+.sr-item:hover{background:rgba(200,146,42,.06);}
+.sr-item:last-child{border-bottom:none;}
+.sr-item-city{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px;}
+.sr-item-detail{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.sr-item-trucks{font-size:11px;font-weight:600;color:var(--gold);margin-top:4px;}
+.sr-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-left:6px;}
+.sr-badge.live{background:rgba(39,174,96,.12);color:#27ae60;}
+.sr-badge.planned{background:rgba(200,146,42,.12);color:var(--gold);}
+.sr-footer{padding:12px 18px;text-align:center;border-top:1px solid var(--cream2);}
+.sr-footer a{font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;}
+.sr-footer a:hover{text-decoration:underline;}
 
 /* ── TRUCK GRID ── */
 .truck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
@@ -145,9 +168,14 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
 .mobile-menu { display: none; }
 
 /* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .page-body{grid-template-columns:260px 1fr;}
+  .sidebar-right{display:none;}
+}
 @media(max-width:900px){
   .page-body{grid-template-columns:1fr;}
   .sidebar{display:none;}
+  .sidebar-right{display:block;position:static;max-height:none;}
   .truck-card.wide{grid-template-columns:1fr;}
   .truck-card.wide .truck-footer{border-left:none;border-top:1px solid var(--cream2);flex-direction:row;}
 }
@@ -201,6 +229,11 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
   <a class="mobile-cta" href="event-planen.html">Event ausschreiben</a>
 </div>
 
+
+    <!-- ZURÜCK -->
+<div style="max-width:1200px;margin:0 auto;padding:12px 24px 0;">
+  <a href="homepage.html" style="color:var(--gold);font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">← Zurück</a>
+</div>
 <!-- HERO -->
 <div class="page-hero">
   <div class="breadcrumb">
@@ -208,6 +241,7 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
     <span>›</span>
     <span>Foodtrucks</span>
   </div>
+  <img src="logos/foodtruck.png" alt="Foodtruck" style="width:160px;height:160px;object-fit:contain;margin:0 auto 12px;display:block;">
   <h1>Alle <span>Foodtrucks</span></h1>
   <p>Steckbriefe, Küche, Kapazität & Preise – finde deinen perfekten Foodtruck für jedes Event</p>
 </div>
@@ -776,7 +810,70 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
       <button class="page-btn">›</button>
     </div>
   </div>
+
+  <!-- RECHTE SIDEBAR: Live-Standorte -->
+  <aside class="sidebar-right">
+    <div class="sr-header">
+      <div class="sr-title">📍 Live-Standorte <span style="font-size:10px;background:rgba(200,146,42,.15);color:var(--gold);padding:2px 8px;border-radius:6px;font-weight:700;margin-left:6px;">DEMO</span></div>
+    </div>
+    <div class="sr-map" id="standort-map"></div>
+    <div class="sr-search">
+      <input type="text" placeholder="PLZ oder Stadt..." id="sr-plz">
+      <button onclick="alert('In der App verfügbar!')">Suchen</button>
+    </div>
+    <div class="sr-list">
+      <div class="sr-item">
+        <div class="sr-item-city">München – Marienplatz <span class="sr-badge live">● Jetzt offen</span></div>
+        <div class="sr-item-detail">📍 Marienplatz 1 · bis 21:00 Uhr</div>
+        <div class="sr-item-trucks">🚚 Burger Brothers, Sushi Express</div>
+      </div>
+      <div class="sr-item">
+        <div class="sr-item-city">Hamburg – Fischmarkt <span class="sr-badge live">● Jetzt offen</span></div>
+        <div class="sr-item-detail">📍 Große Elbstraße · bis 20:00 Uhr</div>
+        <div class="sr-item-trucks">🚚 Street Kitchen, Asia Wok</div>
+      </div>
+      <div class="sr-item">
+        <div class="sr-item-city">Stuttgart – Schlossplatz <span class="sr-badge planned">Sa 12.04.</span></div>
+        <div class="sr-item-detail">📍 Schlossplatz · 11:00–22:00 Uhr</div>
+        <div class="sr-item-trucks">🚚 3 Trucks beim Streetfood Festival</div>
+      </div>
+      <div class="sr-item">
+        <div class="sr-item-city">Köln – Rheinufer <span class="sr-badge planned">So 13.04.</span></div>
+        <div class="sr-item-detail">📍 Deutzer Werft · 12:00–20:00 Uhr</div>
+        <div class="sr-item-trucks">🚚 BBQ King, Crêpe Paradis</div>
+      </div>
+      <div class="sr-item">
+        <div class="sr-item-city">Berlin – Mauerpark <span class="sr-badge planned">So 13.04.</span></div>
+        <div class="sr-item-detail">📍 Bernauer Str. · 10:00–18:00 Uhr</div>
+        <div class="sr-item-trucks">🚚 5 Trucks am Flohmarkt</div>
+      </div>
+    </div>
+    <div class="sr-footer">
+      <a href="foodtruck-standorte.html">Alle Standorte auf der Karte →</a>
+    </div>
+  </aside>
+
 </div>
+
+<!-- Leaflet CSS + JS für Mini-Karte -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Mini-Karte initialisieren
+const map = L.map('standort-map',{zoomControl:false,attributionControl:false}).setView([51.1657,10.4515],5.5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+// Demo-Marker
+const spots = [
+  [48.1371,11.5754,'München – Marienplatz','Burger Brothers, Sushi Express'],
+  [53.5445,9.9653,'Hamburg – Fischmarkt','Street Kitchen, Asia Wok'],
+  [48.7784,9.1800,'Stuttgart – Schlossplatz','Streetfood Festival Sa 12.04.'],
+  [50.9375,6.9603,'Köln – Rheinufer','BBQ King, Crêpe Paradis'],
+  [52.5410,13.4015,'Berlin – Mauerpark','5 Trucks am Flohmarkt']
+];
+spots.forEach(s=>{
+  L.marker([s[0],s[1]]).addTo(map).bindPopup('<b>'+s[2]+'</b><br>'+s[3]);
+});
+</script>
 
 <script>
 function filterKueche(kueche, btn) {
