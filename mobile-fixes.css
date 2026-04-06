@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════
+   PARTYRETTER – GLOBALE MOBILE FIXES
+   Wird auf allen Seiten eingebunden.
+   Überschreibt Inline-Styles wo nötig.
+   ═══════════════════════════════════════ */
+
+/* ── NAVIGATION ── */
+@media (max-width: 768px) {
+  nav { padding: 0 16px !important; }
+  .nav-links { display: none !important; }
+  .nav-actions .btn-login,
+  .nav-actions .btn-cta-nav { display: none !important; }
+  .nav-actions #lang-switcher { display: none !important; }
+  .hamburger { display: block !important; }
+
+  .mobile-menu {
+    position: fixed; top: 66px; left: 0; right: 0;
+    background: var(--dark, #1A1208);
+    padding: 16px 24px; z-index: 199;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    border-top: 1px solid rgba(245,240,232,.1);
+  }
+  .mobile-menu.open { display: block !important; }
+  .mobile-menu a {
+    display: block; color: rgba(245,240,232,.8);
+    text-decoration: none; padding: 12px 0;
+    font-size: 15px; font-weight: 500;
+    border-bottom: 1px solid rgba(245,240,232,.08);
+  }
+  .mobile-menu a:hover { color: var(--gold, #C8922A); }
+  .mobile-menu .mobile-cta {
+    display: inline-block; margin-top: 12px;
+    background: var(--gold, #C8922A); color: var(--dark, #1A1208);
+    padding: 12px 24px; border-radius: 8px;
+    font-weight: 700; font-size: 14px;
+    text-align: center; width: 100%;
+  }
+}
+
+/* ── HERO ── */
+@media (max-width: 768px) {
+  .hero { flex-direction: column !important; min-height: auto !important; }
+  .hero-mascot { display: none !important; }
+  .hero-content {
+    padding: 28px 16px 32px !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  .hero h1 { font-size: 26px !important; text-align: center; }
+  .hero-sub { font-size: 14px !important; text-align: center; }
+  .search-box { max-width: 100% !important; margin: 0 auto 16px !important; }
+  .search-field-wrap { flex-direction: column !important; }
+  .search-seg { border-right: none !important; border-bottom: 1px solid #e8e2d8; }
+  .search-seg:last-of-type { border-bottom: none !important; }
+  .quick-cats { justify-content: center !important; gap: 6px !important; }
+  .quick-cat { padding: 6px 12px !important; font-size: 12px !important; }
+}
+
+/* ── KATEGORIE TABS ── */
+@media (max-width: 480px) {
+  .kat-tabs-section { padding: 24px 12px 0 !important; }
+  .kat-tab-card { min-width: 110px !important; max-width: 130px !important; padding: 14px 10px !important; }
+  .kat-tab-logo { width: 48px !important; height: 48px !important; }
+  .kat-tab-card strong { font-size: 12px !important; }
+}
+
+/* ── SIDEBAR: Mobile ausblenden ── */
+@media (max-width: 768px) {
+  .kat-sidebar { display: none !important; }
+  .angebote-inner { grid-template-columns: 1fr !important; }
+  .angebote-section { padding: 24px 16px !important; }
+  .angebote-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── INLINE-STYLE GRID OVERRIDES ── */
+@media (max-width: 640px) {
+  /* Zwei Wege: 2 Spalten → 1 Spalte */
+  .mobile-stack-grid,
+  #zweiwege div[style*="grid-template-columns: 1fr 1fr"],
+  #zweiwege div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Preise: 3 Spalten → 1 Spalte */
+  .mobile-stack-grid-3,
+  #preise div[style*="grid-template-columns: 1fr 1fr 1fr"],
+  #preise div[style*="grid-template-columns:1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── SECTION PADDING ── */
+@media (max-width: 768px) {
+  .mobile-section-pad,
+  #sogehts,
+  #zweiwege,
+  #preise,
+  section[style*="padding:60px 40px"],
+  section[style*="padding: 60px 40px"] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .section { padding: 40px 16px !important; }
+}
+
+/* ── SEARCH BOX SMALL ── */
+@media (max-width: 480px) {
+  .search-box { border-radius: 12px !important; }
+  .search-btn { width: 48px !important; height: 48px !important; border-radius: 12px !important; margin: 6px !important; font-size: 18px !important; }
+  .test-banner { font-size: 12px !important; padding: 8px 12px !important; }
+}
+
+/* ── ZURÜCK-BUTTON MOBILE ── */
+@media (max-width: 768px) {
+  .zurueck-link { display: none !important; }
+}
+
+/* ── FOOTER MOBILE ── */
+@media (max-width: 640px) {
+  .footer-top { grid-template-columns: 1fr !important; gap: 24px !important; }
+  footer { padding: 32px 16px 20px !important; }
+}
+
+/* ── CONTENT GRIDS (Foodtruck-Liste, Koch-Liste etc.) ── */
+@media (max-width: 768px) {
+  /* 3-Spalten-Layouts auf Listen-Seiten */
+  .content-grid,
+  div[style*="grid-template-columns: 260px 1fr 280px"],
+  div[style*="grid-template-columns:260px 1fr 280px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Sidebar-Karten auf Listen-Seiten */
+  .sidebar-right,
+  .sidebar-left { display: none !important; }
+}
+
+/* ── ALLGEMEINE TEXT-ANPASSUNGEN ── */
+@media (max-width: 480px) {
+  h2 { font-size: 22px !important; }
+  .section-title { font-size: 22px !important; }
+}

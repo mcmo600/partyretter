@@ -25,6 +25,7 @@
   <meta name="twitter:image" content="https://partyretter.com/logo.png" />
   <meta name="robots" content="index, follow" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="mobile-fixes.css" />
   <style>
     :root {
       --dark:   #1A1208;
@@ -167,17 +168,28 @@
       .hamburger { display: block; }
       .nav-links { display: none; }
       .nav-actions .btn-login, .nav-actions .btn-cta-nav { display: none; }
+      .nav-actions #lang-switcher { display: none; }
       .mobile-menu { position: fixed; top: 66px; left: 0; right: 0; background: var(--dark); padding: 16px 24px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,.4); border-top: 1px solid rgba(245,240,232,.1); }
       .mobile-menu.open { display: block; }
       .mobile-menu a { display: block; color: rgba(245,240,232,.8); text-decoration: none; padding: 12px 0; font-size: 15px; font-weight: 500; border-bottom: 1px solid rgba(245,240,232,.08); }
       .mobile-menu a:hover { color: var(--gold); }
       .mobile-menu .mobile-cta { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--dark); padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; width: 100%; }
       nav { padding: 0 16px; }
+      .hero-mascot { display: none !important; }
       .hero-content { padding: 24px 16px 32px; }
-      .hero h1 { font-size: 28px; }
+      .hero h1 { font-size: 26px; }
       .hero-sub { font-size: 14px; }
+      .hero .hero-brand-mobile { display: block !important; }
       .quick-cats { gap: 6px; }
       .quick-cat { padding: 6px 12px; font-size: 12px; }
+      /* Sidebar auf Mobile einklappen */
+      .kat-sidebar { display: none; }
+      .angebote-inner { grid-template-columns: 1fr !important; }
+      .angebote-section { padding: 24px 16px !important; }
+      /* Inline-Grid Overrides für Mobile */
+      .mobile-stack-grid { grid-template-columns: 1fr !important; }
+      .mobile-stack-grid-3 { grid-template-columns: 1fr !important; }
+      .mobile-section-pad { padding-left: 16px !important; padding-right: 16px !important; }
     }
 
     /* SEARCH BOX */
@@ -656,6 +668,13 @@
       .hero-stats { gap: 16px; padding: 10px 14px; }
       .stat-val { font-size: 20px; }
       .angebote-grid { grid-template-columns: 1fr; }
+      .kat-tabs-section { padding: 24px 12px 0 !important; }
+      .kat-tab-card { min-width: 110px; max-width: 130px; padding: 14px 10px; }
+      .kat-tab-logo { width: 48px; height: 48px; }
+      .kat-tab-card strong { font-size: 12px; }
+      .search-box { border-radius: 12px; }
+      .search-btn { width: 48px; height: 48px; border-radius: 12px; margin: 6px; font-size: 18px; }
+      .test-banner { font-size: 12px; padding: 8px 12px; }
     }
   
     .city-dd-item { padding: 10px 16px; cursor: pointer; font-size: 13.5px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0ece4; transition: background .12s; }
@@ -1130,7 +1149,7 @@ document.addEventListener('DOMContentLoaded', renderSaved);
 
 
 <!-- ═══════════════ SO GEHT'S ═══════════════ -->
-<section id="sogehts" style="background:var(--cream);padding:60px 40px;">
+<section id="sogehts" class="mobile-section-pad" style="background:var(--cream);padding:60px 40px;">
   <div style="max-width:860px;margin:0 auto;">
     <h2 data-i18n="howto_title" style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);text-align:center;margin-bottom:8px;">So funktioniert Partyretter</h2>
     <p data-i18n="howto_sub" style="text-align:center;color:var(--muted);font-size:15px;margin-bottom:40px;">In 3 Schritten zum perfekten Event – einfach, schnell, zuverlässig.</p>
@@ -1158,11 +1177,11 @@ document.addEventListener('DOMContentLoaded', renderSaved);
 </section>
 
 <!-- ═══════════════ ZWEI WEGE ═══════════════ -->
-<section id="zweiwege" style="background:#fff;padding:60px 40px;">
+<section id="zweiwege" class="mobile-section-pad" style="background:#fff;padding:60px 40px;">
   <div style="max-width:860px;margin:0 auto;">
     <h2 data-i18n="twoways_title" style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);text-align:center;margin-bottom:8px;">Zwei Wege – ein Ziel</h2>
     <p data-i18n="twoways_sub" style="text-align:center;color:var(--muted);font-size:15px;margin-bottom:40px;">Ob du ein Event planst oder selbst Anbieter bist – Partyretter ist deine Plattform.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div class="mobile-stack-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
       <div style="background:var(--cream);border-radius:16px;padding:32px 28px;">
         <div style="font-size:32px;margin-bottom:12px;">🧑‍🎉</div>
         <h3 data-i18n="for_customers" style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:12px;">Für Kunden</h3>
@@ -1190,11 +1209,11 @@ document.addEventListener('DOMContentLoaded', renderSaved);
 </section>
 
 <!-- ═══════════════ PREISE ═══════════════ -->
-<section id="preise" style="background:var(--cream);padding:60px 40px;">
+<section id="preise" class="mobile-section-pad" style="background:var(--cream);padding:60px 40px;">
   <div style="max-width:700px;margin:0 auto;text-align:center;">
     <h2 data-i18n="prices_title" style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--dark);margin-bottom:8px;">Preise & Provision</h2>
     <p data-i18n="prices_sub" style="color:var(--muted);font-size:15px;margin-bottom:36px;">Transparent, fair, ohne versteckte Kosten.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px;">
+    <div class="mobile-stack-grid-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px;">
       <div style="background:#fff;border-radius:14px;padding:28px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
         <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Für Kunden</div>
         <div style="font-size:38px;font-weight:900;color:var(--gold);font-family:'Fraunces',serif;line-height:1;">0 €</div>
