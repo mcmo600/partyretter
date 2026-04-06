@@ -31,9 +31,9 @@ const T = {
     tr: '🚚 Foodtruck Haritası', ru: '🚚 Карта Фудтраков', nl: '🚚 Foodtruck Kaart',
   },
   nav_blog: {
-    de: '📝 Blog', en: '📝 Blog', fr: '📝 Blog',
-    es: '📝 Blog', it: '📝 Blog', pl: '📝 Blog',
-    tr: '📝 Blog', ru: '📝 Блог', nl: '📝 Blog',
+    de: '🍳 Rezepte', en: '🍳 Recipes', fr: '🍳 Recettes',
+    es: '🍳 Recetas', it: '🍳 Ricette', pl: '🍳 Przepisy',
+    tr: '🍳 Tarifler', ru: '🍳 Рецепты', nl: '🍳 Recepten',
   },
   nav_login: {
     de: 'Anmelden', en: 'Log in', fr: 'Connexion',
