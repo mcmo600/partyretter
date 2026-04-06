@@ -29,7 +29,8 @@
 
     /* ── NAV ── */
     nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;box-shadow:0 2px 24px rgba(0,0,0,.45);}
-    .nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:8px;}
+    .nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:8px;margin-right:0;}
+    .nav-back{color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;margin-left:18px;white-space:nowrap;}
     .nav-logo img{height:38px;width:auto;}
     .nav-logo span{color:var(--gold);}
     .nav-links{display:flex;align-items:center;gap:22px;list-style:none;}
@@ -186,6 +187,7 @@
 
 <nav>
   <a class="nav-logo" href="homepage.html"><span><span style="color:var(--gold)">Party</span><span style="color:var(--cream)">retter</span></span></a>
+  <a href="homepage.html" class="nav-back">← Zurück</a>
   <ul class="nav-links">
     <li><a href="kochevents.html">🍽️ Koch-Events</a></li>
     <li><a href="foodtruck-standorte.html">🚚 Foodtruck-Karte</a></li>
@@ -210,12 +212,6 @@
   <a class="mobile-cta" href="event-planen.html">Anbieter werden</a>
 </div>
 
-<!-- ZURÜCK -->
-<div style="background:#1A1208;padding:10px 24px;margin:0;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <a href="homepage.html" style="color:#C8922A;font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">← Zurück</a>
-  </div>
-</div>
 
 <!-- HERO -->
 <section class="hero" style="display:flex;align-items:center;justify-content:center;gap:40px;text-align:left;">
