@@ -147,6 +147,21 @@ Vercel deployed automatisch nach jedem Push.
 - [x] Google OAuth: Projekt "Partyretter" in Google Cloud angelegt, OAuth-Client erstellt (Client-ID + Secret in REPLIT_GOOGLE_OAUTH.md) ✅
 - [x] Netlify: Account gelöscht ✅
 
+## Erledigte Aufgaben (06.04.2026)
+- [x] Navigation auf 35 Seiten angeglichen (Koch-Events, Foodtruck-Karte, Locations, Rezepte, Preise)
+- [x] Zurück-Button in Nav-Leiste integriert (neben Logo, sticky, auf allen Unterseiten)
+- [x] 7 Kategorie-Cards mit Superhelden-Logos auf Homepage
+- [x] Kategorie-Tabs auf Onboarding erweitert (+ Kuchen & Torten, Event Zubehör, Service & Personal)
+- [x] 25 falsche Claims bereinigt in 17 Dateien
+- [x] Demo-Badges auf 4 Fake-Angebote (Homepage)
+- [x] Testversion-Banner eingefügt (goldener Gradient)
+- [x] Sidebar-Scroll-Bug gefixt
+- [x] Vercel CDN-Cache gelöst
+- [x] mobile-fixes.css erstellt + auf 34 Seiten eingebunden
+- [x] Mobile: Hero-Mascot ausgeblendet, Grids auf 1 Spalte, Sidebar versteckt, Padding reduziert
+- [x] Replit Runde 4 Entwurf v3 erstellt (8 Punkte, Foodtruck-Karte korrigiert)
+- [x] Tages-Zusammenfassung + Audit-Dokument + Design-Vorschläge erstellt
+
 ## Offene Aufgaben
 
 ### Replit (Agent baut gerade)
