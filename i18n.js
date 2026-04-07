@@ -21,19 +21,19 @@ const LANGUAGES = {
 const T = {
   /* ── NAVIGATION ── */
   nav_events: {
-    de: '🍽️ Koch-Events', en: '🍽️ Cooking Events', fr: '🍽️ Événements Culinaires',
-    es: '🍽️ Eventos de Cocina', it: '🍽️ Eventi Culinari', pl: '🍽️ Wydarzenia Kulinarne',
-    tr: '🍽️ Yemek Etkinlikleri', ru: '🍽️ Кулинарные события', nl: '🍽️ Kook-evenementen',
+    de: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Koch-Events', en: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Cooking Events', fr: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Événements Culinaires',
+    es: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Eventos de Cocina', it: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Eventi Culinari', pl: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Wydarzenia Kulinarne',
+    tr: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Yemek Etkinlikleri', ru: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Кулинарные события', nl: '<img src="logos/privatkoch.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Kook-evenementen',
   },
   nav_trucks: {
-    de: '🚚 Foodtruck-Standorte', en: '🚚 Foodtruck Map', fr: '🚚 Carte Foodtrucks',
-    es: '🚚 Mapa Foodtrucks', it: '🚚 Mappa Foodtruck', pl: '🚚 Mapa Foodtrucków',
-    tr: '🚚 Foodtruck Haritası', ru: '🚚 Карта Фудтраков', nl: '🚚 Foodtruck Kaart',
+    de: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Foodtruck-Karte', en: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Foodtruck Map', fr: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Carte Foodtrucks',
+    es: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Mapa Foodtrucks', it: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Mappa Foodtruck', pl: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Mapa Foodtrucków',
+    tr: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Foodtruck Haritası', ru: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Карта Фудтраков', nl: '<img src="logos/foodtruck.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Foodtruck Kaart',
   },
   nav_blog: {
-    de: '🍳 Rezepte', en: '🍳 Recipes', fr: '🍳 Recettes',
-    es: '🍳 Recetas', it: '🍳 Ricette', pl: '🍳 Przepisy',
-    tr: '🍳 Tarifler', ru: '🍳 Рецепты', nl: '🍳 Recepten',
+    de: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Rezepte', en: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Recipes', fr: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Recettes',
+    es: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Recetas', it: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Ricette', pl: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Przepisy',
+    tr: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Tarifler', ru: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Рецепты', nl: '<img src="logos/rezepte.png" alt="" style="width:20px;height:20px;object-fit:contain;vertical-align:middle"> Recepten',
   },
   nav_login: {
     de: 'Anmelden', en: 'Log in', fr: 'Connexion',
@@ -473,7 +473,7 @@ function applyLang(lang) {
   // Text content
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
-    el.textContent = t(key, lang);
+    el.innerHTML = t(key, lang);
   });
   // Placeholders
   document.querySelectorAll('[data-i18n-ph]').forEach(el => {
