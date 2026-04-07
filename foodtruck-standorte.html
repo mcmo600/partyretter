@@ -87,9 +87,9 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
 #map{width:100%;height:520px;z-index:1;}
 
 /* Leaflet marker */
-.gold-marker{background:var(--dark);width:52px;height:52px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid var(--gold);box-shadow:0 3px 12px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;cursor:pointer;}
+.gold-marker{background:var(--dark);border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid var(--gold);box-shadow:0 3px 12px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s,width .3s,height .3s;cursor:pointer;}
 .gold-marker:hover{transform:rotate(-45deg) scale(1.15);box-shadow:0 5px 18px rgba(200,146,42,.5);}
-.gold-marker span{transform:rotate(45deg);font-size:26px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));}
+.gold-marker span{transform:rotate(45deg);line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));transition:font-size .3s;}
 .gold-marker.active-marker{background:var(--gold);border-color:#fff;box-shadow:0 4px 16px rgba(200,146,42,.6);transform:rotate(-45deg) scale(1.25);}
 .leaflet-tooltip.truck-tooltip{background:var(--dark);color:#fff;border:2px solid var(--gold);border-radius:10px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.4;box-shadow:0 4px 12px rgba(0,0,0,.3);}
 .leaflet-tooltip.truck-tooltip::before{border-top-color:var(--dark);}
@@ -413,14 +413,25 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
   maxZoom:18
 }).addTo(map);
 
-// Emoji-Icon je nach Kategorie
-function catIcon(emoji, isActive){
+// Marker-Größe je nach Zoom-Level
+function markerSize(zoom){
+  if(zoom <= 5) return {box:24, font:12, anchor:12, popup:-20};
+  if(zoom <= 7) return {box:32, font:16, anchor:16, popup:-28};
+  if(zoom <= 9) return {box:40, font:20, anchor:20, popup:-36};
+  if(zoom <= 11) return {box:48, font:24, anchor:24, popup:-44};
+  return {box:56, font:28, anchor:28, popup:-52};
+}
+
+// Emoji-Icon je nach Kategorie + Zoom
+function catIcon(emoji, isActive, zoom){
+  var z = zoom || map.getZoom();
+  var s = markerSize(z);
   return L.divIcon({
     className:'',
-    html:'<div class="gold-marker' + (isActive ? ' active-marker' : '') + '"><span>' + (emoji || '🚚') + '</span></div>',
-    iconSize:[52,52],
-    iconAnchor:[26,52],
-    popupAnchor:[0,-48]
+    html:'<div class="gold-marker' + (isActive ? ' active-marker' : '') + '" style="width:'+s.box+'px;height:'+s.box+'px"><span style="font-size:'+s.font+'px">' + (emoji || '🚚') + '</span></div>',
+    iconSize:[s.box,s.box],
+    iconAnchor:[s.anchor,s.box],
+    popupAnchor:[0,s.popup]
   });
 }
 
@@ -486,6 +497,18 @@ function highlightMarker(name){
     }
   });
 }
+
+// ── Marker-Größe bei Zoom anpassen ──
+map.on('zoomend', function(){
+  var z = map.getZoom();
+  var list = getFiltered();
+  list.forEach(function(t){
+    if(markerMap[t.name]){
+      var isActive = selectedTruck && selectedTruck.name === t.name;
+      markerMap[t.name].setIcon(catIcon(t.emoji, isActive, z));
+    }
+  });
+});
 
 // ── SELECT TRUCK → Detail-Panel öffnen ──
 function selectTruck(name){
