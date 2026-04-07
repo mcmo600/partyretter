@@ -234,12 +234,12 @@
     const style = document.createElement('style');
     style.textContent = `
       #mpr-reopen-btn {
-        position: fixed; bottom: 16px; left: 16px; z-index: 9990;
-        background: #1A1208; color: rgba(245,240,232,0.65);
-        border: 1px solid rgba(245,240,232,0.18); border-radius: 99px;
-        padding: 5px 13px; font-size: 11px; font-weight: 600;
+        position: fixed; bottom: 16px; right: 16px; z-index: 9990;
+        background: #1A1208; color: rgba(245,240,232,0.45);
+        border: 1px solid rgba(245,240,232,0.1); border-radius: 99px;
+        padding: 4px 11px; font-size: 10px; font-weight: 500;
         cursor: pointer; font-family: inherit;
-        opacity: 0.75; transition: opacity 0.2s;
+        opacity: 0.5; transition: opacity 0.2s;
       }
       #mpr-reopen-btn:hover { opacity: 1; color: #C8922A; border-color: #C8922A; }
     `;
