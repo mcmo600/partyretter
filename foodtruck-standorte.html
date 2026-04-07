@@ -87,9 +87,12 @@ nav{position:sticky;top:0;z-index:200;background:var(--dark);display:flex;align-
 #map{width:100%;height:520px;z-index:1;}
 
 /* Leaflet marker */
-.gold-marker{background:var(--gold);width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;}
-.gold-marker span{transform:rotate(45deg);font-size:16px;line-height:1;}
-.gold-marker.active-marker{background:#fff;border-color:var(--gold);box-shadow:0 4px 16px rgba(200,146,42,.5);transform:rotate(-45deg) scale(1.2);}
+.gold-marker{background:var(--dark);width:52px;height:52px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid var(--gold);box-shadow:0 3px 12px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;cursor:pointer;}
+.gold-marker:hover{transform:rotate(-45deg) scale(1.15);box-shadow:0 5px 18px rgba(200,146,42,.5);}
+.gold-marker span{transform:rotate(45deg);font-size:26px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));}
+.gold-marker.active-marker{background:var(--gold);border-color:#fff;box-shadow:0 4px 16px rgba(200,146,42,.6);transform:rotate(-45deg) scale(1.25);}
+.leaflet-tooltip.truck-tooltip{background:var(--dark);color:#fff;border:2px solid var(--gold);border-radius:10px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.4;box-shadow:0 4px 12px rgba(0,0,0,.3);}
+.leaflet-tooltip.truck-tooltip::before{border-top-color:var(--dark);}
 
 /* Popup styling */
 .leaflet-popup-content-wrapper{border-radius:16px !important;box-shadow:0 8px 32px rgba(0,0,0,.2) !important;min-width:280px;}
@@ -415,9 +418,9 @@ function catIcon(emoji, isActive){
   return L.divIcon({
     className:'',
     html:'<div class="gold-marker' + (isActive ? ' active-marker' : '') + '"><span>' + (emoji || '🚚') + '</span></div>',
-    iconSize:[36,36],
-    iconAnchor:[18,36],
-    popupAnchor:[0,-32]
+    iconSize:[52,52],
+    iconAnchor:[26,52],
+    popupAnchor:[0,-48]
   });
 }
 
@@ -466,7 +469,8 @@ function addMarkers(list){
         '<a class="popup-btn popup-btn-route" href="' + routeUrl(t) + '" target="_blank" rel="noopener">📍 Route</a>' +
         '<button class="popup-btn" onclick="selectTruck(\'' + t.name.replace(/'/g,"\\'") + '\')">Details & Menü</button>' +
       '</div></div>';
-    var marker = L.marker([t.lat, t.lng], {icon:catIcon(t.emoji, false)}).addTo(markerLayer).bindPopup(popup, {maxWidth:300});
+    var tooltipHtml = '<strong>' + t.emoji + ' ' + t.name + '</strong><br><span style="opacity:.8">' + t.cat + '</span>';
+    var marker = L.marker([t.lat, t.lng], {icon:catIcon(t.emoji, false)}).addTo(markerLayer).bindPopup(popup, {maxWidth:300}).bindTooltip(tooltipHtml, {className:'truck-tooltip', direction:'top', offset:[0,-52], opacity:1});
     marker.on('click', function(){ highlightMarker(t.name); });
     markerMap[t.name] = marker;
   });
